@@ -515,10 +515,10 @@
       "subjects": ["person"],
       "conditions": { "action": ["dancing", "laughing"], "place": ["nightclub", "party"], "time": ["evening", "night-time"], "movement": ["active-motion", "running"], "light": ["stage-light", "low-light"], "distance": ["near", "medium"] },
       "gearStrategy": { "preferredLensRoles": ["low-light", "people", "wide"], "optional": ["flash"] },
-      "baseSettings": { "mode": "M", "focalLength": "18-35mm", "shutter": { "start": "1/500", "range": ["1/250", "1/800"] }, "aperture": { "start": "f/1.8", "range": ["f/1.8", "f/2.8"] }, "iso": "Auto", "focus": "AI Servo", "drive": "Continuous low" },
+      "baseSettings": { "mode": "M", "focalLength": "18-35mm", "shutter": { "start": "1/160", "range": ["1/125", "1/250"] }, "aperture": { "start": "f/1.8", "range": ["f/1.8", "f/2.8"] }, "iso": "Auto", "focus": "AI Servo", "drive": "Continuous low" },
       "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setAiServo"],
-      "quickGuide": ["Brug Sigma 18-35mm og kom relativt tæt på.", "Eksponer efter ansigter i lyset, ikke det mørke lokale.", "Brug bounce-flash kun hvor det er tilladt og loftet egner sig."],
-      "why": "Mørkt lokale og hurtige mennesker konkurrerer om eksponeringen. Lukkertid sikres først, og Auto ISO tager resten."
+      "quickGuide": ["Uden flash: start ved 1/160, f/1.8 og Auto ISO, og accepter at noget bevægelse bliver en del af billedet.", "Eksponer efter ansigter i lyset, ikke det mørke lokale.", "Hvis bounce-flash er tilladt og loftet egner sig, kan du bruge 1/160-1/250, f/2-f/2.8 og ISO 800-1600."],
+      "why": "Natklublys er svagt. 1/160 er et realistisk kompromis på 80D: kort nok til mange øjeblikke, men ikke så kort at ISO presses helt ud over det brugbare. Auto ISO betaler med støj; det skaber ikke ekstra lys."
     },
     {
       "id": "wildlife-forest-low-light",
@@ -1020,10 +1020,10 @@
       "subjects": ["child", "person"],
       "conditions": { "action": ["playing"], "movement": ["running", "active-motion"], "place": ["inside", "home"], "light": ["indoor", "low-light"], "distance": ["near", "medium"] },
       "gearStrategy": { "preferredLensRoles": ["low-light", "people", "wide"] },
-      "baseSettings": { "mode": "M", "focalLength": "18-35mm", "shutter": { "start": "1/640", "range": ["1/500", "1/1000"] }, "aperture": { "start": "f/2.0", "range": ["f/1.8", "f/2.8"] }, "iso": "Auto", "focus": "AI Servo på ansigt eller overkrop", "drive": "High-speed continuous" },
-      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setAiServo", "setHighSpeedContinuous"],
-      "quickGuide": ["Brug Sigma ved 18-24mm, hvis pladsen er trang.", "Lås 1/640 og f/2.0; lad Auto ISO følge lyset.", "Gå ned i barnets højde og tag korte serier."],
-      "why": "M er bedst her: 1/640 fryser legen, f/2.0 samler lys, og Auto ISO håndterer skift mellem vinduer og mørke hjørner."
+      "baseSettings": { "mode": "M", "focalLength": "18-35mm", "shutter": { "start": "1/250", "range": ["1/250", "1/500"] }, "aperture": { "start": "f/1.8", "range": ["f/1.8", "f/2.8"] }, "iso": "Auto", "focus": "AI Servo på ansigt eller overkrop", "drive": "Continuous low" },
+      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setAiServo"],
+      "quickGuide": ["Brug Sigma ved 18-24mm, hvis pladsen er trang.", "Start ved 1/250 og f/1.8. Gå mod 1/500, hvis barnet løber hurtigt og der er nok lys.", "Hvis ISO ryger meget højt, så flyt legen tættere på et vindue, brug bounce-flash hvis det passer, eller accepter lidt bevægelse."],
+      "why": "Almindeligt stuelys er begrænset. 1/250 ved f/1.8 er et realistisk startpunkt på 80D; Auto ISO kan hjælpe, men over cirka ISO 6400 bliver støjen tydelig."
     },
     {
       "id": "indoor-cozy-people",
@@ -1146,16 +1146,30 @@
     },
     {
       "id": "waterfall-long-exposure",
-      "title": "Vandfald med blødt vand",
+      "title": "Vandfald med blødt vand uden ND",
       "family": "landskab",
       "priority": 99,
       "subjects": ["waterfall", "landscape", "nature"],
-      "conditions": { "movement": ["still"], "place": ["forest", "outdoor"], "light": ["overcast", "shade", "daylight"], "distance": ["medium", "far"], "technique": ["long-exposure"] },
+      "conditions": { "movement": ["still"], "place": ["forest", "outdoor"], "time": ["morning", "twilight", "evening"], "light": ["shade", "low-light"], "distance": ["medium", "far"], "technique": ["long-exposure"] },
       "gearStrategy": { "preferredLensRoles": ["wide", "walkaround"] },
+      "baseSettings": { "mode": "M", "focalLength": "18-35mm", "shutter": { "start": "1/4s", "range": ["1/8s", "1/2s"] }, "aperture": { "start": "f/11", "range": ["f/8", "f/16"] }, "iso": { "start": "100", "range": ["100", "200"] }, "focus": "One Shot på en sten cirka en tredjedel inde i billedet", "drive": "2 sek. selvudløser" },
+      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setOneShot"],
+      "quickGuide": ["Brug stativ eller stil kameraet helt fast.", "Start ved 1/4 sek., f/11 og ISO 100 i dyb skygge, skov eller skumring.", "Bliver billedet for lyst, skal lukkertiden være kortere. I dagslys kræver det ND-filter at få rigtig blødt vand."],
+      "why": "Uden ND-filter er 1/2 sekund i dagslys for lyst. Denne profil er til svagt lys, hvor en moderat lang lukkertid kan blødgøre vandet uden at brænde billedet ud."
+    },
+    {
+      "id": "waterfall-long-exposure-nd",
+      "title": "Vandfald med blødt vand med ND-filter",
+      "family": "landskab",
+      "priority": 120,
+      "requiredTags": ["nd-filter"],
+      "subjects": ["waterfall", "landscape", "nature"],
+      "conditions": { "movement": ["still"], "place": ["forest", "outdoor"], "light": ["daylight", "overcast", "shade"], "distance": ["medium", "far"], "technique": ["long-exposure"], "equipment": ["nd-filter"] },
+      "gearStrategy": { "preferredLensRoles": ["wide", "walkaround"], "support": ["tripod", "nd-filter"] },
       "baseSettings": { "mode": "M", "focalLength": "18-35mm", "shutter": { "start": "1/2s", "range": ["1/4s", "2s"] }, "aperture": { "start": "f/11", "range": ["f/8", "f/16"] }, "iso": { "start": "100", "range": ["100", "200"] }, "focus": "One Shot på en sten cirka en tredjedel inde i billedet", "drive": "2 sek. selvudløser" },
       "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setOneShot"],
-      "quickGuide": ["Stil kameraet helt fast og komponér med en tydelig sten eller gren omkring vandet.", "Start ved 1/2 sek., f/11 og ISO 100.", "Bliver billedet for lyst, forkort lukkertiden; bliver vandet for skarpt, gør den længere."],
-      "why": "En halv sekund udjævner vandets bevægelse, mens f/11 og ISO 100 bevarer detaljer i landskabet."
+      "quickGuide": ["Sæt kameraet på stativ og komponér først. Hvis ND-filteret er meget mørkt, så fokusér før du monterer det.", "Start ved 1/2 sek., f/11 og ISO 100.", "Er billedet stadig for lyst, brug stærkere ND-filter eller kortere lukkertid."],
+      "why": "ND-filteret fjerner lys, så du kan bruge lang lukkertid i dagslys. Derfor giver 1/2 sekund mening her, men ikke som almindelig dagslysindstilling uden filter."
     },
     {
       "id": "foggy-forest-landscape",

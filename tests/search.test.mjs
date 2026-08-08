@@ -295,6 +295,10 @@ assert.deepEqual(specificCowResults.results.slice(0, 2).map((result) => result.i
 
 const nightclubResults = searchProfiles("mennesker danser på natklub", situations.profiles, taxonomy);
 assert.equal(nightclubResults.results[0].item.id, "nightclub-dancing");
+const nightclubRecommendation = buildRecommendation(nightclubResults.results[0].item, equipment, { classification: nightclubResults.classification });
+assert.equal(nightclubRecommendation.settings.mode, "M");
+assert.equal(nightclubRecommendation.settings.shutter, "1/160");
+assert.equal(nightclubRecommendation.settings.aperture, "f/1.8");
 const nightclubClassification = classifyQuery("mennesker danser på natklub", taxonomy);
 assert.equal(nightclubClassification.facets.place.includes("nightclub"), true);
 assert.equal(nightclubClassification.facets.light?.includes("night") || false, false);
@@ -429,8 +433,9 @@ const indoorPlay = searchProfiles("barn leger indenfor", situations.profiles, ta
 assert.equal(indoorPlay.results[0].item.id, "children-playing-indoor");
 const indoorPlayRecommendation = buildRecommendation(indoorPlay.results[0].item, equipment, { classification: indoorPlay.classification });
 assert.equal(indoorPlayRecommendation.settings.mode, "M");
-assert.equal(indoorPlayRecommendation.settings.shutter, "1/640");
-assert.equal(indoorPlayRecommendation.settings.aperture, "f/2.0");
+assert.equal(indoorPlayRecommendation.settings.shutter, "1/250");
+assert.equal(indoorPlayRecommendation.settings.aperture, "f/1.8");
+assert.equal(indoorPlayRecommendation.settings.drive, "Continuous low");
 
 assert.equal(searchProfiles("mennesker hygger indenfor", situations.profiles, taxonomy).results[0].item.id, "indoor-cozy-people");
 assert.equal(searchProfiles("mennesker spiser indenfor", situations.profiles, taxonomy).results[0].item.id, "people-eating-indoor");
@@ -459,8 +464,15 @@ const waterfall = searchProfiles("vandfald lang eksponering", situations.profile
 assert.equal(waterfall.results[0].item.id, "waterfall-long-exposure");
 const waterfallRecommendation = buildRecommendation(waterfall.results[0].item, equipment, { classification: waterfall.classification });
 assert.equal(waterfallRecommendation.settings.mode, "M");
-assert.equal(waterfallRecommendation.settings.shutter, "1/2s");
+assert.equal(waterfallRecommendation.settings.shutter, "1/4s");
 assert.equal(waterfallRecommendation.settings.aperture, "f/11");
+assert.equal(waterfall.results[0].item.conditions.light.includes("daylight"), false);
+
+assert.equal(findExactTerm(taxonomy, "nd-filter").id, "nd-filter");
+const waterfallNd = searchProfiles("vandfald lang eksponering nd-filter dagslys", situations.profiles, taxonomy);
+assert.equal(waterfallNd.results[0].item.id, "waterfall-long-exposure-nd");
+const waterfallNdRecommendation = buildRecommendation(waterfallNd.results[0].item, equipment, { classification: waterfallNd.classification });
+assert.equal(waterfallNdRecommendation.settings.shutter, "1/2s");
 
 assert.equal(findExactTerm(taxonomy, "natur").id, "nature");
 assert.equal(findExactTerm(taxonomy, "træstamme").id, "tree");
