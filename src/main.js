@@ -1,4 +1,4 @@
-import { astroStatus, maxStarShutterSeconds } from "./lib/astro.js";
+import { astroStatus, astroTargets, maxStarShutterSeconds } from "./lib/astro.js";
 import { applyManualOverride, defaultContext, getAutomaticContext } from "./lib/context.js";
 import { readExifFromFile } from "./lib/exif.js";
 import { loadPresets, savePreset } from "./lib/presets.js";
@@ -119,6 +119,7 @@ function renderHome(results = null) {
 function renderAstro() {
   const content = document.querySelector("#content");
   const status = astroStatus(new Date(state.context.date), state.context.coords);
+  const targets = astroTargets(new Date(state.context.date), state.context.coords);
   content.innerHTML = `
     <section class="panel astro-panel">
       <div class="panel-header">
@@ -136,14 +137,38 @@ function renderAstro() {
         <span>${maxStarShutterSeconds(18)}s maks</span>
         <span>ISO 1600</span>
       </div>
-      <div class="quick-actions">
-        <button data-query="stjerner">Stjerner</button>
-        <button data-query="nordlys">Nordlys</button>
-        <button data-query="måne">Måne</button>
+      <div class="astro-ready">
+        <p class="section-kicker">Jeg står klar nu</p>
+        <ol>
+          <li>Sæt 80D på stativ og monter Sigma 18-35mm eller 70-300mm afhængigt af motivet.</li>
+          <li>Brug Live View og Canon Camera Connect ved lange eksponeringer.</li>
+          <li>Tag et testbillede og brug "Det virkede ikke" i guiden til næste justering.</li>
+        </ol>
+      </div>
+      <div class="astro-targets">
+        ${targets.map(renderAstroTarget).join("")}
       </div>
     </section>
   `;
-  bindShellEvents();
+  document.querySelectorAll("[data-open-astro]").forEach((button) => {
+    button.addEventListener("click", () => openResult(button.dataset.openAstro));
+  });
+}
+
+function renderAstroTarget(target) {
+  return `
+    <article class="astro-target">
+      <div>
+        <p class="badge">${"★".repeat(target.score)}${"☆".repeat(5 - target.score)}</p>
+        <h3>${target.title}</h3>
+      </div>
+      <p>${target.note}</p>
+      <div class="settings-strip">
+        ${target.settings.split(" · ").map((item) => `<span>${item}</span>`).join("")}
+      </div>
+      <button data-open-astro="${target.id}">Åbn guide</button>
+    </article>
+  `;
 }
 
 function renderPresets() {
@@ -274,6 +299,10 @@ function openResult(profileId) {
         <span>${recommendation.settings.focus}</span>
         <span>${recommendation.settings.drive}</span>
         ${recommendation.flash ? `<span>${recommendation.flash.model}</span>` : ""}
+      </div>
+      <h3>Tag med</h3>
+      <div class="gear-checklist">
+        ${recommendation.gearChecklist.map((item) => `<span>${item}</span>`).join("")}
       </div>
       <h3>Hurtig guide</h3>
       <ol>${profile.quickGuide.map((step) => `<li>${step}</li>`).join("")}</ol>

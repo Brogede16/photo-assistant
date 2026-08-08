@@ -261,6 +261,23 @@ select {
   background: #0e141d;
 }
 
+.gear-checklist {
+  display: grid;
+  gap: 8px;
+}
+
+.gear-checklist span {
+  display: flex;
+  align-items: center;
+  min-height: 38px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 8px 10px;
+  background: #0e141d;
+  color: var(--text);
+  font-weight: 700;
+}
+
 .hero-setting {
   color: var(--text);
   font-size: 18px;
@@ -303,6 +320,29 @@ summary {
 
 .astro-panel {
   overflow: hidden;
+}
+
+.astro-ready,
+.astro-target {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 12px;
+  background: #0e141d;
+}
+
+.astro-ready {
+  display: grid;
+  gap: 8px;
+}
+
+.astro-targets {
+  display: grid;
+  gap: 10px;
+}
+
+.astro-target {
+  display: grid;
+  gap: 10px;
 }
 
 .astro-visual {

@@ -31,6 +31,7 @@ export function buildRecommendation(profile, equipment, context = {}) {
       focus: settings.focus || "Auto",
       drive: settings.drive || "Single"
     },
+    gearChecklist: buildGearChecklist(profile, lens),
     actions: (profile.cameraActions || []).map((actionId) => ({
       id: actionId,
       steps: camera?.procedures?.[actionId] || []
@@ -109,4 +110,15 @@ function buildNotes(profile, context) {
   if (profile.why) notes.push(profile.why);
   if (context.source === "automatic") notes.push("Automatisk kontekst bruges som udgangspunkt. Manuel override vinder altid.");
   return notes;
+}
+
+function buildGearChecklist(profile, lens) {
+  const support = profile.gearStrategy?.support || [];
+  const checklist = [`Canon EOS 80D`, `${lens.brand} ${lens.model}`];
+  if (support.includes("tripod") || support.includes("tripod-optional")) checklist.push("Stativ");
+  if (support.includes("remote-release")) checklist.push("Canon Camera Connect eller 2 sek. selvudløser");
+  if (profile.family === "astro" || support.includes("tripod")) checklist.push("Ekstra batteri");
+  if (profile.family === "astro") checklist.push("Pandelampe med lav styrke");
+  if (profile.gearStrategy?.optional?.includes("flash")) checklist.push("Speedlite 430EX II som mulighed");
+  return checklist;
 }

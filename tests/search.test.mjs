@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
-import { astroStatus, maxStarShutterSeconds } from "../src/lib/astro.js";
+import { astroStatus, astroTargets, maxStarShutterSeconds } from "../src/lib/astro.js";
 import { buildRecommendation } from "../src/lib/recommendations.js";
 import { classifyQuery, searchProfiles } from "../src/lib/search.js";
 
@@ -30,8 +30,10 @@ assert.equal(sportResults.results[0].item.id, "outdoor-sport-daylight");
 const recommendation = buildRecommendation(astroResults.results[0].item, equipment, { phase: "night" });
 assert.equal(recommendation.lens.id, "sigma-18-35-f18-art");
 assert.equal(recommendation.settings.aperture, "f/1.8");
+assert.equal(recommendation.gearChecklist.includes("Stativ"), true);
 
 assert.equal(maxStarShutterSeconds(18, 1.6), 13);
 assert.equal(astroStatus(new Date("2026-08-08T23:00:00+02:00")).moon.percent >= 0, true);
+assert.equal(astroTargets(new Date("2026-08-08T23:00:00+02:00")).some((target) => target.id === "milky-way-wide"), true);
 
 console.log("Alle søge-, anbefalings- og astro-tests bestod.");

@@ -6,8 +6,8 @@
   "description": "Dansk, offline-first PWA til konkrete fotoanbefalinger for Canon EOS 80D og brugerens udstyr.",
   "scripts": {
     "serve": "python3 -m http.server 8000",
-    "test": "node tests/search.test.mjs",
-    "check": "node tests/search.test.mjs"
+    "test": "node --check src/main.js && node tests/search.test.mjs",
+    "check": "node --check src/main.js && node tests/search.test.mjs"
   },
   "keywords": [
     "photography",

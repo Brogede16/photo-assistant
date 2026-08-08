@@ -51,6 +51,51 @@ export function astroStatus(date = new Date(), coords = null) {
   };
 }
 
+export function astroTargets(date = new Date(), coords = null) {
+  const status = astroStatus(date, coords);
+  const moon = status.moon;
+  const isDark = ["night", "twilight", "blue-hour"].includes(status.light.phase);
+  const moonIsBright = moon.illumination > 0.65;
+
+  return [
+    {
+      id: "stars-wide-field",
+      title: "Stjerner",
+      score: isDark && !moonIsBright ? 5 : isDark ? 3 : 1,
+      settings: `18mm · f/1.8 · ${status.starSeconds18mm}s maks · ISO 1600`,
+      note: moonIsBright ? "Månen lyser meget, så svage stjerner bliver sværere." : "Bedst når himlen er mørk og månen ikke dominerer."
+    },
+    {
+      id: "milky-way-wide",
+      title: "Mælkevejen",
+      score: isDark && moon.illumination < 0.35 ? 5 : isDark ? 2 : 1,
+      settings: "18mm · f/1.8 · 8-13s · ISO 1600-3200",
+      note: "Kræver mørk himmel og lav måne. Brug denne som planlægningsmål."
+    },
+    {
+      id: "aurora-weak",
+      title: "Nordlys",
+      score: isDark ? 4 : 1,
+      settings: "18mm · f/1.8 · 2-8s · ISO 1600-3200",
+      note: "Vælg svagt nordlys som start. Gå kortere i tid, hvis det bevæger sig hurtigt."
+    },
+    {
+      id: "moon-telephoto",
+      title: "Månen",
+      score: moon.percent > 10 ? 5 : 2,
+      settings: "300mm · f/8 · 1/500 · ISO 200",
+      note: `${moon.label}, ${moon.percent}% belyst. Månen kræver ikke almindelige natindstillinger.`
+    },
+    {
+      id: "fireworks-tripod",
+      title: "Fyrværkeri",
+      score: status.light.phase === "night" ? 4 : 2,
+      settings: "18-35mm · f/8 · 4s · ISO 100",
+      note: "Lang lukkertid er her selve effekten. Brug stativ."
+    }
+  ];
+}
+
 function scoreAstro(phase, illumination) {
   let score = phase === "night" ? 4 : phase === "twilight" ? 2 : 1;
   if (illumination < 0.25) score += 1;
