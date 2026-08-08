@@ -4,6 +4,8 @@ const DANISH_REPLACEMENTS = new Map([
   ["å", "aa"]
 ]);
 
+const CONNECTOR_WORDS = new Set(["i", "på", "paa", "ved", "med", "om", "til", "af", "og", "en", "et", "den", "det", "de"]);
+
 export function normalizeText(value) {
   return String(value || "")
     .toLowerCase()
@@ -45,7 +47,10 @@ export function classifyQuery(query, taxonomy) {
     if (!entry.phrase) continue;
     const directMatch = containsPhrase(normalized, entry.phrase);
     const fuzzyMatch = !entry.term.requiresProfileMatch
-      && tokens.some((token) => token.length > 4 && levenshtein(token, entry.phrase) <= 1);
+      && tokens.some((token) => token.length > 4
+        && entry.phrase.length > 4
+        && token[0] === entry.phrase[0]
+        && levenshtein(token, entry.phrase) <= 1);
     if (directMatch || fuzzyMatch) {
       const current = matches.get(entry.term.id) || { ...entry.term, score: 0 };
       current.score += directMatch ? 4 : 1;
@@ -421,7 +426,10 @@ export function consumeKnownTerms(value, taxonomy, { includeLastTerm = false } =
     }
   }
 
-  return { termIds: [...new Set(termIds)], remainder: remainder.join(" ") };
+  const cleanedRemainder = termIds.length > 0
+    ? remainder.filter((word) => !CONNECTOR_WORDS.has(word))
+    : remainder;
+  return { termIds: [...new Set(termIds)], remainder: cleanedRemainder.join(" ") };
 }
 
 function buildPhraseIndex(taxonomy) {

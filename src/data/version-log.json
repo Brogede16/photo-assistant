@@ -1,6 +1,17 @@
 {
-  "current": "0.21.0",
+  "current": "0.22.0",
   "entries": [
+    {
+      "version": "0.22.0",
+      "date": "2026-08-08",
+      "title": "Arkitektur, marker og dyr ved havet",
+      "items": [
+        "Tilføjede moderne og ældre arkitektur med egne dagslys- og natprofiler.",
+        "Tilføjede marker i dagslys som selvstændigt landskabsscenarie.",
+        "Tilføjede dyr på havet samt sæl og søløve i vandet eller hvilende på land.",
+        "Alle scenarier har nu en automatisk test for minimum fire tagforbindelser på mindst tre forskellige typer kontekst."
+      ]
+    },
     {
       "version": "0.21.0",
       "date": "2026-08-08",

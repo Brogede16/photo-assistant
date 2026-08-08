@@ -89,3 +89,13 @@ Arkitekturprofilerne følger bygningens størrelse, sted og lys:
 - Slotte og borge har egne dag- og natprofiler, fordi belyst stenfacade og dagslandskab kræver forskellige eksponeringer.
 
 [Canons arkitekturgennemgang](https://www.canon.com.au/get-inspired/architecture-photography-tips-emma-desira) anbefaler Av eller M, ISO 100, f/8-f/14 og cirka 1/125 som dagsudgangspunkt. Den beskriver også, at kameraet bør holdes parallelt med bygningen for at begrænse konvergerende lodrette linjer, og at længere brændvidde på afstand reducerer forvrængning. [Canons perspektivforklaring](https://files.canon-europe.com/files/webcontent/rf-lens-world/knowledge/perspective/index.html) dokumenterer forskellen mellem vidvinklens stærke rumvirkning og teleobjektivets kompression. [Canons low-light-vejledning](https://www.canon.com.au/get-inspired/6-low-light-photography-tips) bruges til de håndholdte restaurant- og museumsprofiler.
+
+## Arkitektur, marker og dyr ved havet
+
+Moderne og ældre bygninger har egne dag- og natprofiler. De holdes adskilt, fordi glasfacader ofte fotograferes bredt og grafisk, mens ældre facader oftere vinder på en mere moderat brændvidde og et tydeligt materiale eller detalje som fokuspunkt.
+
+- Marker i dagslys bruger Av, 18-35mm, f/8 og ISO 100 som start. Mark, dagslys, tid på dagen, afstand og landskab er alle direkte forbindelser i profilen.
+- Dyr på havet bruger Tv ved 1/1600 og 200-300mm. Det er et bevægelsesscenarie, hvor vand, vind, afstand og dyrets pludselige opdukken er vigtigere end lav ISO.
+- Sæl og søløve skelner mellem `I vandet` og `På land`. I vandet får 1/1600 og hurtig serie, mens på land starter ved 1/800 og stadig holder fokus på øjet fra god afstand.
+
+Hvert scenarie bliver ved test kontrolleret for mindst ét motivtag, mindst tre forskellige konteksttyper og mindst fire samlede tagforbindelser. Det forhindrer, at et scenarie ender som en isoleret opskrift, der kun kan findes med én bestemt formulering.

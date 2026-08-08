@@ -50,11 +50,21 @@ assert.equal(findExactTerm(taxonomy, "lille hus").id, "small-building");
 assert.equal(findExactTerm(taxonomy, "på landet").id, "countryside");
 assert.equal(findExactTerm(taxonomy, "lys restaurant").id, "bright-interior");
 assert.equal(findExactTerm(taxonomy, "mørk restaurant").id, "dim-interior");
+assert.equal(findExactTerm(taxonomy, "moderne bygninger").id, "modern-architecture");
+assert.equal(findExactTerm(taxonomy, "gamle bygninger").id, "historic-architecture");
+assert.equal(findExactTerm(taxonomy, "marker").id, "field");
+assert.equal(findExactTerm(taxonomy, "søløve").id, "seal");
+assert.equal(findExactTerm(taxonomy, "i vandet").id, "in-water");
+assert.equal(findExactTerm(taxonomy, "på land").id, "on-shore");
 assert.equal(classifyQuery("morgen", taxonomy).facets.subject?.includes("castle") || false, false);
+assert.equal(classifyQuery("om natten", taxonomy).facets.subject?.includes("cat") || false, false);
 
 const consumedPhrase = consumeKnownTerms("ko gråt vejr ", taxonomy);
 assert.deepEqual(consumedPhrase.termIds, ["cow", "overcast"]);
 assert.equal(consumedPhrase.remainder, "");
+const consumedNaturalPhrase = consumeKnownTerms("marker i dagslys ", taxonomy);
+assert.deepEqual(consumedNaturalPhrase.termIds, ["field", "daylight"]);
+assert.equal(consumedNaturalPhrase.remainder, "");
 
 const livePartial = suggestNextTags("kan", situations.profiles, taxonomy, [], 6);
 assert.equal(livePartial.some((term) => term.id === "rabbit"), true);
@@ -177,6 +187,32 @@ const smallCountryBuilding = searchProfiles("lille bygning på landet", situatio
 assert.equal(smallCountryBuilding.results[0].item.id, "architecture-small-countryside-day");
 assert.equal(buildRecommendation(smallCountryBuilding.results[0].item, equipment, { classification: smallCountryBuilding.classification }).lens.id, "canon-ef-70-300-is-usm");
 assert.equal(searchProfiles("stor bygning på landet", situations.profiles, taxonomy).results[0].item.id, "architecture-large-countryside-day");
+
+const fieldsDaylight = searchProfiles("marker i dagslys", situations.profiles, taxonomy);
+assert.equal(fieldsDaylight.results[0].item.id, "fields-daylight");
+assert.equal(buildRecommendation(fieldsDaylight.results[0].item, equipment, { classification: fieldsDaylight.classification }).settings.aperture, "f/8");
+
+const modernArchitectureDay = searchProfiles("moderne arkitektur i byen om dagen", situations.profiles, taxonomy);
+assert.equal(modernArchitectureDay.results[0].item.id, "modern-architecture-day");
+assert.equal(buildRecommendation(modernArchitectureDay.results[0].item, equipment, { classification: modernArchitectureDay.classification }).settings.mode, "Av");
+const modernArchitectureNight = searchProfiles("glasfacade om natten", situations.profiles, taxonomy);
+assert.equal(modernArchitectureNight.results[0].item.id, "modern-architecture-night");
+assert.equal(buildRecommendation(modernArchitectureNight.results[0].item, equipment, { classification: modernArchitectureNight.classification }).settings.shutter, "1s");
+assert.equal(searchProfiles("gammel bygning i dagslys", situations.profiles, taxonomy).results[0].item.id, "historic-architecture-day");
+assert.equal(searchProfiles("historisk bygning om natten", situations.profiles, taxonomy).results[0].item.id, "historic-architecture-night");
+
+const marineAnimals = searchProfiles("dyr på havet", situations.profiles, taxonomy);
+assert.equal(marineAnimals.results[0].item.id, "marine-animal-open-water");
+assert.equal(buildRecommendation(marineAnimals.results[0].item, equipment, { classification: marineAnimals.classification }).settings.shutter, "1/1600");
+const sealInWater = searchProfiles("søløve i vandet", situations.profiles, taxonomy);
+assert.equal(sealInWater.results[0].item.id, "seal-in-water");
+assert.equal(buildRecommendation(sealInWater.results[0].item, equipment, { classification: sealInWater.classification }).lens.id, "canon-ef-70-300-is-usm");
+const sealOnShore = searchProfiles("sæl på land", situations.profiles, taxonomy);
+assert.equal(sealOnShore.results[0].item.id, "seal-on-shore");
+assert.equal(buildRecommendation(sealOnShore.results[0].item, equipment, { classification: sealOnShore.classification }).settings.shutter, "1/800");
+const sealTags = suggestNextTags("Sæl", situations.profiles, taxonomy, ["seal"], 16);
+assert.equal(sealTags.some((term) => term.id === "in-water"), true);
+assert.equal(sealTags.some((term) => term.id === "on-shore"), true);
 
 assert.equal(searchProfiles("museum", situations.profiles, taxonomy).results[0].item.id, "museum-exterior-day");
 assert.equal(searchProfiles("museum indenfor lyst lokale", situations.profiles, taxonomy).results[0].item.id, "museum-interior-bright");
@@ -455,6 +491,16 @@ assert.equal(searchProfiles("koncert lavt lys", situations.profiles, taxonomy).r
 assert.equal(taxonomy.terms.length >= 160, true);
 assert.equal(situations.profiles.length >= 95, true);
 
+const taxonomyIds = new Set(taxonomy.terms.map((term) => term.id));
+for (const profile of situations.profiles) {
+  const conditionGroups = Object.values(profile.conditions || {}).filter((ids) => Array.isArray(ids) && ids.length > 0);
+  const conditionIds = conditionGroups.flat();
+  assert.equal((profile.subjects || []).length >= 1, true, `${profile.id} mangler motivtag`);
+  assert.equal(conditionGroups.length >= 3, true, `${profile.id} har for få konteksttyper`);
+  assert.equal((profile.subjects || []).length + conditionIds.length >= 4, true, `${profile.id} har for få tagforbindelser`);
+  assert.equal(conditionIds.every((id) => taxonomyIds.has(id)), true, `${profile.id} bruger et ukendt tag`);
+}
+
 const macroRecommendation = buildRecommendation(macroResults.results[0].item, equipment, {
   classification: macroResults.classification
 });
@@ -482,8 +528,8 @@ assert.equal(influencedRecommendation.scenarioDecisions[0].includes("Mit regnkon
 assert.equal(maxStarShutterSeconds(18, 1.6), 13);
 assert.equal(astroStatus(new Date("2026-08-08T23:00:00+02:00")).moon.percent >= 0, true);
 assert.equal(astroTargets(new Date("2026-08-08T23:00:00+02:00")).some((target) => target.id === "milky-way-wide"), true);
-assert.equal(versionLog.current, "0.21.0");
-assert.equal(versionLog.entries[0].version, "0.21.0");
+assert.equal(versionLog.current, "0.22.0");
+assert.equal(versionLog.entries[0].version, "0.22.0");
 assert.equal(learning.lessons.length, 6);
 assert.equal(learning.lessons.some((lesson) => lesson.id === "modes"), true);
 const modesLesson = learning.lessons.find((lesson) => lesson.id === "modes");
