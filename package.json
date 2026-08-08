@@ -1,0 +1,20 @@
+{
+  "name": "photo-assistant",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Dansk, offline-first PWA til konkrete fotoanbefalinger for Canon EOS 80D og brugerens udstyr.",
+  "scripts": {
+    "serve": "python3 -m http.server 8000",
+    "test": "node tests/search.test.mjs",
+    "check": "node tests/search.test.mjs"
+  },
+  "keywords": [
+    "photography",
+    "pwa",
+    "canon",
+    "astro",
+    "offline-first"
+  ],
+  "license": "UNLICENSED"
+}

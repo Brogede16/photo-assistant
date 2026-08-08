@@ -1,0 +1,156 @@
+{
+  "profiles": [
+    {
+      "id": "stars-wide-field",
+      "title": "Stjernehimmel",
+      "family": "astro",
+      "priority": 100,
+      "subjects": ["stars"],
+      "conditions": { "movement": ["still"], "light": ["night"], "distance": ["far"] },
+      "gearStrategy": { "preferredLensRoles": ["astro", "wide"], "support": ["tripod", "remote-release"] },
+      "baseSettings": {
+        "mode": "M",
+        "focalLength": "18mm",
+        "shutter": { "start": "8s", "range": ["6s", "10s"] },
+        "aperture": { "start": "f/1.8", "strategy": "wide-open" },
+        "iso": { "start": "1600", "range": ["1600", "3200"] },
+        "focus": "Manuel fokus på klar stjerne",
+        "drive": "2 sek. selvudløser eller Canon Camera Connect"
+      },
+      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "useLiveViewForAstro", "useCanonCameraConnect"],
+      "quickGuide": [
+        "Brug Sigma 18-35mm ved 18mm.",
+        "Sæt kameraet på stativ.",
+        "Fokusér manuelt med Live View på en klar stjerne.",
+        "Start med 8 sek., f/1.8 og ISO 1600."
+      ],
+      "why": "80D er APS-C, så 18mm giver cirka 29mm full-frame equivalent. 8-10 sekunder er et sikkert startområde, før stjernerne begynder at tegne tydelige spor."
+    },
+    {
+      "id": "aurora-weak",
+      "title": "Svagt nordlys",
+      "family": "astro",
+      "priority": 98,
+      "subjects": ["aurora"],
+      "conditions": { "movement": ["still"], "light": ["night"], "distance": ["far"] },
+      "gearStrategy": { "preferredLensRoles": ["astro", "wide"], "support": ["tripod", "remote-release"] },
+      "baseSettings": {
+        "mode": "M",
+        "focalLength": "18mm",
+        "shutter": { "start": "6s", "range": ["4s", "10s"] },
+        "aperture": { "start": "f/1.8", "strategy": "wide-open" },
+        "iso": { "start": "3200", "range": ["1600", "3200"] },
+        "focus": "Manuel fokus på stjerne",
+        "drive": "Canon Camera Connect eller 2 sek. selvudløser"
+      },
+      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "useLiveViewForAstro", "useCanonCameraConnect"],
+      "quickGuide": [
+        "Ret kameraet mod nord/nordøst efter komposition.",
+        "Brug 18mm og f/1.8 for mest muligt lys.",
+        "Hvis nordlyset bevæger sig hurtigt, gå kortere i lukkertid og hæv ISO."
+      ],
+      "why": "Nordlys kræver kortere eksponering end almindelige stjerner, hvis strukturen bevæger sig. Svagt nordlys kræver dog stadig flere sekunder."
+    },
+    {
+      "id": "moon-telephoto",
+      "title": "Månen alene",
+      "family": "astro",
+      "priority": 92,
+      "subjects": ["moon"],
+      "conditions": { "movement": ["still"], "light": ["night"], "distance": ["far"] },
+      "gearStrategy": { "preferredLensRoles": ["moon", "telephoto"], "support": ["tripod-optional"] },
+      "baseSettings": {
+        "mode": "M",
+        "focalLength": "300mm",
+        "shutter": { "start": "1/500", "range": ["1/250", "1/800"] },
+        "aperture": { "start": "f/8", "range": ["f/5.6", "f/8"] },
+        "iso": { "start": "200", "range": ["100", "400"] },
+        "focus": "One Shot eller manuel fokus i Live View",
+        "drive": "Single eller 2 sek. selvudløser"
+      },
+      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso"],
+      "quickGuide": [
+        "Brug Canon 70-300mm ved 300mm.",
+        "Månen er lysere end himlen, så start ikke med natteindstillinger.",
+        "Hvis månen bliver hvid uden detaljer, brug hurtigere lukkertid."
+      ],
+      "why": "Månen er direkte solbelyst. Den kræver ofte lav ISO og relativt hurtig lukkertid, selv om himlen er mørk."
+    },
+    {
+      "id": "bird-flight-daylight",
+      "title": "Fugl i flugt",
+      "family": "fugle",
+      "priority": 90,
+      "subjects": ["bird"],
+      "conditions": { "movement": ["flight", "running"], "light": ["daylight", "overcast"], "distance": ["medium", "far"] },
+      "gearStrategy": { "preferredLensRoles": ["birds", "telephoto"] },
+      "baseSettings": {
+        "mode": "M",
+        "focalLength": "250-300mm",
+        "shutter": { "start": "1/1600", "range": ["1/1000", "1/2500"] },
+        "aperture": { "start": "f/5.6", "strategy": "wide-open-at-tele" },
+        "iso": "Auto",
+        "focus": "AI Servo",
+        "drive": "High-speed continuous"
+      },
+      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setAiServo", "setHighSpeedContinuous"],
+      "quickGuide": [
+        "Brug Canon 70-300mm.",
+        "Start omkring 200-250mm, find fuglen, og zoom ind derefter.",
+        "Hold fokuspunktet på fuglens krop eller hoved.",
+        "Tag korte serier på 3-6 billeder."
+      ],
+      "why": "Fugle i flugt kræver kort lukkertid og kontinuerlig fokus. Lidt ISO-støj er bedre end bevægelsesslør."
+    },
+    {
+      "id": "animal-running",
+      "title": "Dyr der løber",
+      "family": "dyr",
+      "priority": 84,
+      "subjects": ["animal", "dog", "monkey"],
+      "conditions": { "movement": ["running"], "light": ["daylight", "overcast", "shade"], "distance": ["medium", "far"] },
+      "gearStrategy": { "preferredLensRoles": ["animals", "telephoto"] },
+      "baseSettings": {
+        "mode": "M",
+        "focalLength": "100-300mm",
+        "shutter": { "start": "1/1000", "range": ["1/800", "1/1600"] },
+        "aperture": { "start": "f/5.6", "strategy": "wide-open-at-tele" },
+        "iso": "Auto",
+        "focus": "AI Servo",
+        "drive": "High-speed continuous"
+      },
+      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setAiServo", "setHighSpeedContinuous"],
+      "quickGuide": [
+        "Brug 70-300mm, hvis dyret er på afstand.",
+        "Prioriter lukkertiden, når motivet bevæger sig.",
+        "Følg dyret jævnt med overkroppen."
+      ],
+      "why": "Løbende dyr kræver hurtig lukkertid. Auto ISO lader kameraet kompensere, når lyset skifter."
+    },
+    {
+      "id": "people-indoor-low-light",
+      "title": "Mennesker indendørs i lavt lys",
+      "family": "mennesker",
+      "priority": 78,
+      "subjects": ["person"],
+      "conditions": { "movement": ["still", "walking"], "light": ["indoor", "low-light"], "distance": ["near", "medium"] },
+      "gearStrategy": { "preferredLensRoles": ["low-light", "people"], "optional": ["flash"] },
+      "baseSettings": {
+        "mode": "M",
+        "focalLength": "24-35mm",
+        "shutter": { "start": "1/250", "range": ["1/125", "1/320"] },
+        "aperture": { "start": "f/1.8", "range": ["f/1.8", "f/2.8"] },
+        "iso": "Auto",
+        "focus": "AI Servo ved børn/bevægelse, One Shot ved stille portræt",
+        "drive": "Continuous low eller single"
+      },
+      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso"],
+      "quickGuide": [
+        "Brug Sigma 18-35mm for mest lys.",
+        "Hold lukkertiden omkring 1/250 til børn og almindelig bevægelse.",
+        "Brug Speedlite bounce, hvis rummet er for mørkt og loft/væg kan bruges."
+      ],
+      "why": "Indendørs lys er ofte svagere end det ser ud for øjet. f/1.8 og Auto ISO giver 80D mere arbejdsrum."
+    }
+  ]
+}

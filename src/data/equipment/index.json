@@ -1,0 +1,158 @@
+{
+  "ownerLabel": "Mads",
+  "cameras": [
+    {
+      "id": "canon-eos-80d",
+      "type": "camera",
+      "brand": "Canon",
+      "model": "EOS 80D",
+      "sensor": {
+        "format": "APS-C",
+        "cropFactor": 1.6,
+        "megapixels": 24.2
+      },
+      "capabilities": {
+        "manualMode": true,
+        "aperturePriority": true,
+        "shutterPriority": true,
+        "liveView": true,
+        "wifi": true,
+        "touchScreen": true,
+        "maxMechanicalFps": 7,
+        "flashSyncSpeed": "1/250",
+        "raw": true
+      },
+      "recommendedDefaults": {
+        "imageQuality": "RAW eller RAW+JPEG",
+        "whiteBalance": "Auto",
+        "metering": "Evaluative",
+        "safeResetMode": "Av + Auto ISO + One Shot + Single drive"
+      },
+      "procedures": {
+        "setManualMode": [
+          "Drej programhjulet øverst til venstre til M.",
+          "Kontroller at skærmen viser M."
+        ],
+        "setShutter": [
+          "Brug Main Dial ved udløserknappen.",
+          "Drej indtil lukkertiden på skærmen matcher anbefalingen.",
+          "Ved hele sekunder viser 80D et anførselstegn, fx 8\" for 8 sekunder."
+        ],
+        "setAperture": [
+          "I M drejes Quick Control Dial bagpå for at ændre blænde.",
+          "Hvis hjulet er låst, brug låsekontakten ved Quick Control Dial."
+        ],
+        "setIso": [
+          "Tryk ISO-knappen på toppen.",
+          "Drej Main Dial til ønsket ISO eller AUTO.",
+          "Tryk udløseren halvt ned for at vende tilbage."
+        ],
+        "setAiServo": [
+          "Tryk AF-knappen på toppen.",
+          "Drej Main Dial til AI Servo.",
+          "Brug dette til motiver der bevæger sig."
+        ],
+        "setOneShot": [
+          "Tryk AF-knappen på toppen.",
+          "Drej Main Dial til One Shot.",
+          "Brug dette til stillestående motiver."
+        ],
+        "setHighSpeedContinuous": [
+          "Tryk DRIVE-knappen på toppen.",
+          "Drej Main Dial til High-speed continuous.",
+          "Tag korte serier fremfor at holde knappen nede længe."
+        ],
+        "useLiveViewForAstro": [
+          "Sæt kameraet på stativ.",
+          "Tryk Live View-knappen bagpå.",
+          "Find en klar stjerne eller fjern lysprik.",
+          "Forstør visningen og fokuser manuelt, indtil prikken er mindst mulig."
+        ],
+        "useCanonCameraConnect": [
+          "Brug Canon Camera Connect som fjernudløser og Live View-hjælp.",
+          "Photo Assistant styrer ikke kameraet direkte.",
+          "Brug appen til at undgå kamerarystelser ved stativ, astro og lange eksponeringer."
+        ]
+      }
+    }
+  ],
+  "lenses": [
+    {
+      "id": "sigma-18-35-f18-art",
+      "type": "lens",
+      "brand": "Sigma",
+      "model": "18-35mm f/1.8 DC HSM Art",
+      "mount": "Canon EF-S compatible",
+      "focalLength": { "min": 18, "max": 35 },
+      "aperture": { "maxAtMinFocal": 1.8, "maxAtMaxFocal": 1.8 },
+      "stabilization": false,
+      "autofocus": true,
+      "roles": ["wide", "normal", "low-light", "astro", "people", "indoor"],
+      "notes": [
+        "Mest lysstærke objektiv i sættet.",
+        "Bedste førstevalg til stjerner, nordlys, indendørs mennesker og natmiljø."
+      ]
+    },
+    {
+      "id": "canon-ef-s-18-55-is-stm",
+      "type": "lens",
+      "brand": "Canon",
+      "model": "EF-S 18-55mm f/3.5-5.6 IS STM",
+      "mount": "Canon EF-S",
+      "focalLength": { "min": 18, "max": 55 },
+      "aperture": { "maxAtMinFocal": 3.5, "maxAtMaxFocal": 5.6 },
+      "stabilization": true,
+      "autofocus": true,
+      "roles": ["walkaround", "wide", "travel", "family"],
+      "notes": [
+        "Let standardzoom.",
+        "Overlapper med Sigma i vidvinkelområdet, men har mere rækkevidde til 55mm."
+      ]
+    },
+    {
+      "id": "canon-ef-55-200-ii-usm",
+      "type": "lens",
+      "brand": "Canon",
+      "model": "EF 55-200mm f/4.5-5.6 II USM",
+      "mount": "Canon EF",
+      "focalLength": { "min": 55, "max": 200 },
+      "aperture": { "maxAtMinFocal": 4.5, "maxAtMaxFocal": 5.6 },
+      "stabilization": false,
+      "autofocus": true,
+      "roles": ["telephoto", "outdoor", "animals", "portraits"],
+      "notes": [
+        "Telezoom uden billedstabilisering.",
+        "Kræver hurtigere lukkertid håndholdt end 70-300 IS."
+      ]
+    },
+    {
+      "id": "canon-ef-70-300-is-usm",
+      "type": "lens",
+      "brand": "Canon",
+      "model": "EF 70-300mm f/4-5.6 IS USM",
+      "mount": "Canon EF",
+      "focalLength": { "min": 70, "max": 300 },
+      "aperture": { "maxAtMinFocal": 4, "maxAtMaxFocal": 5.6 },
+      "stabilization": true,
+      "autofocus": true,
+      "roles": ["telephoto", "animals", "birds", "moon", "zoo", "sports"],
+      "notes": [
+        "Bedste televalg i sættet.",
+        "Førstevalg til fugle, dyr på afstand, zoo og måne."
+      ]
+    }
+  ],
+  "flashes": [
+    {
+      "id": "canon-speedlite-430ex-ii",
+      "type": "flash",
+      "brand": "Canon",
+      "model": "Speedlite 430EX II",
+      "roles": ["bounce-flash", "indoor", "people", "fill"],
+      "notes": [
+        "Brug bounce mod loft/væg for mere naturligt indendørs lys.",
+        "Hold flash sync speed på eller under kameraets sync-hastighed, typisk 1/250."
+      ]
+    }
+  ]
+}
