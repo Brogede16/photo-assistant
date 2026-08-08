@@ -17,7 +17,7 @@ Photo Assistant er en personlig fotoassistent til mobil brug ved siden af kamera
 
 ## Hovedområder
 
-1. Fotografer nu
+1. Fotografér nu
 2. Søg motiv eller problem
 3. Astro
 4. Mine presets

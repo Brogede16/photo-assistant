@@ -61,7 +61,7 @@ function render() {
 
       <section class="now-panel">
         <div>
-          <p class="section-kicker">Fotografer nu</p>
+          <p class="section-kicker">Fotografér nu</p>
           <h2>${state.context.label}</h2>
           <p>${state.context.dateLabel} · ${state.context.locationLabel}</p>
         </div>
@@ -80,7 +80,7 @@ function render() {
       </section>
 
       <nav class="tabbar" aria-label="Hovedfunktioner">
-        <button data-view="home" class="active">Fotografer</button>
+        <button data-view="home" class="active">Fotografér</button>
         <button data-view="astro">Astro</button>
         <button data-view="presets">Presets</button>
         <button data-view="learn">Lær</button>
