@@ -82,11 +82,15 @@ export function searchProfiles(query, profiles, taxonomy, presets = []) {
   const results = [];
 
   for (const profile of profiles) {
+    if (!profileRequiredTagsMatch(profile, classification)) continue;
     if (!profileAcceptsSubjects(profile, classification, taxonomy)) continue;
     if (!profileAcceptsMotion(profile, classification, taxonomy)) continue;
     if (!profileAcceptsPlace(profile, classification, taxonomy)) continue;
     if (!profileAcceptsDistance(profile, classification)) continue;
-    if (!profileAcceptsTechnique(profile, classification, taxonomy)) continue;
+    if (!profileAcceptsExclusiveFacet(profile, classification, taxonomy, "light")) continue;
+    if (!profileAcceptsExclusiveFacet(profile, classification, taxonomy, "time")) continue;
+    if (!profileAcceptsExclusiveFacet(profile, classification, taxonomy, "weather")) continue;
+    if (!profileAcceptsExclusiveFacet(profile, classification, taxonomy, "technique")) continue;
     const score = scoreProfile(profile, classification);
     if (score > 0) {
       results.push({
@@ -115,6 +119,13 @@ export function searchProfiles(query, profiles, taxonomy, presets = []) {
   };
 }
 
+function profileRequiredTagsMatch(profile, classification) {
+  const required = profile.requiredTags || [];
+  if (!required.length) return true;
+  const explicit = new Set(classification.matches.filter((match) => !match.implied).map((match) => match.id));
+  return required.every((id) => explicit.has(id));
+}
+
 function profileAcceptsDistance(profile, classification) {
   const requested = classification.matches.filter((match) => match.type === "distance" && !match.implied);
   if (!requested.length) return true;
@@ -123,14 +134,15 @@ function profileAcceptsDistance(profile, classification) {
   return requested.some((distance) => supported.includes(distance.id));
 }
 
-function profileAcceptsTechnique(profile, classification, taxonomy) {
-  const requested = classification.matches.filter((match) => match.type === "technique" && !match.implied && match.exclusiveGroup);
+function profileAcceptsExclusiveFacet(profile, classification, taxonomy, type) {
+  const requested = classification.matches.filter((match) => match.type === type && match.exclusiveGroup);
   if (!requested.length) return true;
-  const profileIds = profile.conditions?.technique || [];
+  const profileIds = profile.conditions?.[type] || [];
   const profileTerms = profileIds.map((id) => findTermById(taxonomy, id)).filter(Boolean);
   return requested.every((term) => {
     const alternatives = profileTerms.filter((profileTerm) => profileTerm.exclusiveGroup === term.exclusiveGroup);
-    return alternatives.length === 0 || profileIds.includes(term.id);
+    if (alternatives.length === 0) return !term.requiresProfileMatch;
+    return profileIds.includes(term.id);
   });
 }
 

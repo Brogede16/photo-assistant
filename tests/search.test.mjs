@@ -79,6 +79,13 @@ assert.deepEqual(macroResults.results.filter((result) => result.type === "offici
 const rainConcert = searchProfiles("koncert udenfor regn scenelys", situations.profiles, taxonomy);
 assert.equal(rainConcert.results[0].item.id, "concert-outdoor-rain");
 assert.equal(rainConcert.results.some((result) => result.item.id === "concert-indoor-stage"), false);
+const festivalEveningRain = searchProfiles("festival aften regn", situations.profiles, taxonomy);
+assert.equal(festivalEveningRain.results[0].item.id, "festival-rain-evening");
+assert.equal(festivalEveningRain.results.some((result) => result.item.id.startsWith("concert-outdoor")), false);
+assert.equal(festivalEveningRain.results.some((result) => result.item.id === "concert-indoor-stage"), false);
+const concertLowLightOnly = searchProfiles("koncert lavt lys", situations.profiles, taxonomy);
+assert.equal(concertLowLightOnly.results[0].item.id, "concert-indoor-stage");
+assert.equal(concertLowLightOnly.results.some((result) => result.item.family === "festival"), false);
 const groupPortrait = searchProfiles("gruppe portræt indenfor", situations.profiles, taxonomy);
 assert.equal(groupPortrait.results[0].item.id, "portrait-group-indoor");
 
@@ -250,6 +257,53 @@ assert.equal(new Set(taxonomy.terms.map((term) => term.id)).size, taxonomy.terms
 assert.equal(taxonomy.terms.length >= 140, true);
 assert.equal(situations.profiles.length >= 82, true);
 
+assert.equal(findExactTerm(taxonomy, "musikfestival").id, "festival");
+assert.equal(findExactTerm(taxonomy, "forsanger").id, "singer");
+assert.equal(findExactTerm(taxonomy, "menneskehav").id, "crowd-shot");
+assert.equal(findExactTerm(taxonomy, "spotlys").id, "spotlight");
+assert.equal(findExactTerm(taxonomy, "farvet scenelys").id, "colored-stage-light");
+assert.equal(findExactTerm(taxonomy, "trommer").id, "drummer");
+assert.equal(findExactTerm(taxonomy, "festivalplads").id, "festival-site");
+assert.equal(findExactTerm(taxonomy, "om dagen").id, "day-time");
+
+const festivalDay = searchProfiles("festival dag", situations.profiles, taxonomy);
+assert.equal(festivalDay.results[0].item.id, "festival-day-artist");
+const festivalDayRecommendation = buildRecommendation(festivalDay.results[0].item, equipment, { classification: festivalDay.classification });
+assert.equal(festivalDayRecommendation.settings.mode, "Tv");
+assert.equal(festivalDayRecommendation.settings.shutter, "1/1000");
+assert.equal(festivalDayRecommendation.lens.id, "canon-ef-70-300-is-usm");
+
+const festivalEvening = searchProfiles("festival aften", situations.profiles, taxonomy);
+assert.equal(festivalEvening.results[0].item.id, "festival-evening-artist-near");
+assert.equal(festivalEvening.results.some((result) => result.item.id === "festival-rain-evening"), false);
+const festivalEveningRecommendation = buildRecommendation(festivalEvening.results[0].item, equipment, { classification: festivalEvening.classification });
+assert.equal(festivalEveningRecommendation.settings.mode, "M");
+assert.equal(festivalEveningRecommendation.settings.aperture, "f/2");
+assert.equal(festivalEveningRecommendation.lens.id, "sigma-18-35-f18-art");
+
+assert.equal(searchProfiles("festival aften langt væk", situations.profiles, taxonomy).results[0].item.id, "festival-evening-artist-far");
+assert.equal(searchProfiles("festival publikum dag", situations.profiles, taxonomy).results[0].item.id, "festival-crowd-day");
+assert.equal(searchProfiles("festival publikum aften", situations.profiles, taxonomy).results[0].item.id, "festival-crowd-evening");
+assert.equal(searchProfiles("festival regn aften", situations.profiles, taxonomy).results[0].item.id, "festival-rain-evening");
+assert.equal(searchProfiles("trommeslager koncert lavt lys", situations.profiles, taxonomy).results[0].item.id, "concert-drummer-action");
+assert.equal(searchProfiles("band på scenen lavt lys", situations.profiles, taxonomy).results[0].item.id, "concert-band-wide-stage");
+assert.equal(searchProfiles("artist farvet scenelys aften", situations.profiles, taxonomy).results[0].item.id, "concert-colored-stage-light");
+assert.equal(searchProfiles("artist backstage", situations.profiles, taxonomy).results[0].item.id, "backstage-performer-candid");
+assert.equal(searchProfiles("dj festival nat", situations.profiles, taxonomy).results[0].item.id, "festival-dj-night");
+
+const spotlightConcert = searchProfiles("koncert spotlight", situations.profiles, taxonomy);
+assert.equal(spotlightConcert.results[0].item.id, "concert-singer-spotlight");
+const spotlightRecommendation = buildRecommendation(spotlightConcert.results[0].item, equipment, { classification: spotlightConcert.classification });
+assert.equal(spotlightRecommendation.settings.shutter, "1/500");
+assert.equal(spotlightRecommendation.settings.iso, "800");
+assert.equal(spotlightRecommendation.actions.some((action) => action.id === "setSpotMetering"), true);
+const festivalSpotlight = searchProfiles("festival aften spotlight", situations.profiles, taxonomy);
+assert.equal(festivalSpotlight.results[0].item.id, "concert-singer-spotlight");
+assert.equal(buildRecommendation(festivalSpotlight.results[0].item, equipment, { classification: festivalSpotlight.classification }).settings.iso, "800");
+assert.equal(searchProfiles("koncert lavt lys", situations.profiles, taxonomy).results[0].item.id, "concert-indoor-stage");
+assert.equal(taxonomy.terms.length >= 159, true);
+assert.equal(situations.profiles.length >= 94, true);
+
 const macroRecommendation = buildRecommendation(macroResults.results[0].item, equipment, {
   classification: macroResults.classification
 });
@@ -277,8 +331,8 @@ assert.equal(influencedRecommendation.scenarioDecisions[0].includes("Mit regnkon
 assert.equal(maxStarShutterSeconds(18, 1.6), 13);
 assert.equal(astroStatus(new Date("2026-08-08T23:00:00+02:00")).moon.percent >= 0, true);
 assert.equal(astroTargets(new Date("2026-08-08T23:00:00+02:00")).some((target) => target.id === "milky-way-wide"), true);
-assert.equal(versionLog.current, "0.17.0");
-assert.equal(versionLog.entries[0].version, "0.17.0");
+assert.equal(versionLog.current, "0.18.0");
+assert.equal(versionLog.entries[0].version, "0.18.0");
 assert.equal(learning.lessons.length, 6);
 assert.equal(learning.lessons.some((lesson) => lesson.id === "modes"), true);
 assert.deepEqual(new Set(situations.profiles.map((profile) => profile.baseSettings.mode)), new Set(["P", "Av", "Tv", "M"]));

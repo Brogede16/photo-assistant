@@ -1,6 +1,17 @@
 {
-  "current": "0.17.0",
+  "current": "0.18.0",
   "entries": [
+    {
+      "version": "0.18.0",
+      "date": "2026-08-08",
+      "title": "Festival og koncertlys",
+      "items": [
+        "Tilføjede sammenhængende tags for festival, artist, publikum, scene, spotlight, farvet scenelys, band, sanger, DJ og trommeslager.",
+        "Tilføjede scenarier for festival om dagen og aftenen, artist tæt på eller langt væk, publikum, regn, backstage og forskellige sceneudtryk.",
+        "Specialprofiler kræver nu deres konkrete tag, så regn, spotlight, DJ og trommeslager ikke vælges uden grund.",
+        "Lys, tidspunkt, vejr og fotografisk effekt har nu hårde konfliktfiltre i søgemotoren."
+      ]
+    },
     {
       "version": "0.17.0",
       "date": "2026-08-08",

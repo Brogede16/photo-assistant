@@ -40,13 +40,13 @@ export function triangulateScenario(baseSettings, classification, profile) {
   }
 
   const lowLight = explicitMatches.find((match) => ["low-light", "indoor", "night", "nightclub", "evening"].includes(match.id));
-  if (lowLight && profile.family !== "astro" && !profile.exposurePlan) {
+  if (lowLight && profile.family !== "astro" && !profile.exposurePlan && profile.isoPolicy !== "fixed") {
     settings.iso = "Auto";
     decisions.push(`${lowLight.label} betyder, at ISO får lov at kompensere efter lukkertiden er sikret.`);
   }
 
   const brightLight = explicitMatches.find((match) => ["bright-sun", "midday"].includes(match.id));
-  if (brightLight && profile.family !== "astro" && !profile.exposurePlan) {
+  if (brightLight && profile.family !== "astro" && !profile.exposurePlan && profile.isoPolicy !== "fixed") {
     settings.iso = "100";
     decisions.push(`${brightLight.label} starter ved ISO 100 for at beskytte de lyse områder.`);
   }

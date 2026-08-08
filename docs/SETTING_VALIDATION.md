@@ -30,3 +30,15 @@ De to effekter er gensidigt udelukkende. Når én vælges, filtrerer motoren den
 - [Canon landscape examples](https://files.canon-europe.com/files/webcontent/hpp/fotoalbum_opdrachten_landschap.html) fremhæver komposition, vejr og lys som en samlet del af landskabsbilledet.
 
 Kilderne giver principper og tekniske grænser. De konkrete startværdier tilpasses Canon EOS 80D, APS-C-formatet og brugerens objektiver og verificeres derefter med scenarietests.
+
+## Festival og koncert
+
+Festival- og koncertprofiler opdeles efter dagslys, aften/nat, afstand, motiv og scenelysets karakter:
+
+- Dagslys fra publikum prioriterer Tv og hurtig lukkertid med 70-300mm.
+- Aften tæt på scenen prioriterer Sigma 18-35mm, fast lukkertid og stor blænde med Auto ISO.
+- Aften langt væk bruger 70-300mm ved åben teleblænde og accepterer højere ISO for at bevare en skarp artist.
+- Spotlight er et specialscenarie, der eksponerer efter det belyste ansigt fremfor den mørke baggrund.
+- Trommeslager, publikum, band, DJ, regn og backstage har egne profiler og må kun udløses af deres konkrete tag.
+
+[Canons ISO-vejledning](https://files.canon-europe.com/files/soft40253/Manual/PSG10_CUG_ENG.pdf) beskriver, at højere ISO muliggør hurtigere lukkertid i mørke og dermed reducerer motivslør. [Canons vejledning om målemetoder](https://files.canon-europe.com/files/soft32414/manual/PSG9_CUG_eng.pdf) beskriver spotmåling til situationer med stor lysforskel mellem motiv og omgivelser. Profilerne kombinerer disse principper med EOS 80D, Sigma 18-35mm f/1.8 og de to telezooms.

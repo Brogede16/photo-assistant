@@ -67,6 +67,11 @@
           "Drej Main Dial til ønsket ISO eller AUTO.",
           "Tryk udløseren halvt ned for at vende tilbage."
         ],
+        "setSpotMetering": [
+          "Tryk knappen til målemetode på toppen af kameraet.",
+          "Drej Main Dial, til symbolet for Spotmåling vises på topdisplayet.",
+          "Placér søgerens centrale måleområde på artistens belyste ansigt, når du kontrollerer eksponeringen."
+        ],
         "setAiServo": [
           "Tryk AF-knappen på toppen.",
           "Drej Main Dial til AI Servo.",
