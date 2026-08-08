@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { astroStatus, astroTargets, maxStarShutterSeconds } from "../src/lib/astro.js";
 import { buildRecommendation } from "../src/lib/recommendations.js";
-import { classifyQuery, searchProfiles } from "../src/lib/search.js";
+import { classifyQuery, searchProfiles, suggestNextTags, termsToQuery } from "../src/lib/search.js";
 
 const taxonomy = JSON.parse(await readFile(new URL("../src/data/search/taxonomy.json", import.meta.url), "utf8"));
 const situations = JSON.parse(await readFile(new URL("../src/data/situations/core-profiles.json", import.meta.url), "utf8"));
@@ -23,6 +23,13 @@ assert.equal(milkyWayResults.results[0].item.id, "milky-way-wide");
 
 const zooResults = searchProfiles("aber i zoo gråvejr", situations.profiles, taxonomy);
 assert.equal(zooResults.results[0].item.id, "zoo-monkeys-overcast");
+
+const tagQuery = termsToQuery(taxonomy, ["monkey", "overcast", "medium"], "");
+assert.equal(tagQuery, "Abe Overskyet Mellem afstand");
+assert.equal(searchProfiles(tagQuery, situations.profiles, taxonomy).results[0].item.id, "zoo-monkeys-overcast");
+
+const nextTags = suggestNextTags("Abe", situations.profiles, taxonomy, ["monkey"], 6);
+assert.equal(nextTags.some((term) => ["overcast", "running", "medium"].includes(term.id)), true);
 
 const sportResults = searchProfiles("fodbold overskyet", situations.profiles, taxonomy);
 assert.equal(sportResults.results[0].item.id, "outdoor-sport-daylight");

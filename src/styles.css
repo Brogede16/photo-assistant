@@ -145,6 +145,43 @@ select {
   white-space: nowrap;
 }
 
+.suggestion-block {
+  display: grid;
+  gap: 8px;
+}
+
+.selected-tags {
+  display: flex;
+  min-height: 38px;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.empty-tags {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.tag-chip {
+  min-height: 36px;
+  border-color: #315060;
+  background: #0d2630;
+  color: var(--text);
+}
+
+.tag-chip.selected {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-color: var(--accent);
+  background: #103133;
+}
+
+.tag-chip.selected span {
+  color: var(--accent);
+}
+
 .now-panel,
 .manual-context,
 .panel,

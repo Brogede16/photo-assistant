@@ -100,6 +100,55 @@ export function searchProfiles(query, profiles, taxonomy, presets = []) {
   };
 }
 
+export function findTermById(taxonomy, id) {
+  return taxonomy.terms.find((term) => term.id === id);
+}
+
+export function termsToQuery(taxonomy, termIds, extraText = "") {
+  const labels = termIds.map((id) => findTermById(taxonomy, id)?.label).filter(Boolean);
+  return [...labels, extraText].join(" ").trim();
+}
+
+export function suggestNextTags(query, profiles, taxonomy, selectedIds = [], limit = 10) {
+  const selected = new Set(selectedIds);
+  const search = searchProfiles(query || termsToQuery(taxonomy, selectedIds), profiles, taxonomy);
+  const candidates = new Map();
+
+  for (const result of search.results.slice(0, 5)) {
+    const profile = result.item;
+    const ids = [
+      ...(profile.subjects || []),
+      ...(profile.conditions?.movement || []),
+      ...(profile.conditions?.light || []),
+      ...(profile.conditions?.distance || []),
+      ...(profile.gearStrategy?.preferredLensRoles || [])
+    ];
+    for (const id of ids) {
+      if (selected.has(id)) continue;
+      const term = findTermById(taxonomy, id);
+      if (!term) continue;
+      const current = candidates.get(id) || { term, score: 0 };
+      current.score += result.score + typeBoost(term.type);
+      candidates.set(id, current);
+    }
+  }
+
+  if (candidates.size < limit) {
+    for (const term of taxonomy.terms) {
+      if (selected.has(term.id)) continue;
+      if (!["subject", "movement", "light", "distance"].includes(term.type)) continue;
+      const current = candidates.get(term.id) || { term, score: 0 };
+      current.score += typeBoost(term.type);
+      candidates.set(term.id, current);
+    }
+  }
+
+  return [...candidates.values()]
+    .sort((a, b) => b.score - a.score || a.term.label.localeCompare(b.term.label, "da"))
+    .slice(0, limit)
+    .map((item) => item.term);
+}
+
 function scoreProfile(profile, classification) {
   let score = 0;
   for (const match of classification.matches) {
@@ -126,6 +175,16 @@ function scorePreset(preset, classification) {
     if (haystack.includes(token)) score += 1;
   }
   return score;
+}
+
+function typeBoost(type) {
+  return {
+    subject: 4,
+    movement: 3,
+    light: 3,
+    distance: 2,
+    equipment: 1
+  }[type] || 0;
 }
 
 function levenshtein(a, b) {

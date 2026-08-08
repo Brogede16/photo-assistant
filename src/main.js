@@ -3,7 +3,7 @@ import { applyManualOverride, defaultContext, getAutomaticContext } from "./lib/
 import { readExifFromFile } from "./lib/exif.js";
 import { loadPresets, savePreset } from "./lib/presets.js";
 import { buildRecommendation, explainProblem } from "./lib/recommendations.js";
-import { searchProfiles } from "./lib/search.js";
+import { findTermById, searchProfiles, suggestNextTags, termsToQuery } from "./lib/search.js";
 
 const state = {
   equipment: null,
@@ -11,6 +11,8 @@ const state = {
   profiles: [],
   context: defaultContext(),
   selectedResult: null,
+  searchText: "",
+  selectedTagIds: [],
   presets: loadPresets(),
   unknownSearches: []
 };
@@ -46,18 +48,27 @@ function render() {
       <section class="search-hero">
         <label for="search-input">Hvad vil du fotografere?</label>
         <div class="search-row">
-          <input id="search-input" type="search" autocomplete="off" placeholder="fx nordlys, abe overskyet, fugl flyver" />
+          <input id="search-input" type="search" autocomplete="off" placeholder="fx nordlys, abe overskyet, fugl flyver" value="${escapeHtml(state.searchText)}" />
           <button data-action="search">Søg</button>
         </div>
+        <div class="selected-tags" aria-label="Valgte tags">
+          ${renderSelectedTags()}
+        </div>
+        <div class="suggestion-block">
+          <p class="section-kicker">Forslag der passer til</p>
+          <div class="quick-actions">
+            ${renderSuggestedTags()}
+          </div>
+        </div>
         <div class="quick-actions">
-          <button data-query="stjerner">Stjerner</button>
-          <button data-query="nordlys">Nordlys</button>
-          <button data-query="mælkevejen">Mælkevej</button>
-          <button data-query="måne">Måne</button>
-          <button data-query="fugl flyver langt">Fugl</button>
-          <button data-query="abe zoo overskyet">Zoo</button>
-          <button data-query="dyr løber overskyet">Dyr</button>
-          <button data-query="mennesker indendørs">Inde</button>
+          <button data-add-tags="stars">Stjerner</button>
+          <button data-add-tags="aurora">Nordlys</button>
+          <button data-add-tags="milky-way">Mælkevej</button>
+          <button data-add-tags="moon">Måne</button>
+          <button data-add-tags="bird,flight,far">Fugl</button>
+          <button data-add-tags="monkey,overcast,medium">Zoo</button>
+          <button data-add-tags="animal,running,overcast">Dyr</button>
+          <button data-add-tags="person,indoor">Inde</button>
         </div>
       </section>
 
@@ -98,9 +109,10 @@ function render() {
 
 function renderHome(results = null) {
   const content = document.querySelector("#content");
+  const query = currentSearchQuery();
   const resultList =
     results ||
-    searchProfiles("stjerner nordlys måne fugl dyr mennesker", state.profiles, state.taxonomy, state.presets).results.slice(0, 5);
+    searchProfiles(query || "stjerner nordlys måne fugl dyr mennesker", state.profiles, state.taxonomy, state.presets).results.slice(0, 5);
 
   content.innerHTML = `
     <section class="panel">
@@ -114,6 +126,24 @@ function renderHome(results = null) {
     </section>
   `;
   bindResultEvents();
+}
+
+function renderSelectedTags() {
+  if (!state.selectedTagIds.length) {
+    return `<span class="empty-tags">Klik på forslag for at bygge din situation</span>`;
+  }
+  return state.selectedTagIds
+    .map((id) => {
+      const term = findTermById(state.taxonomy, id);
+      if (!term) return "";
+      return `<button class="tag-chip selected" data-remove-tag="${term.id}" title="Fjern ${term.label}">${term.label}<span aria-hidden="true">×</span></button>`;
+    })
+    .join("");
+}
+
+function renderSuggestedTags() {
+  const suggestions = suggestNextTags(currentSearchQuery(), state.profiles, state.taxonomy, state.selectedTagIds, 9);
+  return suggestions.map((term) => `<button class="tag-chip" data-add-tags="${term.id}">${term.label}</button>`).join("");
 }
 
 function renderAstro() {
@@ -359,19 +389,31 @@ function renderFieldGuide(profile) {
 }
 
 function bindShellEvents() {
-  document.querySelectorAll("[data-query]").forEach((button) => {
+  document.querySelectorAll("[data-add-tags]").forEach((button) => {
     button.addEventListener("click", () => {
-      document.querySelector("#search-input").value = button.dataset.query;
-      runSearch(button.dataset.query);
+      addTags(button.dataset.addTags.split(","));
     });
   });
 
+  document.querySelectorAll("[data-remove-tag]").forEach((button) => {
+    button.addEventListener("click", () => removeTag(button.dataset.removeTag));
+  });
+
   document.querySelector('[data-action="search"]')?.addEventListener("click", () => {
-    runSearch(document.querySelector("#search-input").value);
+    state.searchText = document.querySelector("#search-input").value;
+    runSearch(currentSearchQuery());
+  });
+
+  document.querySelector("#search-input")?.addEventListener("input", (event) => {
+    state.searchText = event.currentTarget.value;
+    refreshSearchComposer();
   });
 
   document.querySelector("#search-input")?.addEventListener("keydown", (event) => {
-    if (event.key === "Enter") runSearch(event.currentTarget.value);
+    if (event.key === "Enter") {
+      state.searchText = event.currentTarget.value;
+      runSearch(currentSearchQuery());
+    }
   });
 
   document.querySelector('[data-action="now"]')?.addEventListener("click", async () => {
@@ -397,6 +439,37 @@ function bindShellEvents() {
   document.querySelector('[data-action="show-equipment"]')?.addEventListener("click", renderEquipment);
 }
 
+function addTags(ids) {
+  const next = new Set(state.selectedTagIds);
+  for (const id of ids) {
+    if (findTermById(state.taxonomy, id)) next.add(id);
+  }
+  state.selectedTagIds = [...next];
+  runSearch(currentSearchQuery());
+  render();
+}
+
+function removeTag(id) {
+  state.selectedTagIds = state.selectedTagIds.filter((tagId) => tagId !== id);
+  runSearch(currentSearchQuery());
+  render();
+}
+
+function currentSearchQuery() {
+  return termsToQuery(state.taxonomy, state.selectedTagIds, state.searchText);
+}
+
+function refreshSearchComposer() {
+  document.querySelector(".selected-tags").innerHTML = renderSelectedTags();
+  document.querySelector(".suggestion-block .quick-actions").innerHTML = renderSuggestedTags();
+  document.querySelectorAll("[data-add-tags]").forEach((button) => {
+    button.addEventListener("click", () => addTags(button.dataset.addTags.split(",")));
+  });
+  document.querySelectorAll("[data-remove-tag]").forEach((button) => {
+    button.addEventListener("click", () => removeTag(button.dataset.removeTag));
+  });
+}
+
 function bindResultEvents() {
   document.querySelectorAll("[data-open-result]").forEach((button) => {
     button.addEventListener("click", () => openResult(button.dataset.openResult));
@@ -409,6 +482,14 @@ function runSearch(query) {
     state.unknownSearches.push({ query, createdAt: new Date().toISOString() });
   }
   renderHome(search.results.slice(0, 10));
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
 }
 
 async function handleExifImport(event) {
