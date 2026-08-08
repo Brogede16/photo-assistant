@@ -403,9 +403,10 @@ select {
   align-items: center;
   gap: 8px;
   background:
-    linear-gradient(180deg, color-mix(in srgb, var(--accent-2) 18%, transparent), color-mix(in srgb, var(--bg) 26%, transparent)),
+    linear-gradient(180deg, color-mix(in srgb, var(--text) 16%, transparent), color-mix(in srgb, var(--bg) 24%, transparent)),
     var(--glass-soft);
-  color: var(--accent-2);
+  color: var(--text);
+  border-color: color-mix(in srgb, var(--text) 38%, transparent);
 }
 
 .ambient-on .tag-chip,
@@ -414,11 +415,12 @@ select {
 }
 
 .ambient-on .tag-chip.selected {
-  color: var(--accent-2);
+  color: var(--text);
 }
 
 .tag-chip.selected span {
-  color: var(--accent);
+  color: var(--text);
+  opacity: 0.82;
 }
 
 .clear-tags {
