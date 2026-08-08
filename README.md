@@ -27,6 +27,8 @@ Projektet er bevidst bygget uden AI-afhængighed og uden direkte Canon API/SDK-k
 - Scenariemotoren vælger mellem Canon-programmerne P, Av, Tv, M og Bulb ud fra den ønskede kontrol.
 - 141 grundscenarier, blandt andet standardportrætter, baggrundstyper, biler, strand, vand, børn, indendørs hverdag, natur, biograf, arkitektur, festival, panorering og lysspor.
 - Astro som central tagfamilie med stjerner, Mælkevejen, nordlys og måne.
+- Astro-guides med stjerner, Mælkevejen og meteorregn viser en indbygget brændvidde-beregner for maks lukkertid på EOS 80D.
+- Objektivvalg kan forklares med et konkret alternativ fra brugerens kit.
 - Lange aften- og Astro-forløb med lukkertid pr. billede, samlet optagetid, startvindue og Bulb-alternativ.
 - Lokale presets kan bruges som gennemsigtigt udgangspunkt for matchende guides.
 - Billedupload kun til lokal EXIF-læsning og "gem som mit preset".

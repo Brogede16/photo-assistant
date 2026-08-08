@@ -1,16 +1,18 @@
 import { preferredRolesForScenario, triangulateScenario } from "./scenario.js";
 
 export function pickLens(profile, equipment, classification = null) {
+  return rankLenses(profile, equipment, classification)[0]?.lens || equipment.lenses?.[0];
+}
+
+export function rankLenses(profile, equipment, classification = null) {
   const roles = preferredRolesForScenario(profile, classification);
   const lenses = equipment.lenses || [];
-  const scored = lenses
+  return lenses
     .map((lens) => ({
       lens,
       score: roles.reduce((sum, role) => sum + (lens.roles?.includes(role) ? 1 : 0), 0)
     }))
     .sort((a, b) => b.score - a.score || (b.lens.focalLength?.max || 0) - (a.lens.focalLength?.max || 0));
-
-  return scored[0]?.score > 0 ? scored[0].lens : lenses[0];
 }
 
 export function buildRecommendation(profile, equipment, context = {}) {

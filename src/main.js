@@ -1,7 +1,8 @@
 import { readExifFromFile } from "./lib/exif.js";
 import { startAmbientField } from "./lib/ambient.js";
+import { maxStarShutterSeconds } from "./lib/astro.js";
 import { deletePreset, loadPresets, savePreset } from "./lib/presets.js";
-import { buildRecommendation, explainProblem } from "./lib/recommendations.js";
+import { buildRecommendation, explainProblem, rankLenses } from "./lib/recommendations.js";
 import { consumeKnownTerms, findTermById, mergeTagIds, searchProfiles, suggestNextTags, termsToQuery } from "./lib/search.js";
 
 const state = {
@@ -18,6 +19,7 @@ const state = {
   unknownSearches: loadUnknownSearches(),
   selectedLearnTopic: "shutter",
   exposureTrainer: { shutter: 0, aperture: 0, iso: 0 },
+  astroTool: {},
   theme: getInitialTheme(),
   ambientEnabled: getInitialAmbientSetting()
 };
@@ -425,6 +427,7 @@ function openResult(profileId) {
         ${recommendation.flash ? renderSettingPill("flash", recommendation.flash.model, profile.id) : ""}
       </div>
       ${renderExposurePlan(recommendation.exposurePlan)}
+      ${renderAstroShutterTool(profile, recommendation)}
       ${recommendation.scenarioDecisions.length ? `<div class="scenario-decisions"><p class="section-kicker">Sådan hænger dine tags sammen</p><ul>${recommendation.scenarioDecisions.map((item) => `<li>${item}</li>`).join("")}</ul></div>` : ""}
       <h3>Hurtig guide</h3>
       <ol>${profile.quickGuide.map((step) => `<li>${step}</li>`).join("")}</ol>
@@ -468,6 +471,64 @@ function openResult(profileId) {
     renderPresets();
   });
   bindResultEvents();
+  bindAstroTool(profile.id);
+}
+
+function renderAstroShutterTool(profile, recommendation) {
+  if (!isAstroShutterProfile(profile)) return "";
+  const camera = state.equipment.cameras[0];
+  const lenses = state.equipment.lenses.filter((lens) => lens.roles?.some((role) => ["astro", "wide", "normal"].includes(role)));
+  const selected = state.astroTool[profile.id] || {
+    lensId: recommendation.lens.id,
+    focalLength: parseFocalLength(recommendation.settings.focalLength) || recommendation.lens.focalLength?.min || 18
+  };
+  const lens = lenses.find((item) => item.id === selected.lensId) || lenses[0];
+  const focal = clamp(Number(selected.focalLength) || lens.focalLength.min, lens.focalLength.min, lens.focalLength.max);
+  const maxSeconds = maxStarShutterSeconds(focal, camera.sensor.cropFactor);
+  const cautiousSeconds = Math.max(1, Math.floor(maxSeconds * 0.75));
+  return `
+    <section class="astro-tool" data-astro-profile="${profile.id}">
+      <div>
+        <p class="section-kicker">Astro-tjek</p>
+        <h3>Maks lukkertid før stjerner trækker spor</h3>
+        <p>Vælg objektiv og brændvidde. Brug det forsigtige tal, hvis stjernerne skal være helt små prikker.</p>
+      </div>
+      <label>
+        Objektiv
+        <select data-astro-lens>
+          ${lenses.map((item) => `<option value="${item.id}" ${item.id === lens.id ? "selected" : ""}>${item.brand} ${item.model}</option>`).join("")}
+        </select>
+      </label>
+      <label class="exposure-slider">
+        <span>Brændvidde: ${focal}mm</span>
+        <input data-astro-focal type="range" min="${lens.focalLength.min}" max="${lens.focalLength.max}" step="1" value="${focal}" />
+        <small>${lens.focalLength.min}-${lens.focalLength.max}mm på ${lens.model}</small>
+      </label>
+      <div class="astro-readout">
+        <div><span>Forsigtigt</span><strong>${cautiousSeconds}s</strong></div>
+        <div><span>Øvre grænse</span><strong>${maxSeconds}s</strong></div>
+      </div>
+      <p>På EOS 80D ganger crop-faktoren brændvidden med ${camera.sensor.cropFactor}. Ved ${focal}mm svarer det til cirka ${Math.round(focal * camera.sensor.cropFactor)}mm full-frame.</p>
+    </section>
+  `;
+}
+
+function bindAstroTool(profileId) {
+  const tool = document.querySelector(`[data-astro-profile="${profileId}"]`);
+  if (!tool) return;
+  const update = () => {
+    const lens = state.equipment.lenses.find((item) => item.id === tool.querySelector("[data-astro-lens]").value);
+    const focal = clamp(Number(tool.querySelector("[data-astro-focal]").value), lens.focalLength.min, lens.focalLength.max);
+    state.astroTool[profileId] = { lensId: lens.id, focalLength: focal };
+    openResult(profileId);
+  };
+  tool.querySelector("[data-astro-lens]")?.addEventListener("change", update);
+  tool.querySelector("[data-astro-focal]")?.addEventListener("input", update);
+}
+
+function isAstroShutterProfile(profile) {
+  const subjects = new Set(profile.subjects || []);
+  return profile.family === "astro" && ["stars", "milky-way", "meteor-shower", "star-trails"].some((id) => subjects.has(id));
 }
 
 function renderExposurePlan(plan) {
@@ -736,11 +797,36 @@ function explainIso(value, recommendation) {
 }
 
 function explainLensChoice(recommendation) {
+  const ranked = rankLenses(recommendation.profile, state.equipment, state.activeClassification);
+  const alternative = ranked.find((item) => item.lens.id !== recommendation.lens.id)?.lens;
   const roles = recommendation.lens.roles || [];
-  if (roles.includes("low-light")) return `${recommendation.lens.model} samler mest lys i dit kit, så den er stærk til mørke, indendørs, astro og scene.`;
-  if (roles.includes("telephoto")) return `${recommendation.lens.model} giver rækkevidde, når motivet er langt væk, fx dyr, måne, sport eller detaljer på afstand.`;
-  if (roles.includes("wide")) return `${recommendation.lens.model} giver bredere udsnit, når miljø, landskab eller himmel skal med i billedet.`;
-  return `${recommendation.lens.model} passer bedst til scenariets afstand, lys og ønskede udsnit.`;
+  const main = roles.includes("low-light")
+    ? `${recommendation.lens.model} er valgt, fordi den samler mest lys i dit kit. Det hjælper især i mørke, indendørs, astro og scene.`
+    : roles.includes("telephoto")
+      ? `${recommendation.lens.model} er valgt, fordi scenariet kræver rækkevidde til et motiv på afstand.`
+      : roles.includes("wide")
+        ? `${recommendation.lens.model} er valgt, fordi scenariet har brug for bredt udsnit, miljø eller himmel.`
+        : `${recommendation.lens.model} passer bedst til scenariets afstand, lys og udsnit.`;
+  if (!alternative) return main;
+  return `${main} Alternativ: ${alternative.model}, hvis du hellere vil ${alternativeReason(alternative, recommendation.lens)}.`;
+}
+
+function alternativeReason(alternative, selected) {
+  const roles = alternative.roles || [];
+  if (roles.includes("walkaround")) return "have en lettere standardzoom og lidt mere fleksibel rækkevidde";
+  if (roles.includes("telephoto")) return "komme tættere på motivet på afstand";
+  if (roles.includes("low-light")) return "prioritere mest muligt lys frem for rækkevidde";
+  if (roles.includes("close-up")) return "gå tættere på små detaljer med dit nuværende kit";
+  return "prioritere en anden brændvidde eller vægt";
+}
+
+function parseFocalLength(value) {
+  const match = String(value || "").match(/\d+/);
+  return match ? Number(match[0]) : null;
+}
+
+function clamp(value, min, max) {
+  return Math.max(min, Math.min(max, value));
 }
 
 function settingLabel(key) {

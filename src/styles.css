@@ -607,6 +607,46 @@ select {
   border-bottom: 1px solid var(--line);
 }
 
+.astro-tool {
+  display: grid;
+  gap: 14px;
+  padding: 16px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.astro-readout {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--line);
+}
+
+.astro-readout div {
+  display: grid;
+  gap: 4px;
+  min-height: 76px;
+  padding: 12px;
+  background: var(--glass-inset);
+}
+
+.astro-readout span {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.astro-readout strong {
+  color: var(--text);
+  font-family: var(--display-font);
+  font-size: 32px;
+  font-weight: 500;
+}
+
 .timing-note {
   color: var(--text);
   font-weight: 700;

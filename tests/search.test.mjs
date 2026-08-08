@@ -24,6 +24,35 @@ for (const profile of situations.profiles) {
   }
 }
 
+for (const profile of situations.profiles.filter((item) => item.family === "astro")) {
+  const subjects = new Set(profile.subjects || []);
+  const isPinpointStars = ["stars", "milky-way", "meteor-shower"].some((id) => subjects.has(id)) && !subjects.has("star-trails");
+  if (!isPinpointStars) continue;
+  const focalLength = firstNumber(profile.baseSettings?.focalLength);
+  const shutterSeconds = shutterToSeconds(profile.baseSettings?.shutter?.start || profile.baseSettings?.shutter);
+  if (!focalLength || !shutterSeconds) continue;
+  assert.equal(
+    shutterSeconds <= maxStarShutterSeconds(focalLength, equipment.cameras[0].sensor.cropFactor),
+    true,
+    `Astroprofil ${profile.id} bruger ${shutterSeconds}s ved ${focalLength}mm, hvilket risikerer stjernespor`
+  );
+}
+
+function firstNumber(value) {
+  const match = String(value || "").match(/\d+/);
+  return match ? Number(match[0]) : null;
+}
+
+function shutterToSeconds(value) {
+  const text = String(value || "");
+  if (text.endsWith("s")) return Number(text.slice(0, -1).replace(",", "."));
+  if (text.includes("/")) {
+    const [top, bottom] = text.split("/").map(Number);
+    return bottom ? top / bottom : null;
+  }
+  return Number(text) || null;
+}
+
 const overcast = classifyQuery("abe i zoo gråvejr", taxonomy);
 assert.deepEqual(overcast.facets.subject.includes("monkey"), true);
 assert.deepEqual(overcast.facets.light.includes("overcast"), true);
