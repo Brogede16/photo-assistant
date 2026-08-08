@@ -209,7 +209,39 @@ button:active {
 
 .header-actions {
   display: flex;
+  align-items: center;
   gap: 8px;
+}
+
+.theme-switch {
+  display: inline-grid;
+  grid-template-columns: repeat(3, 34px);
+  gap: 4px;
+  min-height: 44px;
+  align-items: center;
+  border: 1px solid var(--glass-line);
+  border-radius: var(--radius);
+  padding: 4px;
+  background: var(--glass-soft);
+  backdrop-filter: blur(14px);
+}
+
+.theme-choice {
+  min-width: 0;
+  min-height: 34px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  padding: 0;
+  color: var(--muted);
+}
+
+.theme-choice.active {
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--accent) 22%, transparent), color-mix(in srgb, var(--bg) 28%, transparent)),
+    var(--glass-inset);
+  color: var(--text);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, #fff 36%, transparent);
 }
 
 @media (max-width: 400px) {
@@ -227,6 +259,10 @@ button:active {
   .header-actions button {
     min-width: 40px;
     padding-inline: 7px;
+  }
+
+  .theme-switch {
+    grid-template-columns: repeat(3, 32px);
   }
 
   .topbar h1 {
@@ -352,25 +388,29 @@ select {
 
 .tag-chip {
   min-height: 36px;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--accent) 14%, transparent), color-mix(in srgb, var(--bg) 24%, transparent)),
+    var(--glass-soft);
   color: var(--text);
-  padding-inline: 2px;
+  padding-inline: 12px;
+  box-shadow: inset 0 1px 0 color-mix(in srgb, #fff 32%, transparent);
 }
 
 .tag-chip.selected {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: transparent;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--accent-2) 18%, transparent), color-mix(in srgb, var(--bg) 26%, transparent)),
+    var(--glass-soft);
   color: var(--accent-2);
 }
 
 .ambient-on .tag-chip,
 .ambient-on .tag-chip.selected {
-  border: 0;
-  background: transparent;
+  border-color: color-mix(in srgb, var(--accent) 30%, transparent);
 }
 
 .ambient-on .tag-chip.selected {
@@ -528,7 +568,6 @@ select {
   position: relative;
   min-height: 34px;
   border: 1px solid color-mix(in srgb, var(--accent) 34%, transparent);
-  border-right: 1px solid var(--line);
   border-radius: 999px;
   background:
     linear-gradient(180deg, color-mix(in srgb, var(--accent) 16%, transparent), color-mix(in srgb, var(--bg) 26%, transparent)),
@@ -541,17 +580,6 @@ select {
 
 .setting-pill:last-child {
   border-right: 1px solid color-mix(in srgb, var(--accent) 34%, transparent);
-}
-
-.setting-pill::after {
-  position: absolute;
-  left: 14px;
-  right: 14px;
-  bottom: 3px;
-  height: 1px;
-  background: color-mix(in srgb, #fff 52%, transparent);
-  content: "";
-  opacity: 0.42;
 }
 
 .lens-choice {

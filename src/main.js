@@ -63,7 +63,11 @@ function render() {
       </div>
       <div class="header-actions">
         <button class="icon-button fx-toggle ${state.ambientEnabled ? "active" : ""}" data-action="toggle-ambient" aria-pressed="${state.ambientEnabled}" aria-label="${state.ambientEnabled ? "Sæt gradientens bevægelse på pause" : "Start gradientens bevægelse"}" title="${state.ambientEnabled ? "Gradient bevæger sig" : "Gradient er sat på pause"}"><span aria-hidden="true">${state.ambientEnabled ? "Ⅱ" : "▶"}</span></button>
-        <button class="icon-button theme-toggle" data-action="toggle-theme" aria-label="Skift farvetema" title="Skift farvetema"><span aria-hidden="true">${themeIcon(state.theme)}</span></button>
+        <div class="theme-switch" aria-label="Tema">
+          ${renderThemeButton("light", "☀", "Hvid baggrund")}
+          ${renderThemeButton("dark", "◐", "Sort baggrund")}
+          ${renderThemeButton("red", "☾", "Rød nattetilstand")}
+        </div>
         <button class="icon-button" data-action="show-equipment" aria-label="Mit udstyr" title="Mit udstyr">80D</button>
       </div>
     </header>
@@ -135,6 +139,10 @@ function renderSelectedTags() {
 function renderSuggestedTags() {
   const suggestions = suggestNextTags(currentSearchQuery(), state.profiles, state.taxonomy, state.selectedTagIds, 9);
   return suggestions.map((term) => `<button class="tag-chip" data-add-tags="${term.id}">${term.label}</button>`).join("");
+}
+
+function renderThemeButton(theme, icon, label) {
+  return `<button class="theme-choice ${state.theme === theme ? "active" : ""}" data-theme-choice="${theme}" aria-label="${label}" aria-pressed="${state.theme === theme}" title="${label}"><span aria-hidden="true">${icon}</span></button>`;
 }
 
 function renderPresets() {
@@ -605,7 +613,9 @@ function bindShellEvents() {
   });
 
   document.querySelector('[data-action="show-equipment"]')?.addEventListener("click", renderEquipment);
-  document.querySelector('[data-action="toggle-theme"]')?.addEventListener("click", toggleTheme);
+  document.querySelectorAll("[data-theme-choice]").forEach((button) => {
+    button.addEventListener("click", () => setTheme(button.dataset.themeChoice));
+  });
   document.querySelector('[data-action="toggle-ambient"]')?.addEventListener("click", toggleAmbient);
 }
 
@@ -624,9 +634,8 @@ function applyTheme() {
   document.querySelector('meta[name="theme-color"]')?.setAttribute("content", colors[state.theme] || colors.dark);
 }
 
-function toggleTheme() {
-  const themes = ["light", "dark", "red"];
-  state.theme = themes[(themes.indexOf(state.theme) + 1) % themes.length];
+function setTheme(theme) {
+  state.theme = theme;
   localStorage.setItem("photoAssistant.theme", state.theme);
   applyTheme();
   render();
@@ -876,10 +885,6 @@ function settingLabel(key) {
 
 function setSearchVisibility(visible) {
   document.querySelector(".search-hero")?.toggleAttribute("hidden", !visible);
-}
-
-function themeIcon(theme) {
-  return { light: "☀", dark: "◐", red: "☾" }[theme] || "◐";
 }
 
 function loadUnknownSearches() {
