@@ -30,6 +30,8 @@ Projektet er bevidst bygget uden AI-afhængighed og uden direkte Canon API/SDK-k
 - Vandfald med blødt vand skelner mellem svagt lys uden ND-filter og dagslys med ND-filter.
 - Natklub og børn indendørs er justeret til realistiske available-light-indstillinger på EOS 80D.
 - Gruppeportræt indendørs skelner mellem vindueslys/rumlys og bounce Speedlite.
+- Koncert i scenelys skelner mellem Sigma tæt på scenen og tele fra afstand, uden blandede værdier i samme felt.
+- Profiler med minimumslukkertid bruger struktureret data i stedet for tekst som indstillingsværdi.
 - Dyreliv skelner mellem landjord, skov, fugle i luften, dyr på havet og sæl/søløve i eller uden for vandet.
 - Astro som central tagfamilie med stjerner, Mælkevejen, nordlys og måne.
 - Astro-guides med stjerner, Mælkevejen og meteorregn viser en indbygget brændvidde-beregner for maks lukkertid på EOS 80D.

@@ -323,6 +323,16 @@ assert.equal(festivalEveningRain.results.some((result) => result.item.id === "co
 const concertLowLightOnly = searchProfiles("koncert lavt lys", situations.profiles, taxonomy);
 assert.equal(concertLowLightOnly.results[0].item.id, "concert-indoor-stage");
 assert.equal(concertLowLightOnly.results.some((result) => result.item.family === "festival"), false);
+const concertLowLightRecommendation = buildRecommendation(concertLowLightOnly.results[0].item, equipment, { classification: concertLowLightOnly.classification });
+assert.equal(concertLowLightRecommendation.settings.focalLength, "35mm");
+assert.equal(concertLowLightRecommendation.settings.shutter, "1/250");
+assert.equal(concertLowLightRecommendation.settings.aperture, "f/1.8");
+assert.equal(String(concertLowLightRecommendation.settings.aperture).includes("med Sigma"), false);
+const concertTele = searchProfiles("koncert scenelys tele langt væk", situations.profiles, taxonomy);
+assert.equal(concertTele.results[0].item.id, "concert-stage-telephoto");
+const concertTeleRecommendation = buildRecommendation(concertTele.results[0].item, equipment, { classification: concertTele.classification });
+assert.equal(concertTeleRecommendation.settings.focalLength, "200-300mm");
+assert.equal(concertTeleRecommendation.settings.aperture, "f/5.6");
 const groupPortrait = searchProfiles("gruppe portræt indenfor", situations.profiles, taxonomy);
 assert.equal(groupPortrait.results[0].item.id, "portrait-group-indoor");
 const groupPortraitRecommendation = buildRecommendation(groupPortrait.results[0].item, equipment, { classification: groupPortrait.classification });
@@ -422,6 +432,8 @@ assert.equal(singlePortrait.results[0].item.id, "portrait-single-person");
 const singlePortraitRecommendation = buildRecommendation(singlePortrait.results[0].item, equipment, { classification: singlePortrait.classification });
 assert.equal(singlePortraitRecommendation.settings.mode, "Av");
 assert.equal(singlePortraitRecommendation.settings.shutter, "1/250");
+assert.equal(singlePortrait.results[0].item.priority < standardPortrait.results[0].item.priority, true);
+assert.equal(singlePortrait.results[0].item.quickGuide[0].includes("2,5-3 meter"), true);
 assert.equal(singlePortraitRecommendation.settings.aperture, "f/2.8");
 assert.equal(singlePortraitRecommendation.lens.id, "sigma-18-35-f18-art");
 assert.equal(singlePortrait.results.every((result) => result.item.conditions?.style?.includes("single-portrait")), true);
@@ -536,6 +548,8 @@ assert.deepEqual(mergeTagIds(taxonomy, ["long-exposure"], ["freeze-motion"]), ["
 assert.equal(new Set(taxonomy.terms.map((term) => term.id)).size, taxonomy.terms.length);
 assert.equal(taxonomy.terms.length >= 140, true);
 assert.equal(situations.profiles.length >= 82, true);
+assert.deepEqual(situations.profiles.filter((profile) => typeof profile.baseSettings?.shutter === "string" && profile.baseSettings.shutter !== "Auto").map((profile) => profile.id), []);
+assert.equal(situations.profiles.some((profile) => String(profile.baseSettings?.aperture?.start || "").includes("med Sigma")), false);
 
 assert.equal(findExactTerm(taxonomy, "musikfestival").id, "festival");
 assert.equal(findExactTerm(taxonomy, "forsanger").id, "singer");

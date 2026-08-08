@@ -80,7 +80,7 @@
       "id": "bird-flight-daylight",
       "title": "Fugl i flugt",
       "family": "fugle",
-      "priority": 90,
+      "priority": 93,
       "subjects": ["bird"],
       "conditions": { "movement": ["flight", "running"], "light": ["daylight", "overcast"], "distance": ["medium", "far"] },
       "gearStrategy": { "preferredLensRoles": ["birds", "telephoto"] },
@@ -393,29 +393,55 @@
     },
     {
       "id": "concert-stage-light",
-      "title": "Koncert eller scene",
+      "title": "Koncert tæt på scenen",
       "family": "event",
-      "priority": 70,
+      "priority": 72,
       "requiredTags": ["concert"],
       "subjects": ["concert", "person"],
-      "conditions": { "movement": ["walking", "running"], "light": ["stage-light", "low-light"], "distance": ["medium", "far"] },
-      "gearStrategy": { "preferredLensRoles": ["low-light", "telephoto", "people"] },
+      "conditions": { "movement": ["walking", "running"], "light": ["stage-light", "low-light"], "distance": ["medium"] },
+      "gearStrategy": { "preferredLensRoles": ["low-light", "people"] },
       "baseSettings": {
         "mode": "M",
-        "focalLength": "35mm eller 70-300mm",
+        "focalLength": "35mm",
         "shutter": { "start": "1/250", "range": ["1/125", "1/500"] },
-        "aperture": { "start": "f/1.8 med Sigma, f/5.6 med tele", "strategy": "wide-open" },
+        "aperture": { "start": "f/1.8", "range": ["f/1.8", "f/2.8"] },
         "iso": "Auto",
         "focus": "AI Servo ved bevægelse",
         "drive": "Continuous low"
       },
       "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setAiServo"],
       "quickGuide": [
-        "Brug Sigma hvis du er tæt på scenen.",
-        "Brug 70-300mm hvis du står langt væk, men forvent høj ISO.",
+        "Brug Sigma 18-35mm, hvis du er tæt nok på scenen.",
+        "Start ved 35mm, 1/250 og f/1.8.",
         "Eksponer efter ansigter i lyset, ikke den mørke baggrund."
       ],
-      "why": "Scenelys har store kontraster. Mørk baggrund snyder let kameraet til for lyse ansigter."
+      "why": "Tæt på scenen er Sigmaen klart bedst, fordi f/1.8 samler meget mere lys. Prisen er smalere fokus og mere risiko for udbrændte ansigter i spotlys."
+    },
+    {
+      "id": "concert-stage-telephoto",
+      "title": "Koncert fra afstand med tele",
+      "family": "event",
+      "priority": 76,
+      "requiredTags": ["concert", "telephoto"],
+      "subjects": ["concert", "person"],
+      "conditions": { "movement": ["walking", "running"], "light": ["stage-light", "low-light"], "distance": ["far"], "equipment": ["telephoto"] },
+      "gearStrategy": { "preferredLensRoles": ["telephoto", "people"] },
+      "baseSettings": {
+        "mode": "M",
+        "focalLength": "200-300mm",
+        "shutter": { "start": "1/250", "range": ["1/125", "1/500"] },
+        "aperture": { "start": "f/5.6", "range": ["f/4", "f/5.6"] },
+        "iso": "Auto",
+        "focus": "AI Servo på ansigt eller overkrop",
+        "drive": "Continuous low"
+      },
+      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setAiServo", "setLensStabilizationOn"],
+      "quickGuide": [
+        "Brug 70-300mm, hvis du ikke kan komme tættere på scenen.",
+        "Start ved 1/250 og helt åben teleblænde.",
+        "Forvent høj ISO; gå mod 1/125 ved rolige øjeblikke, hvis lyset er svagt."
+      ],
+      "why": "Tele giver udsnittet fra publikum, men f/5.6 koster meget lys. Den fungerer bedst i tydeligt spotlys; ellers er Sigma tættere på scenen et bedre valg."
     },
     {
       "id": "outdoor-sport-daylight",
@@ -569,7 +595,7 @@
       "subjects": ["food", "object"],
       "conditions": { "distance": ["close-up", "near"], "place": ["home"], "light": ["window-light", "indoor"], "movement": ["still"] },
       "gearStrategy": { "preferredLensRoles": ["close-up", "low-light"] },
-      "baseSettings": { "mode": "Av", "focalLength": "35-55mm", "shutter": { "start": "Auto", "range": ["1/60", "1/250"] }, "aperture": { "start": "f/5.6", "range": ["f/2.8", "f/8"] }, "iso": { "start": "400", "range": ["100", "800"] }, "focus": "One Shot", "drive": "2 sek. selvudløser" },
+      "baseSettings": { "mode": "Av", "focalLength": "35-55mm", "shutter": { "start": "1/60", "range": ["1/60", "1/250"] }, "aperture": { "start": "f/5.6", "range": ["f/2.8", "f/8"] }, "iso": { "start": "400", "range": ["100", "800"] }, "focus": "One Shot", "drive": "Single" },
       "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot"],
       "quickGuide": ["Placér motivet tæt ved et vindue, men uden direkte sol.", "Brug 18-55mm ved 35-55mm.", "Vælg ét tydeligt fokuspunkt og ryd baggrunden."],
       "why": "Vindueslys giver stor og blød lyskilde. f/5.6 holder mere af motivet skarpt end f/1.8."
@@ -675,12 +701,12 @@
       "priority": 87,
       "requiredTags": ["concert"],
       "subjects": ["concert"],
-      "conditions": { "place": ["inside", "nightclub"], "light": ["stage-light", "low-light", "indoor"], "distance": ["near", "medium", "far"], "movement": ["active-motion", "running"] },
-      "gearStrategy": { "preferredLensRoles": ["low-light", "people", "telephoto"] },
-      "baseSettings": { "mode": "M", "focalLength": "35mm eller 70-200mm", "shutter": { "start": "1/500", "range": ["1/250", "1/800"] }, "aperture": { "start": "f/1.8", "range": ["f/1.8", "f/5.6"] }, "iso": "Auto", "focus": "AI Servo", "drive": "Continuous low" },
+      "conditions": { "place": ["inside", "nightclub"], "light": ["stage-light", "low-light", "indoor"], "distance": ["near", "medium"], "movement": ["active-motion", "running"] },
+      "gearStrategy": { "preferredLensRoles": ["low-light", "people"] },
+      "baseSettings": { "mode": "M", "focalLength": "35mm", "shutter": { "start": "1/250", "range": ["1/125", "1/500"] }, "aperture": { "start": "f/1.8", "range": ["f/1.8", "f/2.8"] }, "iso": "Auto", "focus": "AI Servo", "drive": "Continuous low" },
       "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setAiServo"],
-      "quickGuide": ["Brug Sigma tæt på scenen og tele på afstand.", "Eksponer efter ansigter i spotlyset.", "Undgå blitz medmindre arrangøren udtrykkeligt tillader det."],
-      "why": "Scenelyset skifter hurtigt og har høj kontrast. Manuel lukkertid og blænde med Auto ISO er robust."
+      "quickGuide": ["Brug Sigma tæt på scenen.", "Start ved 35mm, 1/250 og f/1.8; gå mod 1/500 kun i stærkt spotlys.", "Eksponer efter ansigter i spotlyset, og undgå blitz medmindre arrangøren udtrykkeligt tillader det."],
+      "why": "Scenelyset skifter hurtigt og har høj kontrast. Sigma ved f/1.8 giver 80D en reel chance i lavt lys; 1/500 er en mulighed, ikke et standardkrav."
     },
     {
       "id": "concert-outdoor-daylight",
@@ -796,7 +822,7 @@
       "id": "portrait-single-person",
       "title": "Enkeltportræt af én person",
       "family": "portræt",
-      "priority": 101,
+      "priority": 90,
       "requiredTags": ["single-portrait"],
       "modePolicy": "fixed",
       "subjects": ["person"],
@@ -804,8 +830,8 @@
       "gearStrategy": { "preferredLensRoles": ["low-light", "people", "portraits"] },
       "baseSettings": { "mode": "Av", "focalLength": "35mm", "shutter": { "start": "1/250", "range": ["1/200", "1/1000"] }, "aperture": { "start": "f/2.8", "range": ["f/2", "f/4"] }, "iso": "Auto", "focus": "One Shot på det nærmeste øje", "drive": "Single" },
       "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot"],
-      "quickGuide": ["Brug Sigma 18-35mm ved 35mm og stå cirka 1,5-3 meter fra personen.", "Start i Av ved f/2.8 og Auto ISO; kontrollér at lukkertiden er mindst 1/250.", "Fokusér på det nærmeste øje, og skab afstand mellem personen og baggrunden."],
-      "why": "35mm på EOS 80D giver et naturligt udsnit til én person. f/2.8 gør baggrunden roligere, mens 1/250 beskytter mod små bevægelser."
+      "quickGuide": ["Brug Sigma 18-35mm ved 35mm og stå cirka 2,5-3 meter fra personen.", "Start i Av ved f/2.8 og Auto ISO; kontrollér at lukkertiden er mindst 1/250.", "Fokusér på det nærmeste øje, og skab afstand mellem personen og baggrunden."],
+      "why": "35mm på EOS 80D er fint til halvfigur og miljøportræt, når du ikke står for tæt på. Til tættere klassisk portræt er 70-120mm mere flatterende."
     },
     {
       "id": "portrait-standard-indoor",
@@ -956,10 +982,11 @@
       "title": "Portræt på stranden i dagslys",
       "family": "strand",
       "priority": 92,
+      "requiredTags": ["beach"],
       "subjects": ["person"],
       "conditions": { "style": ["portrait", "single-portrait"], "action": ["posing"], "movement": ["still"], "place": ["beach", "outdoor"], "light": ["daylight", "backlight"], "distance": ["near", "medium"] },
       "gearStrategy": { "preferredLensRoles": ["portraits", "people", "telephoto"] },
-      "baseSettings": { "mode": "Av", "focalLength": "70-120mm", "shutter": "Auto (mindst 1/250)", "aperture": { "start": "f/2.8", "range": ["f/2.8", "f/4"] }, "iso": "Auto", "focus": "One Shot på nærmeste øje", "drive": "Single" },
+      "baseSettings": { "mode": "Av", "focalLength": "70-120mm", "shutter": { "start": "1/250", "range": ["1/250", "Auto"] }, "aperture": { "start": "f/2.8", "range": ["f/2.8", "f/4"] }, "iso": "Auto", "focus": "One Shot på nærmeste øje", "drive": "Single" },
       "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot", "setLensStabilizationOn"],
       "quickGuide": ["Placér personen med solen skråt bagfra eller i åben skygge.", "Brug 70-120mm og hold horisonten væk fra hovedet.", "Kontrollér at ansigtet er lyst uden at sand og vand brænder ud."],
       "why": "Av ved f/2.8 giver kontrol over baggrunden, mens Auto ISO hjælper med den store forskel mellem ansigt, sand og vand."
@@ -1011,7 +1038,7 @@
       "subjects": ["child", "baby", "person"],
       "conditions": { "action": ["sleeping"], "movement": ["still"], "place": ["inside", "home"], "light": ["indoor", "window-light", "low-light"], "distance": ["near"] },
       "gearStrategy": { "preferredLensRoles": ["low-light", "people", "portraits"] },
-      "baseSettings": { "mode": "Av", "focalLength": "35mm", "shutter": "Auto (mindst 1/125)", "aperture": { "start": "f/2.0", "range": ["f/1.8", "f/2.8"] }, "iso": "Auto", "focus": "One Shot på nærmeste øje", "drive": "Single" },
+      "baseSettings": { "mode": "Av", "focalLength": "35mm", "shutter": { "start": "1/125", "range": ["1/125", "Auto"] }, "aperture": { "start": "f/2.0", "range": ["f/1.8", "f/2.8"] }, "iso": "Auto", "focus": "One Shot på nærmeste øje", "drive": "Single" },
       "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot"],
       "quickGuide": ["Brug Sigma ved 35mm og undgå blitz.", "Placér dig, så blødt vindueslys rammer ansigtet fra siden.", "Tag få billeder og kontrollér lukkertiden før du fortsætter."],
       "why": "Motivet ligger stille, så Av kan prioritere blød baggrund og lavere ISO uden unødig serieoptagelse."
@@ -1846,7 +1873,7 @@
       "subjects": ["child", "person"],
       "conditions": { "action": ["posing"], "movement": ["still"], "place": ["forest", "outdoor"], "light": ["shade", "overcast", "low-light"], "distance": ["near", "medium"], "style": ["portrait", "environmental-portrait"] },
       "gearStrategy": { "preferredLensRoles": ["low-light", "people", "portraits"] },
-      "baseSettings": { "mode": "Av", "focalLength": "35mm", "shutter": "Auto (mindst 1/250)", "aperture": { "start": "f/2.8", "range": ["f/2", "f/4"] }, "iso": "Auto", "focus": "One Shot på nærmeste øje", "drive": "Single" },
+      "baseSettings": { "mode": "Av", "focalLength": "35mm", "shutter": { "start": "1/250", "range": ["1/250", "Auto"] }, "aperture": { "start": "f/2.8", "range": ["f/2", "f/4"] }, "iso": "Auto", "focus": "One Shot på nærmeste øje", "drive": "Single" },
       "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot"],
       "quickGuide": ["Brug Sigma ved 35mm og placér barnet i åben skygge tæt på skovkanten eller en lysning.", "Start i Av ved f/2.8 og Auto ISO; kontrollér mindst 1/250.", "Hold lyse huller mellem grenene væk fra hovedet."],
       "why": "Når barnet står stille, kan Av prioritere baggrund og ansigt. 1/250 som minimum beskytter mod små bevægelser, selv om poseringen ser rolig ud."
@@ -1878,7 +1905,7 @@
       "subjects": ["person", "group"],
       "conditions": { "action": ["posing", "relaxing"], "movement": ["still"], "place": ["beach", "outdoor"], "light": ["daylight", "overcast", "backlight"], "distance": ["near", "medium"], "style": ["portrait", "environmental-portrait"] },
       "gearStrategy": { "preferredLensRoles": ["people", "portraits", "wide"] },
-      "baseSettings": { "mode": "Av", "focalLength": "35mm", "shutter": "Auto (mindst 1/250)", "aperture": { "start": "f/4", "range": ["f/2.8", "f/5.6"] }, "iso": "Auto", "focus": "One Shot på nærmeste øje", "drive": "Single" },
+      "baseSettings": { "mode": "Av", "focalLength": "35mm", "shutter": { "start": "1/250", "range": ["1/250", "Auto"] }, "aperture": { "start": "f/4", "range": ["f/2.8", "f/5.6"] }, "iso": "Auto", "focus": "One Shot på nærmeste øje", "drive": "Single" },
       "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot"],
       "quickGuide": ["Brug Sigma ved 35mm og hold horisonten fri af hovederne.", "Start i Av ved f/4 og Auto ISO; kontrollér mindst 1/250.", "Placér menneskerne tæt på samme afstand, så alle er skarpe."],
       "why": "f/4 giver mere sikker dybdeskarphed til flere mennesker end et enkeltportræt, mens 35mm bevarer både personer og strandmiljø."
@@ -1894,7 +1921,7 @@
       "subjects": ["group", "person"],
       "conditions": { "action": ["posing"], "movement": ["still"], "place": ["beach", "outdoor"], "light": ["daylight", "overcast", "backlight"], "distance": ["medium"], "style": ["group-portrait"] },
       "gearStrategy": { "preferredLensRoles": ["people", "wide", "walkaround"] },
-      "baseSettings": { "mode": "Av", "focalLength": "28-35mm", "shutter": "Auto (mindst 1/250)", "aperture": { "start": "f/5.6", "range": ["f/4", "f/8"] }, "iso": "Auto", "focus": "One Shot på et ansigt i forreste række", "drive": "Single" },
+      "baseSettings": { "mode": "Av", "focalLength": "28-35mm", "shutter": { "start": "1/250", "range": ["1/250", "Auto"] }, "aperture": { "start": "f/5.6", "range": ["f/4", "f/8"] }, "iso": "Auto", "focus": "One Shot på et ansigt i forreste række", "drive": "Single" },
       "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot"],
       "quickGuide": ["Brug 28-35mm og stil gruppen i højst to tætte rækker.", "Start i Av ved f/5.6 og Auto ISO; kontrollér mindst 1/250.", "Hold alle ansigter fri af hinanden og tag flere enkeltbilleder."],
       "why": "En gruppe kræver mere dybdeskarphed end få personer. f/5.6 og en moderat vidvinkel holder rækkerne skarpe uden stærk perspektivforvrængning."
@@ -1958,7 +1985,7 @@
       "subjects": ["architecture"],
       "conditions": { "style": ["large-building"], "movement": ["still"], "place": ["city", "street", "outdoor"], "time": ["day-time", "morning", "afternoon"], "light": ["daylight", "overcast"], "distance": ["far"] },
       "gearStrategy": { "preferredLensRoles": ["wide", "travel"] },
-      "baseSettings": { "mode": "Av", "focalLength": "18-24mm", "shutter": "Auto (mindst 1/125)", "aperture": { "start": "f/8", "range": ["f/5.6", "f/11"] }, "iso": { "start": "100", "range": ["100", "400"] }, "focus": "One Shot på en tydelig kant cirka en tredjedel inde i billedet", "drive": "Single" },
+      "baseSettings": { "mode": "Av", "focalLength": "18-24mm", "shutter": { "start": "1/125", "range": ["1/125", "Auto"] }, "aperture": { "start": "f/8", "range": ["f/5.6", "f/11"] }, "iso": { "start": "100", "range": ["100", "400"] }, "focus": "One Shot på en tydelig kant cirka en tredjedel inde i billedet", "drive": "Single" },
       "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot", "setLensStabilizationOn"],
       "quickGuide": ["Brug 18-24mm, men hold kameraet vandret for at begrænse væltende lodrette linjer.", "Start i Av ved f/8 og ISO 100; kontrollér mindst 1/125 håndholdt.", "Gå længere tilbage før du vipper kameraet kraftigt op."],
       "why": "Store bygninger kræver vidvinkel, men perspektivet styres bedst ved at holde sensoren parallel med facaden. f/8 giver skarphed gennem hele motivet."
@@ -1990,7 +2017,7 @@
       "subjects": ["architecture"],
       "conditions": { "style": ["small-building"], "movement": ["still"], "place": ["city", "street", "outdoor"], "time": ["day-time", "morning", "afternoon"], "light": ["daylight", "overcast"], "distance": ["medium", "far"] },
       "gearStrategy": { "preferredLensRoles": ["telephoto", "travel"] },
-      "baseSettings": { "mode": "Av", "focalLength": "70-100mm", "shutter": "Auto (mindst 1/200)", "aperture": { "start": "f/8", "range": ["f/5.6", "f/11"] }, "iso": { "start": "100", "range": ["100", "400"] }, "focus": "One Shot på facadens vigtigste detalje", "drive": "Single" },
+      "baseSettings": { "mode": "Av", "focalLength": "70-100mm", "shutter": { "start": "1/200", "range": ["1/200", "Auto"] }, "aperture": { "start": "f/8", "range": ["f/5.6", "f/11"] }, "iso": { "start": "100", "range": ["100", "400"] }, "focus": "One Shot på facadens vigtigste detalje", "drive": "Single" },
       "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot", "setLensStabilizationOn"],
       "quickGuide": ["Brug 70-300mm ved 70-100mm og gå længere tilbage for mindre perspektivforvrængning.", "Start i Av ved f/8 og ISO 100; kontrollér mindst 1/200.", "Vent på, at biler og mennesker forlader facaden, eller brug én person bevidst som målestok."],
       "why": "En mindre bygning behøver ikke ekstrem vidvinkel. Moderat tele giver roligere proportioner og isolerer huset fra en travl bygade."
@@ -2006,7 +2033,7 @@
       "subjects": ["architecture"],
       "conditions": { "style": ["small-building"], "movement": ["still"], "place": ["countryside", "outdoor"], "time": ["day-time", "morning", "afternoon"], "light": ["daylight", "overcast"], "distance": ["medium", "far"] },
       "gearStrategy": { "preferredLensRoles": ["telephoto"] },
-      "baseSettings": { "mode": "Av", "focalLength": "70-100mm", "shutter": "Auto (mindst 1/200)", "aperture": { "start": "f/8", "range": ["f/5.6", "f/11"] }, "iso": { "start": "100", "range": ["100", "400"] }, "focus": "One Shot på bygningens forreste facade", "drive": "Single" },
+      "baseSettings": { "mode": "Av", "focalLength": "70-100mm", "shutter": { "start": "1/200", "range": ["1/200", "Auto"] }, "aperture": { "start": "f/8", "range": ["f/5.6", "f/11"] }, "iso": { "start": "100", "range": ["100", "400"] }, "focus": "One Shot på bygningens forreste facade", "drive": "Single" },
       "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot", "setLensStabilizationOn"],
       "quickGuide": ["Brug 70-300mm ved 70-100mm og lad mark, vej eller hegn føre blikket mod bygningen.", "Start i Av ved f/8 og ISO 100; kontrollér mindst 1/200.", "Hold horisonten lige og giv huset luft omkring taget."],
       "why": "En længere brændvidde samler den lille bygning med landskabet uden at gøre forgrunden unødigt stor. f/8 holder både hus og omgivelser tydelige."
@@ -2022,7 +2049,7 @@
       "subjects": ["architecture"],
       "conditions": { "style": ["large-building"], "movement": ["still"], "place": ["countryside", "outdoor"], "time": ["day-time", "morning", "afternoon"], "light": ["daylight", "overcast"], "distance": ["far"] },
       "gearStrategy": { "preferredLensRoles": ["wide", "travel"] },
-      "baseSettings": { "mode": "Av", "focalLength": "18-35mm", "shutter": "Auto (mindst 1/125)", "aperture": { "start": "f/8", "range": ["f/5.6", "f/11"] }, "iso": { "start": "100", "range": ["100", "400"] }, "focus": "One Shot på bygningen eller en tydelig mellemgrund", "drive": "Single" },
+      "baseSettings": { "mode": "Av", "focalLength": "18-35mm", "shutter": { "start": "1/125", "range": ["1/125", "Auto"] }, "aperture": { "start": "f/8", "range": ["f/5.6", "f/11"] }, "iso": { "start": "100", "range": ["100", "400"] }, "focus": "One Shot på bygningen eller en tydelig mellemgrund", "drive": "Single" },
       "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot", "setLensStabilizationOn"],
       "quickGuide": ["Brug 18-35mm og vis bygningens forhold til landskabet.", "Start i Av ved f/8 og ISO 100; kontrollér mindst 1/125.", "Brug en vej, allé eller markkant som retning ind mod bygningen."],
       "why": "Den store landbygning fungerer som landskabets hovedmotiv. Vidvinkel viser skalaen, mens f/8 holder både omgivelser og facade skarpe."
@@ -2038,7 +2065,7 @@
       "subjects": ["museum", "architecture"],
       "conditions": { "style": ["large-building"], "movement": ["still"], "place": ["outdoor", "city", "countryside"], "time": ["day-time", "morning", "afternoon"], "light": ["daylight", "overcast"], "distance": ["far"] },
       "gearStrategy": { "preferredLensRoles": ["wide", "travel"] },
-      "baseSettings": { "mode": "Av", "focalLength": "18-24mm", "shutter": "Auto (mindst 1/125)", "aperture": { "start": "f/8", "range": ["f/5.6", "f/11"] }, "iso": { "start": "100", "range": ["100", "400"] }, "focus": "One Shot på museets facade", "drive": "Single" },
+      "baseSettings": { "mode": "Av", "focalLength": "18-24mm", "shutter": { "start": "1/125", "range": ["1/125", "Auto"] }, "aperture": { "start": "f/8", "range": ["f/5.6", "f/11"] }, "iso": { "start": "100", "range": ["100", "400"] }, "focus": "One Shot på museets facade", "drive": "Single" },
       "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot", "setLensStabilizationOn"],
       "quickGuide": ["Brug 18-24mm og hold kameraet vandret midt for facaden eller vælg en tydelig diagonal bevidst.", "Start i Av ved f/8 og ISO 100; kontrollér mindst 1/125.", "Brug én besøgende som målestok, hvis bygningens størrelse ellers er svær at aflæse."],
       "why": "Museumsbygningen er stillestående og detaljefyldt. f/8 og lav ISO prioriterer facade, materialer og linjer fremfor en sløret baggrund."
@@ -2054,7 +2081,7 @@
       "subjects": ["museum", "architecture"],
       "conditions": { "style": ["large-building"], "movement": ["still"], "place": ["inside"], "light": ["indoor", "window-light", "bright-interior"], "distance": ["medium", "far"] },
       "gearStrategy": { "preferredLensRoles": ["wide", "indoor", "low-light"] },
-      "baseSettings": { "mode": "Av", "focalLength": "18mm", "shutter": "Auto (mindst 1/60)", "aperture": { "start": "f/5.6", "range": ["f/4", "f/8"] }, "iso": { "start": "800", "range": ["400", "1600"] }, "focus": "One Shot på en kant i mellemgrunden", "drive": "Single" },
+      "baseSettings": { "mode": "Av", "focalLength": "18mm", "shutter": { "start": "1/60", "range": ["1/60", "Auto"] }, "aperture": { "start": "f/5.6", "range": ["f/4", "f/8"] }, "iso": { "start": "800", "range": ["400", "1600"] }, "focus": "One Shot på en kant i mellemgrunden", "drive": "Single" },
       "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot", "setAntiFlicker"],
       "quickGuide": ["Brug Sigma ved 18mm og hold kameraet vandret for lige vægge og søjler.", "Start i Av ved f/5.6 og ISO 800; kontrollér mindst 1/60.", "Følg museets regler, og undgå flash mod kunst og montre."],
       "why": "f/5.6 giver mere dybdeskarphed end en åben portrætindstilling, mens ISO 800 holder en brugbar håndholdt lukkertid i et lyst museum."
@@ -2102,7 +2129,7 @@
       "subjects": ["castle", "architecture"],
       "conditions": { "style": ["large-building"], "movement": ["still"], "place": ["outdoor", "city", "countryside"], "time": ["day-time", "morning", "afternoon"], "light": ["daylight", "overcast"], "distance": ["far"] },
       "gearStrategy": { "preferredLensRoles": ["wide", "travel"] },
-      "baseSettings": { "mode": "Av", "focalLength": "18-24mm", "shutter": "Auto (mindst 1/125)", "aperture": { "start": "f/8", "range": ["f/5.6", "f/11"] }, "iso": { "start": "100", "range": ["100", "400"] }, "focus": "One Shot på slottets facade eller port", "drive": "Single" },
+      "baseSettings": { "mode": "Av", "focalLength": "18-24mm", "shutter": { "start": "1/125", "range": ["1/125", "Auto"] }, "aperture": { "start": "f/8", "range": ["f/5.6", "f/11"] }, "iso": { "start": "100", "range": ["100", "400"] }, "focus": "One Shot på slottets facade eller port", "drive": "Single" },
       "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot", "setLensStabilizationOn"],
       "quickGuide": ["Brug 18-24mm til hele slottet eller 70-100mm til en roligere facade på afstand.", "Start i Av ved f/8 og ISO 100; kontrollér mindst 1/125.", "Brug en person, allé eller port som målestok for størrelsen."],
       "why": "Slottet er stort og detaljefyldt. f/8 giver gennemgående skarphed, mens vidvinkel eller moderat tele vælges efter pladsen foran bygningen."
@@ -2134,7 +2161,7 @@
       "subjects": ["landscape", "nature"],
       "conditions": { "movement": ["still"], "place": ["field", "meadow", "countryside", "outdoor"], "time": ["day-time", "morning", "afternoon"], "light": ["daylight", "overcast"], "distance": ["medium", "far"] },
       "gearStrategy": { "preferredLensRoles": ["wide", "travel"] },
-      "baseSettings": { "mode": "Av", "focalLength": "18-35mm", "shutter": "Auto (mindst 1/125)", "aperture": { "start": "f/8", "range": ["f/5.6", "f/11"] }, "iso": { "start": "100", "range": ["100", "400"] }, "focus": "One Shot cirka en tredjedel ind i landskabet", "drive": "Single" },
+      "baseSettings": { "mode": "Av", "focalLength": "18-35mm", "shutter": { "start": "1/125", "range": ["1/125", "Auto"] }, "aperture": { "start": "f/8", "range": ["f/5.6", "f/11"] }, "iso": { "start": "100", "range": ["100", "400"] }, "focus": "One Shot cirka en tredjedel ind i landskabet", "drive": "Single" },
       "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot", "setLensStabilizationOn"],
       "quickGuide": ["Brug 18-35mm og find en markkant, vej eller afgrøde i forgrunden.", "Start i Av ved f/8 og ISO 100; kontrollér mindst 1/125 håndholdt.", "Hold horisonten helt lige og vent på et skyhul, hvis himlen er flad."],
       "why": "f/8 holder både forgrundens struktur og markens fjerne linjer tydelige. ISO 100 giver den reneste fil, når motivet står stille i dagslys."
@@ -2150,7 +2177,7 @@
       "subjects": ["architecture"],
       "conditions": { "style": ["modern-architecture"], "movement": ["still"], "place": ["city", "countryside", "outdoor"], "time": ["day-time", "morning", "afternoon"], "light": ["daylight", "overcast"], "distance": ["far"] },
       "gearStrategy": { "preferredLensRoles": ["wide", "travel"] },
-      "baseSettings": { "mode": "Av", "focalLength": "18-24mm", "shutter": "Auto (mindst 1/125)", "aperture": { "start": "f/8", "range": ["f/5.6", "f/11"] }, "iso": { "start": "100", "range": ["100", "400"] }, "focus": "One Shot på en skarp linje cirka en tredjedel ind i facaden", "drive": "Single" },
+      "baseSettings": { "mode": "Av", "focalLength": "18-24mm", "shutter": { "start": "1/125", "range": ["1/125", "Auto"] }, "aperture": { "start": "f/8", "range": ["f/5.6", "f/11"] }, "iso": { "start": "100", "range": ["100", "400"] }, "focus": "One Shot på en skarp linje cirka en tredjedel ind i facaden", "drive": "Single" },
       "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot", "setLensStabilizationOn"],
       "quickGuide": ["Brug 18-24mm og hold kameraet helt vandret for rene lodrette linjer.", "Start i Av ved f/8 og ISO 100; kontrollér mindst 1/125.", "Vent på, at spejlinger i glasfacaden giver en enkel form frem for visuelt kaos."],
       "why": "Moderne arkitektur lever af linjer, gentagelser og glas. f/8 giver de rene kanter, mens vandret kamera begrænser forvrængning."
@@ -2182,7 +2209,7 @@
       "subjects": ["architecture"],
       "conditions": { "style": ["historic-architecture"], "movement": ["still"], "place": ["city", "countryside", "outdoor"], "time": ["day-time", "morning", "afternoon"], "light": ["daylight", "overcast"], "distance": ["medium", "far"] },
       "gearStrategy": { "preferredLensRoles": ["wide", "travel", "telephoto"] },
-      "baseSettings": { "mode": "Av", "focalLength": "24-35mm", "shutter": "Auto (mindst 1/125)", "aperture": { "start": "f/8", "range": ["f/5.6", "f/11"] }, "iso": { "start": "100", "range": ["100", "400"] }, "focus": "One Shot på den vigtigste detalje i facaden", "drive": "Single" },
+      "baseSettings": { "mode": "Av", "focalLength": "24-35mm", "shutter": { "start": "1/125", "range": ["1/125", "Auto"] }, "aperture": { "start": "f/8", "range": ["f/5.6", "f/11"] }, "iso": { "start": "100", "range": ["100", "400"] }, "focus": "One Shot på den vigtigste detalje i facaden", "drive": "Single" },
       "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot", "setLensStabilizationOn"],
       "quickGuide": ["Start ved 24-35mm og gå lidt tilbage, så facaden får mere naturlige proportioner.", "Brug Av, f/8 og ISO 100; kontrollér mindst 1/125.", "Lad en port, tekstur eller et gammelt vindue være det tydelige fokuspunkt."],
       "why": "Ældre bygninger vinder på materialer og detaljer. En moderat vidvinkel og f/8 viser murværk og form uden at gøre hjørnerne unødigt skæve."
