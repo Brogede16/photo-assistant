@@ -1,6 +1,16 @@
 {
-  "current": "0.4.3",
+  "current": "0.4.4",
   "entries": [
+    {
+      "version": "0.4.4",
+      "date": "2026-08-08",
+      "title": "Versionlog og bedre opdatering",
+      "items": [
+        "Tilføjede Versionlog direkte i appen.",
+        "Topknappen viser nu den aktuelle app-version.",
+        "Offline-cachen henter nu nye filer først og bruger kun cache som fallback."
+      ]
+    },
     {
       "version": "0.4.3",
       "date": "2026-08-08",
