@@ -26,9 +26,10 @@ Projektet er bevidst bygget uden AI-afhængighed og uden direkte Canon API/SDK-k
 - Søgning på tværs af motiver, lys, bevægelse, afstand, problemer, teknikker og udstyr.
 - Ét levende tagsystem for motiv, handling, afstand, sted, vejr, tidspunkt, lys og stil.
 - Scenariemotoren vælger mellem Canon-programmerne P, Av, Tv, M og Bulb ud fra den ønskede kontrol.
-- 142 grundscenarier, blandt andet standardportrætter, baggrundstyper, biler, strand, vand, børn, indendørs hverdag, natur, biograf, arkitektur, festival, panorering og lysspor.
+- 143 grundscenarier, blandt andet standardportrætter, baggrundstyper, biler, strand, vand, børn, indendørs hverdag, natur, biograf, arkitektur, festival, panorering og lysspor.
 - Vandfald med blødt vand skelner mellem svagt lys uden ND-filter og dagslys med ND-filter.
 - Natklub og børn indendørs er justeret til realistiske available-light-indstillinger på EOS 80D.
+- Gruppeportræt indendørs skelner mellem vindueslys/rumlys og bounce Speedlite.
 - Dyreliv skelner mellem landjord, skov, fugle i luften, dyr på havet og sæl/søløve i eller uden for vandet.
 - Astro som central tagfamilie med stjerner, Mælkevejen, nordlys og måne.
 - Astro-guides med stjerner, Mælkevejen og meteorregn viser en indbygget brændvidde-beregner for maks lukkertid på EOS 80D.

@@ -524,14 +524,16 @@
       "id": "wildlife-forest-low-light",
       "title": "Vilde dyr i skov",
       "family": "dyr",
-      "priority": 81,
+      "priority": 138,
+      "modePolicy": "fixed",
+      "requiredTags": ["shade"],
       "subjects": ["animal", "deer", "fox", "bird"],
       "conditions": { "place": ["forest", "outdoor"], "time": ["morning", "evening"], "movement": ["walking", "running"], "light": ["shade", "low-light"], "distance": ["far"] },
       "gearStrategy": { "preferredLensRoles": ["animals", "birds", "telephoto"] },
-      "baseSettings": { "mode": "Tv", "focalLength": "200-300mm", "shutter": { "start": "1/800", "range": ["1/500", "1/1600"] }, "aperture": "Auto", "iso": "Auto", "focus": "AI Servo", "drive": "High-speed continuous" },
+      "baseSettings": { "mode": "Tv", "focalLength": "200-300mm", "shutter": { "start": "1/400", "range": ["1/250", "1/800"] }, "aperture": "Auto", "iso": "Auto", "focus": "AI Servo", "drive": "High-speed continuous" },
       "cameraActions": ["setTvMode", "setShutter", "setIso", "setAiServo", "setHighSpeedContinuous", "setLensStabilizationOn"],
-      "quickGuide": ["Brug 70-300mm og slå IS til.", "Find åbninger mellem grene før motivet kommer frem.", "Accepter høj ISO for at bevare en sikker lukkertid."],
-      "why": "Skovlys er ofte markant svagere end åbent dagslys, mens dyret stadig kan bevæge sig pludseligt."
+      "quickGuide": ["Brug 70-300mm og slå IS til.", "Start ved 1/400. Gå mod 1/250, hvis dyret står stille; gå kun mod 1/800, hvis der faktisk er lys nok.", "Tag korte serier og accepter, at nogle billeder ryger på bevægelse eller høj ISO."],
+      "why": "Skovlys morgen og aften er hårdt for 80D. 1/400 er et ærligt kompromis: bedre chance for brugbar ISO, men stadig kort nok til forsigtige bevægelser."
     },
     {
       "id": "insect-close-up",
@@ -603,13 +605,29 @@
       "title": "Gruppeportræt indendørs",
       "family": "portræt",
       "priority": 84,
+      "modePolicy": "fixed",
       "subjects": ["group", "person"],
       "conditions": { "style": ["portrait", "group-portrait"], "distance": ["medium"], "place": ["home", "party"], "light": ["indoor", "window-light"], "movement": ["still"] },
       "gearStrategy": { "preferredLensRoles": ["people", "wide", "indoor"], "optional": ["flash"] },
-      "baseSettings": { "mode": "M", "focalLength": "24-35mm", "shutter": { "start": "1/250", "range": ["1/160", "1/320"] }, "aperture": { "start": "f/5.6", "range": ["f/4", "f/8"] }, "iso": "Auto", "focus": "One Shot på forreste tredjedel", "drive": "Single" },
+      "baseSettings": { "mode": "M", "focalLength": "24-35mm", "shutter": { "start": "1/125", "range": ["1/80", "1/160"] }, "aperture": { "start": "f/4", "range": ["f/2.8", "f/5.6"] }, "iso": "Auto", "focus": "One Shot på forreste tredjedel", "drive": "Single" },
       "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setOneShot"],
-      "quickGuide": ["Stil ansigterne i omtrent samme fokusplan.", "Brug f/5.6 fremfor f/1.8.", "Bounce Speedlite i et neutralt loft, hvis vindueslyset ikke rækker."],
-      "why": "En gruppe kræver mere dybdeskarphed end ét ansigt."
+      "quickGuide": ["Stil ansigterne i omtrent samme fokusplan.", "Start ved 1/125 og f/4 i vindueslys eller godt rumlys.", "Hvis ISO bliver meget høj, så flyt gruppen tættere på vinduet eller brug den separate bounce-blitz-guide."],
+      "why": "En gruppe kræver mere dybdeskarphed end ét ansigt, men f/5.6 og 1/250 bliver for mørkt indendørs uden blitz. f/4 og 1/125 er et mere realistisk kompromis."
+    },
+    {
+      "id": "portrait-group-indoor-bounce-flash",
+      "title": "Gruppeportræt indendørs med bounce-blitz",
+      "family": "portræt",
+      "priority": 118,
+      "modePolicy": "fixed",
+      "requiredTags": ["flash"],
+      "subjects": ["group", "person"],
+      "conditions": { "style": ["portrait", "group-portrait"], "distance": ["medium"], "place": ["home", "party"], "light": ["indoor", "low-light"], "movement": ["still"], "equipment": ["flash"] },
+      "gearStrategy": { "preferredLensRoles": ["people", "wide", "indoor"], "support": ["flash"] },
+      "baseSettings": { "mode": "M", "focalLength": "24-35mm", "shutter": { "start": "1/100", "range": ["1/60", "1/125"] }, "aperture": { "start": "f/4", "range": ["f/4", "f/5.6"] }, "iso": { "start": "800", "range": ["800", "1600"] }, "focus": "One Shot på forreste tredjedel", "drive": "Single" },
+      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setOneShot"],
+      "quickGuide": ["Peg Speedlite mod et neutralt loft eller en lys væg, ikke direkte i ansigterne.", "Start ved 1/100, f/4 og ISO 800.", "Gå mod 1/60, hvis rummet skal med i billedet; gå mod f/5.6, hvis gruppen står i flere rækker."],
+      "why": "80D kan synke flash op til 1/250, men det er ikke det samme som den bedste indstilling. 1/60-1/125 lader rummets lys være med, mens bounce-blitzen giver ansigterne renere lys."
     },
     {
       "id": "portrait-candid",
@@ -2227,10 +2245,10 @@
       "subjects": ["animal", "deer", "fox", "bird"],
       "conditions": { "movement": ["still", "walking", "active-motion"], "place": ["forest", "outdoor"], "time": ["morning", "afternoon", "day-time"], "light": ["shade", "overcast", "low-light"], "distance": ["far"] },
       "gearStrategy": { "preferredLensRoles": ["telephoto", "animals"] },
-      "baseSettings": { "mode": "Tv", "focalLength": "200-300mm", "shutter": { "start": "1/640", "range": ["1/400", "1/1000"] }, "aperture": "Auto", "iso": "Auto", "focus": "AI Servo på hovedet", "drive": "Continuous low" },
+      "baseSettings": { "mode": "Tv", "focalLength": "200-300mm", "shutter": { "start": "1/400", "range": ["1/250", "1/800"] }, "aperture": "Auto", "iso": "Auto", "focus": "AI Servo på hovedet", "drive": "Continuous low" },
       "cameraActions": ["setTvMode", "setShutter", "setIso", "setAiServo", "setLensStabilizationOn"],
-      "quickGuide": ["Brug 70-300mm og find en fri linje mellem grene.", "Start ved 1/640 med Auto ISO.", "Hvis skoven er meget mørk, accepter højere ISO før du går under 1/400."],
-      "why": "Skov sluger lys, og grene kan snyde fokus. Tv holder lukkertiden sikker, mens Auto ISO tager prisen for det mørkere miljø."
+      "quickGuide": ["Brug 70-300mm og find en fri linje mellem grene.", "Start ved 1/400 med Auto ISO.", "Hvis dyret står stille, kan 1/250 redde ISO. Hvis det løber, kræver 1/800 mere lys end skoven ofte giver."],
+      "why": "Skov sluger lys, og 80D bliver hurtigt presset ved 200-300mm. 1/400 er et ærligt startpunkt, hvor flere billeder kan bruges, selv om nogle stadig ryger."
     },
     {
       "id": "wildlife-land-running",

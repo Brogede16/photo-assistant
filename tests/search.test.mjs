@@ -318,6 +318,21 @@ assert.equal(concertLowLightOnly.results[0].item.id, "concert-indoor-stage");
 assert.equal(concertLowLightOnly.results.some((result) => result.item.family === "festival"), false);
 const groupPortrait = searchProfiles("gruppe portræt indenfor", situations.profiles, taxonomy);
 assert.equal(groupPortrait.results[0].item.id, "portrait-group-indoor");
+const groupPortraitRecommendation = buildRecommendation(groupPortrait.results[0].item, equipment, { classification: groupPortrait.classification });
+assert.equal(groupPortraitRecommendation.settings.shutter, "1/125");
+assert.equal(groupPortraitRecommendation.settings.aperture, "f/4");
+
+const groupPortraitFlash = searchProfiles("gruppe portræt indenfor med speedlite", situations.profiles, taxonomy);
+assert.equal(groupPortraitFlash.results[0].item.id, "portrait-group-indoor-bounce-flash");
+const groupPortraitFlashRecommendation = buildRecommendation(groupPortraitFlash.results[0].item, equipment, { classification: groupPortraitFlash.classification });
+assert.equal(groupPortraitFlashRecommendation.settings.shutter, "1/100");
+assert.equal(groupPortraitFlashRecommendation.settings.iso, "800");
+
+const forestWildlifeLowLight = searchProfiles("rådyr i skov morgen skygge langt væk", situations.profiles, taxonomy);
+assert.equal(forestWildlifeLowLight.results[0].item.id, "wildlife-forest-low-light");
+const forestWildlifeRecommendation = buildRecommendation(forestWildlifeLowLight.results[0].item, equipment, { classification: forestWildlifeLowLight.classification });
+assert.equal(forestWildlifeRecommendation.settings.mode, "Tv");
+assert.equal(forestWildlifeRecommendation.settings.shutter, "1/400");
 
 const cowNextTags = suggestNextTags("Ko", situations.profiles, taxonomy, ["cow"], 6);
 assert.equal(cowNextTags.some((term) => term.id === "monkey"), false);
