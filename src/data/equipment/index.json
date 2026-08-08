@@ -160,7 +160,7 @@
       "aperture": { "maxAtMinFocal": 4.5, "maxAtMaxFocal": 5.6 },
       "stabilization": false,
       "autofocus": true,
-      "roles": ["telephoto", "outdoor", "animals", "portraits"],
+      "roles": ["telephoto", "outdoor", "animals"],
       "notes": [
         "Telezoom uden billedstabilisering.",
         "Kræver hurtigere lukkertid håndholdt end 70-300 IS."
@@ -176,7 +176,7 @@
       "aperture": { "maxAtMinFocal": 4, "maxAtMaxFocal": 5.6 },
       "stabilization": true,
       "autofocus": true,
-      "roles": ["telephoto", "animals", "birds", "moon", "zoo", "sports"],
+      "roles": ["telephoto", "animals", "birds", "moon", "zoo", "sports", "portraits"],
       "notes": [
         "Bedste televalg i sættet.",
         "Førstevalg til fugle, dyr på afstand, zoo og måne."

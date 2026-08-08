@@ -422,9 +422,11 @@ assert.equal(protectedLightTrails.settings.shutter, "10s");
 
 const standardPortrait = searchProfiles("standard portræt dagslys udenfor", situations.profiles, taxonomy);
 assert.equal(standardPortrait.results[0].item.id, "portrait-standard-daylight");
-assert.equal(buildRecommendation(standardPortrait.results[0].item, equipment, {
+const standardPortraitRecommendation = buildRecommendation(standardPortrait.results[0].item, equipment, {
   classification: standardPortrait.classification
-}).settings.mode, "Av");
+});
+assert.equal(standardPortraitRecommendation.settings.mode, "Av");
+assert.equal(standardPortraitRecommendation.lens.id, "canon-ef-70-300-is-usm");
 assert.equal(searchProfiles("portræt rodet baggrund", situations.profiles, taxonomy).results[0].item.id, "portrait-busy-background");
 
 const singlePortrait = searchProfiles("portræt enkeltmand", situations.profiles, taxonomy);
@@ -559,6 +561,10 @@ assert.equal(findExactTerm(taxonomy, "farvet scenelys").id, "colored-stage-light
 assert.equal(findExactTerm(taxonomy, "trommer").id, "drummer");
 assert.equal(findExactTerm(taxonomy, "festivalplads").id, "festival-site");
 assert.equal(findExactTerm(taxonomy, "om dagen").id, "day-time");
+assert.equal(findExactTerm(taxonomy, "festival").implies.includes("concert"), true);
+assert.equal(findExactTerm(taxonomy, "forsanger").implies.includes("concert"), true);
+assert.equal(classifyQuery("barn leger indenfor", taxonomy).matches.find((match) => match.id === "playing").effects.motion, "active");
+assert.equal(classifyQuery("sæl svømmer i havet", taxonomy).matches.find((match) => match.id === "swimming").effects.motion, "active");
 
 const festivalDay = searchProfiles("festival dag", situations.profiles, taxonomy);
 assert.equal(festivalDay.results[0].item.id, "festival-day-artist");
