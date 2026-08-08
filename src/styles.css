@@ -628,6 +628,42 @@ select {
   line-height: 1.35;
 }
 
+.mode-explanations {
+  display: grid;
+  border-top: 1px solid var(--line);
+}
+
+.mode-explanation {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.mode-symbol {
+  color: var(--accent);
+  font-family: var(--display-font);
+  font-size: 30px;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.mode-explanation > div {
+  display: grid;
+  gap: 6px;
+}
+
+.mode-explanation h4 {
+  margin: 0;
+  color: var(--text);
+  font-size: 15px;
+}
+
+.mode-explanation p strong {
+  color: var(--text);
+}
+
 .lesson-rule,
 .field-exercise,
 .lesson-check {
@@ -684,6 +720,21 @@ select {
 .answer-grid button.wrong {
   border-color: var(--danger);
   background: var(--danger-surface);
+}
+
+@media (max-width: 520px) {
+  .answer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mode-explanation {
+    grid-template-columns: 48px minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .mode-symbol {
+    font-size: 27px;
+  }
 }
 
 #learn-feedback:not(:empty) {

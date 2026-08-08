@@ -173,6 +173,20 @@ function renderLearn() {
         <div class="lesson-scale">
           ${lesson.scale.map((point) => `<div><strong>${point.value}</strong><span>${point.label}</span><small>${point.effect}</small></div>`).join("")}
         </div>
+        ${lesson.explanations ? `
+          <section class="mode-explanations" aria-label="Forklaring af kameraprogrammer">
+            ${lesson.explanations.map((mode) => `
+              <div class="mode-explanation">
+                <strong class="mode-symbol">${mode.value}</strong>
+                <div>
+                  <h4>${mode.name}</h4>
+                  <p>${mode.meaning}</p>
+                  <p><strong>Bedst når:</strong> ${mode.bestFor}</p>
+                </div>
+              </div>
+            `).join("")}
+          </section>
+        ` : ""}
         <div class="lesson-rule"><span>Husk</span><p>${lesson.rule}</p></div>
         <section class="field-exercise">
           <p class="section-kicker">Prøv det med dit 80D</p>

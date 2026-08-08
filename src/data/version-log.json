@@ -1,6 +1,17 @@
 {
-  "current": "0.18.1",
+  "current": "0.18.2",
   "entries": [
+    {
+      "version": "0.18.2",
+      "date": "2026-08-08",
+      "title": "Programmer forklaret",
+      "items": [
+        "Programvalg forklarer nu de fulde betydninger af P, Av, Tv, M og Bulb.",
+        "Hvert program viser tydeligt, hvad du vælger, hvad kameraet vælger, og hvornår programmet er bedst.",
+        "Forklaringen skelner mellem fuld manuel eksponering og M med Auto ISO.",
+        "Øvelsen og spørgsmålet bruger nu programmernes fulde danske navne."
+      ]
+    },
     {
       "version": "0.18.1",
       "date": "2026-08-08",

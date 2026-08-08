@@ -94,21 +94,28 @@
     {
       "id": "modes",
       "label": "Programvalg",
-      "title": "P, Av, Tv, M eller Bulb?",
-      "intro": "Programmet bestemmer, hvem der vælger blænde og lukkertid. Mere manuel kontrol er ikke automatisk bedre; det rigtige program fjerner arbejde uden at fjerne den kontrol, motivet kræver.",
+      "title": "Hvad betyder P, Av, Tv, M og Bulb?",
+      "intro": "Bogstaverne kommer fra Canons engelske betegnelser. Programmet fordeler arbejdet mellem dig og kameraet: Nogle gange vælger kameraet både blænde og lukkertid, andre gange låser du den indstilling, der er vigtigst for billedet.",
       "scale": [
-        { "value": "P", "label": "Hverdag", "effect": "Kameraet vælger blænde og tid" },
-        { "value": "Av", "label": "Portræt", "effect": "Du vælger blænden" },
-        { "value": "Tv", "label": "Bevægelse", "effect": "Du vælger lukkertiden" },
-        { "value": "M", "label": "Kontrolleret lys", "effect": "Du vælger begge dele" },
-        { "value": "Bulb", "label": "Over 30 sek.", "effect": "Du styrer hele eksponeringens længde" }
+        { "value": "P", "label": "Programautomatik", "effect": "Kameraet vælger blænde og lukkertid" },
+        { "value": "Av", "label": "Blændeprioritet", "effect": "Du vælger f-tallet; kameraet vælger lukkertiden" },
+        { "value": "Tv", "label": "Lukkertidsprioritet", "effect": "Du vælger tiden; kameraet vælger blænden" },
+        { "value": "M", "label": "Manuel eksponering", "effect": "Du vælger både blænde og lukkertid" },
+        { "value": "Bulb", "label": "Lang eksponering", "effect": "Du bestemmer, hvor længe lukkeren er åben" }
       ],
-      "rule": "Vælg program efter den indstilling, der ikke må flytte sig: Av for dybdeskarphed, Tv for bevægelse og M for lys, der snyder automatikken.",
-      "exercise": "Tag et roligt portræt i Av og en gående person i Tv. Læg mærke til hvilken indstilling kameraet vælger for dig.",
+      "explanations": [
+        { "value": "P", "name": "Programautomatik", "meaning": "Du koncentrerer dig om motivet. Kameraet vælger både blænde og lukkertid, mens du stadig kan bruge Auto ISO og eksponeringskompensation.", "bestFor": "Hurtige hverdagsbilleder, hvor øjeblikket er vigtigere end en bestemt teknisk effekt." },
+        { "value": "Av", "name": "Aperture value · blændeprioritet", "meaning": "Du vælger blænden, fx f/2.8. Kameraet vælger lukkertiden, der passer til lyset.", "bestFor": "Portrætter, grupper, close-up og landskab, hvor dybdeskarpheden er vigtigst. Hold øje med, at lukkertiden ikke bliver for langsom." },
+        { "value": "Tv", "name": "Time value · lukkertidsprioritet", "meaning": "Du vælger lukkertiden, fx 1/1000. Kameraet vælger den blænde, objektivet kan levere.", "bestFor": "Børn, dyr, sport, biler og anden bevægelse. Auto ISO hjælper, når lyset skifter." },
+        { "value": "M", "name": "Manual · manuel eksponering", "meaning": "Du låser både lukkertid og blænde. Med Auto ISO kan kameraet stadig tilpasse lysstyrken uden at ændre de to kreative valg.", "bestFor": "Koncert, scenelys og andre situationer, hvor bevægelse og blænde skal forblive ens gennem skiftende lys." },
+        { "value": "Bulb", "name": "Bulb · længere end 30 sekunder", "meaning": "Lukkeren er åben, indtil du stopper eksponeringen. Brug stativ og fjernudløser eller Canon Camera Connect.", "bestFor": "Stjernespor, meget mørke natmotiver og andre bevidst lange eksponeringer." }
+      ],
+      "rule": "Spørg først: Hvad må ikke ændre sig? Vælg Av, når blænden og dybdeskarpheden er vigtigst. Vælg Tv, når lukkertiden og bevægelsen er vigtigst. Vælg M, når begge skal låses. Brug P, når kameraet gerne må klare begge, og Bulb når 30 sekunder ikke er langt nok.",
+      "exercise": "Tag samme rolige portræt i P og Av ved f/2.8. Fotografér derefter en gående person i Tv ved 1/500. Se, hvilken indstilling du selv låser, og hvilken kameraet vælger.",
       "question": "Du fotograferer en kørende bil og vil sikre 1/1000. Hvilket program er enklest?",
-      "answers": ["P", "Av", "Tv"],
+      "answers": ["P · Programautomatik", "Av · Blændeprioritet", "Tv · Lukkertidsprioritet"],
       "correct": 2,
-      "feedback": "Tv er enklest, fordi du låser lukkertiden og lader kameraet vælge blænden."
+      "feedback": "Tv betyder Time value. Du låser lukkertiden på 1/1000, mens kameraet vælger blænden."
     }
   ]
 }
