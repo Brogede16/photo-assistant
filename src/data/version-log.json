@@ -1,6 +1,18 @@
 {
-  "current": "0.8.0",
+  "current": "0.9.0",
   "entries": [
+    {
+      "version": "0.9.0",
+      "date": "2026-08-08",
+      "title": "Præcise kameratrin og mere hverdag",
+      "items": [
+        "Vis mig præcis hvordan bruger nu den aktuelle anbefalings program, lukkertid, blænde, ISO, fokus og serieindstilling.",
+        "M vælges fortsat, når både lukkertid og blænde bør låses, blandt andet ved indendørs leg, hygge og spisning med Auto ISO.",
+        "Tilføjede scenarier for strand, vand, løb på afstand, sovende børn samt indendørs og udendørs hverdag.",
+        "Fjernede Tag med-listen og begrænsede hurtige startpunkter til fire.",
+        "Lær og Presets viser ikke længere søgefeltet, og farvesystemet er nu sort, hvidt og rødt."
+      ]
+    },
     {
       "version": "0.8.0",
       "date": "2026-08-08",

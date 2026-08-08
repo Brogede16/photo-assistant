@@ -35,7 +35,8 @@ assert.deepEqual(consumedPhrase.termIds, ["cow", "overcast"]);
 assert.equal(consumedPhrase.remainder, "");
 
 const livePartial = suggestNextTags("kan", situations.profiles, taxonomy, [], 6);
-assert.equal(livePartial[0].id, "rabbit");
+assert.equal(livePartial.some((term) => term.id === "rabbit"), true);
+assert.equal(livePartial.some((term) => term.id === "boat"), true);
 
 const resolvedDistance = mergeTagIds(taxonomy, ["near"], ["far"]);
 assert.deepEqual(resolvedDistance, ["far"]);
@@ -104,7 +105,7 @@ assert.equal(sportResults.results[0].item.id, "outdoor-sport-daylight");
 const recommendation = buildRecommendation(astroResults.results[0].item, equipment, { phase: "night" });
 assert.equal(recommendation.lens.id, "sigma-18-35-f18-art");
 assert.equal(recommendation.settings.aperture, "f/1.8");
-assert.equal(recommendation.gearChecklist.includes("Stativ"), true);
+assert.equal("gearChecklist" in recommendation, false);
 
 const childClassification = classifyQuery("barn griner udenfor", taxonomy);
 const childProfile = searchProfiles("barn griner udenfor", situations.profiles, taxonomy).results[0].item;
@@ -113,6 +114,10 @@ assert.equal(childRecommendation.settings.shutter, "1/500");
 assert.equal(childRecommendation.settings.focus, "AI Servo");
 assert.equal(childRecommendation.settings.mode, "Tv");
 assert.equal(childRecommendation.actions[0].id, "setTvMode");
+assert.equal(childRecommendation.actions[0].steps.some((step) => step.includes("Tv")), true);
+assert.equal(childRecommendation.actions.find((action) => action.id === "setFocalLength").steps.some((step) => step.includes(childRecommendation.settings.focalLength)), true);
+assert.equal(childRecommendation.actions.find((action) => action.id === "setShutter").steps.some((step) => step.includes("1/500")), true);
+assert.equal(childRecommendation.actions.find((action) => action.id === "setDriveMode").steps.some((step) => step.includes(childRecommendation.settings.drive)), true);
 
 const protectedAstro = buildRecommendation(astroResults.results[0].item, equipment, {
   phase: "night",
@@ -172,6 +177,22 @@ assert.equal(buildRecommendation(snapshot.results[0].item, equipment, {
   classification: snapshot.classification
 }).settings.mode, "P");
 
+assert.equal(searchProfiles("barn løber på stranden", situations.profiles, taxonomy).results[0].item.id, "beach-child-running");
+assert.equal(searchProfiles("sovende barn indenfor", situations.profiles, taxonomy).results[0].item.id, "child-sleeping-indoor");
+assert.equal(searchProfiles("mennesker løber langt væk", situations.profiles, taxonomy).results[0].item.id, "people-running-far");
+assert.equal(searchProfiles("mennesker i båd på vandet", situations.profiles, taxonomy).results[0].item.id, "people-on-water-boat");
+
+const indoorPlay = searchProfiles("barn leger indenfor", situations.profiles, taxonomy);
+assert.equal(indoorPlay.results[0].item.id, "children-playing-indoor");
+const indoorPlayRecommendation = buildRecommendation(indoorPlay.results[0].item, equipment, { classification: indoorPlay.classification });
+assert.equal(indoorPlayRecommendation.settings.mode, "M");
+assert.equal(indoorPlayRecommendation.settings.shutter, "1/640");
+assert.equal(indoorPlayRecommendation.settings.aperture, "f/2.0");
+
+assert.equal(searchProfiles("mennesker hygger indenfor", situations.profiles, taxonomy).results[0].item.id, "indoor-cozy-people");
+assert.equal(searchProfiles("mennesker spiser indenfor", situations.profiles, taxonomy).results[0].item.id, "people-eating-indoor");
+assert.equal(searchProfiles("mennesker spiser udenfor", situations.profiles, taxonomy).results[0].item.id, "people-eating-outdoor");
+
 const macroRecommendation = buildRecommendation(macroResults.results[0].item, equipment, {
   classification: macroResults.classification
 });
@@ -199,8 +220,8 @@ assert.equal(influencedRecommendation.scenarioDecisions[0].includes("Mit regnkon
 assert.equal(maxStarShutterSeconds(18, 1.6), 13);
 assert.equal(astroStatus(new Date("2026-08-08T23:00:00+02:00")).moon.percent >= 0, true);
 assert.equal(astroTargets(new Date("2026-08-08T23:00:00+02:00")).some((target) => target.id === "milky-way-wide"), true);
-assert.equal(versionLog.current, "0.8.0");
-assert.equal(versionLog.entries[0].version, "0.8.0");
+assert.equal(versionLog.current, "0.9.0");
+assert.equal(versionLog.entries[0].version, "0.9.0");
 assert.equal(learning.lessons.length, 6);
 assert.equal(learning.lessons.some((lesson) => lesson.id === "modes"), true);
 assert.deepEqual(new Set(situations.profiles.map((profile) => profile.baseSettings.mode)), new Set(["P", "Av", "Tv", "M"]));

@@ -90,7 +90,8 @@ function renderHome(results = null) {
   const query = currentSearchQuery();
   const defaultSearch = searchProfiles(query || "stjerner nordlys måne fugl dyr mennesker", state.profiles, state.taxonomy, state.presets);
   if (!state.activeClassification) state.activeClassification = defaultSearch.classification;
-  const resultList = results || defaultSearch.results.slice(0, 5);
+  setSearchVisibility(true);
+  const resultList = results || defaultSearch.results.slice(0, 4);
 
   content.innerHTML = `
     <section class="panel">
@@ -125,6 +126,7 @@ function renderSuggestedTags() {
 }
 
 function renderPresets() {
+  setSearchVisibility(false);
   const content = document.querySelector("#content");
   content.innerHTML = `
     <section class="panel">
@@ -146,6 +148,7 @@ function renderPresets() {
 }
 
 function renderLearn() {
+  setSearchVisibility(false);
   const content = document.querySelector("#content");
   const lesson = state.lessons.find((item) => item.id === state.selectedLearnTopic) || state.lessons[0];
   content.innerHTML = `
@@ -331,10 +334,6 @@ function openResult(profileId) {
       </div>
       ${renderExposurePlan(recommendation.exposurePlan)}
       ${recommendation.scenarioDecisions.length ? `<div class="scenario-decisions"><p class="section-kicker">Sådan hænger dine tags sammen</p><ul>${recommendation.scenarioDecisions.map((item) => `<li>${item}</li>`).join("")}</ul></div>` : ""}
-      <h3>Tag med</h3>
-      <div class="gear-checklist">
-        ${recommendation.gearChecklist.map((item) => `<span>${item}</span>`).join("")}
-      </div>
       <h3>Hurtig guide</h3>
       <ol>${profile.quickGuide.map((step) => `<li>${step}</li>`).join("")}</ol>
       ${renderFieldGuide(profile)}
@@ -531,6 +530,10 @@ function runSearch(query) {
   renderHome(search.results.slice(0, 10));
 }
 
+function setSearchVisibility(visible) {
+  document.querySelector(".search-hero")?.toggleAttribute("hidden", !visible);
+}
+
 function escapeHtml(value) {
   return String(value)
     .replace(/&/g, "&amp;")
@@ -570,12 +573,14 @@ function labelProcedure(key) {
     setTvMode: "Sæt kameraet i Tv",
     setProgramMode: "Sæt kameraet i P",
     setBulbMode: "Sæt kameraet i Bulb",
+    setFocalLength: "Vælg objektiv og brændvidde",
     setShutter: "Indstil lukkertid",
     setAperture: "Indstil blænde",
     setIso: "Indstil ISO",
     setAiServo: "Vælg AI Servo",
     setOneShot: "Vælg One Shot",
     setHighSpeedContinuous: "Vælg serieoptagelse",
+    setDriveMode: "Indstil enkeltbillede eller serie",
     useLiveViewForAstro: "Fokusér med Live View",
     useCanonCameraConnect: "Brug Canon Camera Connect",
     setLensStabilizationOn: "Slå IS til på objektivet",
