@@ -1,6 +1,18 @@
 {
-  "current": "0.14.0",
+  "current": "0.15.0",
   "entries": [
+    {
+      "version": "0.15.0",
+      "date": "2026-08-08",
+      "title": "Gradient på hele siden",
+      "items": [
+        "Det ultramarine lysfelt er gjort cirka 75 procent større.",
+        "Feltet ligger nu i hele dokumentfladen og følger med indholdet, når siden scrolles.",
+        "Bevægelsen går ad tilfældige, bløde ruter mellem punkter fra top til bund og fra side til side.",
+        "Fjernede skillelinjen under søgeområdet og omdøbte Forslag mens du skriver til Tags.",
+        "Hurtige startpunkter hedder nu Guides."
+      ]
+    },
     {
       "version": "0.14.0",
       "date": "2026-08-08",

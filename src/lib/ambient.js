@@ -13,20 +13,42 @@ export function startAmbientField(canvas) {
   let frameId = 0;
   let lastFrame = 0;
   let disposed = false;
+  let resizeObserver = null;
+  let radiusX = 0.9;
+  let radiusY = 0.3;
+  let currentPoint = null;
+  let nextPoint = null;
+  let segmentStarted = 0;
+  let segmentDuration = 8000;
 
   function resize() {
+    const host = canvas.parentElement;
+    const contentBottom = [...(host?.children || [])]
+      .filter((element) => element !== canvas)
+      .reduce((bottom, element) => Math.max(bottom, element.offsetTop + element.offsetHeight), 0);
+    const hostPadding = host ? parseFloat(getComputedStyle(host).paddingBottom) || 0 : 0;
+    const targetHeight = Math.max(window.innerHeight, contentBottom + hostPadding);
+    canvas.style.height = `${targetHeight}px`;
     const rect = canvas.getBoundingClientRect();
     const density = Math.min(2, window.devicePixelRatio || 1);
     canvas.width = Math.max(1, Math.round(rect.width * density));
     canvas.height = Math.max(1, Math.round(rect.height * density));
     source.width = 84;
     source.height = Math.max(56, Math.round(84 * rect.height / Math.max(1, rect.width)));
+    radiusX = Math.min(1.2, (window.innerWidth * 1.34) / Math.max(1, rect.width));
+    radiusY = Math.min(0.95, (window.innerHeight * 0.74) / Math.max(1, rect.height));
+    if (!currentPoint) {
+      currentPoint = { x: 0.3, y: Math.min(0.2, (window.innerHeight * 0.22) / Math.max(1, rect.height)) };
+      nextPoint = randomPointFarFrom(currentPoint);
+      segmentStarted = performance.now();
+    }
     draw(performance.now());
   }
 
   function draw(now) {
     if (disposed || !source.width || !source.height) return;
     const time = reduceMotion ? SESSION_SEED * 1000 : now;
+    const center = motionPosition(time);
     const image = sourceContext.createImageData(source.width, source.height);
     const data = image.data;
 
@@ -34,11 +56,9 @@ export function startAmbientField(canvas) {
       const v = y / Math.max(1, source.height - 1);
       for (let x = 0; x < source.width; x += 1) {
         const u = x / Math.max(1, source.width - 1);
-        const centerX = 0.32 + Math.sin(time * 0.0006 + SESSION_SEED) * 0.24;
-        const centerY = 0.2 + Math.cos(time * 0.00043 + SESSION_SEED * 1.4) * 0.1;
         const pulse = 1 + Math.sin(time * 0.00065 + SESSION_SEED * 0.8) * 0.08;
-        const dx = (u - centerX) / (0.54 * pulse);
-        const dy = (v - centerY) / (0.42 * pulse);
+        const dx = (u - center.x) / (radiusX * pulse);
+        const dy = (v - center.y) / (radiusY * pulse);
         const sphere = Math.exp(-2.35 * (dx * dx + dy * dy));
         const waves = [
           0.5 + 0.5 * Math.sin(u * 5.2 + v * 2.1 + time * 0.0002 + SESSION_SEED),
@@ -62,6 +82,33 @@ export function startAmbientField(canvas) {
     context.drawImage(source, 0, 0, canvas.width, canvas.height);
   }
 
+  function motionPosition(now) {
+    if (reduceMotion || !currentPoint || !nextPoint) return currentPoint || { x: 0.3, y: 0.12 };
+    let progress = (now - segmentStarted) / segmentDuration;
+    if (progress >= 1) {
+      currentPoint = nextPoint;
+      nextPoint = randomPointFarFrom(currentPoint);
+      segmentStarted = now;
+      segmentDuration = 6000 + Math.random() * 4000;
+      progress = 0;
+    }
+    const eased = progress * progress * (3 - 2 * progress);
+    return {
+      x: currentPoint.x + (nextPoint.x - currentPoint.x) * eased,
+      y: currentPoint.y + (nextPoint.y - currentPoint.y) * eased
+    };
+  }
+
+  function randomPointFarFrom(origin) {
+    let point;
+    let attempts = 0;
+    do {
+      point = { x: 0.06 + Math.random() * 0.88, y: 0.04 + Math.random() * 0.92 };
+      attempts += 1;
+    } while (attempts < 12 && Math.hypot(point.x - origin.x, point.y - origin.y) < 0.34);
+    return point;
+  }
+
   function animate(now) {
     if (disposed) return;
     if (!document.hidden && now - lastFrame > 38) {
@@ -73,11 +120,16 @@ export function startAmbientField(canvas) {
 
   resize();
   window.addEventListener("resize", resize);
+  if ("ResizeObserver" in window) {
+    resizeObserver = new ResizeObserver(resize);
+    resizeObserver.observe(canvas.parentElement);
+  }
   if (!reduceMotion) frameId = requestAnimationFrame(animate);
 
   return () => {
     disposed = true;
     cancelAnimationFrame(frameId);
     window.removeEventListener("resize", resize);
+    resizeObserver?.disconnect();
   };
 }

@@ -104,7 +104,7 @@ button:active {
 }
 
 .ambient-field {
-  position: fixed;
+  position: absolute;
   z-index: 0;
   top: 0;
   left: 50%;
@@ -269,7 +269,7 @@ label {
   gap: 12px;
   padding: 8px 0 24px;
   border: 0;
-  border-bottom: 1px solid var(--line);
+  border-bottom: 0;
   border-radius: 0;
   background: transparent;
 }
@@ -325,7 +325,6 @@ select {
 .tag-chip {
   min-height: 36px;
   border: 0;
-  border-bottom: 1px solid var(--line);
   border-radius: 0;
   background: transparent;
   color: var(--text);
@@ -336,19 +335,18 @@ select {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  border-bottom-color: var(--accent-2);
   background: transparent;
+  color: var(--accent-2);
 }
 
 .ambient-on .tag-chip,
 .ambient-on .tag-chip.selected {
   border: 0;
-  border-bottom: 1px solid var(--glass-line);
   background: transparent;
 }
 
 .ambient-on .tag-chip.selected {
-  border-bottom-color: var(--accent-2);
+  color: var(--accent-2);
 }
 
 .tag-chip.selected span {

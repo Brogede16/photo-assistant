@@ -12,6 +12,7 @@ Projektet er bevidst bygget uden AI-afhængighed og uden direkte Canon API/SDK-k
 - En monokrom ultramarin gradient og linjebaserede resultater holder farvesproget roligt og reducerer antallet af synlige kasser.
 - Den bevægelige baggrund samles i én stor ultramarin lyskugle; glaslaget kan slås fra og holdes meget let, når FX er aktiv.
 - Lysfeltet har et koncentreret centrum, fader til den rene temabaggrund og vandrer synligt hen over skærmen.
+- Gradientlaget dækker hele dokumentfladen, følger med scroll og bevæger sig ad tilfældige, bløde ruter.
 - Modulær arkitektur: data, søgning, anbefalinger, astro, EXIF og UI holdes adskilt.
 - Canon EOS 80D som første fuldt understøttede kamera.
 - Brugerens udstyr forudindlæst:

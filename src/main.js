@@ -71,7 +71,7 @@ function render() {
           ${renderSelectedTags()}
         </div>
         <div class="suggestion-block">
-          <p class="section-kicker">Forslag mens du skriver</p>
+          <p class="section-kicker">Tags</p>
           <div class="quick-actions">
             ${renderSuggestedTags()}
           </div>
@@ -105,7 +105,7 @@ function renderHome(results = null) {
     <section class="panel">
       <div class="panel-header">
         <p class="section-kicker">Anbefalet</p>
-        <h2>${query ? "Anbefalinger til din situation" : "Hurtige startpunkter"}</h2>
+        <h2>${query ? "Anbefalinger til din situation" : "Guides"}</h2>
       </div>
       <div class="result-list">
         ${resultList.map(renderResultCard).join("")}
@@ -483,12 +483,11 @@ function toggleTheme() {
 }
 
 function getInitialAmbientSetting() {
-  return localStorage.getItem("photoAssistant.ambient.v2") !== "off";
+  return true;
 }
 
 function toggleAmbient() {
   state.ambientEnabled = !state.ambientEnabled;
-  localStorage.setItem("photoAssistant.ambient.v2", state.ambientEnabled ? "on" : "off");
   render();
 }
 
