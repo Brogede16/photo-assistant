@@ -14,6 +14,8 @@ assert.deepEqual(overcast.facets.subject.includes("monkey"), true);
 assert.deepEqual(overcast.facets.light.includes("overcast"), true);
 assert.equal(findExactTerm(taxonomy, "aber").id, "monkey");
 assert.equal(findExactTerm(taxonomy, "gråvejr").id, "overcast");
+assert.equal(findExactTerm(taxonomy, "ko").id, "cow");
+assert.equal(findExactTerm(taxonomy, "køer").id, "cow");
 assert.equal(findExactTerm(taxonomy, "ukendt ord"), null);
 
 const birdResults = searchProfiles("fugl flyver langt væk", situations.profiles, taxonomy);
@@ -27,6 +29,12 @@ assert.equal(milkyWayResults.results[0].item.id, "milky-way-wide");
 
 const zooResults = searchProfiles("aber i zoo gråvejr", situations.profiles, taxonomy);
 assert.equal(zooResults.results[0].item.id, "zoo-monkeys-overcast");
+
+const cowResults = searchProfiles("ko overskyet", situations.profiles, taxonomy);
+assert.equal(cowResults.results[0].item.id, "cow-field-overcast");
+
+const cowNextTags = suggestNextTags("Ko", situations.profiles, taxonomy, ["cow"], 6);
+assert.equal(cowNextTags.some((term) => term.id === "monkey"), false);
 
 const tagQuery = termsToQuery(taxonomy, ["monkey", "overcast", "medium"], "");
 assert.equal(tagQuery, "Abe Overskyet Mellem afstand");
@@ -53,7 +61,7 @@ assert.equal(recommendation.gearChecklist.includes("Stativ"), true);
 assert.equal(maxStarShutterSeconds(18, 1.6), 13);
 assert.equal(astroStatus(new Date("2026-08-08T23:00:00+02:00")).moon.percent >= 0, true);
 assert.equal(astroTargets(new Date("2026-08-08T23:00:00+02:00")).some((target) => target.id === "milky-way-wide"), true);
-assert.equal(versionLog.current, "0.4.4");
-assert.equal(versionLog.entries[0].version, "0.4.4");
+assert.equal(versionLog.current, "0.4.5");
+assert.equal(versionLog.entries[0].version, "0.4.5");
 
 console.log("Alle søge-, anbefalings- og astro-tests bestod.");

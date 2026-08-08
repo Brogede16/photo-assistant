@@ -135,12 +135,7 @@ export function suggestNextTags(query, profiles, taxonomy, selectedIds = [], lim
       addCandidate(candidates, taxonomy, selected, child.id, 70);
     }
 
-    if (selectedTerm.parent) {
-      for (const sibling of taxonomy.terms.filter((term) => term.parent === selectedTerm.parent)) {
-        addCandidate(candidates, taxonomy, selected, sibling.id, 35);
-      }
-      addCandidate(candidates, taxonomy, selected, selectedTerm.parent, 20);
-    }
+    if (selectedTerm.parent) addCandidate(candidates, taxonomy, selected, selectedTerm.parent, 20);
   }
 
   for (const result of search.results.slice(0, 5)) {
@@ -188,6 +183,7 @@ function scoreProfile(profile, classification) {
   let score = 0;
   for (const match of classification.matches) {
     if (profile.subjects?.includes(match.id)) score += match.score + 4;
+    if (match.parent && profile.subjects?.includes(match.parent)) score += match.score + 3;
     if (profile.conditions?.movement?.includes(match.id)) score += match.score + 3;
     if (profile.conditions?.light?.includes(match.id)) score += match.score + 3;
     if (profile.conditions?.distance?.includes(match.id)) score += match.score + 2;

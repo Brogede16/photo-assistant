@@ -2,6 +2,11 @@
   "terms": [
     { "id": "animal", "type": "subject", "label": "Dyr", "synonyms": ["dyr", "dyret", "vilde dyr", "zoo"], "related": ["running", "walking", "overcast", "shade", "far", "telephoto"] },
     { "id": "dog", "type": "subject", "label": "Hund", "parent": "animal", "synonyms": ["hund", "hunden", "hunde"], "related": ["running", "walking", "daylight", "overcast", "medium"] },
+    { "id": "cat", "type": "subject", "label": "Kat", "parent": "animal", "synonyms": ["kat", "katten", "katte", "killing"], "related": ["walking", "running", "indoor", "low-light", "near"] },
+    { "id": "horse", "type": "subject", "label": "Hest", "parent": "animal", "synonyms": ["hest", "hesten", "heste", "pony"], "related": ["running", "walking", "daylight", "overcast", "far"] },
+    { "id": "cow", "type": "subject", "label": "Ko", "parent": "animal", "synonyms": ["ko", "koen", "køer", "koer", "kvæg", "kvaeg", "kalv", "kalve"], "related": ["walking", "still", "daylight", "overcast", "medium", "far"] },
+    { "id": "deer", "type": "subject", "label": "Hjort", "parent": "animal", "synonyms": ["hjort", "hjorte", "rådyr", "raadyr", "dådyr", "daadyr"], "related": ["walking", "running", "daylight", "shade", "far", "telephoto"] },
+    { "id": "fox", "type": "subject", "label": "Ræv", "parent": "animal", "synonyms": ["ræv", "raev", "ræven", "raeven"], "related": ["walking", "running", "low-light", "far", "telephoto"] },
     { "id": "bird", "type": "subject", "label": "Fugl", "parent": "animal", "synonyms": ["fugl", "fugle", "ørn", "rovfugl", "måge", "and", "svane", "småfugl"], "related": ["flight", "far", "daylight", "overcast", "telephoto"] },
     { "id": "monkey", "type": "subject", "label": "Abe", "parent": "animal", "synonyms": ["abe", "aber", "chimpanse", "gorilla", "orangutang", "primat", "primater"], "related": ["overcast", "shade", "walking", "running", "medium", "far"] },
     { "id": "person", "type": "subject", "label": "Menneske", "synonyms": ["person", "menneske", "mennesker", "portræt", "portraet", "familie", "barn", "børn", "boern"] },

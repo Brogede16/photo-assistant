@@ -279,6 +279,44 @@
       "why": "Overskyet zoo-lys er ofte blødt men svagt. 1/800 er et praktisk startpunkt, fordi aber skifter mellem stille og hurtig bevægelse."
     },
     {
+      "id": "cow-field-overcast",
+      "title": "Ko på mark",
+      "family": "dyr",
+      "priority": 87,
+      "subjects": ["cow", "animal"],
+      "conditions": { "movement": ["still", "walking"], "light": ["daylight", "overcast"], "distance": ["medium", "far"] },
+      "gearStrategy": { "preferredLensRoles": ["animals", "telephoto", "walkaround"] },
+      "baseSettings": {
+        "mode": "Av",
+        "focalLength": "70-300mm eller 35-55mm",
+        "shutter": { "start": "Auto", "range": ["1/250", "1/800"] },
+        "aperture": { "start": "f/5.6", "range": ["f/4", "f/8"] },
+        "iso": "Auto",
+        "focus": "One Shot hvis koen står stille, AI Servo hvis den går tæt på",
+        "drive": "Single eller kort serie"
+      },
+      "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot", "setLensStabilizationOn"],
+      "quickGuide": [
+        "Brug 70-300mm hvis koen er et stykke væk.",
+        "Brug 18-55mm eller Sigma hvis du vil have mere af marken og omgivelserne med.",
+        "Fokusér på hovedet eller øjet, hvis det er synligt.",
+        "Ved overskyet lys: brug Auto ISO og hold øje med at lukkertiden ikke falder for langt ned."
+      ],
+      "fieldGuide": {
+        "before": [
+          "Vælg tele, hvis du ikke kan komme tæt på uden at forstyrre dyret.",
+          "Slå IS til på 70-300mm ved håndholdt foto.",
+          "Start i Av med f/5.6 for en enkel og rolig opsætning."
+        ],
+        "during": [
+          "Vent på at koen løfter hovedet eller vender siden let mod dig.",
+          "Hvis den går, tag en kort serie og hold fokus på hovedet.",
+          "Hvis baggrunden er rodet, zoom mere ind eller flyt dig lidt til siden."
+        ]
+      },
+      "why": "Køer bevæger sig typisk langsomt, så du behøver ikke fugle-hurtige lukkertider. Objektivvalg og komposition betyder ofte mere end maksimal hastighed."
+    },
+    {
       "id": "portrait-outdoor-backlight",
       "title": "Portræt i modlys",
       "family": "mennesker",
