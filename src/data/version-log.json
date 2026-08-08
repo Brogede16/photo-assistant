@@ -1,6 +1,17 @@
 {
-  "current": "0.16.0",
+  "current": "0.17.0",
   "entries": [
+    {
+      "version": "0.17.0",
+      "date": "2026-08-08",
+      "title": "Natur og dokumenterede valg",
+      "items": [
+        "Tilføjede tags og scenarier for træer, græs, dug, blade, svampe, blomstereng, å, sø og bjerge.",
+        "Vandfald kan nu vælges som blødt vand med lang eksponering eller skarpe dråber med hurtig lukkertid.",
+        "Nye tests kontrollerer, at naturens motiv, lys, afstand og ønskede effekt giver den rigtige samlede profil.",
+        "Dokumenterede hvordan tags, profiler, udstyr, kilder og regelmotor bliver valideret."
+      ]
+    },
     {
       "version": "0.16.0",
       "date": "2026-08-08",

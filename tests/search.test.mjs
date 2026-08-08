@@ -219,6 +219,37 @@ assert.equal(waterfallRecommendation.settings.mode, "M");
 assert.equal(waterfallRecommendation.settings.shutter, "1/2s");
 assert.equal(waterfallRecommendation.settings.aperture, "f/11");
 
+assert.equal(findExactTerm(taxonomy, "natur").id, "nature");
+assert.equal(findExactTerm(taxonomy, "træstamme").id, "tree");
+assert.equal(findExactTerm(taxonomy, "græsstrå").id, "grass");
+assert.equal(findExactTerm(taxonomy, "paddehat").id, "mushroom");
+assert.equal(findExactTerm(taxonomy, "vandløb").id, "river");
+assert.equal(findExactTerm(taxonomy, "dugdråber").id, "dew");
+assert.equal(findExactTerm(taxonomy, "frys vandet").id, "freeze-motion");
+assert.equal(searchProfiles("natur", situations.profiles, taxonomy).results[0].item.id, "nature-landscape-daylight");
+assert.equal(searchProfiles("træer i skov overskyet", situations.profiles, taxonomy).results[0].item.id, "trees-forest-overcast");
+assert.equal(searchProfiles("træ i modlys aften", situations.profiles, taxonomy).results[0].item.id, "tree-backlight-evening");
+assert.equal(searchProfiles("dug på græs close-up morgen", situations.profiles, taxonomy).results[0].item.id, "grass-dew-morning-closeup");
+assert.equal(searchProfiles("blomstereng landskab", situations.profiles, taxonomy).results[0].item.id, "flower-meadow-wide");
+assert.equal(searchProfiles("svamp close-up i skov", situations.profiles, taxonomy).results[0].item.id, "mushroom-forest-closeup");
+assert.equal(searchProfiles("blade i modlys tæt på", situations.profiles, taxonomy).results[0].item.id, "leaves-backlight-closeup");
+assert.equal(searchProfiles("å lang eksponering", situations.profiles, taxonomy).results[0].item.id, "river-soft-flow");
+assert.equal(searchProfiles("sø morgen langt væk", situations.profiles, taxonomy).results[0].item.id, "lake-reflection-calm");
+assert.equal(searchProfiles("bjerglandskab dagslys", situations.profiles, taxonomy).results[0].item.id, "mountain-landscape-daylight");
+
+const frozenWaterfall = searchProfiles("vandfald frys bevægelsen", situations.profiles, taxonomy);
+assert.equal(frozenWaterfall.results[0].item.id, "waterfall-frozen-motion");
+const frozenWaterfallRecommendation = buildRecommendation(frozenWaterfall.results[0].item, equipment, { classification: frozenWaterfall.classification });
+assert.equal(frozenWaterfallRecommendation.settings.mode, "Tv");
+assert.equal(frozenWaterfallRecommendation.settings.shutter, "1/1000");
+assert.equal(frozenWaterfall.results.some((result) => result.item.id === "waterfall-long-exposure"), false);
+assert.equal(waterfall.results[0].item.id, "waterfall-long-exposure");
+assert.equal(waterfall.results.some((result) => result.item.id === "waterfall-frozen-motion"), false);
+assert.deepEqual(mergeTagIds(taxonomy, ["long-exposure"], ["freeze-motion"]), ["freeze-motion"]);
+assert.equal(new Set(taxonomy.terms.map((term) => term.id)).size, taxonomy.terms.length);
+assert.equal(taxonomy.terms.length >= 140, true);
+assert.equal(situations.profiles.length >= 82, true);
+
 const macroRecommendation = buildRecommendation(macroResults.results[0].item, equipment, {
   classification: macroResults.classification
 });
@@ -246,8 +277,8 @@ assert.equal(influencedRecommendation.scenarioDecisions[0].includes("Mit regnkon
 assert.equal(maxStarShutterSeconds(18, 1.6), 13);
 assert.equal(astroStatus(new Date("2026-08-08T23:00:00+02:00")).moon.percent >= 0, true);
 assert.equal(astroTargets(new Date("2026-08-08T23:00:00+02:00")).some((target) => target.id === "milky-way-wide"), true);
-assert.equal(versionLog.current, "0.16.0");
-assert.equal(versionLog.entries[0].version, "0.16.0");
+assert.equal(versionLog.current, "0.17.0");
+assert.equal(versionLog.entries[0].version, "0.17.0");
 assert.equal(learning.lessons.length, 6);
 assert.equal(learning.lessons.some((lesson) => lesson.id === "modes"), true);
 assert.deepEqual(new Set(situations.profiles.map((profile) => profile.baseSettings.mode)), new Set(["P", "Av", "Tv", "M"]));

@@ -86,6 +86,7 @@ export function searchProfiles(query, profiles, taxonomy, presets = []) {
     if (!profileAcceptsMotion(profile, classification, taxonomy)) continue;
     if (!profileAcceptsPlace(profile, classification, taxonomy)) continue;
     if (!profileAcceptsDistance(profile, classification)) continue;
+    if (!profileAcceptsTechnique(profile, classification, taxonomy)) continue;
     const score = scoreProfile(profile, classification);
     if (score > 0) {
       results.push({
@@ -120,6 +121,17 @@ function profileAcceptsDistance(profile, classification) {
   const supported = profile.conditions?.distance || [];
   if (!supported.length) return true;
   return requested.some((distance) => supported.includes(distance.id));
+}
+
+function profileAcceptsTechnique(profile, classification, taxonomy) {
+  const requested = classification.matches.filter((match) => match.type === "technique" && !match.implied && match.exclusiveGroup);
+  if (!requested.length) return true;
+  const profileIds = profile.conditions?.technique || [];
+  const profileTerms = profileIds.map((id) => findTermById(taxonomy, id)).filter(Boolean);
+  return requested.every((term) => {
+    const alternatives = profileTerms.filter((profileTerm) => profileTerm.exclusiveGroup === term.exclusiveGroup);
+    return alternatives.length === 0 || profileIds.includes(term.id);
+  });
 }
 
 function profileAcceptsPlace(profile, classification, taxonomy) {

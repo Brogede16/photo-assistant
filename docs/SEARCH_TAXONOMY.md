@@ -36,3 +36,5 @@ Hvis søgningen ikke giver stærke resultater, gemmes søgeteksten lokalt som uk
 Profilen giver et fotografisk udgangspunkt. De valgte tags lægges derefter på i faste lag: motiv og handling, bevægelse, lys, afstand, sted og tid. Hvert lag må kun ændre de indstillinger, det har faglig betydning for. Eksempelvis styrer bevægelse primært lukkertid, fokus og serieoptagelse, mens afstand styrer objektivprioritet. Astro og effektmotiver som fyrværkeri er beskyttede mod almindelige bevægelsesregler.
 
 Astro bruger samme klassifikation og samme resultatvisning som andre motiver. `Stjerner`, `Mælkevejen`, `Nordlys`, `Måne`, tidspunkt og afstand kan derfor kombineres som almindelige tags.
+
+Se [Validering af indstillinger](SETTING_VALIDATION.md) for kvalitetstjek, kilder og et gennemgået vandfaldseksempel.
