@@ -8,6 +8,7 @@ Projektet er bevidst bygget uden AI-afhængighed og uden direkte Canon API/SDK-k
 
 - Dansk mobile-first PWA med skarpt, feltvenligt interface og lyst/mørkt tema.
 - Lokalt genereret gradientfelt med synlig bevægelse, ny komposition ved hver åbning og en husket pause/play-kontakt.
+- Rød nattetilstand slukker gradienten automatisk for at beskytte nattesynet.
 - Offline-first service worker: appen bruger den gemte kopi først og opdaterer data i baggrunden, når der er net.
 - Transparente glasflader og et editorialt serif/sans-serif-hierarki lader gradienten leve gennem hele appen.
 - En monokrom ultramarin gradient og linjebaserede resultater holder farvesproget roligt og reducerer antallet af synlige kasser.
@@ -26,6 +27,7 @@ Projektet er bevidst bygget uden AI-afhængighed og uden direkte Canon API/SDK-k
 - Ét levende tagsystem for motiv, handling, afstand, sted, vejr, tidspunkt, lys og stil.
 - Scenariemotoren vælger mellem Canon-programmerne P, Av, Tv, M og Bulb ud fra den ønskede kontrol.
 - 141 grundscenarier, blandt andet standardportrætter, baggrundstyper, biler, strand, vand, børn, indendørs hverdag, natur, biograf, arkitektur, festival, panorering og lysspor.
+- Dyreliv skelner mellem landjord, skov, fugle i luften, dyr på havet og sæl/søløve i eller uden for vandet.
 - Astro som central tagfamilie med stjerner, Mælkevejen, nordlys og måne.
 - Astro-guides med stjerner, Mælkevejen og meteorregn viser en indbygget brændvidde-beregner for maks lukkertid på EOS 80D.
 - Objektivvalg kan forklares med et konkret alternativ fra brugerens kit.

@@ -636,6 +636,10 @@ function applyTheme() {
 
 function setTheme(theme) {
   state.theme = theme;
+  if (theme === "red") {
+    state.ambientEnabled = false;
+    localStorage.setItem("photoAssistant.ambientEnabled", "false");
+  }
   localStorage.setItem("photoAssistant.theme", state.theme);
   applyTheme();
   render();

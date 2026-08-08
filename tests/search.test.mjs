@@ -99,6 +99,8 @@ assert.equal(findExactTerm(taxonomy, "marker").id, "field");
 assert.equal(findExactTerm(taxonomy, "søløve").id, "seal");
 assert.equal(findExactTerm(taxonomy, "i vandet").id, "in-water");
 assert.equal(findExactTerm(taxonomy, "på land").id, "on-shore");
+assert.equal(findExactTerm(taxonomy, "landjord").id, "land-ground");
+assert.equal(findExactTerm(taxonomy, "i luften").id, "flight");
 assert.equal(classifyQuery("morgen", taxonomy).facets.subject?.includes("castle") || false, false);
 assert.equal(classifyQuery("om natten", taxonomy).facets.subject?.includes("cat") || false, false);
 
@@ -121,7 +123,11 @@ assert.deepEqual(mergeTagIds(taxonomy, ["toward-city"], ["away-from-city"]), ["a
 assert.deepEqual(mergeTagIds(taxonomy, ["light-pollution"], ["dark-sky"]), ["dark-sky"]);
 
 const birdResults = searchProfiles("fugl flyver langt væk", situations.profiles, taxonomy);
-assert.equal(birdResults.results[0].item.id, "bird-flight-daylight");
+assert.equal(birdResults.results[0].item.id, "bird-in-air-far");
+assert.equal(searchProfiles("fugl i luften langt væk", situations.profiles, taxonomy).results[0].item.id, "bird-in-air-far");
+assert.equal(searchProfiles("rådyr i skov langt væk", situations.profiles, taxonomy).results[0].item.id, "wildlife-forest-far");
+assert.equal(searchProfiles("dyr på landjord langt væk", situations.profiles, taxonomy).results[0].item.id, "wildlife-land-far");
+assert.equal(searchProfiles("hest løber på mark", situations.profiles, taxonomy).results[0].item.id, "wildlife-land-running");
 
 const astroResults = searchProfiles("nordlys", situations.profiles, taxonomy);
 assert.equal(astroResults.results[0].item.id, "aurora-weak");
