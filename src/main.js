@@ -275,6 +275,7 @@ function renderResultCard(result, index) {
         <span>${recommendation.settings.aperture}</span>
         <span>ISO ${recommendation.settings.iso}</span>
       </div>
+      ${recommendation.exposurePlan ? `<p class="exposure-summary">${recommendation.exposurePlan.perFrame} pr. billede · ${recommendation.exposurePlan.total} samlet</p>` : ""}
     </article>
   `;
 }
@@ -324,6 +325,7 @@ function openResult(profileId) {
         <span>${recommendation.settings.drive}</span>
         ${recommendation.flash ? `<span>${recommendation.flash.model}</span>` : ""}
       </div>
+      ${renderExposurePlan(recommendation.exposurePlan)}
       ${recommendation.scenarioDecisions.length ? `<div class="scenario-decisions"><p class="section-kicker">Sådan hænger dine tags sammen</p><ul>${recommendation.scenarioDecisions.map((item) => `<li>${item}</li>`).join("")}</ul></div>` : ""}
       <h3>Tag med</h3>
       <div class="gear-checklist">
@@ -370,6 +372,27 @@ function openResult(profileId) {
     state.presets = loadPresets();
     renderPresets();
   });
+}
+
+function renderExposurePlan(plan) {
+  if (!plan) return "";
+  return `
+    <section class="exposure-plan">
+      <div>
+        <p class="section-kicker">Lang eksponering</p>
+        <h3>Plan for hele forløbet</h3>
+      </div>
+      <p class="timing-note">${plan.timing}</p>
+      <div class="exposure-grid">
+        <div><span>Pr. billede</span><strong>${plan.perFrame}</strong></div>
+        <div><span>Antal</span><strong>${plan.frames}</strong></div>
+        <div><span>Interval</span><strong>${plan.interval}</strong></div>
+        <div><span>Samlet tid</span><strong>${plan.total}</strong></div>
+      </div>
+      <p><strong>Canon-app:</strong> ${plan.control}</p>
+      <details><summary>Alternativ med Bulb</summary><p>${plan.alternative}</p></details>
+    </section>
+  `;
 }
 
 function renderFieldGuide(profile) {

@@ -687,6 +687,62 @@
       "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setAiServo", "setLensStabilizationOn"],
       "quickGuide": ["Brug regnslag; kamera og objektiv er ikke et regnsikkert pro-kit.", "Placér scenelys bag dråberne, hvis muligt.", "Tør frontglasset og kontrollér kontrast mellem serier."],
       "why": "Regn reducerer lyset, men dråber og optræden kræver stadig kort lukkertid."
+    },
+    {
+      "id": "star-trails-sequence",
+      "title": "Stjernespor over en time",
+      "family": "astro",
+      "priority": 95,
+      "subjects": ["star-trails", "stars"],
+      "conditions": { "movement": ["still"], "light": ["night"], "time": ["night-time"], "distance": ["far"], "technique": ["long-exposure", "interval-sequence"] },
+      "gearStrategy": { "preferredLensRoles": ["astro", "wide"], "support": ["tripod", "remote-release"] },
+      "baseSettings": { "mode": "M", "focalLength": "18mm", "shutter": { "start": "20s", "range": ["15s", "25s"] }, "aperture": { "start": "f/2.8", "range": ["f/1.8", "f/4"] }, "iso": { "start": "800", "range": ["400", "1600"] }, "focus": "Manuel fokus på en klar stjerne", "drive": "Gentagen fjernudløsning" },
+      "exposurePlan": { "timing": "Når himlen er helt mørk, ofte 60-90 min. efter solnedgang", "perFrame": "20 sek.", "frames": "180 billeder", "interval": "1 sek. mellem billeder", "total": "Ca. 63 min.", "control": "Brug Canon Camera Connect som fjernudløser og til kontrolbilleder; automatisk gentagelse afhænger af kamera/app", "alternative": "Bulb på 5-15 min. kan bruges, men en serie giver mindre sensorvarme og er lettere at redde" },
+      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setLensManualFocus", "useLiveViewForAstro", "useCanonCameraConnect"],
+      "quickGuide": ["Brug 18mm, stativ og et fuldt batteri.", "Tag først ét testbillede og kontrollér fokus og histogram.", "Optag 180 billeder á 20 sekunder og stak dem senere til sammenhængende spor."],
+      "why": "Stjernespor bygges sikrest af mange lange eksponeringer. En hel times enkelt eksponering øger risikoen for sensorvarme, overeksponering og et ødelagt slutresultat."
+    },
+    {
+      "id": "meteor-shower-sequence",
+      "title": "Meteorregn som billedserie",
+      "family": "astro",
+      "priority": 93,
+      "subjects": ["meteor-shower", "stars"],
+      "conditions": { "movement": ["still"], "light": ["night"], "time": ["night-time"], "distance": ["far"], "technique": ["interval-sequence"] },
+      "gearStrategy": { "preferredLensRoles": ["astro", "wide"], "support": ["tripod", "remote-release"] },
+      "baseSettings": { "mode": "M", "focalLength": "18mm", "shutter": { "start": "10s", "range": ["8s", "13s"] }, "aperture": { "start": "f/1.8", "range": ["f/1.8", "f/2.2"] }, "iso": { "start": "3200", "range": ["1600", "3200"] }, "focus": "Manuel fokus på en klar stjerne", "drive": "Gentagen fjernudløsning" },
+      "exposurePlan": { "timing": "Fra fuldt mørke og mindst 60 min. omkring meteorregnens forventede maksimum", "perFrame": "10 sek.", "frames": "300-600 billeder", "interval": "1 sek. mellem billeder", "total": "Ca. 55-110 min.", "control": "Brug Canon Camera Connect som fjernudløser og til kontrolbilleder; automatisk gentagelse afhænger af kamera/app", "alternative": "Få lange Bulb-eksponeringer frarådes, fordi meteorerne lettere forsvinder i en lys himmel" },
+      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setLensManualFocus", "useLiveViewForAstro", "useCanonCameraConnect"],
+      "quickGuide": ["Ret kameraet et stykke fra radianten, så sporene bliver længere.", "Brug 18mm og kontrollér fokus før serien.", "Lad kameraet arbejde uafbrudt i mindst en time."],
+      "why": "Meteorregn handler om sandsynlighed. Mange korte eksponeringer giver langt større chance for at fange flere meteorer."
+    },
+    {
+      "id": "night-landscape-long",
+      "title": "Natlandskab med lang eksponering",
+      "family": "astro",
+      "priority": 85,
+      "subjects": ["night-landscape"],
+      "conditions": { "movement": ["still"], "light": ["night", "low-light"], "time": ["evening", "night-time"], "distance": ["far"], "technique": ["long-exposure"] },
+      "gearStrategy": { "preferredLensRoles": ["wide", "astro"], "support": ["tripod", "remote-release"] },
+      "baseSettings": { "mode": "M", "focalLength": "18-35mm", "shutter": { "start": "20s", "range": ["10s", "30s"] }, "aperture": { "start": "f/5.6", "range": ["f/4", "f/8"] }, "iso": { "start": "400", "range": ["100", "1600"] }, "focus": "Manuel fokus eller One Shot før det bliver helt mørkt", "drive": "Canon Camera Connect" },
+      "exposurePlan": { "timing": "Start 30-60 min. efter solnedgang; vent længere for mørkere himmel", "perFrame": "20 sek.", "frames": "1-5 billeder", "interval": "Ingen fast interval", "total": "Ca. 1-3 min. inkl. kontrol", "control": "Udløs uden at røre kameraet via Canon Camera Connect", "alternative": "Ved vand eller skyer kan 1-2 min. i Bulb give mere udjævning, hvis højlys ikke brænder ud" },
+      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setLensManualFocus", "useCanonCameraConnect"],
+      "quickGuide": ["Komponér og fokusér før mørket bliver totalt.", "Start med 20 sekunder og tjek de lyseste områder.", "Brug Bulb i 1-2 minutter kun når scenen er mørk nok."],
+      "why": "Et natlandskab kan have både mørk himmel og meget lyse lamper. Testbilleder er vigtigere end én fast lang lukkertid."
+    },
+    {
+      "id": "light-trails-evening",
+      "title": "Lysspor fra biler i aftenbyen",
+      "family": "aften",
+      "priority": 84,
+      "subjects": ["light-trails"],
+      "conditions": { "movement": ["running"], "light": ["twilight", "night", "low-light"], "time": ["evening", "twilight", "night-time"], "place": ["street", "city", "outdoor"], "distance": ["medium", "far"], "technique": ["long-exposure"] },
+      "gearStrategy": { "preferredLensRoles": ["wide", "walkaround"], "support": ["tripod", "remote-release"] },
+      "baseSettings": { "mode": "M", "focalLength": "18-35mm", "shutter": { "start": "10s", "range": ["5s", "20s"] }, "aperture": { "start": "f/8", "range": ["f/8", "f/11"] }, "iso": { "start": "100", "range": ["100", "400"] }, "focus": "One Shot på vej eller bygning, derefter MF", "drive": "Canon Camera Connect" },
+      "exposurePlan": { "timing": "Start 20-40 min. efter solnedgang, mens himlen stadig har lidt farve", "perFrame": "10 sek.", "frames": "10-20 billeder", "interval": "Tag næste billede når trafikken passer", "total": "Ca. 5-15 min.", "control": "Brug Canon Camera Connect som vibrationsfri udløser", "alternative": "Bulb på 30-60 sek. kan samle flere spor, men pas på gadelygter og skilte" },
+      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setLensManualFocus", "useCanonCameraConnect"],
+      "quickGuide": ["Sæt stativet sikkert væk fra trafik.", "Start med 10 sekunder, f/8 og ISO 100.", "Gå kortere i tid hvis gadelygter bliver helt hvide."],
+      "why": "Skumring giver balance mellem byens omgivelser og bilernes lysspor. Helt mørk nat gør kontrasten hårdere."
     }
   ]
 }

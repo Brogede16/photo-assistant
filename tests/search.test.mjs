@@ -23,6 +23,8 @@ assert.equal(findExactTerm(taxonomy, "natklub").id, "nightclub");
 assert.equal(findExactTerm(taxonomy, "makro").id, "macro");
 assert.equal(findExactTerm(taxonomy, "nærbillede").id, "close-up");
 assert.equal(findExactTerm(taxonomy, "gruppeportræt").id, "group-portrait");
+assert.equal(findExactTerm(taxonomy, "stjernespor").id, "star-trails");
+assert.equal(findExactTerm(taxonomy, "lang eksponering").id, "long-exposure");
 
 const consumedPhrase = consumeKnownTerms("ko gråt vejr ", taxonomy);
 assert.deepEqual(consumedPhrase.termIds, ["cow", "overcast"]);
@@ -112,6 +114,24 @@ const protectedAstro = buildRecommendation(astroResults.results[0].item, equipme
 });
 assert.equal(protectedAstro.settings.shutter, "6s");
 
+const starTrailSearch = searchProfiles("stjernespor nat", situations.profiles, taxonomy);
+assert.equal(starTrailSearch.results[0].item.id, "star-trails-sequence");
+const starTrailRecommendation = buildRecommendation(starTrailSearch.results[0].item, equipment, {
+  classification: starTrailSearch.classification
+});
+assert.equal(starTrailRecommendation.settings.shutter, "20s");
+assert.equal(starTrailRecommendation.exposurePlan.total, "Ca. 63 min.");
+assert.equal(starTrailRecommendation.exposurePlan.frames, "180 billeder");
+
+const nightLandscape = searchProfiles("natlandskab lang eksponering", situations.profiles, taxonomy);
+assert.equal(nightLandscape.results[0].item.id, "night-landscape-long");
+const lightTrails = searchProfiles("lysspor aften gade", situations.profiles, taxonomy);
+assert.equal(lightTrails.results[0].item.id, "light-trails-evening");
+const protectedLightTrails = buildRecommendation(lightTrails.results[0].item, equipment, {
+  classification: classifyQuery("lysspor løber aften gade", taxonomy)
+});
+assert.equal(protectedLightTrails.settings.shutter, "10s");
+
 const macroRecommendation = buildRecommendation(macroResults.results[0].item, equipment, {
   classification: macroResults.classification
 });
@@ -139,8 +159,8 @@ assert.equal(influencedRecommendation.scenarioDecisions[0].includes("Mit regnkon
 assert.equal(maxStarShutterSeconds(18, 1.6), 13);
 assert.equal(astroStatus(new Date("2026-08-08T23:00:00+02:00")).moon.percent >= 0, true);
 assert.equal(astroTargets(new Date("2026-08-08T23:00:00+02:00")).some((target) => target.id === "milky-way-wide"), true);
-assert.equal(versionLog.current, "0.6.0");
-assert.equal(versionLog.entries[0].version, "0.6.0");
+assert.equal(versionLog.current, "0.7.0");
+assert.equal(versionLog.entries[0].version, "0.7.0");
 assert.equal(learning.lessons.length, 5);
 assert.equal(learning.lessons.every((lesson) => lesson.answers[lesson.correct]), true);
 

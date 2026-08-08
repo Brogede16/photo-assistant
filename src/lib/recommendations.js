@@ -41,6 +41,7 @@ export function buildRecommendation(profile, equipment, context = {}) {
     flash: shouldSuggestFlash(profile, equipment) ? equipment.flashes?.[0] : null,
     settings: scenario.settings,
     scenarioDecisions: scenario.decisions,
+    exposurePlan: profile.exposurePlan || null,
     gearChecklist: buildGearChecklist(profile, lens),
     actions: (profile.cameraActions || []).map((actionId) => ({
       id: actionId,

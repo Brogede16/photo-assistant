@@ -1,6 +1,17 @@
 {
-  "current": "0.6.0",
+  "current": "0.7.0",
   "entries": [
+    {
+      "version": "0.7.0",
+      "date": "2026-08-08",
+      "title": "Lange aften- og Astro-forløb",
+      "items": [
+        "Anbefalinger kan nu skelne mellem lukkertid pr. billede og samlet optagetid i minutter eller timer.",
+        "Tilføjede stjernespor, meteorregn, natlandskab og lysspor i aftenbyen.",
+        "Lange forløb viser startvindue efter solnedgang, antal billeder, interval, samlet tid og Canon Camera Connect-styring.",
+        "Bulb vises som et alternativ, mens lange Astro-serier anbefales for mindre sensorvarme og større fejltolerance."
+      ]
+    },
     {
       "version": "0.6.0",
       "date": "2026-08-08",

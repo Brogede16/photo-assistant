@@ -15,7 +15,7 @@ export function triangulateScenario(baseSettings, classification, profile) {
     .filter((item) => item.rule)
     .sort((a, b) => b.rule.rank - a.rule.rank);
 
-  if (motionSignals.length && profile.family !== "astro" && profile.id !== "fireworks-tripod") {
+  if (motionSignals.length && profile.family !== "astro" && !profile.exposurePlan && profile.id !== "fireworks-tripod") {
     const { match, rule } = motionSignals[0];
     settings.mode = "M";
     settings.shutter = rule.shutter;

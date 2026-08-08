@@ -88,3 +88,21 @@ Presets gemmes lokalt i browseren.
   "tags": ["monkey", "zoo", "overcast"]
 }
 ```
+
+## ExposurePlan
+
+Lange aften- og Astro-forløb beskrives særskilt fra kameraets grundindstillinger:
+
+```json
+{
+  "timing": "60-90 min. efter solnedgang",
+  "perFrame": "20 sek.",
+  "frames": "180 billeder",
+  "interval": "1 sek. mellem billeder",
+  "total": "Ca. 63 min.",
+  "control": "Canon Camera Connect",
+  "alternative": "Bulb på 5-15 min. er muligt, men serie anbefales"
+}
+```
+
+`perFrame` er den faktiske lukkertid. `total` er hele optagelsens varighed. Meget lange Astro-resultater bygges som udgangspunkt af en serie fremfor én ubrudt eksponering.

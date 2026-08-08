@@ -18,6 +18,7 @@ Projektet er bevidst bygget uden AI-afhængighed og uden direkte Canon API/SDK-k
 - Søgning på tværs af motiver, lys, bevægelse, afstand, problemer, teknikker og udstyr.
 - Ét levende tagsystem for motiv, handling, afstand, sted, vejr, tidspunkt, lys og stil.
 - Astro som central tagfamilie med stjerner, Mælkevejen, nordlys og måne.
+- Lange aften- og Astro-forløb med lukkertid pr. billede, samlet optagetid, startvindue og Bulb-alternativ.
 - Lokale presets kan bruges som gennemsigtigt udgangspunkt for matchende guides.
 - Billedupload kun til lokal EXIF-læsning og "gem som mit preset".
 - Egne presets markeres tydeligt som `MIT PRESET`.

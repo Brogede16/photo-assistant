@@ -44,11 +44,10 @@ export function classifyQuery(query, taxonomy) {
   for (const entry of index) {
     if (!entry.phrase) continue;
     const directMatch = containsPhrase(normalized, entry.phrase);
-    const partialMatch = tokens.some((token) => token.length >= 3 && entry.phrase.startsWith(token));
     const fuzzyMatch = tokens.some((token) => token.length > 4 && levenshtein(token, entry.phrase) <= 1);
-    if (directMatch || partialMatch || fuzzyMatch) {
+    if (directMatch || fuzzyMatch) {
       const current = matches.get(entry.term.id) || { ...entry.term, score: 0 };
-      current.score += directMatch ? 4 : partialMatch ? 2 : 1;
+      current.score += directMatch ? 4 : 1;
       matches.set(entry.term.id, current);
     }
   }
@@ -202,6 +201,10 @@ export function suggestNextTags(query, profiles, taxonomy, selectedIds = [], lim
   const search = searchProfiles(query || termsToQuery(taxonomy, selectedIds), profiles, taxonomy);
   const candidates = new Map();
 
+  for (const term of findPrefixTerms(query, taxonomy)) {
+    addCandidate(candidates, taxonomy, selected, term.id, 130);
+  }
+
   for (const match of search.classification.matches) {
     if (!match.implied) addCandidate(candidates, taxonomy, selected, match.id, 120 + match.score);
   }
@@ -233,6 +236,7 @@ export function suggestNextTags(query, profiles, taxonomy, selectedIds = [], lim
       ...(profile.conditions?.time || []),
       ...(profile.conditions?.weather || []),
       ...(profile.conditions?.style || []),
+      ...(profile.conditions?.technique || []),
       ...(profile.gearStrategy?.preferredLensRoles || [])
     ];
     for (const id of ids) {
@@ -251,6 +255,18 @@ export function suggestNextTags(query, profiles, taxonomy, selectedIds = [], lim
     .sort((a, b) => b.score - a.score || a.term.label.localeCompare(b.term.label, "da"))
     .slice(0, limit)
     .map((item) => item.term);
+}
+
+function findPrefixTerms(query, taxonomy) {
+  const words = normalizeText(query).split(" ").filter(Boolean);
+  const prefix = words.at(-1) || "";
+  if (prefix.length < 3 || findExactTerm(taxonomy, prefix)) return [];
+  const matches = new Map();
+  for (const term of taxonomy.terms) {
+    const phrases = [term.id, term.label, ...(term.synonyms || [])].map(normalizeText);
+    if (phrases.some((phrase) => phrase.startsWith(prefix))) matches.set(term.id, term);
+  }
+  return [...matches.values()];
 }
 
 function addCandidate(candidates, taxonomy, selected, id, score) {
@@ -277,6 +293,7 @@ function scoreProfile(profile, classification) {
     if (profile.conditions?.time?.includes(match.id)) score += match.score + 2;
     if (profile.conditions?.weather?.includes(match.id)) score += match.score + 2;
     if (profile.conditions?.style?.includes(match.id)) score += match.score + 3;
+    if (profile.conditions?.technique?.includes(match.id)) score += match.score + 2;
     if (profile.gearStrategy?.preferredLensRoles?.includes(match.id)) score += match.score + 1;
     if (containsPhrase(normalizeText(profile.title), normalizeText(match.id))) score += 2;
     if (containsPhrase(normalizeText(profile.title), normalizeText(match.label))) score += 2;
@@ -309,6 +326,7 @@ function typeBoost(type) {
     time: 3,
     weather: 3,
     style: 4,
+    technique: 2,
     equipment: 1
   }[type] || 0;
 }
