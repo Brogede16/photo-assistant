@@ -27,6 +27,8 @@ assert.equal(findExactTerm(taxonomy, "stjernespor").id, "star-trails");
 assert.equal(findExactTerm(taxonomy, "lang eksponering").id, "long-exposure");
 assert.equal(findExactTerm(taxonomy, "bil").id, "car");
 assert.equal(findExactTerm(taxonomy, "standard portræt").id, "classic-portrait");
+assert.equal(findExactTerm(taxonomy, "enkeltmand").id, "single-portrait");
+assert.equal(findExactTerm(taxonomy, "portræt af en mand").id, "single-portrait");
 assert.equal(findExactTerm(taxonomy, "rodet baggrund").id, "busy-background");
 assert.equal(findExactTerm(taxonomy, "hverdagsbillede").id, "snapshot");
 
@@ -156,6 +158,16 @@ assert.equal(buildRecommendation(standardPortrait.results[0].item, equipment, {
   classification: standardPortrait.classification
 }).settings.mode, "Av");
 assert.equal(searchProfiles("portræt rodet baggrund", situations.profiles, taxonomy).results[0].item.id, "portrait-busy-background");
+
+const singlePortrait = searchProfiles("portræt enkeltmand", situations.profiles, taxonomy);
+assert.equal(singlePortrait.results[0].item.id, "portrait-single-person");
+const singlePortraitRecommendation = buildRecommendation(singlePortrait.results[0].item, equipment, { classification: singlePortrait.classification });
+assert.equal(singlePortraitRecommendation.settings.mode, "Av");
+assert.equal(singlePortraitRecommendation.settings.shutter, "1/250");
+assert.equal(singlePortraitRecommendation.settings.aperture, "f/2.8");
+assert.equal(singlePortraitRecommendation.lens.id, "sigma-18-35-f18-art");
+assert.equal(singlePortrait.results.every((result) => result.item.conditions?.style?.includes("single-portrait")), true);
+assert.equal(searchProfiles("enkeltportræt i regn", situations.profiles, taxonomy).results[0].item.id, "portrait-rain");
 
 const carRainNight = searchProfiles("bil kører i regn om natten", situations.profiles, taxonomy);
 assert.equal(carRainNight.results[0].item.id, "car-rain-night");
@@ -301,8 +313,8 @@ const festivalSpotlight = searchProfiles("festival aften spotlight", situations.
 assert.equal(festivalSpotlight.results[0].item.id, "concert-singer-spotlight");
 assert.equal(buildRecommendation(festivalSpotlight.results[0].item, equipment, { classification: festivalSpotlight.classification }).settings.iso, "800");
 assert.equal(searchProfiles("koncert lavt lys", situations.profiles, taxonomy).results[0].item.id, "concert-indoor-stage");
-assert.equal(taxonomy.terms.length >= 159, true);
-assert.equal(situations.profiles.length >= 94, true);
+assert.equal(taxonomy.terms.length >= 160, true);
+assert.equal(situations.profiles.length >= 95, true);
 
 const macroRecommendation = buildRecommendation(macroResults.results[0].item, equipment, {
   classification: macroResults.classification
@@ -331,8 +343,8 @@ assert.equal(influencedRecommendation.scenarioDecisions[0].includes("Mit regnkon
 assert.equal(maxStarShutterSeconds(18, 1.6), 13);
 assert.equal(astroStatus(new Date("2026-08-08T23:00:00+02:00")).moon.percent >= 0, true);
 assert.equal(astroTargets(new Date("2026-08-08T23:00:00+02:00")).some((target) => target.id === "milky-way-wide"), true);
-assert.equal(versionLog.current, "0.18.0");
-assert.equal(versionLog.entries[0].version, "0.18.0");
+assert.equal(versionLog.current, "0.18.1");
+assert.equal(versionLog.entries[0].version, "0.18.1");
 assert.equal(learning.lessons.length, 6);
 assert.equal(learning.lessons.some((lesson) => lesson.id === "modes"), true);
 assert.deepEqual(new Set(situations.profiles.map((profile) => profile.baseSettings.mode)), new Set(["P", "Av", "Tv", "M"]));

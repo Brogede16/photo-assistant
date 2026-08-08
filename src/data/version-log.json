@@ -1,6 +1,17 @@
 {
-  "current": "0.18.0",
+  "current": "0.18.1",
   "entries": [
+    {
+      "version": "0.18.1",
+      "date": "2026-08-08",
+      "title": "Enkeltportræt",
+      "items": [
+        "Tilføjede Enkeltportræt som selvstændigt tag og scenarie for én person.",
+        "Ord som enkeltmand, soloportræt og portræt af en mand forbindes med samme fotografiske scenarie.",
+        "Guiden bruger Sigma ved 35mm, Av, f/2.8, Auto ISO og mindst 1/250 som konkret udgangspunkt.",
+        "Lys, afstand og baggrund kan fortsat tilføjes som tags og præcisere situationen."
+      ]
+    },
     {
       "version": "0.18.0",
       "date": "2026-08-08",

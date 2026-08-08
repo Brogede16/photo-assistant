@@ -82,6 +82,7 @@ export function searchProfiles(query, profiles, taxonomy, presets = []) {
   const results = [];
 
   for (const profile of profiles) {
+    if (!profileAcceptsRequiredTerms(profile, classification)) continue;
     if (!profileRequiredTagsMatch(profile, classification)) continue;
     if (!profileAcceptsSubjects(profile, classification, taxonomy)) continue;
     if (!profileAcceptsMotion(profile, classification, taxonomy)) continue;
@@ -117,6 +118,14 @@ export function searchProfiles(query, profiles, taxonomy, presets = []) {
     classification,
     results: results.sort((a, b) => b.score - a.score)
   };
+}
+
+function profileAcceptsRequiredTerms(profile, classification) {
+  const required = classification.matches.filter((match) => !match.implied && match.requiresProfileMatch);
+  return required.every((term) => {
+    if (term.type === "subject") return (profile.subjects || []).includes(term.id);
+    return (profile.conditions?.[term.type] || []).includes(term.id);
+  });
 }
 
 function profileRequiredTagsMatch(profile, classification) {
