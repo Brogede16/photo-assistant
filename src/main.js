@@ -117,7 +117,7 @@ function renderHome(results = null) {
 
 function renderSelectedTags() {
   if (!state.selectedTagIds.length) {
-    return `<span class="empty-tags">Klik på forslag for at bygge din situation</span>`;
+    return "";
   }
   return state.selectedTagIds
     .map((id) => {
@@ -278,7 +278,7 @@ function renderResultCard(result, index) {
     <article class="result-card" data-result-index="${index}">
       <div class="card-title-row">
         <div>
-          <p class="badge">${result.presetInfluence ? "Guide + dit preset" : "Photo Assistant guide"}</p>
+          ${result.presetInfluence ? `<p class="badge">Dit preset påvirker guiden</p>` : ""}
           <h3>${result.item.title}</h3>
         </div>
         <button data-open-result="${result.item.id}">Åbn</button>

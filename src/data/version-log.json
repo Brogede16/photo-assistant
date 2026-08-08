@@ -1,6 +1,18 @@
 {
-  "current": "0.12.0",
+  "current": "0.13.0",
   "entries": [
+    {
+      "version": "0.13.0",
+      "date": "2026-08-08",
+      "title": "Klarere flader og bedre læring",
+      "items": [
+        "Reducerede glaslaget med 50 procent i både lyst og mørkt tema for tydeligere indhold.",
+        "Gradienten er nu én større ultramarin lyskugle med en lidt hurtigere, rolig bevægelse.",
+        "Fjernede hjælpeteksten under søgning og Photo Assistant guide-labelen fra resultater.",
+        "Bundmenuen er mere transparent og lader gradienten fortsætte gennem navigationen.",
+        "Lær bruger blåtonede flader og forklarer nu sammenhængen mellem bevægelsesslør, lukkertid, Auto ISO og billedstøj."
+      ]
+    },
     {
       "version": "0.12.0",
       "date": "2026-08-08",

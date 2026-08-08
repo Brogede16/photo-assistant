@@ -32,21 +32,25 @@ export function startAmbientField(canvas) {
 
     for (let y = 0; y < source.height; y += 1) {
       const v = y / Math.max(1, source.height - 1);
-      const fade = 0.34 + 0.66 * Math.pow(Math.max(0, 1 - v * 0.82), 1.6);
       for (let x = 0; x < source.width; x += 1) {
         const u = x / Math.max(1, source.width - 1);
+        const centerX = 0.5 + Math.sin(time * 0.00022 + SESSION_SEED) * 0.18;
+        const centerY = 0.44 + Math.cos(time * 0.00017 + SESSION_SEED * 1.4) * 0.16;
+        const dx = (u - centerX) / 0.78;
+        const dy = (v - centerY) / 0.72;
+        const sphere = Math.pow(Math.max(0, 1 - Math.sqrt(dx * dx + dy * dy)), 0.72);
         const waves = [
-          0.5 + 0.5 * Math.sin(u * 5.2 + v * 2.1 + time * 0.00011 + SESSION_SEED),
-          0.5 + 0.5 * Math.sin(u * -3.4 + v * 5.8 + time * 0.00008 + SESSION_SEED * 1.7),
-          0.5 + 0.5 * Math.cos(u * 4.4 + v * -3.2 + time * 0.00009 + SESSION_SEED * 2.4),
-          0.5 + 0.5 * Math.sin(u * 2.2 + v * 6.1 - time * 0.00007 + SESSION_SEED * 3.1)
+          0.5 + 0.5 * Math.sin(u * 5.2 + v * 2.1 + time * 0.0002 + SESSION_SEED),
+          0.5 + 0.5 * Math.sin(u * -3.4 + v * 5.8 + time * 0.00016 + SESSION_SEED * 1.7),
+          0.5 + 0.5 * Math.cos(u * 4.4 + v * -3.2 + time * 0.00018 + SESSION_SEED * 2.4),
+          0.5 + 0.5 * Math.sin(u * 2.2 + v * 6.1 - time * 0.00014 + SESSION_SEED * 3.1)
         ];
         const total = waves.reduce((sum, value) => sum + value * value, 0);
         const pixel = (y * source.width + x) * 4;
         for (let channel = 0; channel < 3; channel += 1) {
           data[pixel + channel] = Math.round(waves.reduce((sum, value, index) => sum + palette[index][channel] * value * value, 0) / total);
         }
-        data[pixel + 3] = Math.round(210 * fade);
+        data[pixel + 3] = Math.round(238 * sphere);
       }
     }
 
@@ -59,7 +63,7 @@ export function startAmbientField(canvas) {
 
   function animate(now) {
     if (disposed) return;
-    if (!document.hidden && now - lastFrame > 55) {
+    if (!document.hidden && now - lastFrame > 38) {
       draw(now);
       lastFrame = now;
     }

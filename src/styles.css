@@ -15,9 +15,9 @@
   --accent-2: #aeb7ff;
   --danger: #ff4d4d;
   --nav-bg: rgba(9, 11, 14, 0.96);
-  --glass: rgba(9, 11, 14, 0.2);
-  --glass-soft: rgba(13, 16, 20, 0.13);
-  --glass-inset: rgba(4, 6, 9, 0.18);
+  --glass: rgba(9, 11, 14, 0.1);
+  --glass-soft: rgba(13, 16, 20, 0.07);
+  --glass-inset: rgba(4, 6, 9, 0.09);
   --glass-line: rgba(255, 255, 255, 0.2);
   --shadow: 0 -8px 24px rgba(0, 0, 0, 0.28);
   --radius: 8px;
@@ -42,9 +42,9 @@
   --accent-2: #2437e8;
   --danger: #c8102e;
   --nav-bg: rgba(244, 246, 248, 0.96);
-  --glass: rgba(255, 255, 255, 0.28);
-  --glass-soft: rgba(255, 255, 255, 0.2);
-  --glass-inset: rgba(255, 255, 255, 0.26);
+  --glass: rgba(255, 255, 255, 0.14);
+  --glass-soft: rgba(255, 255, 255, 0.1);
+  --glass-inset: rgba(255, 255, 255, 0.13);
   --glass-line: rgba(0, 0, 0, 0.16);
   --shadow: 0 -8px 24px rgba(31, 42, 52, 0.14);
 }
@@ -108,11 +108,11 @@ button:active {
   z-index: 0;
   top: 0;
   left: 50%;
-  width: min(920px, calc(100vw + 80px));
+  width: min(1200px, calc(100vw + 220px));
   height: 100dvh;
   pointer-events: none;
   opacity: 0.82;
-  filter: blur(34px) saturate(1.18);
+  filter: blur(52px) saturate(1.16);
   transform: translateX(-50%);
 }
 
@@ -309,6 +309,10 @@ select {
   align-items: center;
 }
 
+.selected-tags:empty {
+  display: none;
+}
+
 .empty-tags {
   color: var(--muted);
   font-size: 14px;
@@ -411,8 +415,8 @@ select {
 
 .ambient-on .tabbar {
   border-color: var(--glass-line);
-  background: color-mix(in srgb, var(--bg) 68%, transparent);
-  backdrop-filter: blur(24px) saturate(1.1);
+  background: color-mix(in srgb, var(--bg) 38%, transparent);
+  backdrop-filter: blur(20px) saturate(1.08);
 }
 
 .ambient-on .tabbar button {
@@ -590,7 +594,7 @@ select {
   overflow: hidden;
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  background: var(--line);
+  background: color-mix(in srgb, var(--accent-2), transparent 72%);
 }
 
 .lesson-scale div {
@@ -599,7 +603,7 @@ select {
   gap: 3px;
   min-height: 112px;
   padding: 12px;
-  background: var(--inset);
+  background: color-mix(in srgb, var(--bg) 88%, var(--accent-2));
 }
 
 .lesson-scale div:last-child:nth-child(odd) {
@@ -629,7 +633,22 @@ select {
   gap: 8px;
   padding: 14px;
   border: 1px solid var(--line);
-  background: var(--inset);
+  background: color-mix(in srgb, var(--bg) 64%, var(--accent-2));
+}
+
+.learn-panel button {
+  border-color: rgba(160, 172, 255, 0.58);
+  background: rgba(37, 55, 255, 0.26);
+}
+
+.learn-panel .learn-topics button.active {
+  background: rgba(37, 55, 255, 0.48);
+}
+
+.ambient-on .learn-panel .lesson-rule,
+.ambient-on .learn-panel .field-exercise,
+.ambient-on .learn-panel .lesson-check {
+  background: rgba(37, 55, 255, 0.16);
 }
 
 .lesson-rule {
