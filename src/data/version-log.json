@@ -1,6 +1,18 @@
 {
-  "current": "0.13.0",
+  "current": "0.14.0",
   "entries": [
+    {
+      "version": "0.14.0",
+      "date": "2026-08-08",
+      "title": "Tydeligt ultramarin lysfelt",
+      "items": [
+        "Gradienten er koncentreret som et klart ultramarin lysfelt i den øverste del af skærmen.",
+        "Farven fader tydeligt til ren hvid eller sort længere nede, som i designreferencen.",
+        "Reducerede sløringen og øgede farvemætningen, så det blå centrum er let at aflæse.",
+        "Lysfeltet vandrer nu synligt på tværs af skærmen over cirka 10-14 sekunder.",
+        "Bevægelsen bruger fortsat bløde kurver, stopper i skjulte faner og har en tydelig pause/play-knap."
+      ]
+    },
     {
       "version": "0.13.0",
       "date": "2026-08-08",

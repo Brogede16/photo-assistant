@@ -111,13 +111,13 @@ button:active {
   width: min(1200px, calc(100vw + 220px));
   height: 100dvh;
   pointer-events: none;
-  opacity: 0.82;
-  filter: blur(52px) saturate(1.16);
+  opacity: 1;
+  filter: blur(28px) saturate(1.35);
   transform: translateX(-50%);
 }
 
 :root[data-theme="light"] .ambient-field {
-  opacity: 0.58;
+  opacity: 0.94;
 }
 
 .ambient-on .search-hero,
@@ -212,7 +212,7 @@ button:active {
 
 @media (prefers-reduced-motion: reduce) {
   .ambient-field {
-    filter: blur(34px) saturate(1.08);
+    filter: blur(28px) saturate(1.2);
   }
 }
 

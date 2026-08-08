@@ -7,10 +7,11 @@ Projektet er bevidst bygget uden AI-afhængighed og uden direkte Canon API/SDK-k
 ## Første scope
 
 - Dansk mobile-first PWA med skarpt, feltvenligt interface og lyst/mørkt tema.
-- Lokalt genereret gradientfelt med langsom bevægelse, ny komposition ved hver åbning og en husket FX-kontakt.
+- Lokalt genereret gradientfelt med synlig bevægelse, ny komposition ved hver åbning og en husket pause/play-kontakt.
 - Transparente glasflader og et editorialt serif/sans-serif-hierarki lader gradienten leve gennem hele appen.
 - En monokrom ultramarin gradient og linjebaserede resultater holder farvesproget roligt og reducerer antallet af synlige kasser.
 - Den bevægelige baggrund samles i én stor ultramarin lyskugle; glaslaget kan slås fra og holdes meget let, når FX er aktiv.
+- Lysfeltet har et koncentreret centrum, fader til den rene temabaggrund og vandrer synligt hen over skærmen.
 - Modulær arkitektur: data, søgning, anbefalinger, astro, EXIF og UI holdes adskilt.
 - Canon EOS 80D som første fuldt understøttede kamera.
 - Brugerens udstyr forudindlæst:

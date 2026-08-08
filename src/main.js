@@ -56,7 +56,7 @@ function render() {
         <h1>Photo Assistant</h1>
       </div>
       <div class="header-actions">
-        <button class="icon-button fx-toggle ${state.ambientEnabled ? "active" : ""}" data-action="toggle-ambient" aria-pressed="${state.ambientEnabled}" aria-label="${state.ambientEnabled ? "Slå gradient og bevægelse fra" : "Slå gradient og bevægelse til"}" title="${state.ambientEnabled ? "Gradient og bevægelse: til" : "Gradient og bevægelse: fra"}">FX</button>
+        <button class="icon-button fx-toggle ${state.ambientEnabled ? "active" : ""}" data-action="toggle-ambient" aria-pressed="${state.ambientEnabled}" aria-label="${state.ambientEnabled ? "Sæt gradientens bevægelse på pause" : "Start gradientens bevægelse"}" title="${state.ambientEnabled ? "Gradient bevæger sig" : "Gradient er sat på pause"}"><span aria-hidden="true">${state.ambientEnabled ? "Ⅱ" : "▶"}</span></button>
         <button class="icon-button theme-toggle" data-action="toggle-theme" aria-label="${state.theme === "dark" ? "Skift til lyst tema" : "Skift til mørkt tema"}" title="${state.theme === "dark" ? "Lyst tema" : "Mørkt tema"}"><span aria-hidden="true">${state.theme === "dark" ? "☀" : "◐"}</span></button>
         <button class="icon-button" data-action="show-version-log" aria-label="Versionlog" title="Versionlog">v${state.versionLog.current}</button>
         <button class="icon-button" data-action="show-equipment" aria-label="Mit udstyr" title="Mit udstyr">80D</button>
@@ -483,12 +483,12 @@ function toggleTheme() {
 }
 
 function getInitialAmbientSetting() {
-  return localStorage.getItem("photoAssistant.ambient") !== "off";
+  return localStorage.getItem("photoAssistant.ambient.v2") !== "off";
 }
 
 function toggleAmbient() {
   state.ambientEnabled = !state.ambientEnabled;
-  localStorage.setItem("photoAssistant.ambient", state.ambientEnabled ? "on" : "off");
+  localStorage.setItem("photoAssistant.ambient.v2", state.ambientEnabled ? "on" : "off");
   render();
 }
 

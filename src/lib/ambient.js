@@ -34,11 +34,12 @@ export function startAmbientField(canvas) {
       const v = y / Math.max(1, source.height - 1);
       for (let x = 0; x < source.width; x += 1) {
         const u = x / Math.max(1, source.width - 1);
-        const centerX = 0.5 + Math.sin(time * 0.00022 + SESSION_SEED) * 0.18;
-        const centerY = 0.44 + Math.cos(time * 0.00017 + SESSION_SEED * 1.4) * 0.16;
-        const dx = (u - centerX) / 0.78;
-        const dy = (v - centerY) / 0.72;
-        const sphere = Math.pow(Math.max(0, 1 - Math.sqrt(dx * dx + dy * dy)), 0.72);
+        const centerX = 0.32 + Math.sin(time * 0.0006 + SESSION_SEED) * 0.24;
+        const centerY = 0.2 + Math.cos(time * 0.00043 + SESSION_SEED * 1.4) * 0.1;
+        const pulse = 1 + Math.sin(time * 0.00065 + SESSION_SEED * 0.8) * 0.08;
+        const dx = (u - centerX) / (0.54 * pulse);
+        const dy = (v - centerY) / (0.42 * pulse);
+        const sphere = Math.exp(-2.35 * (dx * dx + dy * dy));
         const waves = [
           0.5 + 0.5 * Math.sin(u * 5.2 + v * 2.1 + time * 0.0002 + SESSION_SEED),
           0.5 + 0.5 * Math.sin(u * -3.4 + v * 5.8 + time * 0.00016 + SESSION_SEED * 1.7),
@@ -50,7 +51,7 @@ export function startAmbientField(canvas) {
         for (let channel = 0; channel < 3; channel += 1) {
           data[pixel + channel] = Math.round(waves.reduce((sum, value, index) => sum + palette[index][channel] * value * value, 0) / total);
         }
-        data[pixel + 3] = Math.round(238 * sphere);
+        data[pixel + 3] = Math.round(255 * sphere);
       }
     }
 
