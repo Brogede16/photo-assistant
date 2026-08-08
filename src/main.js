@@ -104,7 +104,6 @@ function renderHome(results = null) {
   content.innerHTML = `
     <section class="panel">
       <div class="panel-header">
-        <p class="section-kicker">Anbefalet</p>
         <h2>${query ? "Anbefalinger til din situation" : "Guides"}</h2>
       </div>
       <div class="result-list">

@@ -1,6 +1,17 @@
 {
-  "current": "0.15.0",
+  "current": "0.16.0",
   "entries": [
+    {
+      "version": "0.16.0",
+      "date": "2026-08-08",
+      "title": "Tættere forside og flere situationer",
+      "items": [
+        "Fjernede Anbefalet over Guides og samlede søgefelt, tags og guides tættere.",
+        "Den usynlige række til valgte tags optager ikke længere plads, når den er tom.",
+        "Udvidede tagsystemet med flere hverdags-, natur- og stedbegreber.",
+        "Tilføjede nye gennemprøvede scenarier med konkrete indstillinger til Canon EOS 80D."
+      ]
+    },
     {
       "version": "0.15.0",
       "date": "2026-08-08",

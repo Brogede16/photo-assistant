@@ -193,6 +193,32 @@ assert.equal(searchProfiles("mennesker hygger indenfor", situations.profiles, ta
 assert.equal(searchProfiles("mennesker spiser indenfor", situations.profiles, taxonomy).results[0].item.id, "people-eating-indoor");
 assert.equal(searchProfiles("mennesker spiser udenfor", situations.profiles, taxonomy).results[0].item.id, "people-eating-outdoor");
 
+assert.equal(findExactTerm(taxonomy, "legeplads").id, "playground");
+assert.equal(findExactTerm(taxonomy, "gadefoto").id, "street-photo");
+assert.equal(findExactTerm(taxonomy, "cyklist").id, "cycling");
+assert.equal(findExactTerm(taxonomy, "vandfald").id, "waterfall");
+assert.equal(searchProfiles("hund løber i park", situations.profiles, taxonomy).results[0].item.id, "dog-running-park");
+assert.equal(searchProfiles("kat hjemme ved vinduet", situations.profiles, taxonomy).results[0].item.id, "cat-home-window");
+assert.equal(searchProfiles("barn hopper på legeplads", situations.profiles, taxonomy).results[0].item.id, "child-playground-action");
+assert.equal(searchProfiles("gadefoto i dagslys", situations.profiles, taxonomy).results[0].item.id, "street-photo-daylight");
+assert.equal(searchProfiles("mad på restaurant", situations.profiles, taxonomy).results[0].item.id, "restaurant-food-closeup");
+assert.equal(searchProfiles("landskab tåge i skov", situations.profiles, taxonomy).results[0].item.id, "foggy-forest-landscape");
+assert.equal(searchProfiles("arkitektur i skumring", situations.profiles, taxonomy).results[0].item.id, "architecture-blue-hour");
+
+const indoorSport = searchProfiles("sport i hallen indenfor", situations.profiles, taxonomy);
+assert.equal(indoorSport.results[0].item.id, "indoor-sport-action");
+const indoorSportRecommendation = buildRecommendation(indoorSport.results[0].item, equipment, { classification: indoorSport.classification });
+assert.equal(indoorSportRecommendation.settings.mode, "M");
+assert.equal(indoorSportRecommendation.settings.shutter, "1/800");
+assert.equal(indoorSportRecommendation.lens.id, "sigma-18-35-f18-art");
+
+const waterfall = searchProfiles("vandfald lang eksponering", situations.profiles, taxonomy);
+assert.equal(waterfall.results[0].item.id, "waterfall-long-exposure");
+const waterfallRecommendation = buildRecommendation(waterfall.results[0].item, equipment, { classification: waterfall.classification });
+assert.equal(waterfallRecommendation.settings.mode, "M");
+assert.equal(waterfallRecommendation.settings.shutter, "1/2s");
+assert.equal(waterfallRecommendation.settings.aperture, "f/11");
+
 const macroRecommendation = buildRecommendation(macroResults.results[0].item, equipment, {
   classification: macroResults.classification
 });
@@ -220,8 +246,8 @@ assert.equal(influencedRecommendation.scenarioDecisions[0].includes("Mit regnkon
 assert.equal(maxStarShutterSeconds(18, 1.6), 13);
 assert.equal(astroStatus(new Date("2026-08-08T23:00:00+02:00")).moon.percent >= 0, true);
 assert.equal(astroTargets(new Date("2026-08-08T23:00:00+02:00")).some((target) => target.id === "milky-way-wide"), true);
-assert.equal(versionLog.current, "0.15.0");
-assert.equal(versionLog.entries[0].version, "0.15.0");
+assert.equal(versionLog.current, "0.16.0");
+assert.equal(versionLog.entries[0].version, "0.16.0");
 assert.equal(learning.lessons.length, 6);
 assert.equal(learning.lessons.some((lesson) => lesson.id === "modes"), true);
 assert.deepEqual(new Set(situations.profiles.map((profile) => profile.baseSettings.mode)), new Set(["P", "Av", "Tv", "M"]));
