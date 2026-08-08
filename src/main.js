@@ -1009,6 +1009,7 @@ function labelProcedure(key) {
     setHighSpeedContinuous: "Vælg serieoptagelse",
     setDriveMode: "Indstil enkeltbillede eller serie",
     useLiveViewForAstro: "Fokusér med Live View",
+    use80dIntervalTimer: "Brug 80D intervaltimer",
     useCanonCameraConnect: "Brug Canon Camera Connect",
     setLensStabilizationOn: "Slå IS til på objektivet",
     setLensManualFocus: "Sæt objektivet til MF"

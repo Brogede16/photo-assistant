@@ -33,6 +33,8 @@ Projektet er bevidst bygget uden AI-afhængighed og uden direkte Canon API/SDK-k
 - Dyreliv skelner mellem landjord, skov, fugle i luften, dyr på havet og sæl/søløve i eller uden for vandet.
 - Astro som central tagfamilie med stjerner, Mælkevejen, nordlys og måne.
 - Astro-guides med stjerner, Mælkevejen og meteorregn viser en indbygget brændvidde-beregner for maks lukkertid på EOS 80D.
+- Stjerner og Mælkevejen bruger samme sikre 18mm-lukkertid, f/2.2 for renere hjørner og ISO som lysbuffer.
+- Lange astroserier bruger EOS 80D's indbyggede intervaltimer og advarer mod Long exposure noise reduction i serier.
 - Objektivvalg kan forklares med et konkret alternativ fra brugerens kit.
 - Lange aften- og Astro-forløb med lukkertid pr. billede, samlet optagetid, startvindue og Bulb-alternativ.
 - Lokale presets kan bruges som gennemsigtigt udgangspunkt for matchende guides.

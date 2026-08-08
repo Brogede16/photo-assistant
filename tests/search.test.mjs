@@ -134,6 +134,10 @@ assert.equal(astroResults.results[0].item.id, "aurora-weak");
 
 const milkyWayResults = searchProfiles("mælkevejen", situations.profiles, taxonomy);
 assert.equal(milkyWayResults.results[0].item.id, "milky-way-wide");
+const milkyWayRecommendation = buildRecommendation(milkyWayResults.results[0].item, equipment, { classification: milkyWayResults.classification });
+assert.equal(milkyWayRecommendation.settings.shutter, "8s");
+assert.equal(milkyWayRecommendation.settings.aperture, "f/2.2");
+assert.equal(milkyWayRecommendation.settings.iso, "3200");
 
 const cityStars = searchProfiles("stjerner i byen lysforurening mod byen", situations.profiles, taxonomy);
 assert.equal(cityStars.results[0].item.id, "stars-city-light-pollution");
@@ -147,13 +151,16 @@ assert.equal(searchProfiles("stjerner ved bykanten", situations.profiles, taxono
 const fieldStars = searchProfiles("stjerner ved bykanten væk fra byen ud over marken mørk himmel", situations.profiles, taxonomy);
 assert.equal(fieldStars.results[0].item.id, "stars-field-away-city");
 const fieldStarsRecommendation = buildRecommendation(fieldStars.results[0].item, equipment, { classification: fieldStars.classification });
-assert.equal(fieldStarsRecommendation.settings.shutter, "10s");
-assert.equal(fieldStarsRecommendation.settings.aperture, "f/1.8");
-assert.equal(fieldStarsRecommendation.settings.iso, "1600");
+assert.equal(fieldStarsRecommendation.settings.shutter, "8s");
+assert.equal(fieldStarsRecommendation.settings.aperture, "f/2.2");
+assert.equal(fieldStarsRecommendation.settings.iso, "3200");
 
 const cityEdgeMilkyWay = searchProfiles("mælkevejen væk fra byen ud over marken", situations.profiles, taxonomy);
 assert.equal(cityEdgeMilkyWay.results[0].item.id, "milky-way-city-edge-away");
-assert.equal(buildRecommendation(cityEdgeMilkyWay.results[0].item, equipment, { classification: cityEdgeMilkyWay.classification }).settings.shutter, "8s");
+const cityEdgeMilkyWayRecommendation = buildRecommendation(cityEdgeMilkyWay.results[0].item, equipment, { classification: cityEdgeMilkyWay.classification });
+assert.equal(cityEdgeMilkyWayRecommendation.settings.shutter, "8s");
+assert.equal(cityEdgeMilkyWayRecommendation.settings.aperture, "f/2.2");
+assert.equal(cityEdgeMilkyWayRecommendation.settings.iso, "3200");
 assert.equal(searchProfiles("måne over byen", situations.profiles, taxonomy).results[0].item.id, "moon-city-skyline");
 assert.equal(searchProfiles("stjernespor over byen", situations.profiles, taxonomy).results[0].item.id, "star-trails-city");
 assert.equal(searchProfiles("meteorregn væk fra byen ud over marken", situations.profiles, taxonomy).results[0].item.id, "meteor-shower-field-away-city");
@@ -376,6 +383,11 @@ const protectedAstro = buildRecommendation(astroResults.results[0].item, equipme
   classification: classifyQuery("nordlys løber", taxonomy)
 });
 assert.equal(protectedAstro.settings.shutter, "6s");
+const fastAurora = searchProfiles("kraftigt nordlys løber", situations.profiles, taxonomy);
+assert.equal(fastAurora.results[0].item.id, "aurora-fast");
+const fastAuroraRecommendation = buildRecommendation(fastAurora.results[0].item, equipment, { classification: fastAurora.classification });
+assert.equal(fastAuroraRecommendation.settings.shutter, "2s");
+assert.equal(fastAuroraRecommendation.settings.iso, "3200");
 
 const starTrailSearch = searchProfiles("stjernespor nat", situations.profiles, taxonomy);
 assert.equal(starTrailSearch.results[0].item.id, "star-trails-sequence");
@@ -383,8 +395,11 @@ const starTrailRecommendation = buildRecommendation(starTrailSearch.results[0].i
   classification: starTrailSearch.classification
 });
 assert.equal(starTrailRecommendation.settings.shutter, "20s");
-assert.equal(starTrailRecommendation.exposurePlan.total, "Ca. 63 min.");
+assert.equal(starTrailRecommendation.settings.aperture, "f/4");
+assert.equal(starTrailRecommendation.settings.iso, "400");
+assert.equal(starTrailRecommendation.exposurePlan.total, "Ca. 60-63 min.");
 assert.equal(starTrailRecommendation.exposurePlan.frames, "180 billeder");
+assert.equal(starTrailRecommendation.actions.some((action) => action.id === "use80dIntervalTimer"), true);
 
 const nightLandscape = searchProfiles("natlandskab lang eksponering", situations.profiles, taxonomy);
 assert.equal(nightLandscape.results[0].item.id, "night-landscape-long");
@@ -464,7 +479,9 @@ assert.equal(searchProfiles("hund løber i park", situations.profiles, taxonomy)
 assert.equal(searchProfiles("kat hjemme ved vinduet", situations.profiles, taxonomy).results[0].item.id, "cat-home-window");
 assert.equal(searchProfiles("barn hopper på legeplads", situations.profiles, taxonomy).results[0].item.id, "child-playground-action");
 assert.equal(searchProfiles("gadefoto i dagslys", situations.profiles, taxonomy).results[0].item.id, "street-photo-daylight");
-assert.equal(searchProfiles("mad på restaurant", situations.profiles, taxonomy).results[0].item.id, "restaurant-food-closeup");
+const restaurantFood = searchProfiles("mad på restaurant", situations.profiles, taxonomy);
+assert.equal(restaurantFood.results[0].item.id, "restaurant-food-closeup");
+assert.equal(buildRecommendation(restaurantFood.results[0].item, equipment, { classification: restaurantFood.classification }).settings.aperture, "f/4");
 assert.equal(searchProfiles("landskab tåge i skov", situations.profiles, taxonomy).results[0].item.id, "foggy-forest-landscape");
 assert.equal(searchProfiles("arkitektur i skumring", situations.profiles, taxonomy).results[0].item.id, "architecture-blue-hour");
 

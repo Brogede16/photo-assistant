@@ -86,6 +86,7 @@ function buildExactSteps(actionId, settings, camera, lens) {
     setDriveMode: ["Tryk DRIVE-knappen på toppen.", `Drej Main Dial, til ${settings.drive} vises.`, settings.drive === "Single" ? "Tag ét billede ad gangen." : "Brug korte, kontrollerede serier."],
     setLensStabilizationOn: [`Sæt STABILIZER-kontakten på ${lens.model} til ON.`, "Slå stabilisering fra, hvis kameraet står helt fast på stativ."],
     useLiveViewForAstro: ["Tryk START/STOP for Live View.", "Forstør en klar stjerne 5x og derefter 10x.", "Drej fokusringen, til stjernen er mindst mulig og skarp."],
+    use80dIntervalTimer: ["Åbn optagemenuen på EOS 80D og find Intervaltimer.", "Sæt intervallet til den anbefalede pause og antal billeder til serien.", "Slå Long exposure noise reduction fra, før du starter lange serier."],
     useCanonCameraConnect: ["Forbind EOS 80D til Canon Camera Connect via kameraets Wi-Fi-menu.", "Åbn fjernoptagelse, og brug appens udløser uden at røre kameraet."]
   };
   return (exact[actionId] || camera?.procedures?.[actionId] || []).filter(Boolean);

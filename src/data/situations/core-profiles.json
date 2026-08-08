@@ -12,8 +12,8 @@
         "mode": "M",
         "focalLength": "18mm",
         "shutter": { "start": "8s", "range": ["6s", "10s"] },
-        "aperture": { "start": "f/1.8", "strategy": "wide-open" },
-        "iso": { "start": "1600", "range": ["1600", "3200"] },
+        "aperture": { "start": "f/2.2", "range": ["f/2", "f/2.8"] },
+        "iso": { "start": "3200", "range": ["1600", "6400"] },
         "focus": "Manuel fokus",
         "drive": "2 sek. selvudløser eller Canon Camera Connect"
       },
@@ -22,9 +22,9 @@
         "Brug Sigma 18-35mm ved 18mm.",
         "Sæt kameraet på stativ.",
         "Fokusér manuelt med Live View på en klar stjerne.",
-        "Start med 8 sek., f/1.8 og ISO 1600."
+        "Start med 8 sek., f/2.2 og ISO 3200."
       ],
-      "why": "80D er APS-C, så 18mm giver cirka 29mm full-frame equivalent. 8-10 sekunder er et sikkert startområde, før stjernerne begynder at tegne tydelige spor."
+      "why": "80D er APS-C, så 18mm giver cirka 29mm full-frame equivalent. 8 sekunder er et sikkert startpunkt mod stjernespor, mens f/2.2 giver pænere stjerner i hjørnerne end helt åben f/1.8."
     },
     {
       "id": "aurora-weak",
@@ -163,9 +163,9 @@
       "baseSettings": {
         "mode": "M",
         "focalLength": "18mm",
-        "shutter": { "start": "10s", "range": ["8s", "13s"] },
-        "aperture": { "start": "f/1.8", "strategy": "wide-open" },
-        "iso": { "start": "3200", "range": ["1600", "3200"] },
+        "shutter": { "start": "8s", "range": ["6s", "10s"] },
+        "aperture": { "start": "f/2.2", "range": ["f/2", "f/2.8"] },
+        "iso": { "start": "3200", "range": ["3200", "6400"] },
         "focus": "Manuel fokus på stjerne",
         "drive": "Canon Camera Connect eller 2 sek. selvudløser"
       },
@@ -174,7 +174,7 @@
         "Brug Sigma 18-35mm ved 18mm.",
         "Find mørk himmel væk fra bylys.",
         "Fokusér manuelt på en klar stjerne før du komponerer færdigt.",
-        "Start med 10 sek., f/1.8 og ISO 3200."
+        "Start med 8 sek., f/2.2 og ISO 3200."
       ],
       "fieldGuide": {
         "before": [
@@ -184,11 +184,11 @@
         ],
         "during": [
           "Tag et testbillede og zoom ind på stjernerne på skærmen.",
-          "Hvis stjernerne bliver til små streger, gå ned mod 8 sek.",
-          "Hvis billedet er for mørkt, hæv ISO før du gør lukkertiden meget længere."
+          "Hvis stjernerne bliver til små streger, gå ned mod 6 sek.",
+          "Hvis billedet er for mørkt, hæv ISO før du gør lukkertiden længere."
         ]
       },
-      "why": "Mælkevejen kræver mere lys end en simpel stjernehimmel, men 18mm på 80D sætter stadig en praktisk grænse for lukkertiden."
+      "why": "Jordens rotation ændrer sig ikke, fordi motivet er Mælkevejen. Brug samme sikre lukkertid som stjernehimlen ved 18mm, og hent ekstra lys med ISO i stedet."
     },
     {
       "id": "aurora-fast",
@@ -203,14 +203,14 @@
         "focalLength": "18mm",
         "shutter": { "start": "2s", "range": ["1s", "4s"] },
         "aperture": { "start": "f/1.8", "strategy": "wide-open" },
-        "iso": { "start": "1600", "range": ["800", "3200"] },
+        "iso": { "start": "3200", "range": ["1600", "6400"] },
         "focus": "Manuel fokus på stjerne",
         "drive": "Canon Camera Connect"
       },
       "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setLensManualFocus", "useLiveViewForAstro", "useCanonCameraConnect"],
       "quickGuide": [
         "Brug kortere lukkertid for at bevare struktur i nordlyset.",
-        "Start med 2 sek., f/1.8 og ISO 1600.",
+        "Start med 2 sek., f/1.8 og ISO 3200.",
         "Hvis billedet bliver for mørkt, hæv ISO før du går meget længere i tid."
       ],
       "why": "Kraftigt nordlys kan bevæge sig hurtigt. Korte eksponeringer bevarer striber og gardiner bedre end 8-10 sekunder."
@@ -718,11 +718,11 @@
       "subjects": ["star-trails", "stars"],
       "conditions": { "movement": ["still"], "light": ["night"], "time": ["night-time"], "distance": ["far"], "technique": ["long-exposure", "interval-sequence"] },
       "gearStrategy": { "preferredLensRoles": ["astro", "wide"], "support": ["tripod", "remote-release"] },
-      "baseSettings": { "mode": "M", "focalLength": "18mm", "shutter": { "start": "20s", "range": ["15s", "25s"] }, "aperture": { "start": "f/2.8", "range": ["f/1.8", "f/4"] }, "iso": { "start": "800", "range": ["400", "1600"] }, "focus": "Manuel fokus på en klar stjerne", "drive": "Gentagen fjernudløsning" },
-      "exposurePlan": { "timing": "Når himlen er helt mørk, ofte 60-90 min. efter solnedgang", "perFrame": "20 sek.", "frames": "180 billeder", "interval": "1 sek. mellem billeder", "total": "Ca. 63 min.", "control": "Brug Canon Camera Connect som fjernudløser og til kontrolbilleder; automatisk gentagelse afhænger af kamera/app", "alternative": "Bulb på 5-15 min. kan bruges, men en serie giver mindre sensorvarme og er lettere at redde" },
-      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setLensManualFocus", "useLiveViewForAstro", "useCanonCameraConnect"],
-      "quickGuide": ["Brug 18mm, stativ og et fuldt batteri.", "Tag først ét testbillede og kontrollér fokus og histogram.", "Optag 180 billeder á 20 sekunder og stak dem senere til sammenhængende spor."],
-      "why": "Stjernespor bygges sikrest af mange lange eksponeringer. En hel times enkelt eksponering øger risikoen for sensorvarme, overeksponering og et ødelagt slutresultat."
+      "baseSettings": { "mode": "M", "focalLength": "18mm", "shutter": { "start": "20s", "range": ["15s", "25s"] }, "aperture": { "start": "f/4", "range": ["f/2.8", "f/4"] }, "iso": { "start": "400", "range": ["400", "800"] }, "focus": "Manuel fokus på en klar stjerne", "drive": "EOS 80D intervaltimer" },
+      "exposurePlan": { "timing": "Når himlen er helt mørk, ofte 60-90 min. efter solnedgang", "perFrame": "20 sek.", "frames": "180 billeder", "interval": "0-1 sek. mellem billeder", "total": "Ca. 60-63 min.", "control": "Brug EOS 80D's indbyggede intervaltimer til interval og antal billeder. Brug Canon Camera Connect kun til kontrolbilleder/fjernudløser, ikke til automatisk intervalserie.", "alternative": "Slå Long exposure noise reduction fra til serier. Ellers tager kameraet et mørkt referencebillede efter hvert foto, fordobler tiden og skaber huller i sporene." },
+      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setLensManualFocus", "useLiveViewForAstro", "use80dIntervalTimer"],
+      "quickGuide": ["Brug 18mm, stativ og et fuldt batteri.", "Tag først ét testbillede ved 20 sek., f/4 og ISO 400.", "Sæt EOS 80D intervaltimer til 180 billeder med 0-1 sek. pause. Slå Long exposure noise reduction fra før serien."],
+      "why": "Stjernespor bygges sikrest af mange eksponeringer. f/4 og ISO 400 beskytter højlysene i stakken, og næsten ingen pause mellem billederne giver mere sammenhængende spor."
     },
     {
       "id": "meteor-shower-sequence",
@@ -733,9 +733,9 @@
       "conditions": { "movement": ["still"], "light": ["night"], "time": ["night-time"], "distance": ["far"], "technique": ["interval-sequence"] },
       "gearStrategy": { "preferredLensRoles": ["astro", "wide"], "support": ["tripod", "remote-release"] },
       "baseSettings": { "mode": "M", "focalLength": "18mm", "shutter": { "start": "10s", "range": ["8s", "13s"] }, "aperture": { "start": "f/1.8", "range": ["f/1.8", "f/2.2"] }, "iso": { "start": "3200", "range": ["1600", "3200"] }, "focus": "Manuel fokus på en klar stjerne", "drive": "Gentagen fjernudløsning" },
-      "exposurePlan": { "timing": "Fra fuldt mørke og mindst 60 min. omkring meteorregnens forventede maksimum", "perFrame": "10 sek.", "frames": "300-600 billeder", "interval": "1 sek. mellem billeder", "total": "Ca. 55-110 min.", "control": "Brug Canon Camera Connect som fjernudløser og til kontrolbilleder; automatisk gentagelse afhænger af kamera/app", "alternative": "Få lange Bulb-eksponeringer frarådes, fordi meteorerne lettere forsvinder i en lys himmel" },
-      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setLensManualFocus", "useLiveViewForAstro", "useCanonCameraConnect"],
-      "quickGuide": ["Ret kameraet et stykke fra radianten, så sporene bliver længere.", "Brug 18mm og kontrollér fokus før serien.", "Lad kameraet arbejde uafbrudt i mindst en time."],
+      "exposurePlan": { "timing": "Fra fuldt mørke og mindst 60 min. omkring meteorregnens forventede maksimum", "perFrame": "10 sek.", "frames": "300-600 billeder", "interval": "0-1 sek. mellem billeder", "total": "Ca. 50-110 min.", "control": "Brug EOS 80D's indbyggede intervaltimer til serien. Canon Camera Connect er fin som fjernudløser til testbilleder, men ikke som automatisk intervaltimer.", "alternative": "Slå Long exposure noise reduction fra til serier. Få lange Bulb-eksponeringer frarådes, fordi meteorerne lettere forsvinder i en lys himmel." },
+      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setLensManualFocus", "useLiveViewForAstro", "use80dIntervalTimer"],
+      "quickGuide": ["Ret kameraet et stykke fra radianten, så sporene bliver længere.", "Brug 18mm og kontrollér fokus før serien.", "Brug EOS 80D intervaltimer og slå Long exposure noise reduction fra, før kameraet arbejder uafbrudt i mindst en time."],
       "why": "Meteorregn handler om sandsynlighed. Mange korte eksponeringer giver langt større chance for at fange flere meteorer."
     },
     {
@@ -1157,10 +1157,10 @@
       "subjects": ["food"],
       "conditions": { "place": ["restaurant", "inside"], "light": ["window-light", "indoor", "low-light"], "distance": ["close-up", "near"] },
       "gearStrategy": { "preferredLensRoles": ["close-up", "low-light", "walkaround"] },
-      "baseSettings": { "mode": "Av", "focalLength": "35-55mm", "shutter": { "start": "1/160", "range": ["1/125", "1/250"] }, "aperture": { "start": "f/2.8", "range": ["f/2.8", "f/4"] }, "iso": "Auto", "focus": "One Shot på rettens vigtigste detalje", "drive": "Single" },
+      "baseSettings": { "mode": "Av", "focalLength": "35-55mm", "shutter": { "start": "1/160", "range": ["1/125", "1/250"] }, "aperture": { "start": "f/4", "range": ["f/2.8", "f/5.6"] }, "iso": "Auto", "focus": "One Shot på rettens vigtigste detalje", "drive": "Single" },
       "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot", "setLensStabilizationOn"],
-      "quickGuide": ["Sæt tallerkenen tæt på et vindue eller drej den mod rummets blødeste lys.", "Fotografér skråt ovenfra ved 35-55mm.", "Kontrollér at lukkertiden er mindst 1/160, før du tager billedet."],
-      "why": "Av f/2.8 fremhæver retten, mens Auto ISO hjælper med at holde en håndholdbar lukkertid i restauranten."
+      "quickGuide": ["Sæt tallerkenen tæt på et vindue eller drej den mod rummets blødeste lys.", "Fotografér skråt ovenfra ved 35-55mm og start ved f/4.", "Gå kun mod f/2.8, hvis lyset ikke rækker, og accepter at mindre af retten bliver skarp."],
+      "why": "En tallerken har dybde. f/4 holder mere af retten skarp end f/2.8 på tæt hold, mens Auto ISO hjælper med at holde en håndholdbar lukkertid i restauranten."
     },
     {
       "id": "waterfall-long-exposure",
@@ -1564,10 +1564,10 @@
       "subjects": ["stars"],
       "conditions": { "movement": ["still"], "place": ["field", "city-edge", "outdoor"], "direction": ["away-from-city"], "light": ["night", "low-light", "dark-sky"], "time": ["night-time"], "distance": ["far"] },
       "gearStrategy": { "preferredLensRoles": ["astro", "wide"], "support": ["tripod", "remote-release"] },
-      "baseSettings": { "mode": "M", "focalLength": "18mm", "shutter": { "start": "10s", "range": ["8s", "13s"] }, "aperture": { "start": "f/1.8", "strategy": "wide-open" }, "iso": { "start": "1600", "range": ["1600", "3200"] }, "focus": "Manuel fokus på en klar stjerne", "drive": "2 sek. selvudløser eller Canon Camera Connect" },
+      "baseSettings": { "mode": "M", "focalLength": "18mm", "shutter": { "start": "8s", "range": ["6s", "10s"] }, "aperture": { "start": "f/2.2", "range": ["f/2", "f/2.8"] }, "iso": { "start": "3200", "range": ["1600", "6400"] }, "focus": "Manuel fokus på en klar stjerne", "drive": "2 sek. selvudløser eller Canon Camera Connect" },
       "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setLensManualFocus", "useLiveViewForAstro", "useCanonCameraConnect"],
-      "quickGuide": ["Stil dig, så byen er bag dig og markens mørke horisont er foran kameraet.", "Brug Sigma ved 18mm og start med 10 sek., f/1.8 og ISO 1600.", "Gå ned mod 8 sek., hvis stjernerne bliver små streger."],
-      "why": "Retningen væk fra lyskuplen giver mørkere baggrund og plads til længere eksponering end et billede ind over byen."
+      "quickGuide": ["Stil dig, så byen er bag dig og markens mørke horisont er foran kameraet.", "Brug Sigma ved 18mm og start med 8 sek., f/2.2 og ISO 3200.", "Gå ned mod 6 sek., hvis stjernerne bliver små streger."],
+      "why": "Retningen væk fra lyskuplen giver mørkere baggrund, men 18mm på 80D sætter stadig grænsen for lukkertiden. Hent ekstra lys med ISO fremfor længere tid."
     },
     {
       "id": "milky-way-city-edge-away",
@@ -1578,10 +1578,10 @@
       "subjects": ["milky-way", "stars"],
       "conditions": { "movement": ["still"], "place": ["city-edge", "field", "outdoor"], "direction": ["away-from-city"], "light": ["night", "low-light", "dark-sky", "light-pollution"], "time": ["night-time"], "distance": ["far"] },
       "gearStrategy": { "preferredLensRoles": ["astro", "wide"], "support": ["tripod", "remote-release"] },
-      "baseSettings": { "mode": "M", "focalLength": "18mm", "shutter": { "start": "8s", "range": ["6s", "10s"] }, "aperture": { "start": "f/1.8", "strategy": "wide-open" }, "iso": { "start": "1600", "range": ["1600", "3200"] }, "focus": "Manuel fokus på en klar stjerne", "drive": "2 sek. selvudløser eller Canon Camera Connect" },
+      "baseSettings": { "mode": "M", "focalLength": "18mm", "shutter": { "start": "8s", "range": ["6s", "10s"] }, "aperture": { "start": "f/2.2", "range": ["f/2", "f/2.8"] }, "iso": { "start": "3200", "range": ["1600", "6400"] }, "focus": "Manuel fokus på en klar stjerne", "drive": "2 sek. selvudløser eller Canon Camera Connect" },
       "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setLensManualFocus", "useLiveViewForAstro", "useCanonCameraConnect"],
-      "quickGuide": ["Placér byen bag kameraet; der må helst ikke ligge en stor by under Mælkevejens retning.", "Start med 8 sek., f/1.8 og ISO 1600 på Sigma ved 18mm.", "Hvis Mælkevejen ikke skiller sig fra himlen, hjælper større afstand til byen mere end en længere lukkertid."],
-      "why": "Bykantens restlys reducerer kontrasten i Mælkevejen. Retningen er afgørende, og 8 sekunder giver et robust testbillede uden at løfte lyskuplen unødigt."
+      "quickGuide": ["Placér byen bag kameraet; der må helst ikke ligge en stor by under Mælkevejens retning.", "Start med 8 sek., f/2.2 og ISO 3200 på Sigma ved 18mm.", "Hvis Mælkevejen ikke skiller sig fra himlen, hjælper større afstand til byen mere end en længere lukkertid."],
+      "why": "Bykantens restlys reducerer kontrasten i Mælkevejen. Retningen er afgørende, og 8 sekunder holder stjernerne pænere; ekstra lys hentes med ISO."
     },
     {
       "id": "moon-city-skyline",
@@ -1607,9 +1607,9 @@
       "conditions": { "movement": ["still"], "place": ["city", "street"], "direction": ["toward-city"], "light": ["night", "light-pollution"], "time": ["night-time"], "distance": ["far"], "technique": ["long-exposure", "interval-sequence"] },
       "gearStrategy": { "preferredLensRoles": ["astro", "wide"], "support": ["tripod", "remote-release"] },
       "baseSettings": { "mode": "M", "focalLength": "18mm", "shutter": { "start": "8s", "range": ["5s", "10s"] }, "aperture": { "start": "f/2.8", "range": ["f/2.8", "f/4"] }, "iso": { "start": "400", "range": ["200", "800"] }, "focus": "Manuel fokus på en klar stjerne eller fjern lyskilde", "drive": "Gentagen fjernudløsning" },
-      "exposurePlan": { "timing": "Når himlen er helt mørk og de klareste stjerner er synlige", "perFrame": "8 sek.", "frames": "225 billeder", "interval": "1 sek. mellem billeder", "total": "Ca. 34 min.", "control": "Brug Canon Camera Connect som fjernudløser og til kontrolbilleder; automatisk gentagelse afhænger af kamera/app", "alternative": "Flyt kompositionen væk fra direkte lamper, før du hæver ISO" },
-      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setLensManualFocus", "useLiveViewForAstro", "useCanonCameraConnect"],
-      "quickGuide": ["Brug 18mm, stativ og skærm objektivet mod direkte gadelys.", "Tag et testbillede ved 8 sek., f/2.8 og ISO 400 og kontrollér højlys.", "Optag 225 billeder med ét sekund imellem og stak dem senere."],
+      "exposurePlan": { "timing": "Når himlen er helt mørk og de klareste stjerner er synlige", "perFrame": "8 sek.", "frames": "225 billeder", "interval": "0-1 sek. mellem billeder", "total": "Ca. 30-34 min.", "control": "Brug EOS 80D's indbyggede intervaltimer til serien. Canon Camera Connect kan bruges til testbilleder/fjernudløser, ikke som automatisk intervaltimer.", "alternative": "Slå Long exposure noise reduction fra til serier. Flyt kompositionen væk fra direkte lamper, før du hæver ISO." },
+      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setLensManualFocus", "useLiveViewForAstro", "use80dIntervalTimer"],
+      "quickGuide": ["Brug 18mm, stativ og skærm objektivet mod direkte gadelys.", "Tag et testbillede ved 8 sek., f/2.8 og ISO 400 og kontrollér højlys.", "Brug EOS 80D intervaltimer med 0-1 sek. pause, og slå Long exposure noise reduction fra før serien."],
       "why": "Mange korte billeder holder byhimlen og lamperne under kontrol. Serien kan stadig samles til synlige spor fra de klareste stjerner."
     },
     {
@@ -1622,9 +1622,9 @@
       "conditions": { "movement": ["still"], "place": ["field", "city-edge", "outdoor"], "direction": ["away-from-city"], "light": ["night", "low-light", "dark-sky"], "time": ["night-time"], "distance": ["far"], "technique": ["interval-sequence"] },
       "gearStrategy": { "preferredLensRoles": ["astro", "wide"], "support": ["tripod", "remote-release"] },
       "baseSettings": { "mode": "M", "focalLength": "18mm", "shutter": { "start": "8s", "range": ["6s", "10s"] }, "aperture": { "start": "f/1.8", "range": ["f/1.8", "f/2.2"] }, "iso": { "start": "2000", "range": ["1600", "3200"] }, "focus": "Manuel fokus på en klar stjerne", "drive": "Gentagen fjernudløsning" },
-      "exposurePlan": { "timing": "Fra fuldt mørke og mindst 60 min. omkring meteorregnens forventede maksimum", "perFrame": "8 sek.", "frames": "400-800 billeder", "interval": "1 sek. mellem billeder", "total": "Ca. 60-120 min.", "control": "Brug Canon Camera Connect som fjernudløser og til kontrolbilleder; automatisk gentagelse afhænger af kamera/app", "alternative": "Drej længere væk fra byens lyskuppel før du sænker lukkertiden" },
-      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setLensManualFocus", "useLiveViewForAstro", "useCanonCameraConnect"],
-      "quickGuide": ["Placér byen bag kameraet og brug en fri horisont over marken.", "Start med 8 sek., f/1.8 og ISO 2000 ved 18mm.", "Lad serien køre mindst en time; mange billeder er vigtigere end én lang eksponering."],
+      "exposurePlan": { "timing": "Fra fuldt mørke og mindst 60 min. omkring meteorregnens forventede maksimum", "perFrame": "8 sek.", "frames": "400-800 billeder", "interval": "0-1 sek. mellem billeder", "total": "Ca. 55-120 min.", "control": "Brug EOS 80D's indbyggede intervaltimer til serien. Canon Camera Connect kan bruges til testbilleder/fjernudløser, ikke som automatisk intervaltimer.", "alternative": "Slå Long exposure noise reduction fra til serier. Drej længere væk fra byens lyskuppel før du sænker lukkertiden." },
+      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setLensManualFocus", "useLiveViewForAstro", "use80dIntervalTimer"],
+      "quickGuide": ["Placér byen bag kameraet og brug en fri horisont over marken.", "Start med 8 sek., f/1.8 og ISO 2000 ved 18mm.", "Brug EOS 80D intervaltimer og slå Long exposure noise reduction fra. Mange billeder er vigtigere end én lang eksponering."],
       "why": "Meteorer fanges gennem mange forsøg. Den mørkere retning øger kontrasten, mens korte billeder begrænser både stjernespor og restlys fra byen."
     },
     {
