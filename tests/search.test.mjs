@@ -43,6 +43,14 @@ assert.equal(findExactTerm(taxonomy, "salelys tændt").id, "house-lights-on");
 assert.equal(findExactTerm(taxonomy, "biograf uden lys").id, "house-lights-off");
 assert.equal(findExactTerm(taxonomy, "filmvisning").id, "watching-film");
 assert.equal(findExactTerm(taxonomy, "i skumringen").id, "twilight");
+assert.equal(findExactTerm(taxonomy, "museum").id, "museum");
+assert.equal(findExactTerm(taxonomy, "slottet").id, "castle");
+assert.equal(findExactTerm(taxonomy, "stor bygning").id, "large-building");
+assert.equal(findExactTerm(taxonomy, "lille hus").id, "small-building");
+assert.equal(findExactTerm(taxonomy, "på landet").id, "countryside");
+assert.equal(findExactTerm(taxonomy, "lys restaurant").id, "bright-interior");
+assert.equal(findExactTerm(taxonomy, "mørk restaurant").id, "dim-interior");
+assert.equal(classifyQuery("morgen", taxonomy).facets.subject?.includes("castle") || false, false);
 
 const consumedPhrase = consumeKnownTerms("ko gråt vejr ", taxonomy);
 assert.deepEqual(consumedPhrase.termIds, ["cow", "overcast"]);
@@ -133,6 +141,57 @@ const cinemaTags = suggestNextTags("Biograf", situations.profiles, taxonomy, ["c
 assert.equal(cinemaTags.some((term) => term.id === "cinema-screen"), true);
 assert.equal(cinemaTags.some((term) => term.id === "house-lights-off"), true);
 assert.equal(cinemaTags.some((term) => term.id === "audience"), true);
+
+assert.equal(searchProfiles("barn i skoven", situations.profiles, taxonomy).results[0].item.id, "child-forest-exploring");
+const childForestStill = searchProfiles("barn står stille i skoven", situations.profiles, taxonomy);
+assert.equal(childForestStill.results[0].item.id, "child-forest-still");
+assert.equal(buildRecommendation(childForestStill.results[0].item, equipment, { classification: childForestStill.classification }).settings.aperture, "f/2.8");
+const childForestRunning = searchProfiles("barn løber i skoven", situations.profiles, taxonomy);
+assert.equal(childForestRunning.results[0].item.id, "child-forest-running");
+assert.equal(buildRecommendation(childForestRunning.results[0].item, equipment, { classification: childForestRunning.classification }).settings.shutter, "1/1000");
+
+const beachPeopleStill = searchProfiles("mennesker står stille på stranden", situations.profiles, taxonomy);
+assert.equal(beachPeopleStill.results[0].item.id, "beach-people-still");
+assert.equal(buildRecommendation(beachPeopleStill.results[0].item, equipment, { classification: beachPeopleStill.classification }).settings.aperture, "f/4");
+const beachGroupStill = searchProfiles("gruppe står stille på stranden", situations.profiles, taxonomy);
+assert.equal(beachGroupStill.results[0].item.id, "beach-group-still");
+assert.equal(buildRecommendation(beachGroupStill.results[0].item, equipment, { classification: beachGroupStill.classification }).settings.aperture, "f/5.6");
+
+assert.equal(searchProfiles("mennesker på restaurant", situations.profiles, taxonomy).results[0].item.id, "restaurant-people-overview");
+const brightRestaurant = searchProfiles("mennesker på lys restaurant", situations.profiles, taxonomy);
+assert.equal(brightRestaurant.results[0].item.id, "restaurant-people-bright");
+assert.equal(buildRecommendation(brightRestaurant.results[0].item, equipment, { classification: brightRestaurant.classification }).settings.shutter, "1/320");
+const dimRestaurant = searchProfiles("mennesker på mørk restaurant", situations.profiles, taxonomy);
+assert.equal(dimRestaurant.results[0].item.id, "restaurant-people-dim");
+assert.equal(buildRecommendation(dimRestaurant.results[0].item, equipment, { classification: dimRestaurant.classification }).settings.aperture, "f/2");
+assert.equal(dimRestaurant.results.every((result) => result.item.conditions?.place?.includes("restaurant")), true);
+
+const largeCityDay = searchProfiles("stor bygning i byen om dagen", situations.profiles, taxonomy);
+assert.equal(largeCityDay.results[0].item.id, "architecture-large-city-day");
+assert.equal(buildRecommendation(largeCityDay.results[0].item, equipment, { classification: largeCityDay.classification }).settings.aperture, "f/8");
+const largeCityNight = searchProfiles("stor bygning i byen om natten", situations.profiles, taxonomy);
+assert.equal(largeCityNight.results[0].item.id, "architecture-large-city-night");
+assert.equal(buildRecommendation(largeCityNight.results[0].item, equipment, { classification: largeCityNight.classification }).settings.shutter, "1s");
+assert.equal(searchProfiles("lille bygning i byen om dagen", situations.profiles, taxonomy).results[0].item.id, "architecture-small-city-day");
+const smallCountryBuilding = searchProfiles("lille bygning på landet", situations.profiles, taxonomy);
+assert.equal(smallCountryBuilding.results[0].item.id, "architecture-small-countryside-day");
+assert.equal(buildRecommendation(smallCountryBuilding.results[0].item, equipment, { classification: smallCountryBuilding.classification }).lens.id, "canon-ef-70-300-is-usm");
+assert.equal(searchProfiles("stor bygning på landet", situations.profiles, taxonomy).results[0].item.id, "architecture-large-countryside-day");
+
+assert.equal(searchProfiles("museum", situations.profiles, taxonomy).results[0].item.id, "museum-exterior-day");
+assert.equal(searchProfiles("museum indenfor lyst lokale", situations.profiles, taxonomy).results[0].item.id, "museum-interior-bright");
+const dimMuseum = searchProfiles("museum indenfor dæmpet lokale", situations.profiles, taxonomy);
+assert.equal(dimMuseum.results[0].item.id, "museum-interior-dim");
+assert.equal(buildRecommendation(dimMuseum.results[0].item, equipment, { classification: dimMuseum.classification }).settings.iso, "3200");
+assert.equal(searchProfiles("museum om natten", situations.profiles, taxonomy).results[0].item.id, "museum-exterior-night");
+assert.equal(searchProfiles("slot om dagen", situations.profiles, taxonomy).results[0].item.id, "castle-day");
+assert.equal(searchProfiles("slot om natten", situations.profiles, taxonomy).results[0].item.id, "castle-night");
+
+const architectureTags = suggestNextTags("Arkitektur", situations.profiles, taxonomy, ["architecture"], 20);
+assert.equal(architectureTags.some((term) => term.id === "large-building"), true);
+assert.equal(architectureTags.some((term) => term.id === "small-building"), true);
+assert.equal(architectureTags.some((term) => term.id === "museum"), true);
+assert.equal(architectureTags.some((term) => term.id === "castle"), true);
 
 const zooResults = searchProfiles("aber i zoo gråvejr", situations.profiles, taxonomy);
 assert.equal(zooResults.results[0].item.id, "zoo-monkeys-overcast");
@@ -423,8 +482,8 @@ assert.equal(influencedRecommendation.scenarioDecisions[0].includes("Mit regnkon
 assert.equal(maxStarShutterSeconds(18, 1.6), 13);
 assert.equal(astroStatus(new Date("2026-08-08T23:00:00+02:00")).moon.percent >= 0, true);
 assert.equal(astroTargets(new Date("2026-08-08T23:00:00+02:00")).some((target) => target.id === "milky-way-wide"), true);
-assert.equal(versionLog.current, "0.20.0");
-assert.equal(versionLog.entries[0].version, "0.20.0");
+assert.equal(versionLog.current, "0.21.0");
+assert.equal(versionLog.entries[0].version, "0.21.0");
 assert.equal(learning.lessons.length, 6);
 assert.equal(learning.lessons.some((lesson) => lesson.id === "modes"), true);
 const modesLesson = learning.lessons.find((lesson) => lesson.id === "modes");

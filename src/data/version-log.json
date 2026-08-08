@@ -1,6 +1,17 @@
 {
-  "current": "0.20.0",
+  "current": "0.21.0",
   "entries": [
+    {
+      "version": "0.21.0",
+      "date": "2026-08-08",
+      "title": "Skov, strand, restaurant og arkitektur",
+      "items": [
+        "Tilføjede barn i skoven som udforskende, stillestående og løbende motiv.",
+        "Tilføjede rolige mennesker og opstillede grupper på stranden.",
+        "Restaurant skelner nu mellem neutralt, lyst og dæmpet lokale med egne personprofiler.",
+        "Udvidede arkitektur med store og små bygninger, land og by, museer og slotte om dagen og natten."
+      ]
+    },
     {
       "version": "0.20.0",
       "date": "2026-08-08",

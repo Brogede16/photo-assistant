@@ -70,3 +70,22 @@ Biografprofilerne adskiller rummets lys, lærredet og mennesker, fordi de kræve
 Filmtaget er ikke behandlet som en almindelig biografsal. [Det Danske Filminstitut beskriver Filmtaget](https://www.dfi.dk/cinemateket/lej-cinemateket/lej-filmtaget-op-til-800-personer) som en 1.700 m² tagterrasse i København med plads til 800 gæster og udsigt til Kongens Have. [Himmelbio](https://www.dfi.dk/cinemateket/lej-cinemateket/lej-himmelbio) er den udendørs biograf med 127 pladser og LED-skærm. Derfor har dagslys, skumring, LED-skærm, publikum og byudsigt egne profiler.
 
 [Canons low-light-vejledning](https://www.canon.com.au/get-inspired/6-low-light-photography-tips) beskriver fordelen ved RAW, stor blænde, kontrolleret lukkertid og højere ISO fremfor bevægelsesuskarphed. [EOS 80D-manualen](https://gdlp01.c-wss.com/gds/0/0300022720/01/eos_80d_instruction_manual_en.pdf) beskriver kameraets Anti-flicker shoot under den røde optagefane 4. Funktionen hjælper ved almindeligt flimrende kunstlys under søgerfotografering, men et projektor- eller LED-billede skal stadig kontrolleres for mørke bånd med et testbillede.
+
+## Skov, strand, restaurant og arkitektur
+
+De nye personprofiler fastholder motivets bevægelse som første tekniske valg:
+
+- Et barn, der udforsker skoven, bruger M, 1/500, f/2 og Auto ISO, mens et løbende barn bruger Tv ved 1/1000.
+- Et stillestående barn i skoven bruger Av ved f/2.8 og mindst 1/250, fordi små kropsbevægelser stadig skal være skarpe.
+- Rolige mennesker på stranden bruger f/4; en gruppe bruger f/5.6 for større dybdeskarphed.
+- En lys restaurant bruger 1/320 og f/2.8, mens en mørk restaurant bruger 1/250 og f/2. Begge bruger Auto ISO for at bevare ansigter og hænder gennem skiftende lys.
+
+Arkitekturprofilerne følger bygningens størrelse, sted og lys:
+
+- Store bygninger bruger typisk 18-24mm, mens små bygninger fotograferes fra større afstand ved 70-100mm for roligere proportioner.
+- Dagsarkitektur starter ved Av, f/8 og ISO 100.
+- Natarkitektur bruger M, f/8, ISO 100 og en lang lukkertid med kameraet helt fast.
+- Museer opdeles i facade om dagen eller natten samt lyst og dæmpet interiør.
+- Slotte og borge har egne dag- og natprofiler, fordi belyst stenfacade og dagslandskab kræver forskellige eksponeringer.
+
+[Canons arkitekturgennemgang](https://www.canon.com.au/get-inspired/architecture-photography-tips-emma-desira) anbefaler Av eller M, ISO 100, f/8-f/14 og cirka 1/125 som dagsudgangspunkt. Den beskriver også, at kameraet bør holdes parallelt med bygningen for at begrænse konvergerende lodrette linjer, og at længere brændvidde på afstand reducerer forvrængning. [Canons perspektivforklaring](https://files.canon-europe.com/files/webcontent/rf-lens-world/knowledge/perspective/index.html) dokumenterer forskellen mellem vidvinklens stærke rumvirkning og teleobjektivets kompression. [Canons low-light-vejledning](https://www.canon.com.au/get-inspired/6-low-light-photography-tips) bruges til de håndholdte restaurant- og museumsprofiler.

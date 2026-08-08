@@ -44,7 +44,8 @@ export function classifyQuery(query, taxonomy) {
   for (const entry of index) {
     if (!entry.phrase) continue;
     const directMatch = containsPhrase(normalized, entry.phrase);
-    const fuzzyMatch = tokens.some((token) => token.length > 4 && levenshtein(token, entry.phrase) <= 1);
+    const fuzzyMatch = !entry.term.requiresProfileMatch
+      && tokens.some((token) => token.length > 4 && levenshtein(token, entry.phrase) <= 1);
     if (directMatch || fuzzyMatch) {
       const current = matches.get(entry.term.id) || { ...entry.term, score: 0 };
       current.score += directMatch ? 4 : 1;
