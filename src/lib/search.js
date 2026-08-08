@@ -123,6 +123,26 @@ export function suggestNextTags(query, profiles, taxonomy, selectedIds = [], lim
   const search = searchProfiles(query || termsToQuery(taxonomy, selectedIds), profiles, taxonomy);
   const candidates = new Map();
 
+  for (const id of selectedIds) {
+    const selectedTerm = findTermById(taxonomy, id);
+    if (!selectedTerm) continue;
+
+    for (const relatedId of selectedTerm.related || []) {
+      addCandidate(candidates, taxonomy, selected, relatedId, 80);
+    }
+
+    for (const child of taxonomy.terms.filter((term) => term.parent === id)) {
+      addCandidate(candidates, taxonomy, selected, child.id, 70);
+    }
+
+    if (selectedTerm.parent) {
+      for (const sibling of taxonomy.terms.filter((term) => term.parent === selectedTerm.parent)) {
+        addCandidate(candidates, taxonomy, selected, sibling.id, 35);
+      }
+      addCandidate(candidates, taxonomy, selected, selectedTerm.parent, 20);
+    }
+  }
+
   for (const result of search.results.slice(0, 5)) {
     const profile = result.item;
     const ids = [
@@ -133,16 +153,12 @@ export function suggestNextTags(query, profiles, taxonomy, selectedIds = [], lim
       ...(profile.gearStrategy?.preferredLensRoles || [])
     ];
     for (const id of ids) {
-      if (selected.has(id)) continue;
-      const term = findTermById(taxonomy, id);
-      if (!term) continue;
-      const current = candidates.get(id) || { term, score: 0 };
-      current.score += result.score + typeBoost(term.type);
-      candidates.set(id, current);
+      addCandidate(candidates, taxonomy, selected, id, result.score);
     }
   }
 
-  if (candidates.size < limit) {
+  const hasContext = selectedIds.length > 0 || Boolean(query?.trim());
+  if (!hasContext && candidates.size < limit) {
     for (const term of taxonomy.terms) {
       if (selected.has(term.id)) continue;
       if (!["subject", "movement", "light", "distance"].includes(term.type)) continue;
@@ -156,6 +172,16 @@ export function suggestNextTags(query, profiles, taxonomy, selectedIds = [], lim
     .sort((a, b) => b.score - a.score || a.term.label.localeCompare(b.term.label, "da"))
     .slice(0, limit)
     .map((item) => item.term);
+}
+
+function addCandidate(candidates, taxonomy, selected, id, score) {
+  if (selected.has(id)) return;
+  const term = findTermById(taxonomy, id);
+  if (!term) return;
+  if (term.suggest === false) return;
+  const current = candidates.get(id) || { term, score: 0 };
+  current.score += score + typeBoost(term.type);
+  candidates.set(id, current);
 }
 
 function scoreProfile(profile, classification) {

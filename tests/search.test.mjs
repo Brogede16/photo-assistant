@@ -34,6 +34,13 @@ assert.equal(searchProfiles(tagQuery, situations.profiles, taxonomy).results[0].
 const nextTags = suggestNextTags("Abe", situations.profiles, taxonomy, ["monkey"], 6);
 assert.equal(nextTags.some((term) => ["overcast", "running", "medium"].includes(term.id)), true);
 
+const starNextTags = suggestNextTags("Stjerner", situations.profiles, taxonomy, ["stars"], 8);
+assert.equal(starNextTags.some((term) => term.id === "aurora"), true);
+assert.equal(starNextTags.some((term) => term.id === "night"), true);
+assert.equal(starNextTags.some((term) => term.id === "milky-way"), true);
+assert.equal(starNextTags.some((term) => term.id === "monkey"), false);
+assert.equal(starNextTags.some((term) => term.id === "still"), false);
+
 const sportResults = searchProfiles("fodbold overskyet", situations.profiles, taxonomy);
 assert.equal(sportResults.results[0].item.id, "outdoor-sport-daylight");
 
