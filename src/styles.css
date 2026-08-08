@@ -163,6 +163,10 @@ select {
   font-size: 14px;
 }
 
+.helper-text {
+  font-size: 13px;
+}
+
 .tag-chip {
   min-height: 36px;
   border-color: #315060;

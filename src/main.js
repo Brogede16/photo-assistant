@@ -82,14 +82,15 @@ function render() {
       </section>
 
       <section class="manual-context">
-        <label for="manual-light">Manuel override</label>
+        <label for="manual-light">Faktisk lys ved motivet</label>
         <select id="manual-light" data-action="manual-light">
-          <option value="">Auto-kontekst</option>
-          <option value="lysere">Lysere end appen tror</option>
-          <option value="mørkere">Mørkere end appen tror</option>
+          <option value="">Brug tid og sted som udgangspunkt</option>
+          <option value="lysere">Det er lysere ved motivet</option>
+          <option value="mørkere">Det er mørkere ved motivet</option>
           <option value="overskyet">Overskyet / gråvejr</option>
           <option value="indendørs">Indendørs</option>
         </select>
+        <p class="helper-text">Tid og placering gætter på dagslys, skumring eller nat. Vælg selv her, hvis motivet står i fx skygge, stærk sol eller indendørs lys.</p>
       </section>
 
       <nav class="tabbar" aria-label="Hovedfunktioner">
