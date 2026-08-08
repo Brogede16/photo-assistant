@@ -243,6 +243,24 @@ select {
   font-size: 18px;
 }
 
+.technique-strip span {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.field-guide {
+  display: grid;
+  gap: 12px;
+}
+
+.field-guide section {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 12px;
+  background: #0e141d;
+}
+
 .hero-setting {
   color: var(--text);
   font-size: 18px;

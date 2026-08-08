@@ -52,8 +52,10 @@ function render() {
         <div class="quick-actions">
           <button data-query="stjerner">Stjerner</button>
           <button data-query="nordlys">Nordlys</button>
+          <button data-query="mælkevejen">Mælkevej</button>
           <button data-query="måne">Måne</button>
           <button data-query="fugl flyver langt">Fugl</button>
+          <button data-query="abe zoo overskyet">Zoo</button>
           <button data-query="dyr løber overskyet">Dyr</button>
           <button data-query="mennesker indendørs">Inde</button>
         </div>
@@ -268,8 +270,14 @@ function openResult(profileId) {
         <span>${recommendation.settings.aperture}</span>
         <span>ISO ${recommendation.settings.iso}</span>
       </div>
+      <div class="settings-strip technique-strip">
+        <span>${recommendation.settings.focus}</span>
+        <span>${recommendation.settings.drive}</span>
+        ${recommendation.flash ? `<span>${recommendation.flash.model}</span>` : ""}
+      </div>
       <h3>Hurtig guide</h3>
       <ol>${profile.quickGuide.map((step) => `<li>${step}</li>`).join("")}</ol>
+      ${renderFieldGuide(profile)}
       <h3>Vis mig præcis hvordan</h3>
       <div class="guide-list">
         ${recommendation.actions
@@ -307,6 +315,18 @@ function openResult(profileId) {
     state.presets = loadPresets();
     renderPresets();
   });
+}
+
+function renderFieldGuide(profile) {
+  if (!profile.fieldGuide) return "";
+  const before = profile.fieldGuide.before || [];
+  const during = profile.fieldGuide.during || [];
+  return `
+    <div class="field-guide">
+      ${before.length ? `<section><h3>Før du tager billedet</h3><ol>${before.map((step) => `<li>${step}</li>`).join("")}</ol></section>` : ""}
+      ${during.length ? `<section><h3>Når du fotograferer</h3><ol>${during.map((step) => `<li>${step}</li>`).join("")}</ol></section>` : ""}
+    </div>
+  `;
 }
 
 function bindShellEvents() {
@@ -389,6 +409,7 @@ async function handleExifImport(event) {
 function labelProcedure(key) {
   const labels = {
     setManualMode: "Sæt kameraet i M",
+    setAvMode: "Sæt kameraet i Av",
     setShutter: "Indstil lukkertid",
     setAperture: "Indstil blænde",
     setIso: "Indstil ISO",
@@ -396,7 +417,9 @@ function labelProcedure(key) {
     setOneShot: "Vælg One Shot",
     setHighSpeedContinuous: "Vælg serieoptagelse",
     useLiveViewForAstro: "Fokusér med Live View",
-    useCanonCameraConnect: "Brug Canon Camera Connect"
+    useCanonCameraConnect: "Brug Canon Camera Connect",
+    setLensStabilizationOn: "Slå IS til på objektivet",
+    setLensManualFocus: "Sæt objektivet til MF"
   };
   return labels[key] || key;
 }

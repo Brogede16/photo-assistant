@@ -17,7 +17,7 @@
         "focus": "Manuel fokus på klar stjerne",
         "drive": "2 sek. selvudløser eller Canon Camera Connect"
       },
-      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "useLiveViewForAstro", "useCanonCameraConnect"],
+      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setLensManualFocus", "useLiveViewForAstro", "useCanonCameraConnect"],
       "quickGuide": [
         "Brug Sigma 18-35mm ved 18mm.",
         "Sæt kameraet på stativ.",
@@ -43,7 +43,7 @@
         "focus": "Manuel fokus på stjerne",
         "drive": "Canon Camera Connect eller 2 sek. selvudløser"
       },
-      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "useLiveViewForAstro", "useCanonCameraConnect"],
+      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setLensManualFocus", "useLiveViewForAstro", "useCanonCameraConnect"],
       "quickGuide": [
         "Ret kameraet mod nord/nordøst efter komposition.",
         "Brug 18mm og f/1.8 for mest muligt lys.",
@@ -68,7 +68,7 @@
         "focus": "One Shot eller manuel fokus i Live View",
         "drive": "Single eller 2 sek. selvudløser"
       },
-      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso"],
+      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setOneShot", "setLensStabilizationOn"],
       "quickGuide": [
         "Brug Canon 70-300mm ved 300mm.",
         "Månen er lysere end himlen, så start ikke med natteindstillinger.",
@@ -93,7 +93,7 @@
         "focus": "AI Servo",
         "drive": "High-speed continuous"
       },
-      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setAiServo", "setHighSpeedContinuous"],
+      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setAiServo", "setHighSpeedContinuous", "setLensStabilizationOn"],
       "quickGuide": [
         "Brug Canon 70-300mm.",
         "Start omkring 200-250mm, find fuglen, og zoom ind derefter.",
@@ -119,7 +119,7 @@
         "focus": "AI Servo",
         "drive": "High-speed continuous"
       },
-      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setAiServo", "setHighSpeedContinuous"],
+      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setAiServo", "setHighSpeedContinuous", "setLensStabilizationOn"],
       "quickGuide": [
         "Brug 70-300mm, hvis dyret er på afstand.",
         "Prioriter lukkertiden, når motivet bevæger sig.",
@@ -151,6 +151,257 @@
         "Brug Speedlite bounce, hvis rummet er for mørkt og loft/væg kan bruges."
       ],
       "why": "Indendørs lys er ofte svagere end det ser ud for øjet. f/1.8 og Auto ISO giver 80D mere arbejdsrum."
+    },
+    {
+      "id": "milky-way-wide",
+      "title": "Mælkevejen",
+      "family": "astro",
+      "priority": 97,
+      "subjects": ["milky-way", "stars"],
+      "conditions": { "movement": ["still"], "light": ["night"], "distance": ["far"] },
+      "gearStrategy": { "preferredLensRoles": ["astro", "wide"], "support": ["tripod", "remote-release"] },
+      "baseSettings": {
+        "mode": "M",
+        "focalLength": "18mm",
+        "shutter": { "start": "10s", "range": ["8s", "13s"] },
+        "aperture": { "start": "f/1.8", "strategy": "wide-open" },
+        "iso": { "start": "3200", "range": ["1600", "3200"] },
+        "focus": "Manuel fokus på stjerne",
+        "drive": "Canon Camera Connect eller 2 sek. selvudløser"
+      },
+      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setLensManualFocus", "useLiveViewForAstro", "useCanonCameraConnect"],
+      "quickGuide": [
+        "Brug Sigma 18-35mm ved 18mm.",
+        "Find mørk himmel væk fra bylys.",
+        "Fokusér manuelt på en klar stjerne før du komponerer færdigt.",
+        "Start med 10 sek., f/1.8 og ISO 3200."
+      ],
+      "fieldGuide": {
+        "before": [
+          "Sæt stativet solidt og sluk for unødigt lys omkring dig.",
+          "Sæt objektivet til 18mm og AF/MF-kontakten til MF, når fokus er fundet.",
+          "Brug Canon Camera Connect eller 2 sek. selvudløser, så du ikke rører kameraet."
+        ],
+        "during": [
+          "Tag et testbillede og zoom ind på stjernerne på skærmen.",
+          "Hvis stjernerne bliver til små streger, gå ned mod 8 sek.",
+          "Hvis billedet er for mørkt, hæv ISO før du gør lukkertiden meget længere."
+        ]
+      },
+      "why": "Mælkevejen kræver mere lys end en simpel stjernehimmel, men 18mm på 80D sætter stadig en praktisk grænse for lukkertiden."
+    },
+    {
+      "id": "aurora-fast",
+      "title": "Kraftigt nordlys i bevægelse",
+      "family": "astro",
+      "priority": 96,
+      "subjects": ["aurora"],
+      "conditions": { "movement": ["running"], "light": ["night"], "distance": ["far"] },
+      "gearStrategy": { "preferredLensRoles": ["astro", "wide"], "support": ["tripod", "remote-release"] },
+      "baseSettings": {
+        "mode": "M",
+        "focalLength": "18mm",
+        "shutter": { "start": "2s", "range": ["1s", "4s"] },
+        "aperture": { "start": "f/1.8", "strategy": "wide-open" },
+        "iso": { "start": "1600", "range": ["800", "3200"] },
+        "focus": "Manuel fokus på stjerne",
+        "drive": "Canon Camera Connect"
+      },
+      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setLensManualFocus", "useLiveViewForAstro", "useCanonCameraConnect"],
+      "quickGuide": [
+        "Brug kortere lukkertid for at bevare struktur i nordlyset.",
+        "Start med 2 sek., f/1.8 og ISO 1600.",
+        "Hvis billedet bliver for mørkt, hæv ISO før du går meget længere i tid."
+      ],
+      "why": "Kraftigt nordlys kan bevæge sig hurtigt. Korte eksponeringer bevarer striber og gardiner bedre end 8-10 sekunder."
+    },
+    {
+      "id": "moon-with-landscape",
+      "title": "Måne med landskab",
+      "family": "astro",
+      "priority": 88,
+      "subjects": ["moon", "sunset"],
+      "conditions": { "movement": ["still"], "light": ["twilight", "low-light"], "distance": ["far"] },
+      "gearStrategy": { "preferredLensRoles": ["telephoto", "wide"], "support": ["tripod-optional"] },
+      "baseSettings": {
+        "mode": "M",
+        "focalLength": "70-300mm eller 18-35mm",
+        "shutter": { "start": "1/125", "range": ["1/60", "1/250"] },
+        "aperture": { "start": "f/5.6", "range": ["f/5.6", "f/8"] },
+        "iso": { "start": "400", "range": ["200", "1600"] },
+        "focus": "One Shot på landskab eller månekant",
+        "drive": "Single"
+      },
+      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setOneShot", "setLensStabilizationOn"],
+      "quickGuide": [
+        "Fotografér i skumring, ikke midt om natten, hvis landskabet også skal ses.",
+        "Brug 70-300mm hvis månen skal se stor ud.",
+        "Brug 18-35mm hvis landskabet er vigtigere end månen."
+      ],
+      "why": "Månen og landskabet har ofte meget forskellig lysstyrke. Skumring gør balancen lettere end helt mørk nat."
+    },
+    {
+      "id": "zoo-monkeys-overcast",
+      "title": "Aber i zoo, overskyet",
+      "family": "dyr",
+      "priority": 86,
+      "subjects": ["monkey", "animal"],
+      "conditions": { "movement": ["walking", "running"], "light": ["overcast", "shade"], "distance": ["medium", "far"] },
+      "gearStrategy": { "preferredLensRoles": ["zoo", "animals", "telephoto"] },
+      "baseSettings": {
+        "mode": "M",
+        "focalLength": "150-300mm",
+        "shutter": { "start": "1/800", "range": ["1/500", "1/1250"] },
+        "aperture": { "start": "f/5.6", "strategy": "wide-open-at-tele" },
+        "iso": "Auto",
+        "focus": "AI Servo ved bevægelse, One Shot hvis de sidder stille",
+        "drive": "High-speed continuous ved aktivitet"
+      },
+      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setAiServo", "setHighSpeedContinuous", "setLensStabilizationOn"],
+      "quickGuide": [
+        "Brug Canon 70-300mm.",
+        "Kom så tæt på glas/hegn som muligt uden at røre.",
+        "Hvis aben sidder stille, kan du gå ned mod 1/500.",
+        "Hvis den hopper eller leger, gå mod 1/1000-1/1250."
+      ],
+      "fieldGuide": {
+        "before": [
+          "Tjek om du fotograferer gennem glas, hegn eller mørk skygge.",
+          "Slå IS til på 70-300mm.",
+          "Start med Auto ISO, fordi lyset i zoo skifter meget."
+        ],
+        "during": [
+          "Hold fokus på ansigtet eller øjnene.",
+          "Vent på øjeblikke hvor aben vender ansigtet mod lyset.",
+          "Tag korte serier, når den bevæger sig."
+        ]
+      },
+      "why": "Overskyet zoo-lys er ofte blødt men svagt. 1/800 er et praktisk startpunkt, fordi aber skifter mellem stille og hurtig bevægelse."
+    },
+    {
+      "id": "portrait-outdoor-backlight",
+      "title": "Portræt i modlys",
+      "family": "mennesker",
+      "priority": 76,
+      "subjects": ["person"],
+      "conditions": { "movement": ["still"], "light": ["backlight", "daylight"], "distance": ["near", "medium"] },
+      "gearStrategy": { "preferredLensRoles": ["people", "low-light"], "optional": ["flash"] },
+      "baseSettings": {
+        "mode": "Av",
+        "focalLength": "35mm eller 100-150mm",
+        "shutter": { "start": "Auto", "range": ["1/250", "1/1000"] },
+        "aperture": { "start": "f/2.8", "range": ["f/1.8", "f/4"] },
+        "iso": "Auto",
+        "focus": "One Shot på øjet",
+        "drive": "Single"
+      },
+      "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot"],
+      "quickGuide": [
+        "Brug Sigma ved 35mm for miljøportræt eller 70-300mm omkring 100-150mm for tættere portræt.",
+        "Eksponer efter ansigtet, ikke den lyse himmel.",
+        "Brug Speedlite som fill, hvis ansigtet bliver for mørkt."
+      ],
+      "why": "Modlys kan give flot kantlys, men kameraet vil ofte gøre ansigtet for mørkt, hvis himlen fylder meget."
+    },
+    {
+      "id": "sunset-landscape",
+      "title": "Solnedgang og landskab",
+      "family": "landskab",
+      "priority": 74,
+      "subjects": ["sunset"],
+      "conditions": { "movement": ["still"], "light": ["backlight", "daylight"], "distance": ["far"] },
+      "gearStrategy": { "preferredLensRoles": ["wide", "walkaround"] },
+      "baseSettings": {
+        "mode": "Av",
+        "focalLength": "18-35mm",
+        "shutter": { "start": "Auto", "range": ["1/30", "1/500"] },
+        "aperture": { "start": "f/8", "range": ["f/5.6", "f/11"] },
+        "iso": { "start": "100", "range": ["100", "400"] },
+        "focus": "One Shot ca. en tredjedel inde i motivet",
+        "drive": "Single"
+      },
+      "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot"],
+      "quickGuide": [
+        "Brug 18-35mm eller 18-55mm.",
+        "Start ved f/8 for god skarphed i landskabet.",
+        "Hvis himlen bliver hvid, mørkn eksponeringen en smule."
+      ],
+      "why": "Ved landskab er dybdeskarphed og højlys vigtigere end ekstremt stor blænde."
+    },
+    {
+      "id": "fireworks-tripod",
+      "title": "Fyrværkeri",
+      "family": "nat",
+      "priority": 72,
+      "subjects": ["fireworks"],
+      "conditions": { "movement": ["running"], "light": ["night"], "distance": ["far"] },
+      "gearStrategy": { "preferredLensRoles": ["wide", "walkaround"], "support": ["tripod", "remote-release"] },
+      "baseSettings": {
+        "mode": "M",
+        "focalLength": "18-35mm",
+        "shutter": { "start": "4s", "range": ["2s", "8s"] },
+        "aperture": { "start": "f/8", "range": ["f/5.6", "f/11"] },
+        "iso": { "start": "100", "range": ["100", "400"] },
+        "focus": "Manuel fokus mod fjern horisont",
+        "drive": "2 sek. selvudløser eller fjernudløser"
+      },
+      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setLensManualFocus"],
+      "quickGuide": [
+        "Brug stativ og en bred komposition.",
+        "Start med ISO 100, f/8 og 4 sek.",
+        "Hvis sporene bliver for kraftige eller hvide, gå kortere i tid eller til f/11."
+      ],
+      "why": "Fyrværkeri tegner lysstriber over tid. Lang lukkertid er en effekt, ikke en fejl."
+    },
+    {
+      "id": "concert-stage-light",
+      "title": "Koncert eller scene",
+      "family": "event",
+      "priority": 70,
+      "subjects": ["concert", "person"],
+      "conditions": { "movement": ["walking", "running"], "light": ["stage-light", "low-light"], "distance": ["medium", "far"] },
+      "gearStrategy": { "preferredLensRoles": ["low-light", "telephoto", "people"] },
+      "baseSettings": {
+        "mode": "M",
+        "focalLength": "35mm eller 70-300mm",
+        "shutter": { "start": "1/250", "range": ["1/125", "1/500"] },
+        "aperture": { "start": "f/1.8 med Sigma, f/5.6 med tele", "strategy": "wide-open" },
+        "iso": "Auto",
+        "focus": "AI Servo ved bevægelse",
+        "drive": "Continuous low"
+      },
+      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setAiServo"],
+      "quickGuide": [
+        "Brug Sigma hvis du er tæt på scenen.",
+        "Brug 70-300mm hvis du står langt væk, men forvent høj ISO.",
+        "Eksponer efter ansigter i lyset, ikke den mørke baggrund."
+      ],
+      "why": "Scenelys har store kontraster. Mørk baggrund snyder let kameraet til for lyse ansigter."
+    },
+    {
+      "id": "outdoor-sport-daylight",
+      "title": "Sport udendørs",
+      "family": "bevægelse",
+      "priority": 68,
+      "subjects": ["sport"],
+      "conditions": { "movement": ["running"], "light": ["daylight", "overcast"], "distance": ["medium", "far"] },
+      "gearStrategy": { "preferredLensRoles": ["sports", "telephoto"] },
+      "baseSettings": {
+        "mode": "M",
+        "focalLength": "150-300mm",
+        "shutter": { "start": "1/1000", "range": ["1/800", "1/2000"] },
+        "aperture": { "start": "f/5.6", "strategy": "wide-open-at-tele" },
+        "iso": "Auto",
+        "focus": "AI Servo",
+        "drive": "High-speed continuous"
+      },
+      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setAiServo", "setHighSpeedContinuous", "setLensStabilizationOn"],
+      "quickGuide": [
+        "Brug 70-300mm og følg motivet gennem søgeren.",
+        "Hold fokus på kroppen eller ansigtet.",
+        "Tag korte serier ved de vigtigste øjeblikke."
+      ],
+      "why": "Sport kræver ofte samme prioritet som dyr i bevægelse: lukkertid først, ISO bagefter."
     }
   ]
 }

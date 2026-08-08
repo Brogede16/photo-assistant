@@ -33,6 +33,11 @@
           "Drej programhjulet øverst til venstre til M.",
           "Kontroller at skærmen viser M."
         ],
+        "setAvMode": [
+          "Drej programhjulet øverst til venstre til Av.",
+          "Brug Av når du vil vælge blænden, mens kameraet selv vælger lukkertid.",
+          "Hold øje med lukkertiden i søgeren, så den ikke bliver for langsom."
+        ],
         "setShutter": [
           "Brug Main Dial ved udløserknappen.",
           "Drej indtil lukkertiden på skærmen matcher anbefalingen.",
@@ -72,6 +77,16 @@
           "Brug Canon Camera Connect som fjernudløser og Live View-hjælp.",
           "Photo Assistant styrer ikke kameraet direkte.",
           "Brug appen til at undgå kamerarystelser ved stativ, astro og lange eksponeringer."
+        ],
+        "setLensStabilizationOn": [
+          "Find STABILIZER/IS-kontakten på objektivet.",
+          "Sæt den til ON ved håndholdt fotografering.",
+          "Ved stativ og lange eksponeringer kan IS ofte slås fra."
+        ],
+        "setLensManualFocus": [
+          "Find AF/MF-kontakten på objektivet.",
+          "Sæt den til MF, når du vil fokusere manuelt.",
+          "Drej fokusringen meget langsomt, mens du ser forstørret Live View."
         ]
       }
     }
