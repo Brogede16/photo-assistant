@@ -266,6 +266,7 @@ export function suggestNextTags(query, profiles, taxonomy, selectedIds = [], lim
       ...(profile.conditions?.distance || []),
       ...(profile.conditions?.action || []),
       ...(profile.conditions?.place || []),
+      ...(profile.conditions?.direction || []),
       ...(profile.conditions?.time || []),
       ...(profile.conditions?.weather || []),
       ...(profile.conditions?.style || []),
@@ -309,7 +310,7 @@ function addCandidate(candidates, taxonomy, selected, id, score) {
   if (term.suggest === false) return;
   if ([...selected].some((selectedId) => termsConflict(taxonomy, selectedId, id))) return;
   const current = candidates.get(id) || { term, score: 0 };
-  current.score += score + typeBoost(term.type);
+  current.score += score + typeBoost(term.type) + (term.suggestionBoost || 0);
   candidates.set(id, current);
 }
 
@@ -323,6 +324,7 @@ function scoreProfile(profile, classification) {
     if (profile.conditions?.distance?.includes(match.id)) score += match.score + 2;
     if (profile.conditions?.action?.includes(match.id)) score += match.score + 3;
     if (profile.conditions?.place?.includes(match.id)) score += match.score + 2;
+    if (profile.conditions?.direction?.includes(match.id)) score += match.score + 3;
     if (profile.conditions?.time?.includes(match.id)) score += match.score + 2;
     if (profile.conditions?.weather?.includes(match.id)) score += match.score + 2;
     if (profile.conditions?.style?.includes(match.id)) score += match.score + 3;
@@ -356,6 +358,7 @@ function typeBoost(type) {
     distance: 2,
     action: 4,
     place: 3,
+    direction: 3,
     time: 3,
     weather: 3,
     style: 4,

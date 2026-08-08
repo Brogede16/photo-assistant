@@ -31,6 +31,11 @@ assert.equal(findExactTerm(taxonomy, "enkeltmand").id, "single-portrait");
 assert.equal(findExactTerm(taxonomy, "portræt af en mand").id, "single-portrait");
 assert.equal(findExactTerm(taxonomy, "rodet baggrund").id, "busy-background");
 assert.equal(findExactTerm(taxonomy, "hverdagsbillede").id, "snapshot");
+assert.equal(findExactTerm(taxonomy, "bykant").id, "city-edge");
+assert.equal(findExactTerm(taxonomy, "bylys").id, "light-pollution");
+assert.equal(findExactTerm(taxonomy, "ind over byen").id, "toward-city");
+assert.equal(findExactTerm(taxonomy, "væk fra byen").id, "away-from-city");
+assert.equal(findExactTerm(taxonomy, "ud over marken").id, "field");
 
 const consumedPhrase = consumeKnownTerms("ko gråt vejr ", taxonomy);
 assert.deepEqual(consumedPhrase.termIds, ["cow", "overcast"]);
@@ -44,6 +49,8 @@ const resolvedDistance = mergeTagIds(taxonomy, ["near"], ["far"]);
 assert.deepEqual(resolvedDistance, ["far"]);
 const resolvedTime = mergeTagIds(taxonomy, ["morning"], ["night-time"]);
 assert.deepEqual(resolvedTime, ["night-time"]);
+assert.deepEqual(mergeTagIds(taxonomy, ["toward-city"], ["away-from-city"]), ["away-from-city"]);
+assert.deepEqual(mergeTagIds(taxonomy, ["light-pollution"], ["dark-sky"]), ["dark-sky"]);
 
 const birdResults = searchProfiles("fugl flyver langt væk", situations.profiles, taxonomy);
 assert.equal(birdResults.results[0].item.id, "bird-flight-daylight");
@@ -53,6 +60,34 @@ assert.equal(astroResults.results[0].item.id, "aurora-weak");
 
 const milkyWayResults = searchProfiles("mælkevejen", situations.profiles, taxonomy);
 assert.equal(milkyWayResults.results[0].item.id, "milky-way-wide");
+
+const cityStars = searchProfiles("stjerner i byen lysforurening mod byen", situations.profiles, taxonomy);
+assert.equal(cityStars.results[0].item.id, "stars-city-light-pollution");
+const cityStarsRecommendation = buildRecommendation(cityStars.results[0].item, equipment, { classification: cityStars.classification });
+assert.equal(cityStarsRecommendation.settings.shutter, "4s");
+assert.equal(cityStarsRecommendation.settings.aperture, "f/2.8");
+assert.equal(cityStarsRecommendation.settings.iso, "800");
+assert.equal(cityStarsRecommendation.lens.id, "sigma-18-35-f18-art");
+
+assert.equal(searchProfiles("stjerner ved bykanten", situations.profiles, taxonomy).results[0].item.id, "stars-city-edge");
+const fieldStars = searchProfiles("stjerner ved bykanten væk fra byen ud over marken mørk himmel", situations.profiles, taxonomy);
+assert.equal(fieldStars.results[0].item.id, "stars-field-away-city");
+const fieldStarsRecommendation = buildRecommendation(fieldStars.results[0].item, equipment, { classification: fieldStars.classification });
+assert.equal(fieldStarsRecommendation.settings.shutter, "10s");
+assert.equal(fieldStarsRecommendation.settings.aperture, "f/1.8");
+assert.equal(fieldStarsRecommendation.settings.iso, "1600");
+
+const cityEdgeMilkyWay = searchProfiles("mælkevejen væk fra byen ud over marken", situations.profiles, taxonomy);
+assert.equal(cityEdgeMilkyWay.results[0].item.id, "milky-way-city-edge-away");
+assert.equal(buildRecommendation(cityEdgeMilkyWay.results[0].item, equipment, { classification: cityEdgeMilkyWay.classification }).settings.shutter, "8s");
+assert.equal(searchProfiles("måne over byen", situations.profiles, taxonomy).results[0].item.id, "moon-city-skyline");
+assert.equal(searchProfiles("stjernespor over byen", situations.profiles, taxonomy).results[0].item.id, "star-trails-city");
+assert.equal(searchProfiles("meteorregn væk fra byen ud over marken", situations.profiles, taxonomy).results[0].item.id, "meteor-shower-field-away-city");
+assert.equal(cityStars.results.some((result) => result.item.conditions?.direction?.includes("away-from-city")), false);
+
+const cityAstroTags = suggestNextTags("Stjerner", situations.profiles, taxonomy, ["stars"], 16);
+assert.equal(cityAstroTags.some((term) => term.id === "city-edge"), true);
+assert.equal(cityAstroTags.some((term) => term.id === "away-from-city"), true);
 
 const zooResults = searchProfiles("aber i zoo gråvejr", situations.profiles, taxonomy);
 assert.equal(zooResults.results[0].item.id, "zoo-monkeys-overcast");
@@ -343,8 +378,8 @@ assert.equal(influencedRecommendation.scenarioDecisions[0].includes("Mit regnkon
 assert.equal(maxStarShutterSeconds(18, 1.6), 13);
 assert.equal(astroStatus(new Date("2026-08-08T23:00:00+02:00")).moon.percent >= 0, true);
 assert.equal(astroTargets(new Date("2026-08-08T23:00:00+02:00")).some((target) => target.id === "milky-way-wide"), true);
-assert.equal(versionLog.current, "0.18.2");
-assert.equal(versionLog.entries[0].version, "0.18.2");
+assert.equal(versionLog.current, "0.19.0");
+assert.equal(versionLog.entries[0].version, "0.19.0");
 assert.equal(learning.lessons.length, 6);
 assert.equal(learning.lessons.some((lesson) => lesson.id === "modes"), true);
 const modesLesson = learning.lessons.find((lesson) => lesson.id === "modes");

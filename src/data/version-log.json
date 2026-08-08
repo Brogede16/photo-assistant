@@ -1,6 +1,17 @@
 {
-  "current": "0.18.2",
+  "current": "0.19.0",
   "entries": [
+    {
+      "version": "0.19.0",
+      "date": "2026-08-08",
+      "title": "Astro ved byen",
+      "items": [
+        "Tilføjede bykant, lysforurening, mørk himmel og retning som sammenhængende astrotags.",
+        "Mod byen og væk fra byen vælger nu forskellige scenarier og eksponeringer.",
+        "Tilføjede konkrete EOS 80D-guides til stjerner, Mælkevejen, månen, stjernespor og meteorregn i bynære omgivelser.",
+        "Ud over marken forstås som en mørkere retning væk fra byens lyskuppel."
+      ]
+    },
     {
       "version": "0.18.2",
       "date": "2026-08-08",

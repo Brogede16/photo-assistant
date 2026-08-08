@@ -1,4 +1,4 @@
-const CACHE_NAME = "photo-assistant-v0.18.2-r2";
+const CACHE_NAME = "photo-assistant-v0.19.0";
 
 const CORE_ASSETS = [
   "/",

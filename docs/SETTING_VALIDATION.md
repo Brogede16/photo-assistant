@@ -42,3 +42,17 @@ Festival- og koncertprofiler opdeles efter dagslys, aften/nat, afstand, motiv og
 - Trommeslager, publikum, band, DJ, regn og backstage har egne profiler og må kun udløses af deres konkrete tag.
 
 [Canons ISO-vejledning](https://files.canon-europe.com/files/soft40253/Manual/PSG10_CUG_ENG.pdf) beskriver, at højere ISO muliggør hurtigere lukkertid i mørke og dermed reducerer motivslør. [Canons vejledning om målemetoder](https://files.canon-europe.com/files/soft32414/manual/PSG9_CUG_eng.pdf) beskriver spotmåling til situationer med stor lysforskel mellem motiv og omgivelser. Profilerne kombinerer disse principper med EOS 80D, Sigma 18-35mm f/1.8 og de to telezooms.
+
+## Astro ved byen
+
+Lysforurening behandles ikke som et generelt ISO-fradrag. Appen skelner mellem sted, retning og motiv, fordi de tre valg påvirker billedet forskelligt:
+
+- `Mod byen` bruger kortere eksponering og lavere ISO for at bevare farve og højlys i lyskuplen.
+- `Væk fra byen` over en mark tillader længere eksponering og højere ISO, fordi himmelbaggrunden er mørkere.
+- `Mælkevejen` prioriterer retningen væk fra store byer; ekstra lukkertid kan ikke genskabe kontrast, som himmelgløden allerede har skjult.
+- `Måne over byen` er et andet tilfælde, fordi månen er lys. Her kan byens silhuet være en del af motivet, især i skumringen.
+- `Stjernespor over byen` bygges af mange kortere billeder, så byhimlen ikke bliver overeksponeret i én lang optagelse.
+
+[NASA's guide til mørke observationssteder](https://science.nasa.gov/solar-system/skywatching/how-to-find-good-places-to-stargaze/) beskriver, at lyskuplen kan være kraftig på én horisont og betydeligt svagere i den modsatte retning fra samme sted. [Canons guide til meteorregn](https://www.usa.canon.com/learning/training-articles/training-articles-list/photographing-meteor-showers) skelner tilsvarende mellem at fotografere mod byen for en varm glød og væk fra byen for en mørkere himmel. [National Park Service om lysforurening](https://home.nps.gov/subjects/nightskies/lightpollution.htm) beskriver skyglow og hvordan lys spredes i atmosfæren.
+
+Startværdierne er derefter tilpasset EOS 80D og Sigma 18-35mm ved 18mm. De skal stadig kontrolleres med et testbillede og histogram, fordi byens størrelse, afstand, dis, skyer og direkte lamper varierer fra sted til sted.
