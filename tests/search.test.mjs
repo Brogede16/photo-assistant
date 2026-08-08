@@ -7,6 +7,7 @@ import { classifyQuery, findExactTerm, searchProfiles, suggestNextTags, termsToQ
 const taxonomy = JSON.parse(await readFile(new URL("../src/data/search/taxonomy.json", import.meta.url), "utf8"));
 const situations = JSON.parse(await readFile(new URL("../src/data/situations/core-profiles.json", import.meta.url), "utf8"));
 const equipment = JSON.parse(await readFile(new URL("../src/data/equipment/index.json", import.meta.url), "utf8"));
+const versionLog = JSON.parse(await readFile(new URL("../src/data/version-log.json", import.meta.url), "utf8"));
 
 const overcast = classifyQuery("abe i zoo gråvejr", taxonomy);
 assert.deepEqual(overcast.facets.subject.includes("monkey"), true);
@@ -52,5 +53,7 @@ assert.equal(recommendation.gearChecklist.includes("Stativ"), true);
 assert.equal(maxStarShutterSeconds(18, 1.6), 13);
 assert.equal(astroStatus(new Date("2026-08-08T23:00:00+02:00")).moon.percent >= 0, true);
 assert.equal(astroTargets(new Date("2026-08-08T23:00:00+02:00")).some((target) => target.id === "milky-way-wide"), true);
+assert.equal(versionLog.current, "0.4.3");
+assert.equal(versionLog.entries[0].version, "0.4.3");
 
 console.log("Alle søge-, anbefalings- og astro-tests bestod.");

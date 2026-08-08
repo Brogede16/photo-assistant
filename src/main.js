@@ -9,6 +9,7 @@ const state = {
   equipment: null,
   taxonomy: null,
   profiles: [],
+  versionLog: null,
   context: defaultContext(),
   selectedResult: null,
   searchText: "",
@@ -22,14 +23,16 @@ const app = document.querySelector("#app");
 boot();
 
 async function boot() {
-  const [equipment, taxonomy, situations] = await Promise.all([
+  const [equipment, taxonomy, situations, versionLog] = await Promise.all([
     fetchJson("/src/data/equipment/index.json"),
     fetchJson("/src/data/search/taxonomy.json"),
-    fetchJson("/src/data/situations/core-profiles.json")
+    fetchJson("/src/data/situations/core-profiles.json"),
+    fetchJson("/src/data/version-log.json")
   ]);
   state.equipment = equipment;
   state.taxonomy = taxonomy;
   state.profiles = situations.profiles;
+  state.versionLog = versionLog;
   registerServiceWorker();
   render();
 }
@@ -41,7 +44,10 @@ function render() {
         <p class="eyebrow">Canon EOS 80D</p>
         <h1>Photo Assistant</h1>
       </div>
-      <button class="icon-button" data-action="show-equipment" aria-label="Mit udstyr" title="Mit udstyr">80D</button>
+      <div class="header-actions">
+        <button class="icon-button" data-action="show-version-log" aria-label="Versionlog" title="Versionlog">v${state.versionLog.current}</button>
+        <button class="icon-button" data-action="show-equipment" aria-label="Mit udstyr" title="Mit udstyr">80D</button>
+      </div>
     </header>
 
     <main>
@@ -265,6 +271,37 @@ function renderEquipment() {
   `;
 }
 
+function renderVersionLog() {
+  const content = document.querySelector("#content");
+  content.innerHTML = `
+    <section class="panel">
+      <div class="panel-header">
+        <p class="section-kicker">Versionlog</p>
+        <h2>Hvad er nyt?</h2>
+      </div>
+      <div class="version-list">
+        ${state.versionLog.entries.map(renderVersionEntry).join("")}
+      </div>
+    </section>
+  `;
+}
+
+function renderVersionEntry(entry) {
+  return `
+    <article class="version-entry">
+      <div class="card-title-row">
+        <div>
+          <p class="badge">v${entry.version} · ${entry.date}</p>
+          <h3>${entry.title}</h3>
+        </div>
+      </div>
+      <ul>
+        ${entry.items.map((item) => `<li>${item}</li>`).join("")}
+      </ul>
+    </article>
+  `;
+}
+
 function renderResultCard(result, index) {
   if (result.type === "preset") return renderPresetCard(result.item, result.score);
   const recommendation = buildRecommendation(result.item, state.equipment, state.context);
@@ -441,6 +478,7 @@ function bindShellEvents() {
   });
 
   document.querySelector('[data-action="show-equipment"]')?.addEventListener("click", renderEquipment);
+  document.querySelector('[data-action="show-version-log"]')?.addEventListener("click", renderVersionLog);
 }
 
 function addTags(ids) {

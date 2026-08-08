@@ -1,0 +1,74 @@
+{
+  "current": "0.4.3",
+  "entries": [
+    {
+      "version": "0.4.3",
+      "date": "2026-08-08",
+      "title": "Klogere tag-forslag",
+      "items": [
+        "Stjerner foreslår nu relevante næste tags som Mælkevejen, Nordlys, Nat, Vidvinkel og Manuel fokus.",
+        "Forslagsmotoren bruger relationer i taksonomien i stedet for bare at fylde listen med brede tags.",
+        "Irrelevante forslag filtreres hårdere væk."
+      ]
+    },
+    {
+      "version": "0.4.2",
+      "date": "2026-08-08",
+      "title": "Skrivning bliver til tags",
+      "items": [
+        "Kendte ord bliver automatisk til tags, når du afslutter med mellemrum, komma, semikolon eller Enter.",
+        "Synonymer som aber og gråvejr bliver til Abe og Overskyet.",
+        "Ukendte ord bliver stående som almindelig fritekst."
+      ]
+    },
+    {
+      "version": "0.4.1",
+      "date": "2026-08-08",
+      "title": "Tydeligere lysvalg",
+      "items": [
+        "Manuel override blev omdøbt til Faktisk lys ved motivet.",
+        "Valgene forklarer nu bedre, om motivet er lysere, mørkere, overskyet eller indendørs."
+      ]
+    },
+    {
+      "version": "0.4.0",
+      "date": "2026-08-08",
+      "title": "Tags i søgefeltet",
+      "items": [
+        "Forslag kan nu klikkes som tags, så en situation kan bygges af flere dele.",
+        "Valgte tags kan fjernes igen.",
+        "Søgningen kombinerer tags og fri tekst."
+      ]
+    },
+    {
+      "version": "0.3.0",
+      "date": "2026-08-08",
+      "title": "Astro og tag med",
+      "items": [
+        "Astro-fanen fik kort for Stjerner, Mælkevejen, Nordlys, Månen og Fyrværkeri.",
+        "Guides viser nu Tag med, fx kamera, objektiv, stativ og Canon Camera Connect.",
+        "Tests kontrollerer også frontend-syntaks."
+      ]
+    },
+    {
+      "version": "0.2.0",
+      "date": "2026-08-08",
+      "title": "Flere fotoprofiler",
+      "items": [
+        "Tilføjede profiler for Mælkevejen, kraftigt nordlys, måne med landskab, aber i zoo, portræt i modlys, solnedgang, fyrværkeri, koncert og sport.",
+        "Detaljesiden viser nu fokusmetode og drive/serieoptagelse.",
+        "Canon EOS 80D-guides fik flere objektiv- og kameratrin."
+      ]
+    },
+    {
+      "version": "0.1.0",
+      "date": "2026-08-08",
+      "title": "Første fundament",
+      "items": [
+        "Oprettede PWA-skelet, GitHub-repo, datamodel, søgetaksonomi og milepælsplan.",
+        "Indlagde Canon EOS 80D, fire objektiver og Speedlite 430EX II.",
+        "Tilføjede første søgning, anbefalingsmotor, Astro-start, EXIF-flow og lokale presets."
+      ]
+    }
+  ]
+}

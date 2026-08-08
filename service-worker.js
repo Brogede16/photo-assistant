@@ -1,4 +1,4 @@
-const CACHE_NAME = "photo-assistant-v0.4.3";
+const CACHE_NAME = "photo-assistant-v0.4.4";
 
 const CORE_ASSETS = [
   "/",
@@ -16,7 +16,8 @@ const CORE_ASSETS = [
   "/src/lib/storage.js",
   "/src/data/equipment/index.json",
   "/src/data/search/taxonomy.json",
-  "/src/data/situations/core-profiles.json"
+  "/src/data/situations/core-profiles.json",
+  "/src/data/version-log.json"
 ];
 
 self.addEventListener("install", (event) => {

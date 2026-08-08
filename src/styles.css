@@ -64,6 +64,11 @@ button:active {
   margin-bottom: 18px;
 }
 
+.header-actions {
+  display: flex;
+  gap: 8px;
+}
+
 h1,
 h2,
 h3,
@@ -242,7 +247,8 @@ select {
 
 .result-list,
 .guide-list,
-.equipment-list {
+.equipment-list,
+.version-list {
   display: grid;
   gap: 10px;
 }
@@ -465,6 +471,20 @@ summary {
   border-radius: var(--radius);
   padding: 12px;
   background: #0e141d;
+}
+
+.version-entry {
+  display: grid;
+  gap: 8px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 12px;
+  background: #0e141d;
+}
+
+.version-entry ul {
+  margin: 0;
+  padding-left: 20px;
 }
 
 .text-button {
