@@ -609,6 +609,7 @@ function labelProcedure(key) {
     setAperture: "Indstil blænde",
     setIso: "Indstil ISO",
     setSpotMetering: "Vælg spotmåling",
+    setAntiFlicker: "Slå Anti-flicker til",
     setAiServo: "Vælg AI Servo",
     setOneShot: "Vælg One Shot",
     setHighSpeedContinuous: "Vælg serieoptagelse",

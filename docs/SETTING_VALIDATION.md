@@ -56,3 +56,17 @@ Lysforurening behandles ikke som et generelt ISO-fradrag. Appen skelner mellem s
 [NASA's guide til mørke observationssteder](https://science.nasa.gov/solar-system/skywatching/how-to-find-good-places-to-stargaze/) beskriver, at lyskuplen kan være kraftig på én horisont og betydeligt svagere i den modsatte retning fra samme sted. [Canons guide til meteorregn](https://www.usa.canon.com/learning/training-articles/training-articles-list/photographing-meteor-showers) skelner tilsvarende mellem at fotografere mod byen for en varm glød og væk fra byen for en mørkere himmel. [National Park Service om lysforurening](https://home.nps.gov/subjects/nightskies/lightpollution.htm) beskriver skyglow og hvordan lys spredes i atmosfæren.
 
 Startværdierne er derefter tilpasset EOS 80D og Sigma 18-35mm ved 18mm. De skal stadig kontrolleres med et testbillede og histogram, fordi byens størrelse, afstand, dis, skyer og direkte lamper varierer fra sted til sted.
+
+## Biograf og Filmtaget
+
+Biografprofilerne adskiller rummets lys, lærredet og mennesker, fordi de kræver forskellige eksponeringer:
+
+- En tom sal med salelys bruger 1/60, f/4 og ISO 800 som rent, håndholdt rumfoto.
+- En sal uden både salelys og lærredsbillede bruger 1/15, f/1.8 og ISO 3200; der kan kun registreres svage konturer og sikkerhedslys.
+- Et filmbillede på lærredet eksponeres efter den lyse flade ved 1/50, f/2.8 og ISO 400 fremfor efter den mørke sal.
+- Publikum under filmen fotograferes uden flash ved 1/160, f/1.8 og ISO 3200, mens publikum med salelys får 1/250 og Auto ISO.
+- Lærred med mørke publikumssilhuetter er en selvstændig kreativ profil, så systemet ikke forsøger at gøre ansigterne lyse.
+
+Filmtaget er ikke behandlet som en almindelig biografsal. [Det Danske Filminstitut beskriver Filmtaget](https://www.dfi.dk/cinemateket/lej-cinemateket/lej-filmtaget-op-til-800-personer) som en 1.700 m² tagterrasse i København med plads til 800 gæster og udsigt til Kongens Have. [Himmelbio](https://www.dfi.dk/cinemateket/lej-cinemateket/lej-himmelbio) er den udendørs biograf med 127 pladser og LED-skærm. Derfor har dagslys, skumring, LED-skærm, publikum og byudsigt egne profiler.
+
+[Canons low-light-vejledning](https://www.canon.com.au/get-inspired/6-low-light-photography-tips) beskriver fordelen ved RAW, stor blænde, kontrolleret lukkertid og højere ISO fremfor bevægelsesuskarphed. [EOS 80D-manualen](https://gdlp01.c-wss.com/gds/0/0300022720/01/eos_80d_instruction_manual_en.pdf) beskriver kameraets Anti-flicker shoot under den røde optagefane 4. Funktionen hjælper ved almindeligt flimrende kunstlys under søgerfotografering, men et projektor- eller LED-billede skal stadig kontrolleres for mørke bånd med et testbillede.

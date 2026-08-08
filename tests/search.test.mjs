@@ -36,6 +36,13 @@ assert.equal(findExactTerm(taxonomy, "bylys").id, "light-pollution");
 assert.equal(findExactTerm(taxonomy, "ind over byen").id, "toward-city");
 assert.equal(findExactTerm(taxonomy, "væk fra byen").id, "away-from-city");
 assert.equal(findExactTerm(taxonomy, "ud over marken").id, "field");
+assert.equal(findExactTerm(taxonomy, "biografen").id, "cinema");
+assert.equal(findExactTerm(taxonomy, "lærredet").id, "cinema-screen");
+assert.equal(findExactTerm(taxonomy, "Himmelbio").id, "film-roof");
+assert.equal(findExactTerm(taxonomy, "salelys tændt").id, "house-lights-on");
+assert.equal(findExactTerm(taxonomy, "biograf uden lys").id, "house-lights-off");
+assert.equal(findExactTerm(taxonomy, "filmvisning").id, "watching-film");
+assert.equal(findExactTerm(taxonomy, "i skumringen").id, "twilight");
 
 const consumedPhrase = consumeKnownTerms("ko gråt vejr ", taxonomy);
 assert.deepEqual(consumedPhrase.termIds, ["cow", "overcast"]);
@@ -88,6 +95,44 @@ assert.equal(cityStars.results.some((result) => result.item.conditions?.directio
 const cityAstroTags = suggestNextTags("Stjerner", situations.profiles, taxonomy, ["stars"], 16);
 assert.equal(cityAstroTags.some((term) => term.id === "city-edge"), true);
 assert.equal(cityAstroTags.some((term) => term.id === "away-from-city"), true);
+
+const cinemaOverview = searchProfiles("biograf", situations.profiles, taxonomy);
+assert.equal(cinemaOverview.results[0].item.id, "cinema-room-overview");
+const cinemaLightsOn = searchProfiles("biograf med lys", situations.profiles, taxonomy);
+assert.equal(cinemaLightsOn.results[0].item.id, "cinema-room-lights-on");
+assert.equal(buildRecommendation(cinemaLightsOn.results[0].item, equipment, { classification: cinemaLightsOn.classification }).settings.aperture, "f/4");
+const cinemaLightsOff = searchProfiles("biograf uden lys", situations.profiles, taxonomy);
+assert.equal(cinemaLightsOff.results[0].item.id, "cinema-room-lights-off");
+assert.equal(buildRecommendation(cinemaLightsOff.results[0].item, equipment, { classification: cinemaLightsOff.classification }).settings.shutter, "1/15");
+
+const cinemaScreen = searchProfiles("lærred i biograf", situations.profiles, taxonomy);
+assert.equal(cinemaScreen.results[0].item.id, "cinema-screen-exposure");
+const cinemaScreenRecommendation = buildRecommendation(cinemaScreen.results[0].item, equipment, { classification: cinemaScreen.classification });
+assert.equal(cinemaScreenRecommendation.settings.shutter, "1/50");
+assert.equal(cinemaScreenRecommendation.settings.iso, "400");
+assert.equal(cinemaScreenRecommendation.actions.some((action) => action.id === "setAntiFlicker"), true);
+
+const cinemaAudience = searchProfiles("publikum ser film i biograf", situations.profiles, taxonomy);
+assert.equal(cinemaAudience.results[0].item.id, "cinema-audience-watching");
+assert.equal(buildRecommendation(cinemaAudience.results[0].item, equipment, { classification: cinemaAudience.classification }).settings.iso, "3200");
+const cinemaSilhouettes = searchProfiles("lærred og publikum i biograf", situations.profiles, taxonomy);
+assert.equal(cinemaSilhouettes.results[0].item.id, "cinema-screen-audience-silhouette");
+const cinemaReaction = searchProfiles("publikum griner i biograf med salelys tændt", situations.profiles, taxonomy);
+assert.equal(cinemaReaction.results[0].item.id, "cinema-audience-house-lights-reaction");
+assert.equal(buildRecommendation(cinemaReaction.results[0].item, equipment, { classification: cinemaReaction.classification }).settings.shutter, "1/250");
+
+assert.equal(searchProfiles("Filmtaget", situations.profiles, taxonomy).results[0].item.id, "filmtaget-rooftop-event");
+assert.equal(searchProfiles("Filmtaget i dagslys", situations.profiles, taxonomy).results[0].item.id, "filmtaget-daytime-screen");
+const filmRoofScreen = searchProfiles("Himmelbio lærred i skumringen", situations.profiles, taxonomy);
+assert.equal(filmRoofScreen.results[0].item.id, "filmtaget-screen-twilight");
+assert.equal(buildRecommendation(filmRoofScreen.results[0].item, equipment, { classification: filmRoofScreen.classification }).settings.shutter, "1/100");
+assert.equal(searchProfiles("Filmtaget publikum om aftenen", situations.profiles, taxonomy).results[0].item.id, "filmtaget-audience-evening");
+assert.equal(searchProfiles("udsigt fra Filmtaget", situations.profiles, taxonomy).results[0].item.id, "filmtaget-city-view");
+
+const cinemaTags = suggestNextTags("Biograf", situations.profiles, taxonomy, ["cinema"], 16);
+assert.equal(cinemaTags.some((term) => term.id === "cinema-screen"), true);
+assert.equal(cinemaTags.some((term) => term.id === "house-lights-off"), true);
+assert.equal(cinemaTags.some((term) => term.id === "audience"), true);
 
 const zooResults = searchProfiles("aber i zoo gråvejr", situations.profiles, taxonomy);
 assert.equal(zooResults.results[0].item.id, "zoo-monkeys-overcast");
@@ -378,15 +423,15 @@ assert.equal(influencedRecommendation.scenarioDecisions[0].includes("Mit regnkon
 assert.equal(maxStarShutterSeconds(18, 1.6), 13);
 assert.equal(astroStatus(new Date("2026-08-08T23:00:00+02:00")).moon.percent >= 0, true);
 assert.equal(astroTargets(new Date("2026-08-08T23:00:00+02:00")).some((target) => target.id === "milky-way-wide"), true);
-assert.equal(versionLog.current, "0.19.0");
-assert.equal(versionLog.entries[0].version, "0.19.0");
+assert.equal(versionLog.current, "0.20.0");
+assert.equal(versionLog.entries[0].version, "0.20.0");
 assert.equal(learning.lessons.length, 6);
 assert.equal(learning.lessons.some((lesson) => lesson.id === "modes"), true);
 const modesLesson = learning.lessons.find((lesson) => lesson.id === "modes");
 assert.deepEqual(modesLesson.explanations.map((mode) => mode.value), ["P", "Av", "Tv", "M", "Bulb"]);
 assert.equal(modesLesson.explanations.every((mode) => mode.name && mode.meaning && mode.bestFor), true);
 assert.deepEqual(new Set(situations.profiles.map((profile) => profile.baseSettings.mode)), new Set(["P", "Av", "Tv", "M"]));
-assert.equal(["setTvMode", "setProgramMode", "setBulbMode"].every((id) => equipment.cameras[0].procedures[id]), true);
+assert.equal(["setTvMode", "setProgramMode", "setBulbMode", "setAntiFlicker"].every((id) => equipment.cameras[0].procedures[id]), true);
 assert.equal(learning.lessons.every((lesson) => lesson.answers[lesson.correct]), true);
 
 console.log("Alle søge-, anbefalings- og astro-tests bestod.");

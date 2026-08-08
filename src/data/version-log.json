@@ -1,6 +1,17 @@
 {
-  "current": "0.19.0",
+  "current": "0.20.0",
   "entries": [
+    {
+      "version": "0.20.0",
+      "date": "2026-08-08",
+      "title": "Biograf og Filmtaget",
+      "items": [
+        "Tilføjede biograf, lærred, salelys, lærredslys, tom sal og filmvisning som sammenhængende tags.",
+        "Tilføjede særskilte EOS 80D-profiler til tom sal, mørk sal, lærred, publikum under filmen og reaktioner med salelys.",
+        "Filmtaget og Himmelbio har nu egne profiler til dagslys, skumring, LED-skærm, publikum, arrangementer og byudsigt.",
+        "Biografguiderne forklarer anti-flicker, skærmens højlys og hvornår flash ikke skal bruges."
+      ]
+    },
     {
       "version": "0.19.0",
       "date": "2026-08-08",

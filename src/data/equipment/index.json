@@ -72,6 +72,11 @@
           "Drej Main Dial, til symbolet for Spotmåling vises på topdisplayet.",
           "Placér søgerens centrale måleområde på artistens belyste ansigt, når du kontrollerer eksponeringen."
         ],
+        "setAntiFlicker": [
+          "Tryk MENU og gå til den røde optagefane 4.",
+          "Vælg Anti-flicker shoot. og sæt den til Enable.",
+          "Brug søgeren, ikke Live View, når 80D skal time billedet efter almindeligt flimrende kunstlys. Kontrollér stadig lærredet på et testbillede."
+        ],
         "setAiServo": [
           "Tryk AF-knappen på toppen.",
           "Drej Main Dial til AI Servo.",
