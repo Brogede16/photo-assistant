@@ -85,7 +85,7 @@
       "conditions": { "movement": ["flight", "running"], "light": ["daylight", "overcast"], "distance": ["medium", "far"] },
       "gearStrategy": { "preferredLensRoles": ["birds", "telephoto"] },
       "baseSettings": {
-        "mode": "M",
+        "mode": "Tv",
         "focalLength": "250-300mm",
         "shutter": { "start": "1/1600", "range": ["1/1000", "1/2500"] },
         "aperture": { "start": "f/5.6", "strategy": "wide-open-at-tele" },
@@ -93,7 +93,7 @@
         "focus": "AI Servo",
         "drive": "High-speed continuous"
       },
-      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setAiServo", "setHighSpeedContinuous", "setLensStabilizationOn"],
+      "cameraActions": ["setTvMode", "setShutter", "setIso", "setAiServo", "setHighSpeedContinuous", "setLensStabilizationOn"],
       "quickGuide": [
         "Brug Canon 70-300mm.",
         "Start omkring 200-250mm, find fuglen, og zoom ind derefter.",
@@ -111,7 +111,7 @@
       "conditions": { "movement": ["running"], "light": ["daylight", "overcast", "shade"], "distance": ["medium", "far"] },
       "gearStrategy": { "preferredLensRoles": ["animals", "telephoto"] },
       "baseSettings": {
-        "mode": "M",
+        "mode": "Tv",
         "focalLength": "100-300mm",
         "shutter": { "start": "1/1000", "range": ["1/800", "1/1600"] },
         "aperture": { "start": "f/5.6", "strategy": "wide-open-at-tele" },
@@ -119,7 +119,7 @@
         "focus": "AI Servo",
         "drive": "High-speed continuous"
       },
-      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setAiServo", "setHighSpeedContinuous", "setLensStabilizationOn"],
+      "cameraActions": ["setTvMode", "setShutter", "setIso", "setAiServo", "setHighSpeedContinuous", "setLensStabilizationOn"],
       "quickGuide": [
         "Brug 70-300mm, hvis dyret er på afstand.",
         "Prioriter lukkertiden, når motivet bevæger sig.",
@@ -249,7 +249,7 @@
       "conditions": { "movement": ["walking", "running"], "light": ["overcast", "shade"], "distance": ["medium", "far"] },
       "gearStrategy": { "preferredLensRoles": ["zoo", "animals", "telephoto"] },
       "baseSettings": {
-        "mode": "M",
+        "mode": "Tv",
         "focalLength": "150-300mm",
         "shutter": { "start": "1/800", "range": ["1/500", "1/1250"] },
         "aperture": { "start": "f/5.6", "strategy": "wide-open-at-tele" },
@@ -257,7 +257,7 @@
         "focus": "AI Servo ved bevægelse, One Shot hvis de sidder stille",
         "drive": "High-speed continuous ved aktivitet"
       },
-      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setAiServo", "setHighSpeedContinuous", "setLensStabilizationOn"],
+      "cameraActions": ["setTvMode", "setShutter", "setIso", "setAiServo", "setHighSpeedContinuous", "setLensStabilizationOn"],
       "quickGuide": [
         "Brug Canon 70-300mm.",
         "Kom så tæt på glas/hegn som muligt uden at røre.",
@@ -425,7 +425,7 @@
       "conditions": { "movement": ["running"], "light": ["daylight", "overcast"], "distance": ["medium", "far"] },
       "gearStrategy": { "preferredLensRoles": ["sports", "telephoto"] },
       "baseSettings": {
-        "mode": "M",
+        "mode": "Tv",
         "focalLength": "150-300mm",
         "shutter": { "start": "1/1000", "range": ["1/800", "1/2000"] },
         "aperture": { "start": "f/5.6", "strategy": "wide-open-at-tele" },
@@ -433,7 +433,7 @@
         "focus": "AI Servo",
         "drive": "High-speed continuous"
       },
-      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setAiServo", "setHighSpeedContinuous", "setLensStabilizationOn"],
+      "cameraActions": ["setTvMode", "setShutter", "setIso", "setAiServo", "setHighSpeedContinuous", "setLensStabilizationOn"],
       "quickGuide": [
         "Brug 70-300mm og følg motivet gennem søgeren.",
         "Hold fokus på kroppen eller ansigtet.",
@@ -449,8 +449,8 @@
       "subjects": ["animal"],
       "conditions": { "action": ["eating"], "movement": ["gentle-motion", "walking"], "place": ["outdoor", "field", "farm"], "light": ["daylight", "overcast"], "distance": ["near", "medium", "far"] },
       "gearStrategy": { "preferredLensRoles": ["animals", "telephoto", "walkaround"] },
-      "baseSettings": { "mode": "M", "focalLength": "70-300mm eller 35-55mm", "shutter": { "start": "1/320", "range": ["1/250", "1/640"] }, "aperture": { "start": "f/5.6", "range": ["f/4", "f/8"] }, "iso": "Auto", "focus": "AI Servo", "drive": "Continuous low" },
-      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setAiServo", "setLensStabilizationOn"],
+      "baseSettings": { "mode": "Tv", "focalLength": "70-300mm eller 35-55mm", "shutter": { "start": "1/320", "range": ["1/250", "1/640"] }, "aperture": "Auto", "iso": "Auto", "focus": "AI Servo", "drive": "Continuous low" },
+      "cameraActions": ["setTvMode", "setShutter", "setIso", "setAiServo", "setLensStabilizationOn"],
       "quickGuide": ["Vælg objektiv efter afstand, ikke efter dyreart.", "Hold fokus på øjet eller hovedet.", "Vent på at dyret løfter hovedet eller vender sig mod lyset."],
       "why": "Spisende dyr bevæger hovedet mere end kroppen. En mellem-hurtig lukkertid er normalt nok."
     },
@@ -475,8 +475,8 @@
       "subjects": ["child", "person"],
       "conditions": { "action": ["playing", "laughing"], "movement": ["running", "active-motion"], "place": ["outdoor", "beach", "field"], "light": ["daylight", "overcast"], "distance": ["near", "medium"] },
       "gearStrategy": { "preferredLensRoles": ["people", "sports", "walkaround"] },
-      "baseSettings": { "mode": "M", "focalLength": "35-150mm", "shutter": { "start": "1/1000", "range": ["1/640", "1/1600"] }, "aperture": { "start": "f/2.8", "range": ["f/2.8", "f/5.6"] }, "iso": "Auto", "focus": "AI Servo", "drive": "High-speed continuous" },
-      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setAiServo", "setHighSpeedContinuous"],
+      "baseSettings": { "mode": "Tv", "focalLength": "35-150mm", "shutter": { "start": "1/1000", "range": ["1/640", "1/1600"] }, "aperture": "Auto", "iso": "Auto", "focus": "AI Servo", "drive": "High-speed continuous" },
+      "cameraActions": ["setTvMode", "setShutter", "setIso", "setAiServo", "setHighSpeedContinuous"],
       "quickGuide": ["Gå ned i barnets højde.", "Følg ansigt eller overkrop med AI Servo.", "Tag korte serier ved grin, hop og retningsskift."],
       "why": "Leg skifter hurtigt mellem pause og sprint. En hurtig grundindstilling giver flere skarpe øjeblikke."
     },
@@ -488,8 +488,8 @@
       "subjects": ["person"],
       "conditions": { "action": ["laughing"], "movement": ["active-motion"], "place": ["home", "party", "outdoor"], "light": ["daylight", "indoor", "low-light"], "distance": ["near", "medium"] },
       "gearStrategy": { "preferredLensRoles": ["people", "low-light"], "optional": ["flash"] },
-      "baseSettings": { "mode": "M", "focalLength": "24-100mm", "shutter": { "start": "1/500", "range": ["1/320", "1/800"] }, "aperture": { "start": "f/2.8", "range": ["f/1.8", "f/4"] }, "iso": "Auto", "focus": "AI Servo på ansigtet", "drive": "Continuous low" },
-      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setAiServo"],
+      "baseSettings": { "mode": "Tv", "focalLength": "24-100mm", "shutter": { "start": "1/500", "range": ["1/320", "1/800"] }, "aperture": "Auto", "iso": "Auto", "focus": "AI Servo på ansigtet", "drive": "Continuous low" },
+      "cameraActions": ["setTvMode", "setShutter", "setIso", "setAiServo"],
       "quickGuide": ["Hold kameraet klar før grinets højdepunkt.", "Fokusér på det nærmeste ansigt.", "Tag en kort serie fremfor at holde udløseren nede."],
       "why": "Ansigter og skuldre bevæger sig tydeligt under latter, så portræt-lukkertider kan være for langsomme."
     },
@@ -501,8 +501,8 @@
       "subjects": ["person"],
       "conditions": { "place": ["beach", "outdoor"], "time": ["afternoon", "evening"], "weather": ["sunny", "windy"], "movement": ["walking", "running"], "light": ["daylight", "backlight"], "distance": ["near", "medium"] },
       "gearStrategy": { "preferredLensRoles": ["people", "wide", "walkaround"] },
-      "baseSettings": { "mode": "M", "focalLength": "24-100mm", "shutter": { "start": "1/800", "range": ["1/500", "1/1600"] }, "aperture": { "start": "f/4", "range": ["f/2.8", "f/8"] }, "iso": "Auto", "focus": "AI Servo", "drive": "Continuous low" },
-      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setAiServo"],
+      "baseSettings": { "mode": "Tv", "focalLength": "24-100mm", "shutter": { "start": "1/800", "range": ["1/500", "1/1600"] }, "aperture": "Auto", "iso": "Auto", "focus": "AI Servo", "drive": "Continuous low" },
+      "cameraActions": ["setTvMode", "setShutter", "setIso", "setAiServo"],
       "quickGuide": ["Tjek højlys i vand og lys sand.", "Brug modlyset bevidst, men eksponer efter ansigtet.", "Beskyt kameraet mod sand og saltvand ved objektivskift."],
       "why": "Strandlys kan være meget lyst, mens vind og leg kræver en kort lukkertid."
     },
@@ -527,8 +527,8 @@
       "subjects": ["animal", "deer", "fox", "bird"],
       "conditions": { "place": ["forest", "outdoor"], "time": ["morning", "evening"], "movement": ["walking", "running"], "light": ["shade", "low-light"], "distance": ["far"] },
       "gearStrategy": { "preferredLensRoles": ["animals", "birds", "telephoto"] },
-      "baseSettings": { "mode": "M", "focalLength": "200-300mm", "shutter": { "start": "1/800", "range": ["1/500", "1/1600"] }, "aperture": { "start": "f/5.6", "strategy": "wide-open-at-tele" }, "iso": "Auto", "focus": "AI Servo", "drive": "High-speed continuous" },
-      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setAiServo", "setHighSpeedContinuous", "setLensStabilizationOn"],
+      "baseSettings": { "mode": "Tv", "focalLength": "200-300mm", "shutter": { "start": "1/800", "range": ["1/500", "1/1600"] }, "aperture": "Auto", "iso": "Auto", "focus": "AI Servo", "drive": "High-speed continuous" },
+      "cameraActions": ["setTvMode", "setShutter", "setIso", "setAiServo", "setHighSpeedContinuous", "setLensStabilizationOn"],
       "quickGuide": ["Brug 70-300mm og slå IS til.", "Find åbninger mellem grene før motivet kommer frem.", "Accepter høj ISO for at bevare en sikker lukkertid."],
       "why": "Skovlys er ofte markant svagere end åbent dagslys, mens dyret stadig kan bevæge sig pludseligt."
     },
@@ -618,8 +618,8 @@
       "subjects": ["person"],
       "conditions": { "style": ["portrait", "candid"], "action": ["laughing", "walking"], "distance": ["near", "medium"], "place": ["street", "party", "outdoor"], "light": ["daylight", "indoor", "low-light"], "movement": ["walking", "active-motion"] },
       "gearStrategy": { "preferredLensRoles": ["people", "portraits", "low-light"] },
-      "baseSettings": { "mode": "M", "focalLength": "35-150mm", "shutter": { "start": "1/500", "range": ["1/320", "1/800"] }, "aperture": { "start": "f/2.8", "range": ["f/1.8", "f/4"] }, "iso": "Auto", "focus": "AI Servo", "drive": "Continuous low" },
-      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setAiServo"],
+      "baseSettings": { "mode": "Tv", "focalLength": "35-150mm", "shutter": { "start": "1/500", "range": ["1/320", "1/800"] }, "aperture": "Auto", "iso": "Auto", "focus": "AI Servo", "drive": "Continuous low" },
+      "cameraActions": ["setTvMode", "setShutter", "setIso", "setAiServo"],
       "quickGuide": ["Forudse øjeblikket i stedet for at reagere bagefter.", "Hold fokus på ansigt eller overkrop.", "Tag korte serier omkring reaktionen."],
       "why": "Uopstillede øjeblikke kræver mere lukkertid end et roligt portræt."
     },
@@ -631,8 +631,8 @@
       "subjects": ["person"],
       "conditions": { "style": ["portrait"], "weather": ["rain"], "place": ["outdoor", "street"], "light": ["overcast", "low-light"], "distance": ["near", "medium"], "movement": ["still", "walking"] },
       "gearStrategy": { "preferredLensRoles": ["people", "low-light"], "optional": ["flash"] },
-      "baseSettings": { "mode": "M", "focalLength": "35-120mm", "shutter": { "start": "1/500", "range": ["1/320", "1/800"] }, "aperture": { "start": "f/2.8", "range": ["f/1.8", "f/4"] }, "iso": "Auto", "focus": "AI Servo", "drive": "Continuous low" },
-      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setAiServo"],
+      "baseSettings": { "mode": "Tv", "focalLength": "35-120mm", "shutter": { "start": "1/500", "range": ["1/320", "1/800"] }, "aperture": "Auto", "iso": "Auto", "focus": "AI Servo", "drive": "Continuous low" },
+      "cameraActions": ["setTvMode", "setShutter", "setIso", "setAiServo"],
       "quickGuide": ["Brug modlys eller sidelys for at gøre regndråber synlige.", "Hold kamera og objektiv tørre; 80D-kittet er ikke regnsikkert.", "Tør frontglasset ofte."],
       "why": "Regn sænker lyset og skaber bevægelige dråber, så lukkertid prioriteres."
     },
@@ -670,8 +670,8 @@
       "subjects": ["concert"],
       "conditions": { "place": ["outdoor"], "time": ["afternoon", "evening"], "light": ["daylight", "overcast"], "distance": ["medium", "far"], "movement": ["active-motion", "running"] },
       "gearStrategy": { "preferredLensRoles": ["telephoto", "people"] },
-      "baseSettings": { "mode": "M", "focalLength": "100-300mm", "shutter": { "start": "1/800", "range": ["1/500", "1/1250"] }, "aperture": { "start": "f/5.6", "strategy": "wide-open-at-tele" }, "iso": "Auto", "focus": "AI Servo", "drive": "Continuous low" },
-      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setAiServo", "setLensStabilizationOn"],
+      "baseSettings": { "mode": "Tv", "focalLength": "100-300mm", "shutter": { "start": "1/800", "range": ["1/500", "1/1250"] }, "aperture": "Auto", "iso": "Auto", "focus": "AI Servo", "drive": "Continuous low" },
+      "cameraActions": ["setTvMode", "setShutter", "setIso", "setAiServo", "setLensStabilizationOn"],
       "quickGuide": ["Brug 70-300mm fra publikum.", "Hold øje med mikrofoner foran ansigter.", "Tag korte serier ved tydelige bevægelser og publikumsreaktioner."],
       "why": "Dagslys giver rum til hurtigere lukkertid og teleobjektiv uden ekstrem ISO."
     },
@@ -743,6 +743,176 @@
       "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setLensManualFocus", "useCanonCameraConnect"],
       "quickGuide": ["Sæt stativet sikkert væk fra trafik.", "Start med 10 sekunder, f/8 og ISO 100.", "Gå kortere i tid hvis gadelygter bliver helt hvide."],
       "why": "Skumring giver balance mellem byens omgivelser og bilernes lysspor. Helt mørk nat gør kontrasten hårdere."
+    },
+    {
+      "id": "everyday-person-snapshot",
+      "title": "Hurtigt hverdagsbillede",
+      "family": "hverdag",
+      "priority": 70,
+      "subjects": ["person"],
+      "conditions": { "style": ["snapshot"], "movement": ["still", "walking"], "light": ["daylight", "indoor"], "distance": ["near", "medium"] },
+      "gearStrategy": { "preferredLensRoles": ["walkaround", "people", "family"] },
+      "baseSettings": { "mode": "P", "focalLength": "24-55mm", "shutter": "Auto", "aperture": "Auto", "iso": "Auto", "focus": "One Shot; AI Servo hvis personen går", "drive": "Single" },
+      "cameraActions": ["setProgramMode", "setIso", "setOneShot"],
+      "quickGuide": ["Brug P, Auto ISO og 18-55mm eller Sigma.", "Fokusér på ansigtet.", "Tag billedet først; finjustér kun hvis situationen giver tid."],
+      "why": "P er nyttigt, når øjeblikket er vigtigere end at styre både blænde og lukkertid."
+    },
+    {
+      "id": "portrait-standard-daylight",
+      "title": "Klassisk portræt i dagslys",
+      "family": "portræt",
+      "priority": 94,
+      "subjects": ["person"],
+      "conditions": { "style": ["portrait", "classic-portrait"], "movement": ["still"], "light": ["daylight", "overcast"], "place": ["outdoor"], "distance": ["near"] },
+      "gearStrategy": { "preferredLensRoles": ["portraits", "people", "telephoto"] },
+      "baseSettings": { "mode": "Av", "focalLength": "70-120mm eller 35mm", "shutter": { "start": "Auto", "range": ["1/200", "1/1000"] }, "aperture": { "start": "f/2.8", "range": ["f/2.8", "f/4"] }, "iso": "Auto", "focus": "One Shot på nærmeste øje", "drive": "Single" },
+      "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot"],
+      "quickGuide": ["Placér personen i åben skygge eller blødt overskyet lys.", "Brug 70-300mm omkring 70-120mm eller Sigma ved 35mm.", "Fokusér på det nærmeste øje og kontrollér baggrunden."],
+      "why": "Av gør blænde og baggrund let at styre, mens kameraet tilpasser lukkertiden til dagslyset."
+    },
+    {
+      "id": "portrait-standard-indoor",
+      "title": "Klassisk portræt indendørs",
+      "family": "portræt",
+      "priority": 91,
+      "subjects": ["person"],
+      "conditions": { "style": ["portrait", "classic-portrait"], "movement": ["still"], "light": ["indoor", "window-light"], "place": ["inside", "home"], "distance": ["near"] },
+      "gearStrategy": { "preferredLensRoles": ["low-light", "people"], "optional": ["flash"] },
+      "baseSettings": { "mode": "Av", "focalLength": "35mm", "shutter": { "start": "Auto", "range": ["1/125", "1/500"] }, "aperture": { "start": "f/2.8", "range": ["f/1.8", "f/4"] }, "iso": "Auto", "focus": "One Shot på øjet", "drive": "Single" },
+      "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot"],
+      "quickGuide": ["Brug Sigma ved 35mm og placér personen ved et vindue.", "Start ved f/2.8; gå til f/1.8 hvis lyset er meget svagt.", "Hold øje med at lukkertiden ikke falder under cirka 1/125."],
+      "why": "Av og et lysstærkt objektiv er en enkel standardløsning til et roligt indendørs portræt."
+    },
+    {
+      "id": "portrait-clean-background",
+      "title": "Portræt med rolig baggrund",
+      "family": "portræt",
+      "priority": 88,
+      "subjects": ["person"],
+      "conditions": { "style": ["portrait", "clean-background"], "movement": ["still"], "light": ["daylight", "window-light", "overcast"], "distance": ["near", "medium"] },
+      "gearStrategy": { "preferredLensRoles": ["portraits", "people", "telephoto"] },
+      "baseSettings": { "mode": "Av", "focalLength": "70-150mm", "shutter": "Auto", "aperture": { "start": "f/2.8", "range": ["f/2.8", "f/4"] }, "iso": "Auto", "focus": "One Shot på øjet", "drive": "Single" },
+      "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot", "setLensStabilizationOn"],
+      "quickGuide": ["Find en enkel flade eller skab stor afstand til baggrunden.", "Brug 70-150mm for at gøre baggrunden roligere.", "Hold øje med kanter, skilte og linjer bag hovedet."],
+      "why": "En rolig baggrund skabes først med placering og afstand, derefter med længere brændvidde og åben blænde."
+    },
+    {
+      "id": "portrait-busy-background",
+      "title": "Portræt foran en travl baggrund",
+      "family": "portræt",
+      "priority": 89,
+      "subjects": ["person"],
+      "conditions": { "style": ["portrait", "busy-background"], "movement": ["still"], "light": ["daylight", "overcast", "indoor"], "distance": ["near", "medium"] },
+      "gearStrategy": { "preferredLensRoles": ["portraits", "telephoto", "people"] },
+      "baseSettings": { "mode": "Av", "focalLength": "100-200mm", "shutter": "Auto", "aperture": { "start": "f/4", "range": ["f/2.8", "f/5.6"] }, "iso": "Auto", "focus": "One Shot på øjet", "drive": "Single" },
+      "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot", "setLensStabilizationOn"],
+      "quickGuide": ["Flyt personen væk fra baggrunden.", "Brug 70-300mm omkring 100-200mm og zoom ind.", "Skift din egen position, så lyse pletter og linjer ikke rammer ansigtet."],
+      "why": "Når baggrunden ikke kan ryddes, hjælper større motiv-baggrund-afstand og længere brændvidde mere end bare laveste f-tal."
+    },
+    {
+      "id": "portrait-dark-background",
+      "title": "Portræt med mørk baggrund",
+      "family": "portræt",
+      "priority": 86,
+      "subjects": ["person"],
+      "conditions": { "style": ["portrait", "dark-background"], "movement": ["still"], "light": ["window-light", "stage-light", "low-light"], "distance": ["near"] },
+      "gearStrategy": { "preferredLensRoles": ["low-light", "people"], "optional": ["flash"] },
+      "baseSettings": { "mode": "Av", "focalLength": "35-120mm", "shutter": "Auto", "aperture": { "start": "f/2.8", "range": ["f/1.8", "f/4"] }, "iso": "Auto", "focus": "One Shot på øjet", "drive": "Single" },
+      "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot"],
+      "quickGuide": ["Placér personen i lys og baggrunden uden for lyset.", "Eksponer efter huden, ikke den mørke baggrund.", "Brug negativ eksponeringskompensation hvis kameraet gør ansigtet for lyst."],
+      "why": "Low-key-looket kommer fra forskellen mellem lyset på personen og baggrunden, ikke fra at gøre hele billedet mørkt."
+    },
+    {
+      "id": "portrait-bright-background",
+      "title": "Portræt med lys eller hvid baggrund",
+      "family": "portræt",
+      "priority": 85,
+      "subjects": ["person"],
+      "conditions": { "style": ["portrait", "bright-background"], "movement": ["still"], "light": ["window-light", "daylight", "backlight"], "distance": ["near"] },
+      "gearStrategy": { "preferredLensRoles": ["people", "low-light"], "optional": ["flash"] },
+      "baseSettings": { "mode": "Av", "focalLength": "35-120mm", "shutter": "Auto", "aperture": { "start": "f/4", "range": ["f/2.8", "f/5.6"] }, "iso": "Auto", "focus": "One Shot på øjet", "drive": "Single" },
+      "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot"],
+      "quickGuide": ["Eksponer efter ansigtet og kontrollér at baggrunden ikke mister alle detaljer.", "Brug positiv eksponeringskompensation hvis kameraet gør ansigtet gråt.", "Hold personen lidt væk fra den hvide flade for færre skygger."],
+      "why": "En meget lys baggrund kan snyde lysmålingen til at gøre ansigtet for mørkt."
+    },
+    {
+      "id": "car-parked-daylight",
+      "title": "Parkeret bil i dagslys",
+      "family": "biler",
+      "priority": 88,
+      "subjects": ["car"],
+      "conditions": { "action": ["parked"], "movement": ["still"], "light": ["daylight", "overcast"], "place": ["outdoor", "street"], "distance": ["near", "medium"] },
+      "gearStrategy": { "preferredLensRoles": ["walkaround", "wide"] },
+      "baseSettings": { "mode": "Av", "focalLength": "24-55mm", "shutter": "Auto", "aperture": { "start": "f/5.6", "range": ["f/4", "f/8"] }, "iso": { "start": "100", "range": ["100", "400"] }, "focus": "One Shot", "drive": "Single" },
+      "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot"],
+      "quickGuide": ["Fotografér i lavt eller overskyet lys for roligere refleksioner.", "Brug 24-55mm og hold lodrette linjer lige.", "Flyt dig, så fotografen og lyse objekter ikke spejles i lakken."],
+      "why": "En stillestående bil handler mest om form, refleksioner og baggrund; Av giver enkel kontrol over dybdeskarpheden."
+    },
+    {
+      "id": "car-driving-daylight",
+      "title": "Kørende bil i dagslys",
+      "family": "biler",
+      "priority": 90,
+      "subjects": ["car"],
+      "conditions": { "action": ["driving"], "movement": ["running"], "light": ["daylight", "overcast"], "place": ["outdoor", "street"], "distance": ["medium", "far"] },
+      "gearStrategy": { "preferredLensRoles": ["telephoto", "sports"] },
+      "baseSettings": { "mode": "Tv", "focalLength": "100-300mm", "shutter": { "start": "1/1000", "range": ["1/640", "1/1600"] }, "aperture": "Auto", "iso": "Auto", "focus": "AI Servo", "drive": "High-speed continuous" },
+      "cameraActions": ["setTvMode", "setShutter", "setIso", "setAiServo", "setHighSpeedContinuous", "setLensStabilizationOn"],
+      "quickGuide": ["Stå et sikkert sted helt væk fra kørebanen.", "Brug Tv 1/1000 og AI Servo.", "Følg bilen jævnt og tag korte serier."],
+      "why": "Tv gør bilens bevægelse til første prioritet og lader kameraet tilpasse blænden."
+    },
+    {
+      "id": "car-rain-daylight",
+      "title": "Bil i regn om dagen",
+      "family": "biler",
+      "priority": 91,
+      "subjects": ["car"],
+      "conditions": { "action": ["driving", "parked"], "movement": ["running", "still"], "weather": ["rain"], "light": ["daylight", "overcast"], "place": ["outdoor", "street"], "distance": ["medium", "far"] },
+      "gearStrategy": { "preferredLensRoles": ["telephoto", "walkaround"] },
+      "baseSettings": { "mode": "Tv", "focalLength": "70-200mm", "shutter": { "start": "1/800", "range": ["1/500", "1/1250"] }, "aperture": "Auto", "iso": "Auto", "focus": "AI Servo ved kørsel", "drive": "Continuous low" },
+      "cameraActions": ["setTvMode", "setShutter", "setIso", "setAiServo", "setLensStabilizationOn"],
+      "quickGuide": ["Brug 1/800 til kørende bil eller 1/250 til en parkeret bil med synlig regn.", "Søg refleksioner i våd asfalt.", "Beskyt kameraet; dit kit er ikke regnsikkert."],
+      "why": "Regn gør lyset svagere, men Tv bevarer en sikker lukkertid til bil og vandsprøjt."
+    },
+    {
+      "id": "car-rain-night",
+      "title": "Bil i regn om natten",
+      "family": "biler",
+      "priority": 93,
+      "subjects": ["car"],
+      "conditions": { "action": ["driving", "parked"], "movement": ["running", "still"], "weather": ["rain"], "light": ["night", "low-light"], "time": ["night-time"], "place": ["outdoor", "street"], "distance": ["near", "medium"] },
+      "gearStrategy": { "preferredLensRoles": ["low-light", "telephoto"] },
+      "baseSettings": { "mode": "Tv", "focalLength": "35-120mm", "shutter": { "start": "1/500", "range": ["1/250", "1/800"] }, "aperture": "Auto", "iso": "Auto", "focus": "AI Servo ved kørsel", "drive": "Continuous low" },
+      "cameraActions": ["setTvMode", "setShutter", "setIso", "setAiServo", "setLensStabilizationOn"],
+      "quickGuide": ["Brug Tv 1/500 til kørsel og accepter høj ISO.", "Placér gadelygter eller billygter bag regnen for synlige dråber.", "Undgå at stå tæt ved trafikken, især i mørke og regn."],
+      "why": "Tv sikrer bilen først; Auto ISO kompenserer for det meget lave og skiftende lys."
+    },
+    {
+      "id": "car-panning-daylight",
+      "title": "Bil med panorering",
+      "family": "biler",
+      "priority": 89,
+      "subjects": ["car"],
+      "conditions": { "action": ["driving"], "movement": ["running"], "technique": ["panning"], "light": ["daylight", "overcast"], "place": ["outdoor", "street"], "distance": ["medium"] },
+      "gearStrategy": { "preferredLensRoles": ["telephoto", "sports"] },
+      "baseSettings": { "mode": "Tv", "focalLength": "70-150mm", "shutter": { "start": "1/80", "range": ["1/40", "1/160"] }, "aperture": "Auto", "iso": { "start": "100", "range": ["100", "400"] }, "focus": "AI Servo", "drive": "Continuous low" },
+      "cameraActions": ["setTvMode", "setShutter", "setIso", "setAiServo", "setLensStabilizationOn"],
+      "quickGuide": ["Stå sikkert og drej hele overkroppen med bilen.", "Start ved 1/80 og følg bilen før, under og efter billedet.", "Tag korte serier; mange billeder vil naturligt mislykkes."],
+      "why": "En bevidst langsom lukkertid gør baggrunden flydende, mens jævn panorering holder bilen skarp."
+    },
+    {
+      "id": "car-light-trails-night",
+      "title": "Bilernes lysspor om natten",
+      "family": "biler",
+      "priority": 92,
+      "subjects": ["car"],
+      "conditions": { "movement": ["running"], "technique": ["long-exposure", "light-trails"], "light": ["night", "low-light"], "time": ["night-time", "evening"], "place": ["street", "city", "outdoor"], "distance": ["medium", "far"] },
+      "gearStrategy": { "preferredLensRoles": ["wide", "walkaround"], "support": ["tripod", "remote-release"] },
+      "baseSettings": { "mode": "M", "focalLength": "18-35mm", "shutter": { "start": "8s", "range": ["4s", "20s"] }, "aperture": { "start": "f/8", "range": ["f/8", "f/11"] }, "iso": { "start": "100", "range": ["100", "400"] }, "focus": "One Shot på vejen, derefter MF", "drive": "Canon Camera Connect" },
+      "exposurePlan": { "timing": "Start 20-40 min. efter solnedgang eller senere for sort himmel", "perFrame": "8 sek.", "frames": "10-30 billeder", "interval": "Vent på passende trafik", "total": "Ca. 10-20 min.", "control": "Brug Canon Camera Connect som vibrationsfri fjernudløser", "alternative": "Bulb 30-60 sek. samler flere biler, men gadelygter kan brænde ud" },
+      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setLensManualFocus", "useCanonCameraConnect"],
+      "quickGuide": ["Brug stativ og stå helt væk fra trafikken.", "Start med 8 sekunder, f/8 og ISO 100.", "Tim billedet, så biler kører gennem hele kompositionen."],
+      "why": "M og stativ er rigtigt her, fordi bilerne skal blive til spor; hurtig Tv-lukkertid ville fjerne selve effekten."
     }
   ]
 }

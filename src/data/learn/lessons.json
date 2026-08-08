@@ -90,6 +90,25 @@
       "answers": ["Det er ægte 1:1-makro", "Det er close-up", "Brug altid 300mm"],
       "correct": 1,
       "feedback": "Det er close-up. Appen hjælper med dit kit uden at love ægte makroforstørrelse."
+    },
+    {
+      "id": "modes",
+      "label": "Programvalg",
+      "title": "P, Av, Tv, M eller Bulb?",
+      "intro": "Programmet bestemmer, hvem der vælger blænde og lukkertid. Mere manuel kontrol er ikke automatisk bedre; det rigtige program fjerner arbejde uden at fjerne den kontrol, motivet kræver.",
+      "scale": [
+        { "value": "P", "label": "Hverdag", "effect": "Kameraet vælger blænde og tid" },
+        { "value": "Av", "label": "Portræt", "effect": "Du vælger blænden" },
+        { "value": "Tv", "label": "Bevægelse", "effect": "Du vælger lukkertiden" },
+        { "value": "M", "label": "Kontrolleret lys", "effect": "Du vælger begge dele" },
+        { "value": "Bulb", "label": "Over 30 sek.", "effect": "Du styrer hele eksponeringens længde" }
+      ],
+      "rule": "Vælg program efter den indstilling, der ikke må flytte sig: Av for dybdeskarphed, Tv for bevægelse og M for lys, der snyder automatikken.",
+      "exercise": "Tag et roligt portræt i Av og en gående person i Tv. Læg mærke til hvilken indstilling kameraet vælger for dig.",
+      "question": "Du fotograferer en kørende bil og vil sikre 1/1000. Hvilket program er enklest?",
+      "answers": ["P", "Av", "Tv"],
+      "correct": 2,
+      "feedback": "Tv er enklest, fordi du låser lukkertiden og lader kameraet vælge blænden."
     }
   ]
 }

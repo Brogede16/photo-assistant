@@ -43,12 +43,18 @@ export function buildRecommendation(profile, equipment, context = {}) {
     scenarioDecisions: scenario.decisions,
     exposurePlan: profile.exposurePlan || null,
     gearChecklist: buildGearChecklist(profile, lens),
-    actions: (profile.cameraActions || []).map((actionId) => ({
+    actions: actionsForMode(profile.cameraActions || [], scenario.settings.mode).map((actionId) => ({
       id: actionId,
       steps: camera?.procedures?.[actionId] || []
     })),
     notes: buildNotes(profile, context)
   };
+}
+
+function actionsForMode(actions, mode) {
+  const modeActions = new Set(["setManualMode", "setAvMode", "setTvMode", "setProgramMode", "setBulbMode"]);
+  const modeAction = { M: "setManualMode", Av: "setAvMode", Tv: "setTvMode", P: "setProgramMode", Bulb: "setBulbMode" }[mode];
+  return [...new Set([modeAction, ...actions.filter((action) => !modeActions.has(action))].filter(Boolean))];
 }
 
 function pickUsablePresetSettings(settings) {

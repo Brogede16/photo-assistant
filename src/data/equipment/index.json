@@ -38,6 +38,21 @@
           "Brug Av når du vil vælge blænden, mens kameraet selv vælger lukkertid.",
           "Hold øje med lukkertiden i søgeren, så den ikke bliver for langsom."
         ],
+        "setTvMode": [
+          "Drej programhjulet øverst til venstre til Tv.",
+          "Drej Main Dial ved udløserknappen for at vælge lukkertiden.",
+          "Kameraet vælger blænden; brug Auto ISO, når lyset skifter."
+        ],
+        "setProgramMode": [
+          "Drej programhjulet øverst til venstre til P.",
+          "Kameraet vælger lukkertid og blænde.",
+          "Brug P til hurtige hverdagsbilleder, hvor øjeblikket er vigtigere end fuld kontrol."
+        ],
+        "setBulbMode": [
+          "Drej programhjulet til M.",
+          "Drej lukkertiden forbi 30 sekunder til Bulb vises.",
+          "Brug stativ og Canon Camera Connect eller en fjernudløser, så kameraet ikke bevæger sig."
+        ],
         "setShutter": [
           "Brug Main Dial ved udløserknappen.",
           "Drej indtil lukkertiden på skærmen matcher anbefalingen.",

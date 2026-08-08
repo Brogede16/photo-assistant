@@ -1,6 +1,18 @@
 {
-  "current": "0.7.0",
+  "current": "0.8.0",
   "entries": [
+    {
+      "version": "0.8.0",
+      "date": "2026-08-08",
+      "title": "Programvalg, biler og nyt tema",
+      "items": [
+        "Anbefalingerne vælger nu bevidst mellem P, Av, Tv, M og Bulb i stedet for at falde tilbage på M.",
+        "Tilføjede standardportrætter, flere baggrundstyper og bilscenarier i dagslys, regn, nat, panorering og lysspor.",
+        "Presets og Lær ligger nu i en fast bundmenu, så hovedværktøjet får mere ro.",
+        "Toppen har et skift mellem lys og mørk visning, og begge temaer har skarpere kontrast og tydeligere aktive valg.",
+        "Lær-delen har fået en særskilt lektion om Canon-programmerne og hvornår de giver mening."
+      ]
+    },
     {
       "version": "0.7.0",
       "date": "2026-08-08",

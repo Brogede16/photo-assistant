@@ -25,6 +25,10 @@ assert.equal(findExactTerm(taxonomy, "nærbillede").id, "close-up");
 assert.equal(findExactTerm(taxonomy, "gruppeportræt").id, "group-portrait");
 assert.equal(findExactTerm(taxonomy, "stjernespor").id, "star-trails");
 assert.equal(findExactTerm(taxonomy, "lang eksponering").id, "long-exposure");
+assert.equal(findExactTerm(taxonomy, "bil").id, "car");
+assert.equal(findExactTerm(taxonomy, "standard portræt").id, "classic-portrait");
+assert.equal(findExactTerm(taxonomy, "rodet baggrund").id, "busy-background");
+assert.equal(findExactTerm(taxonomy, "hverdagsbillede").id, "snapshot");
 
 const consumedPhrase = consumeKnownTerms("ko gråt vejr ", taxonomy);
 assert.deepEqual(consumedPhrase.termIds, ["cow", "overcast"]);
@@ -107,6 +111,8 @@ const childProfile = searchProfiles("barn griner udenfor", situations.profiles, 
 const childRecommendation = buildRecommendation(childProfile, equipment, { classification: childClassification });
 assert.equal(childRecommendation.settings.shutter, "1/500");
 assert.equal(childRecommendation.settings.focus, "AI Servo");
+assert.equal(childRecommendation.settings.mode, "Tv");
+assert.equal(childRecommendation.actions[0].id, "setTvMode");
 
 const protectedAstro = buildRecommendation(astroResults.results[0].item, equipment, {
   phase: "night",
@@ -131,6 +137,40 @@ const protectedLightTrails = buildRecommendation(lightTrails.results[0].item, eq
   classification: classifyQuery("lysspor løber aften gade", taxonomy)
 });
 assert.equal(protectedLightTrails.settings.shutter, "10s");
+
+const standardPortrait = searchProfiles("standard portræt dagslys udenfor", situations.profiles, taxonomy);
+assert.equal(standardPortrait.results[0].item.id, "portrait-standard-daylight");
+assert.equal(buildRecommendation(standardPortrait.results[0].item, equipment, {
+  classification: standardPortrait.classification
+}).settings.mode, "Av");
+assert.equal(searchProfiles("portræt rodet baggrund", situations.profiles, taxonomy).results[0].item.id, "portrait-busy-background");
+
+const carRainNight = searchProfiles("bil kører i regn om natten", situations.profiles, taxonomy);
+assert.equal(carRainNight.results[0].item.id, "car-rain-night");
+assert.equal(buildRecommendation(carRainNight.results[0].item, equipment, {
+  classification: carRainNight.classification
+}).settings.mode, "Tv");
+assert.equal(searchProfiles("bil i regn om dagen", situations.profiles, taxonomy).results[0].item.id, "car-rain-daylight");
+const carPanning = searchProfiles("bil panorering dagslys", situations.profiles, taxonomy);
+assert.equal(carPanning.results[0].item.id, "car-panning-daylight");
+assert.equal(buildRecommendation(carPanning.results[0].item, equipment, {
+  classification: carPanning.classification
+}).settings.shutter, "1/80");
+
+const carTrails = searchProfiles("bil lysspor om natten", situations.profiles, taxonomy);
+assert.equal(carTrails.results[0].item.id, "car-light-trails-night");
+const carTrailsRecommendation = buildRecommendation(carTrails.results[0].item, equipment, {
+  classification: carTrails.classification
+});
+assert.equal(carTrailsRecommendation.settings.mode, "M");
+assert.equal(carTrailsRecommendation.settings.iso, "100");
+assert.equal(Boolean(carTrailsRecommendation.exposurePlan), true);
+
+const snapshot = searchProfiles("hverdagsbillede af person", situations.profiles, taxonomy);
+assert.equal(snapshot.results[0].item.id, "everyday-person-snapshot");
+assert.equal(buildRecommendation(snapshot.results[0].item, equipment, {
+  classification: snapshot.classification
+}).settings.mode, "P");
 
 const macroRecommendation = buildRecommendation(macroResults.results[0].item, equipment, {
   classification: macroResults.classification
@@ -159,9 +199,12 @@ assert.equal(influencedRecommendation.scenarioDecisions[0].includes("Mit regnkon
 assert.equal(maxStarShutterSeconds(18, 1.6), 13);
 assert.equal(astroStatus(new Date("2026-08-08T23:00:00+02:00")).moon.percent >= 0, true);
 assert.equal(astroTargets(new Date("2026-08-08T23:00:00+02:00")).some((target) => target.id === "milky-way-wide"), true);
-assert.equal(versionLog.current, "0.7.0");
-assert.equal(versionLog.entries[0].version, "0.7.0");
-assert.equal(learning.lessons.length, 5);
+assert.equal(versionLog.current, "0.8.0");
+assert.equal(versionLog.entries[0].version, "0.8.0");
+assert.equal(learning.lessons.length, 6);
+assert.equal(learning.lessons.some((lesson) => lesson.id === "modes"), true);
+assert.deepEqual(new Set(situations.profiles.map((profile) => profile.baseSettings.mode)), new Set(["P", "Av", "Tv", "M"]));
+assert.equal(["setTvMode", "setProgramMode", "setBulbMode"].every((id) => equipment.cameras[0].procedures[id]), true);
 assert.equal(learning.lessons.every((lesson) => lesson.answers[lesson.correct]), true);
 
 console.log("Alle søge-, anbefalings- og astro-tests bestod.");

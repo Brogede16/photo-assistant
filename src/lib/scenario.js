@@ -1,9 +1,9 @@
 const MOTION_RULES = {
-  still: { rank: 0, shutter: "1/125", focus: "One Shot", drive: "Single" },
-  gentle: { rank: 1, shutter: "1/320", focus: "AI Servo", drive: "Continuous low" },
-  active: { rank: 2, shutter: "1/500", focus: "AI Servo", drive: "Continuous low" },
-  fast: { rank: 3, shutter: "1/1000", focus: "AI Servo", drive: "High-speed continuous" },
-  flight: { rank: 4, shutter: "1/1600", focus: "AI Servo", drive: "High-speed continuous" }
+  still: { rank: 0, mode: "Av", shutter: "Auto (mindst 1/125)", focus: "One Shot", drive: "Single" },
+  gentle: { rank: 1, mode: "Tv", shutter: "1/320", focus: "AI Servo", drive: "Continuous low" },
+  active: { rank: 2, mode: "Tv", shutter: "1/500", focus: "AI Servo", drive: "Continuous low" },
+  fast: { rank: 3, mode: "Tv", shutter: "1/1000", focus: "AI Servo", drive: "High-speed continuous" },
+  flight: { rank: 4, mode: "Tv", shutter: "1/1600", focus: "AI Servo", drive: "High-speed continuous" }
 };
 
 export function triangulateScenario(baseSettings, classification, profile) {
@@ -15,13 +15,15 @@ export function triangulateScenario(baseSettings, classification, profile) {
     .filter((item) => item.rule)
     .sort((a, b) => b.rule.rank - a.rule.rank);
 
-  if (motionSignals.length && profile.family !== "astro" && !profile.exposurePlan && profile.id !== "fireworks-tripod") {
+  if (motionSignals.length && canAdaptMode(profile)) {
     const { match, rule } = motionSignals[0];
-    settings.mode = "M";
+    settings.mode = rule.mode;
     settings.shutter = rule.shutter;
+    if (rule.mode === "Tv") settings.aperture = "Auto";
+    settings.iso = "Auto";
     settings.focus = rule.focus;
     settings.drive = rule.drive;
-    decisions.push(`${match.label} gør ${rule.shutter} til sikkert udgangspunkt og styrer fokus/serie.`);
+    decisions.push(`${match.label} vælger ${rule.mode}: ${rule.shutter} prioriteres, mens kameraet hjælper med resten.`);
   }
 
   const distance = strongestMatch(explicitMatches, "distance");
@@ -38,13 +40,13 @@ export function triangulateScenario(baseSettings, classification, profile) {
   }
 
   const lowLight = explicitMatches.find((match) => ["low-light", "indoor", "night", "nightclub", "evening"].includes(match.id));
-  if (lowLight && profile.family !== "astro") {
+  if (lowLight && profile.family !== "astro" && !profile.exposurePlan) {
     settings.iso = "Auto";
     decisions.push(`${lowLight.label} betyder, at ISO får lov at kompensere efter lukkertiden er sikret.`);
   }
 
   const brightLight = explicitMatches.find((match) => ["bright-sun", "midday"].includes(match.id));
-  if (brightLight && profile.family !== "astro") {
+  if (brightLight && profile.family !== "astro" && !profile.exposurePlan) {
     settings.iso = "100";
     decisions.push(`${brightLight.label} starter ved ISO 100 for at beskytte de lyse områder.`);
   }
@@ -53,6 +55,11 @@ export function triangulateScenario(baseSettings, classification, profile) {
   if (place) decisions.push(`${place.label} bruges som miljøkontekst og ændrer kun de indstillinger, stedet faktisk påvirker.`);
 
   return { settings, decisions };
+}
+
+function canAdaptMode(profile) {
+  const protectedTechnique = profile.conditions?.technique?.some((id) => ["panning"].includes(id));
+  return profile.family !== "astro" && profile.family !== "event" && profile.family !== "close-up" && !profile.exposurePlan && !protectedTechnique && profile.id !== "fireworks-tripod" && profile.modePolicy !== "fixed";
 }
 
 export function preferredRolesForScenario(profile, classification) {

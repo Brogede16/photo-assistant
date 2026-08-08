@@ -6,7 +6,7 @@ Projektet er bevidst bygget uden AI-afhængighed og uden direkte Canon API/SDK-k
 
 ## Første scope
 
-- Dansk mobile-first PWA med mørkt, feltvenligt interface.
+- Dansk mobile-first PWA med skarpt, feltvenligt interface og lyst/mørkt tema.
 - Modulær arkitektur: data, søgning, anbefalinger, astro, EXIF og UI holdes adskilt.
 - Canon EOS 80D som første fuldt understøttede kamera.
 - Brugerens udstyr forudindlæst:
@@ -17,6 +17,8 @@ Projektet er bevidst bygget uden AI-afhængighed og uden direkte Canon API/SDK-k
   - Canon Speedlite 430EX II
 - Søgning på tværs af motiver, lys, bevægelse, afstand, problemer, teknikker og udstyr.
 - Ét levende tagsystem for motiv, handling, afstand, sted, vejr, tidspunkt, lys og stil.
+- Scenariemotoren vælger mellem Canon-programmerne P, Av, Tv, M og Bulb ud fra den ønskede kontrol.
+- 52 grundscenarier, blandt andet standardportrætter, baggrundstyper, biler i dagslys/regn/nat, panorering og lysspor.
 - Astro som central tagfamilie med stjerner, Mælkevejen, nordlys og måne.
 - Lange aften- og Astro-forløb med lukkertid pr. billede, samlet optagetid, startvindue og Bulb-alternativ.
 - Lokale presets kan bruges som gennemsigtigt udgangspunkt for matchende guides.

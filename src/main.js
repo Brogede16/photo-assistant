@@ -16,11 +16,13 @@ const state = {
   activeClassification: null,
   presets: loadPresets(),
   unknownSearches: [],
-  selectedLearnTopic: "shutter"
+  selectedLearnTopic: "shutter",
+  theme: getInitialTheme()
 };
 
 const app = document.querySelector("#app");
 
+applyTheme();
 boot();
 
 async function boot() {
@@ -48,6 +50,7 @@ function render() {
         <h1>Photo Assistant</h1>
       </div>
       <div class="header-actions">
+        <button class="icon-button theme-toggle" data-action="toggle-theme" aria-label="${state.theme === "dark" ? "Skift til lyst tema" : "Skift til mørkt tema"}" title="${state.theme === "dark" ? "Lyst tema" : "Mørkt tema"}"><span aria-hidden="true">${state.theme === "dark" ? "☀" : "◐"}</span></button>
         <button class="icon-button" data-action="show-version-log" aria-label="Versionlog" title="Versionlog">v${state.versionLog.current}</button>
         <button class="icon-button" data-action="show-equipment" aria-label="Mit udstyr" title="Mit udstyr">80D</button>
       </div>
@@ -204,7 +207,8 @@ function lessonProcedureIds(lessonId) {
     aperture: ["setAvMode", "setAperture"],
     iso: ["setIso"],
     focus: ["setAiServo", "setOneShot", "setLensManualFocus"],
-    distance: ["setLensStabilizationOn", "setLensManualFocus"]
+    distance: ["setLensStabilizationOn", "setLensManualFocus"],
+    modes: ["setProgramMode", "setAvMode", "setTvMode", "setManualMode", "setBulbMode"]
   }[lessonId] || ["setManualMode"];
 }
 
@@ -449,6 +453,25 @@ function bindShellEvents() {
 
   document.querySelector('[data-action="show-equipment"]')?.addEventListener("click", renderEquipment);
   document.querySelector('[data-action="show-version-log"]')?.addEventListener("click", renderVersionLog);
+  document.querySelector('[data-action="toggle-theme"]')?.addEventListener("click", toggleTheme);
+}
+
+function getInitialTheme() {
+  const saved = localStorage.getItem("photoAssistant.theme");
+  if (saved === "light" || saved === "dark") return saved;
+  return window.matchMedia?.("(prefers-color-scheme: light)").matches ? "light" : "dark";
+}
+
+function applyTheme() {
+  document.documentElement.dataset.theme = state.theme;
+  document.querySelector('meta[name="theme-color"]')?.setAttribute("content", state.theme === "dark" ? "#090b0e" : "#f4f6f8");
+}
+
+function toggleTheme() {
+  state.theme = state.theme === "dark" ? "light" : "dark";
+  localStorage.setItem("photoAssistant.theme", state.theme);
+  applyTheme();
+  render();
 }
 
 function addTags(ids) {
@@ -544,6 +567,9 @@ function labelProcedure(key) {
   const labels = {
     setManualMode: "Sæt kameraet i M",
     setAvMode: "Sæt kameraet i Av",
+    setTvMode: "Sæt kameraet i Tv",
+    setProgramMode: "Sæt kameraet i P",
+    setBulbMode: "Sæt kameraet i Bulb",
     setShutter: "Indstil lukkertid",
     setAperture: "Indstil blænde",
     setIso: "Indstil ISO",

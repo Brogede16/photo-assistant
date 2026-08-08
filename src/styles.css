@@ -1,16 +1,43 @@
 :root {
   color-scheme: dark;
-  --bg: #0b0f14;
-  --panel: #121922;
-  --panel-strong: #172231;
-  --text: #f5f7fa;
-  --muted: #a7b0bd;
-  --line: #273445;
-  --accent: #4fd1c5;
-  --accent-2: #f6c85f;
-  --danger: #ff7f6e;
+  --bg: #090b0e;
+  --panel: #12161b;
+  --panel-strong: #1b2229;
+  --inset: #0b0f13;
+  --input: #050709;
+  --active: #123532;
+  --active-soft: #0d2928;
+  --danger-surface: #35191c;
+  --text: #f7f8fa;
+  --muted: #adb5bf;
+  --line: #3a444f;
+  --accent: #55d6c8;
+  --accent-2: #ffd166;
+  --danger: #ff8879;
+  --nav-bg: rgba(9, 11, 14, 0.96);
+  --shadow: 0 -8px 24px rgba(0, 0, 0, 0.28);
   --radius: 8px;
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: #f4f6f8;
+  --panel: #ffffff;
+  --panel-strong: #e9eef2;
+  --inset: #f0f3f5;
+  --input: #ffffff;
+  --active: #d9f1ed;
+  --active-soft: #e8f6f3;
+  --danger-surface: #ffe5e1;
+  --text: #11161c;
+  --muted: #58636f;
+  --line: #b9c3cc;
+  --accent: #006f66;
+  --accent-2: #8a5200;
+  --danger: #b83225;
+  --nav-bg: rgba(244, 246, 248, 0.96);
+  --shadow: 0 -8px 24px rgba(31, 42, 52, 0.14);
 }
 
 * {
@@ -22,6 +49,10 @@ body {
   min-height: 100vh;
   background: var(--bg);
   color: var(--text);
+}
+
+main {
+  padding-bottom: 88px;
 }
 
 button,
@@ -66,6 +97,25 @@ button:active {
 .header-actions {
   display: flex;
   gap: 8px;
+}
+
+@media (max-width: 400px) {
+  .topbar {
+    align-items: flex-start;
+  }
+
+  .header-actions {
+    gap: 4px;
+  }
+
+  .header-actions button {
+    min-width: 40px;
+    padding-inline: 7px;
+  }
+
+  h1 {
+    font-size: 27px;
+  }
 }
 
 h1,
@@ -118,7 +168,7 @@ label {
   padding: 18px;
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  background: #101720;
+  background: var(--panel);
 }
 
 input,
@@ -127,7 +177,7 @@ select {
   width: 100%;
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  background: #070a0f;
+  background: var(--input);
   color: var(--text);
   padding: 0 12px;
 }
@@ -167,8 +217,8 @@ select {
 
 .tag-chip {
   min-height: 36px;
-  border-color: #315060;
-  background: #0d2630;
+  border-color: color-mix(in srgb, var(--accent), var(--line) 62%);
+  background: var(--active-soft);
   color: var(--text);
 }
 
@@ -177,7 +227,7 @@ select {
   align-items: center;
   gap: 8px;
   border-color: var(--accent);
-  background: #103133;
+  background: var(--active);
 }
 
 .tag-chip.selected span {
@@ -200,15 +250,21 @@ select {
 }
 
 .tabbar {
-  position: sticky;
-  top: 0;
-  z-index: 2;
+  position: fixed;
+  left: 50%;
+  bottom: 0;
+  z-index: 10;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  width: min(100%, 720px);
   gap: 6px;
-  margin: 14px 0;
-  padding: 8px 0;
-  background: var(--bg);
+  margin: 0;
+  padding: 8px 14px calc(8px + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--line);
+  background: var(--nav-bg);
+  box-shadow: var(--shadow);
+  transform: translateX(-50%);
+  backdrop-filter: blur(14px);
 }
 
 .tabbar button {
@@ -218,6 +274,7 @@ select {
 
 .tabbar button.active {
   border-color: var(--accent);
+  background: var(--active);
   color: var(--text);
 }
 
@@ -278,7 +335,7 @@ select {
   border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: 6px 9px;
-  background: #080c12;
+  background: var(--inset);
   color: var(--text);
   font-weight: 800;
 }
@@ -304,7 +361,7 @@ select {
   gap: 8px;
   border-left: 3px solid var(--accent);
   padding: 12px 12px 12px 14px;
-  background: #0d1c22;
+  background: var(--active-soft);
 }
 
 .scenario-decisions ul {
@@ -339,7 +396,7 @@ select {
   gap: 4px;
   min-height: 76px;
   padding: 10px;
-  background: #080c12;
+  background: var(--inset);
 }
 
 .exposure-grid span {
@@ -374,12 +431,12 @@ select {
 
 .learn-topics button.active {
   border-color: var(--accent);
-  background: #103133;
+  background: var(--active);
 }
 
 .lesson-scale {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(112px, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1px;
   overflow: hidden;
   border: 1px solid var(--line);
@@ -393,7 +450,12 @@ select {
   gap: 3px;
   min-height: 112px;
   padding: 12px;
-  background: #0a1018;
+  background: var(--inset);
+}
+
+.lesson-scale div:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+  min-height: auto;
 }
 
 .lesson-scale strong {
@@ -418,7 +480,7 @@ select {
   gap: 8px;
   padding: 14px;
   border: 1px solid var(--line);
-  background: #0e141d;
+  background: var(--inset);
 }
 
 .lesson-rule {
@@ -446,12 +508,12 @@ select {
 
 .answer-grid button.correct {
   border-color: var(--accent);
-  background: #103133;
+  background: var(--active);
 }
 
 .answer-grid button.wrong {
   border-color: var(--danger);
-  background: #31191b;
+  background: var(--danger-surface);
 }
 
 #learn-feedback:not(:empty) {
@@ -463,7 +525,7 @@ select {
   border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: 12px;
-  background: #0e141d;
+  background: var(--inset);
 }
 
 .gear-checklist {
@@ -478,7 +540,7 @@ select {
   border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: 8px 10px;
-  background: #0e141d;
+  background: var(--inset);
   color: var(--text);
   font-weight: 700;
 }
@@ -493,7 +555,7 @@ details {
   border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: 12px;
-  background: #0e141d;
+  background: var(--inset);
 }
 
 summary {
@@ -507,7 +569,7 @@ summary {
   border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: 12px;
-  background: #0e141d;
+  background: var(--inset);
 }
 
 .file-import {
@@ -532,7 +594,7 @@ summary {
   border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: 12px;
-  background: #0e141d;
+  background: var(--inset);
 }
 
 .astro-ready {
@@ -628,7 +690,7 @@ summary {
   border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: 12px;
-  background: #0e141d;
+  background: var(--inset);
 }
 
 .version-entry {
@@ -637,7 +699,7 @@ summary {
   border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: 12px;
-  background: #0e141d;
+  background: var(--inset);
 }
 
 .version-entry ul {
