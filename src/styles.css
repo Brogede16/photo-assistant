@@ -525,18 +525,33 @@ select {
 }
 
 .setting-pill {
+  position: relative;
   min-height: 34px;
-  border: 0;
+  border: 1px solid color-mix(in srgb, var(--accent) 34%, transparent);
   border-right: 1px solid var(--line);
-  border-radius: 0;
-  background: transparent;
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--accent) 16%, transparent), color-mix(in srgb, var(--bg) 26%, transparent)),
+    var(--glass-soft);
   color: var(--text);
-  padding: 4px 10px 4px 0;
+  padding: 5px 12px;
   font-weight: 800;
+  box-shadow: inset 0 1px 0 color-mix(in srgb, #fff 42%, transparent);
 }
 
 .setting-pill:last-child {
-  border-right: 0;
+  border-right: 1px solid color-mix(in srgb, var(--accent) 34%, transparent);
+}
+
+.setting-pill::after {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 3px;
+  height: 1px;
+  background: color-mix(in srgb, #fff 52%, transparent);
+  content: "";
+  opacity: 0.42;
 }
 
 .lens-choice {
@@ -579,6 +594,11 @@ select {
   color: var(--muted);
   font-size: 13px;
   font-weight: 700;
+}
+
+.technique-strip .setting-pill {
+  color: var(--muted);
+  font-size: 13px;
 }
 
 .field-guide {

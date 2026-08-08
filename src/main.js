@@ -750,13 +750,13 @@ function renderSettingExplanation(key, recommendation, fallbackValue = "") {
   const value = recommendation.settings[key] || fallbackValue;
   const explanations = {
     mode: explainMode(value, recommendation),
-    focalLength: `Brændvidden bestemmer udsnittet. ${value} er valgt for at passe til motivets afstand og scenariets behov for enten vidvinkel, normalvinkel eller tele.`,
+    focalLength: explainFocalLength(value, recommendation),
     shutter: explainShutter(value, recommendation),
     aperture: explainAperture(value, recommendation),
     iso: explainIso(value, recommendation),
-    focus: `Fokus er sat til ${value}, fordi scenariet enten kræver præcision på et stille motiv eller løbende fokus på bevægelse.`,
-    drive: `Optagelse er sat til ${value}. Brug enkeltbillede til rolige motiver og korte serier, når øjeblikket eller bevægelsen ændrer sig hurtigt.`,
-    flash: `Flash foreslås kun, når scenariet kan tåle ekstra lys uden at ødelægge stemningen eller motivet.`
+    focus: explainFocus(value, recommendation),
+    drive: explainDrive(value, recommendation),
+    flash: "Flash er kun med, når ekstra lys kan hjælpe uden at ødelægge stemningen. Indendørs betyder det ofte bounce mod loft eller væg, ikke direkte flash i ansigtet."
   };
   return `
     <strong>${settingLabel(key)}: ${key === "iso" && !String(value).startsWith("ISO") ? `ISO ${value}` : value}</strong>
@@ -775,25 +775,57 @@ function explainMode(value, recommendation) {
   return map[value] || "Programmet er valgt efter hvor meget kontrol scenariet kræver.";
 }
 
+function explainFocalLength(value, recommendation) {
+  const focal = parseFocalLength(value);
+  const lens = recommendation.lens;
+  if (recommendation.profile.family === "astro" && focal) {
+    const maxSeconds = maxStarShutterSeconds(focal, recommendation.camera.sensor.cropFactor);
+    return `${value} er valgt for at få meget himmel med. På EOS 80D svarer ${focal}mm til cirka ${Math.round(focal * recommendation.camera.sensor.cropFactor)}mm. Jo længere du zoomer ind, jo kortere lukkertid skal du bruge før stjerner bliver til små streger. Ved ${focal}mm er øvre grænse cirka ${maxSeconds} sekunder.`;
+  }
+  if (lens.roles?.includes("telephoto")) return `${value} bruges for at komme tættere på motivet uden at gå tættere fysisk. Det er især vigtigt ved dyr, sport, måne og detaljer langt væk.`;
+  if (lens.roles?.includes("wide")) return `${value} giver et bredere udsnit. Det er godt når miljøet, himlen, bygningen eller landskabet skal være en del af billedet.`;
+  return `${value} er valgt som et praktisk udsnit til situationen: tæt nok på motivet, men stadig med nok omgivelser til at billedet giver mening.`;
+}
+
 function explainShutter(value, recommendation) {
   const text = String(value);
-  if (text.endsWith("s")) return `${value} er en lang lukkertid. Den bruges enten fordi kameraet står på stativ, eller fordi bevægelsen gerne må tegnes som lys, vand eller stjernespor.`;
-  return `${value} er valgt for at styre bevægelse. Jo hurtigere motivet bevæger sig, jo kortere tid skal sensoren se det. Bliver motivet uskarpt, er lukkertiden ofte det første sted at stramme op.`;
+  if (text.endsWith("s")) {
+    if (recommendation.profile.family === "astro") return `${value} betyder, at kameraet samler lys i flere sekunder. Det er nødvendigt for stjerner, men hvis tiden bliver for lang, når stjernerne at flytte sig på billedet. Start her og gå kortere, hvis prikkerne bliver til streger.`;
+    return `${value} er lang tid for et foto. Brug stativ eller fast støtte. Her er pointen enten mere lys eller at bevægelse bliver tegnet, fx vand, trafiklys eller natstemning.`;
+  }
+  return `${value} er valgt for at styre bevægelse. Tallet betyder, hvor kort øjeblik kameraet ser. Hvis motivet stadig bliver sløret, skal tiden være kortere, fx fra 1/250 til 1/500.`;
 }
 
 function explainAperture(value, recommendation) {
   const numeric = Number(String(value).replace("f/", ""));
-  if (numeric <= 2.8) return `${value} giver meget lys og blødere baggrund. Til gengæld bliver fokusområdet smalt, så fokuspunktet skal sidde præcist.`;
-  if (numeric >= 8) return `${value} giver mere dybdeskarphed, så mere af motivet kan blive skarpt. Det koster lys, så lukkertid eller ISO skal ofte hjælpe.`;
-  return `${value} er et balanceret valg: mere dybdeskarphed end helt åben blænde, men stadig rimeligt lysstærkt.`;
+  if (recommendation.profile.family === "astro" && numeric <= 2.8) return `${value} åbner objektivet meget, så kameraet kan samle stjernelys hurtigere. Ulempen er, at fokus skal sidde præcist, derfor bruger guiden manuel fokus og forstørret Live View.`;
+  if (numeric <= 2.8) return `${value} lukker meget lys ind. Det hjælper i mørke og giver blødere baggrund. Bagsiden er, at kun et tyndt område bliver skarpt, så fokus skal ligge på det vigtigste sted, typisk øjet.`;
+  if (numeric >= 8) return `${value} giver mere dybdeskarphed. Det er godt til landskab, arkitektur, grupper eller close-up, hvor mere af billedet skal være skarpt. Det koster lys, så kameraet må bruge længere lukkertid eller højere ISO.`;
+  return `${value} er et mellemvalg. Du får mere sikkerhed i fokus end ved helt åben blænde, men stadig mere lys end ved f/8 eller f/11.`;
 }
 
 function explainIso(value, recommendation) {
   const numeric = Number(String(value).replace(/\D/g, ""));
-  if (!numeric) return "Auto ISO betyder, at kameraet selv hæver eller sænker følsomheden, mens du bevarer de vigtigste valg i scenariet.";
-  if (numeric <= 200) return `${numeric} er valgt for renest mulig fil, fordi scenen bør have lys nok eller kameraet står stabilt.`;
-  if (numeric >= 1600) return `${numeric} er valgt for at redde lukkertiden i lavt lys. Der kan komme mere støj, men et skarpt billede med lidt støj er bedre end et rent billede der er sløret.`;
-  return `${numeric} er et mellemvalg: stadig pæn kvalitet, men med lidt ekstra hjælp til lukkertid eller blænde.`;
+  if (!numeric) return "Auto ISO lader kameraet betale for skiftende lys. Du låser det vigtige, fx lukkertid og blænde, og kameraet hæver ISO hvis billedet ellers ville blive for mørkt.";
+  if (numeric <= 200) return `ISO ${numeric} giver den reneste fil. Det vælges, når der er lys nok, eller når kameraet står stabilt og lukkertiden gerne må være længere.`;
+  if (numeric >= 1600) return `ISO ${numeric} gør 80D mere følsomt i lavt lys. Der kan komme støj, men det er ofte bedre end et sløret billede. Ved astro er høj ISO normal, fordi stjernerne er svage.`;
+  return `ISO ${numeric} er et roligt kompromis: lidt mere hjælp end ISO 100, men stadig uden at presse filen så hårdt som ISO 3200.`;
+}
+
+function explainFocus(value, recommendation) {
+  const text = String(value).toLowerCase();
+  if (recommendation.profile.family === "astro") return "Ved stjerner er autofokus upålidelig. Sæt objektivet til MF, brug Live View, forstør en klar stjerne og drej fokusringen langsomt, til stjernen er mindst mulig.";
+  if (text.includes("ai servo")) return "AI Servo følger motivet, mens afstanden ændrer sig. Brug det til børn, dyr, sport og folk der bevæger sig mod eller væk fra dig.";
+  if (text.includes("manuel") || text.includes("mf")) return "Manuel fokus bruges, når kameraets autofokus let bliver snydt, eller når du vil låse fokus helt fast før billedet.";
+  return "One Shot låser fokus på et stille motiv. Brug det til portrætter, landskab, arkitektur og andre situationer hvor motivet ikke flytter afstand.";
+}
+
+function explainDrive(value, recommendation) {
+  const text = String(value).toLowerCase();
+  if (text.includes("continuous") || text.includes("serie") || text.includes("high-speed")) return "Serieoptagelse giver flere chancer i bevægelse. Tag korte serier, så du ikke fylder kortet med næsten ens billeder.";
+  if (text.includes("2 sek")) return "2 sekunders selvudløser fjerner rystelsen fra din finger. Det er nyttigt på stativ, ved lange lukkertider og ved astro.";
+  if (text.includes("canon camera connect")) return "Canon Camera Connect bruges som fjernudløser, så kameraet ikke bevæger sig, når du starter billedet.";
+  return "Single betyder ét billede ad gangen. Det passer til rolige motiver, hvor timing og komposition er vigtigere end mange billeder i træk.";
 }
 
 function explainLensChoice(recommendation) {

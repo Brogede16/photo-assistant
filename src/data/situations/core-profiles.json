@@ -14,7 +14,7 @@
         "shutter": { "start": "8s", "range": ["6s", "10s"] },
         "aperture": { "start": "f/1.8", "strategy": "wide-open" },
         "iso": { "start": "1600", "range": ["1600", "3200"] },
-        "focus": "Manuel fokus på klar stjerne",
+        "focus": "Manuel fokus",
         "drive": "2 sek. selvudløser eller Canon Camera Connect"
       },
       "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setLensManualFocus", "useLiveViewForAstro", "useCanonCameraConnect"],
