@@ -3,7 +3,7 @@ import { applyManualOverride, defaultContext, getAutomaticContext } from "./lib/
 import { readExifFromFile } from "./lib/exif.js";
 import { loadPresets, savePreset } from "./lib/presets.js";
 import { buildRecommendation, explainProblem } from "./lib/recommendations.js";
-import { findTermById, searchProfiles, suggestNextTags, termsToQuery } from "./lib/search.js";
+import { findExactTerm, findTermById, searchProfiles, suggestNextTags, termsToQuery } from "./lib/search.js";
 
 const state = {
   equipment: null,
@@ -48,7 +48,7 @@ function render() {
       <section class="search-hero">
         <label for="search-input">Hvad vil du fotografere?</label>
         <div class="search-row">
-          <input id="search-input" type="search" autocomplete="off" placeholder="fx nordlys, abe overskyet, fugl flyver" value="${escapeHtml(state.searchText)}" />
+          <input id="search-input" type="search" autocomplete="off" placeholder="fx abe overskyet langt" value="${escapeHtml(state.searchText)}" />
           <button data-action="search">Søg</button>
         </div>
         <div class="selected-tags" aria-label="Valgte tags">
@@ -407,13 +407,16 @@ function bindShellEvents() {
 
   document.querySelector("#search-input")?.addEventListener("input", (event) => {
     state.searchText = event.currentTarget.value;
+    promoteCompletedInputTerms();
     refreshSearchComposer();
   });
 
   document.querySelector("#search-input")?.addEventListener("keydown", (event) => {
     if (event.key === "Enter") {
       state.searchText = event.currentTarget.value;
+      promoteCompletedInputTerms({ includeLastTerm: true });
       runSearch(currentSearchQuery());
+      render();
     }
   });
 
@@ -448,6 +451,42 @@ function addTags(ids) {
   state.selectedTagIds = [...next];
   runSearch(currentSearchQuery());
   render();
+}
+
+function promoteCompletedInputTerms({ includeLastTerm = false } = {}) {
+  const input = document.querySelector("#search-input");
+  const raw = state.searchText;
+  const hasCompletedSeparator = /[\s,;]$/.test(raw);
+  const parts = raw.split(/([\s,;]+)/);
+  const nextTags = new Set(state.selectedTagIds);
+  let changed = false;
+  let nextText = "";
+
+  for (let index = 0; index < parts.length; index += 1) {
+    const part = parts[index];
+    if (!part || /^[\s,;]+$/.test(part)) {
+      if (part && nextText && !nextText.endsWith(" ")) nextText += " ";
+      continue;
+    }
+
+    const isLastMeaningfulPart = parts.slice(index + 1).every((item) => !item || /^[\s,;]+$/.test(item));
+    const canPromote = includeLastTerm || !isLastMeaningfulPart || hasCompletedSeparator;
+    const term = canPromote ? findExactTerm(state.taxonomy, part) : null;
+
+    if (term) {
+      nextTags.add(term.id);
+      changed = true;
+      continue;
+    }
+
+    nextText += `${part} `;
+  }
+
+  if (!changed) return false;
+  state.selectedTagIds = [...nextTags];
+  state.searchText = nextText.replace(/\s+/g, " ").trimStart();
+  if (input) input.value = state.searchText;
+  return true;
 }
 
 function removeTag(id) {

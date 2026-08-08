@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { astroStatus, astroTargets, maxStarShutterSeconds } from "../src/lib/astro.js";
 import { buildRecommendation } from "../src/lib/recommendations.js";
-import { classifyQuery, searchProfiles, suggestNextTags, termsToQuery } from "../src/lib/search.js";
+import { classifyQuery, findExactTerm, searchProfiles, suggestNextTags, termsToQuery } from "../src/lib/search.js";
 
 const taxonomy = JSON.parse(await readFile(new URL("../src/data/search/taxonomy.json", import.meta.url), "utf8"));
 const situations = JSON.parse(await readFile(new URL("../src/data/situations/core-profiles.json", import.meta.url), "utf8"));
@@ -11,6 +11,9 @@ const equipment = JSON.parse(await readFile(new URL("../src/data/equipment/index
 const overcast = classifyQuery("abe i zoo gråvejr", taxonomy);
 assert.deepEqual(overcast.facets.subject.includes("monkey"), true);
 assert.deepEqual(overcast.facets.light.includes("overcast"), true);
+assert.equal(findExactTerm(taxonomy, "aber").id, "monkey");
+assert.equal(findExactTerm(taxonomy, "gråvejr").id, "overcast");
+assert.equal(findExactTerm(taxonomy, "ukendt ord"), null);
 
 const birdResults = searchProfiles("fugl flyver langt væk", situations.profiles, taxonomy);
 assert.equal(birdResults.results[0].item.id, "bird-flight-daylight");

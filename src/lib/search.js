@@ -104,6 +104,15 @@ export function findTermById(taxonomy, id) {
   return taxonomy.terms.find((term) => term.id === id);
 }
 
+export function findExactTerm(taxonomy, value) {
+  const normalized = normalizeText(value);
+  if (!normalized) return null;
+  return taxonomy.terms.find((term) => {
+    const phrases = [term.id, term.label, ...(term.synonyms || [])];
+    return phrases.some((phrase) => normalizeText(phrase) === normalized);
+  }) || null;
+}
+
 export function termsToQuery(taxonomy, termIds, extraText = "") {
   const labels = termIds.map((id) => findTermById(taxonomy, id)?.label).filter(Boolean);
   return [...labels, extraText].join(" ").trim();
