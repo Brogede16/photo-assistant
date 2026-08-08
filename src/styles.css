@@ -5,19 +5,19 @@
   --panel-strong: #1b2229;
   --inset: #0b0f13;
   --input: #050709;
-  --active: #3a1115;
-  --active-soft: #261013;
+  --active: #181b4d;
+  --active-soft: #111333;
   --danger-surface: #351114;
   --text: #f7f8fa;
   --muted: #adb5bf;
   --line: #3a444f;
-  --accent: #ff4d4d;
-  --accent-2: #ff8a80;
+  --accent: #f7f8ff;
+  --accent-2: #aeb7ff;
   --danger: #ff4d4d;
   --nav-bg: rgba(9, 11, 14, 0.96);
-  --glass: rgba(9, 11, 14, 0.46);
-  --glass-soft: rgba(13, 16, 20, 0.26);
-  --glass-inset: rgba(4, 6, 9, 0.34);
+  --glass: rgba(9, 11, 14, 0.2);
+  --glass-soft: rgba(13, 16, 20, 0.13);
+  --glass-inset: rgba(4, 6, 9, 0.18);
   --glass-line: rgba(255, 255, 255, 0.2);
   --shadow: 0 -8px 24px rgba(0, 0, 0, 0.28);
   --radius: 8px;
@@ -32,19 +32,19 @@
   --panel-strong: #e9eef2;
   --inset: #f0f3f5;
   --input: #ffffff;
-  --active: #ffe0e3;
-  --active-soft: #fff1f2;
+  --active: #e4e7ff;
+  --active-soft: #f0f1ff;
   --danger-surface: #ffe5e7;
   --text: #080808;
   --muted: #4d4d4d;
   --line: #b7b7b7;
-  --accent: #c8102e;
-  --accent-2: #8f0b22;
+  --accent: #080808;
+  --accent-2: #2437e8;
   --danger: #c8102e;
   --nav-bg: rgba(244, 246, 248, 0.96);
-  --glass: rgba(255, 255, 255, 0.62);
-  --glass-soft: rgba(255, 255, 255, 0.42);
-  --glass-inset: rgba(255, 255, 255, 0.5);
+  --glass: rgba(255, 255, 255, 0.28);
+  --glass-soft: rgba(255, 255, 255, 0.2);
+  --glass-inset: rgba(255, 255, 255, 0.26);
   --glass-line: rgba(0, 0, 0, 0.16);
   --shadow: 0 -8px 24px rgba(31, 42, 52, 0.14);
 }
@@ -123,12 +123,11 @@ button:active {
 .ambient-on .search-hero,
 .ambient-on .panel {
   border-color: var(--glass-line);
-  background: var(--glass);
-  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.16);
-  backdrop-filter: blur(22px) saturate(1.08);
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
 }
 
-.ambient-on .result-card,
 .ambient-on details,
 .ambient-on .lesson-rule,
 .ambient-on .field-exercise,
@@ -145,7 +144,6 @@ button:active {
 
 .ambient-on input,
 .ambient-on select,
-.ambient-on .settings-strip span,
 .ambient-on .lesson-scale div,
 .ambient-on .exposure-grid div,
 .ambient-on .scenario-decisions {
@@ -172,6 +170,13 @@ button:active {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
+}
+
+.panel-header {
+  display: grid;
+  align-items: start;
+  justify-content: start;
+  gap: 8px;
 }
 
 .topbar {
@@ -262,10 +267,11 @@ label {
 .search-hero {
   display: grid;
   gap: 12px;
-  padding: 20px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  background: var(--panel);
+  padding: 8px 0 24px;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  border-radius: 0;
+  background: transparent;
 }
 
 input,
@@ -314,17 +320,31 @@ select {
 
 .tag-chip {
   min-height: 36px;
-  border-color: color-mix(in srgb, var(--accent), var(--line) 62%);
-  background: var(--active-soft);
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  border-radius: 0;
+  background: transparent;
   color: var(--text);
+  padding-inline: 2px;
 }
 
 .tag-chip.selected {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  border-color: var(--accent);
-  background: var(--active);
+  border-bottom-color: var(--accent-2);
+  background: transparent;
+}
+
+.ambient-on .tag-chip,
+.ambient-on .tag-chip.selected {
+  border: 0;
+  border-bottom: 1px solid var(--glass-line);
+  background: transparent;
+}
+
+.ambient-on .tag-chip.selected {
+  border-bottom-color: var(--accent-2);
 }
 
 .tag-chip.selected span {
@@ -341,9 +361,9 @@ select {
 
 .panel,
 .result-card {
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  background: var(--panel);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
 }
 
 .tabbar {
@@ -409,7 +429,7 @@ select {
 .panel {
   display: grid;
   gap: 16px;
-  padding: 20px;
+  padding: 12px 0 24px;
 }
 
 .result-list,
@@ -423,7 +443,8 @@ select {
 .result-card {
   display: grid;
   gap: 12px;
-  padding: 18px;
+  padding: 20px 0;
+  border-top: 1px solid var(--line);
 }
 
 .user-preset {
@@ -455,12 +476,17 @@ select {
   min-height: 34px;
   display: inline-flex;
   align-items: center;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  padding: 6px 9px;
-  background: var(--inset);
+  border: 0;
+  border-right: 1px solid var(--line);
+  border-radius: 0;
+  padding: 4px 10px 4px 0;
+  background: transparent;
   color: var(--text);
   font-weight: 800;
+}
+
+.settings-strip span:last-child {
+  border-right: 0;
 }
 
 .settings-strip.large span {
@@ -786,7 +812,7 @@ summary {
   min-width: 46px;
   min-height: 46px;
   border-color: var(--accent);
-  background: #351114;
+  background: #111333;
 }
 
 .top-left {
