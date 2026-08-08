@@ -15,8 +15,13 @@
   --accent-2: #ff8a80;
   --danger: #ff4d4d;
   --nav-bg: rgba(9, 11, 14, 0.96);
+  --glass: rgba(9, 11, 14, 0.46);
+  --glass-soft: rgba(13, 16, 20, 0.26);
+  --glass-inset: rgba(4, 6, 9, 0.34);
+  --glass-line: rgba(255, 255, 255, 0.2);
   --shadow: 0 -8px 24px rgba(0, 0, 0, 0.28);
   --radius: 8px;
+  --display-font: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
@@ -37,6 +42,10 @@
   --accent-2: #8f0b22;
   --danger: #c8102e;
   --nav-bg: rgba(244, 246, 248, 0.96);
+  --glass: rgba(255, 255, 255, 0.62);
+  --glass-soft: rgba(255, 255, 255, 0.42);
+  --glass-inset: rgba(255, 255, 255, 0.5);
+  --glass-line: rgba(0, 0, 0, 0.16);
   --shadow: 0 -8px 24px rgba(31, 42, 52, 0.14);
 }
 
@@ -95,17 +104,16 @@ button:active {
 }
 
 .ambient-field {
-  position: absolute;
+  position: fixed;
   z-index: 0;
-  top: -40px;
+  top: 0;
   left: 50%;
   width: min(920px, calc(100vw + 80px));
-  height: 560px;
+  height: 100dvh;
   pointer-events: none;
   opacity: 0.82;
   filter: blur(34px) saturate(1.18);
   transform: translateX(-50%);
-  mask-image: linear-gradient(to bottom, #000 0%, #000 62%, transparent 100%);
 }
 
 :root[data-theme="light"] .ambient-field {
@@ -113,10 +121,42 @@ button:active {
 }
 
 .ambient-on .search-hero,
-.ambient-on .panel,
-.ambient-on .result-card {
-  background: color-mix(in srgb, var(--panel) 88%, transparent);
-  backdrop-filter: blur(18px) saturate(1.08);
+.ambient-on .panel {
+  border-color: var(--glass-line);
+  background: var(--glass);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.16);
+  backdrop-filter: blur(22px) saturate(1.08);
+}
+
+.ambient-on .result-card,
+.ambient-on details,
+.ambient-on .lesson-rule,
+.ambient-on .field-exercise,
+.ambient-on .lesson-check,
+.ambient-on .field-guide section,
+.ambient-on .equipment-list article,
+.ambient-on .version-entry,
+.ambient-on .astro-ready,
+.ambient-on .astro-target {
+  border-color: var(--glass-line);
+  background: var(--glass-soft);
+  backdrop-filter: blur(14px);
+}
+
+.ambient-on input,
+.ambient-on select,
+.ambient-on .settings-strip span,
+.ambient-on .lesson-scale div,
+.ambient-on .exposure-grid div,
+.ambient-on .scenario-decisions {
+  border-color: var(--glass-line);
+  background: var(--glass-inset);
+  backdrop-filter: blur(12px);
+}
+
+.ambient-on button {
+  border-color: var(--glass-line);
+  background: var(--glass-soft);
 }
 
 .fx-toggle.active {
@@ -135,7 +175,7 @@ button:active {
 }
 
 .topbar {
-  margin-bottom: 18px;
+  margin-bottom: 28px;
 }
 
 .header-actions {
@@ -160,8 +200,8 @@ button:active {
     padding-inline: 7px;
   }
 
-  h1 {
-    font-size: 27px;
+  .topbar h1 {
+    font-size: 28px;
   }
 }
 
@@ -179,13 +219,17 @@ p {
 }
 
 h1 {
-  font-size: 30px;
-  line-height: 1;
+  font-family: var(--display-font);
+  font-size: 34px;
+  font-weight: 500;
+  line-height: 0.98;
 }
 
 h2 {
-  font-size: 22px;
-  line-height: 1.1;
+  font-family: var(--display-font);
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 1.05;
 }
 
 h3 {
@@ -218,7 +262,7 @@ label {
 .search-hero {
   display: grid;
   gap: 12px;
-  padding: 18px;
+  padding: 20px;
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: var(--panel);
@@ -310,7 +354,7 @@ select {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   width: min(100%, 720px);
-  gap: 6px;
+  gap: 0;
   margin: 0;
   padding: 8px 14px calc(8px + env(safe-area-inset-bottom));
   border-top: 1px solid var(--line);
@@ -321,25 +365,51 @@ select {
 }
 
 .tabbar button {
+  position: relative;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
   padding: 0 8px;
   color: var(--muted);
 }
 
 .tabbar button.active {
-  border-color: var(--accent);
-  background: var(--active);
+  background: transparent;
   color: var(--text);
+}
+
+.tabbar button.active::before {
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  width: 28px;
+  height: 2px;
+  background: var(--accent);
+  content: "";
+  transform: translateX(-50%);
+}
+
+.ambient-on .tabbar {
+  border-color: var(--glass-line);
+  background: color-mix(in srgb, var(--bg) 68%, transparent);
+  backdrop-filter: blur(24px) saturate(1.1);
+}
+
+.ambient-on .tabbar button {
+  border: 0;
+  background: transparent;
 }
 
 .content-grid {
   display: grid;
   gap: 14px;
+  margin-top: 18px;
 }
 
 .panel {
   display: grid;
   gap: 16px;
-  padding: 16px;
+  padding: 20px;
 }
 
 .result-list,
@@ -347,13 +417,13 @@ select {
 .equipment-list,
 .version-list {
   display: grid;
-  gap: 10px;
+  gap: 14px;
 }
 
 .result-card {
   display: grid;
   gap: 12px;
-  padding: 14px;
+  padding: 18px;
 }
 
 .user-preset {

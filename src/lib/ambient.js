@@ -35,7 +35,7 @@ export function startAmbientField(canvas) {
 
     for (let y = 0; y < source.height; y += 1) {
       const v = y / Math.max(1, source.height - 1);
-      const fade = Math.pow(Math.max(0, 1 - v * 0.82), 1.6);
+      const fade = 0.34 + 0.66 * Math.pow(Math.max(0, 1 - v * 0.82), 1.6);
       for (let x = 0; x < source.width; x += 1) {
         const u = x / Math.max(1, source.width - 1);
         const waves = [

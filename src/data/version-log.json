@@ -1,6 +1,18 @@
 {
-  "current": "0.10.0",
+  "current": "0.11.0",
   "entries": [
+    {
+      "version": "0.11.0",
+      "date": "2026-08-08",
+      "title": "Editorialt glasdesign",
+      "items": [
+        "Gradientfeltet ligger nu bag hele viewporten og kan ses gennem indholdet under scroll.",
+        "Informationsfelter, resultater, guider, indstillinger og læringskort bruger transparente glasflader.",
+        "Store overskrifter har fået en rolig serif-stil, mens funktionel tekst beholder en ren sans-serif.",
+        "Mere luft, tyndere linjer og en enklere bundnavigation bringer designet tættere på den valgte reference.",
+        "FX fra giver fortsat et helt rent sort eller hvidt design uden gennemsigtige farveeffekter."
+      ]
+    },
     {
       "version": "0.10.0",
       "date": "2026-08-08",
