@@ -1,0 +1,95 @@
+{
+  "lessons": [
+    {
+      "id": "shutter",
+      "label": "Lukkertid",
+      "title": "Frys bevægelsen først",
+      "intro": "Lukkertiden bestemmer, hvor længe bevægelsen bliver tegnet. Vælg efter motivets fart, før du bekymrer dig om ISO-støj.",
+      "scale": [
+        { "value": "8s", "label": "Stjerner", "effect": "Stativ og helt stille kamera" },
+        { "value": "1/125", "label": "Roligt portræt", "effect": "Små bevægelser kan stadig ses" },
+        { "value": "1/500", "label": "Grin og dans", "effect": "Fryser almindelig aktivitet" },
+        { "value": "1/1000", "label": "Løb", "effect": "Fryser hurtig bevægelse" },
+        { "value": "1/1600", "label": "Fugl i flugt", "effect": "Fryser meget hurtig bevægelse" }
+      ],
+      "rule": "Bliver motivet uskarpt, gør lukkertiden hurtigere. Lad Auto ISO betale for det manglende lys.",
+      "exercise": "Fotografér en person, der går, ved 1/125, 1/500 og 1/1000. Sammenlign hænder og fødder.",
+      "question": "Et barn løber mod dig. Hvad er det bedste startpunkt?",
+      "answers": ["1/30", "1/250", "1/1000"],
+      "correct": 2,
+      "feedback": "1/1000 er et sikkert startpunkt. Brug AI Servo og Auto ISO."
+    },
+    {
+      "id": "aperture",
+      "label": "Blænde",
+      "title": "Styr lys og dybdeskarphed",
+      "intro": "Et lavt f-tal giver mere lys og mindre dybdeskarphed. Et højere f-tal gør mere af motivet skarpt, men kræver mere lys eller højere ISO.",
+      "scale": [
+        { "value": "f/1.8", "label": "Lavt lys", "effect": "Meget lille fokusområde" },
+        { "value": "f/2.8", "label": "Ét ansigt", "effect": "Blød baggrund" },
+        { "value": "f/5.6", "label": "Gruppe/close-up", "effect": "Mere arbejdsrum" },
+        { "value": "f/8", "label": "Makro/landskab", "effect": "Større dybdeskarphed" }
+      ],
+      "rule": "Brug ikke automatisk f/1.8. Til grupper og close-ups er f/5.6-f/8 ofte sikrere.",
+      "exercise": "Fotografér tre ting på række ved f/1.8 og f/8 fra samme sted. Se hvor mange der bliver skarpe.",
+      "question": "Fire personer står i to rækker. Hvilken blænde er sikrest?",
+      "answers": ["f/1.8", "f/2", "f/5.6"],
+      "correct": 2,
+      "feedback": "f/5.6 giver væsentligt mere dybdeskarphed til flere ansigter."
+    },
+    {
+      "id": "iso",
+      "label": "ISO",
+      "title": "ISO er prisen for billedet",
+      "intro": "ISO gør ikke scenen lysere; den forstærker kameraets signal. Høj ISO giver mere støj, men kan redde en nødvendig lukkertid.",
+      "scale": [
+        { "value": "100", "label": "Stærkt lys", "effect": "Reneste fil" },
+        { "value": "400", "label": "Overskyet", "effect": "Lav støj" },
+        { "value": "1600", "label": "Indendørs", "effect": "Synlig, brugbar støj" },
+        { "value": "3200+", "label": "Scene og nat", "effect": "Prioritér skarphed" }
+      ],
+      "rule": "Et skarpt billede ved ISO 3200 er normalt bedre end et sløret billede ved ISO 400.",
+      "exercise": "Tag samme stillestående motiv ved ISO 400, 1600 og 3200. Zoom ind på skyggerne.",
+      "question": "Koncertbilledet er mørkt ved 1/500 og største blænde. Hvad ændrer du?",
+      "answers": ["Sænk ISO", "Hæv ISO", "Brug 1/30"],
+      "correct": 1,
+      "feedback": "Hæv ISO. 1/30 ville sandsynligvis gøre musikeren uskarp."
+    },
+    {
+      "id": "focus",
+      "label": "Fokus",
+      "title": "Vælg fokus efter adfærd",
+      "intro": "One Shot låser på et stille motiv. AI Servo følger et motiv, der ændrer afstand til kameraet.",
+      "scale": [
+        { "value": "One Shot", "label": "Stille", "effect": "Portræt, produkt og landskab" },
+        { "value": "AI Servo", "label": "Bevægelse", "effect": "Børn, dyr, sport og scene" },
+        { "value": "Manuel", "label": "Præcision", "effect": "Astro og kontrolleret close-up" }
+      ],
+      "rule": "Når afstanden ændrer sig, skal AI Servo have tid til at følge motivet. Hold fokus aktivt før udløseren trykkes helt ned.",
+      "exercise": "Følg en gående person med AI Servo og tag korte serier. Se hvor ofte øjnene sidder skarpt.",
+      "question": "En hund løber mod dig. Hvilken fokusmetode?",
+      "answers": ["One Shot", "AI Servo", "Manuel fokus"],
+      "correct": 1,
+      "feedback": "AI Servo følger den skiftende afstand til hunden."
+    },
+    {
+      "id": "distance",
+      "label": "Afstand",
+      "title": "Afstand ændrer mere end udsnittet",
+      "intro": "Afstand påvirker objektivvalg, perspektiv, dybdeskarphed og hvor svært fokus bliver. Makro er en særlig disciplin, ikke bare meget zoom.",
+      "scale": [
+        { "value": "Makro", "label": "Centimeter", "effect": "Ekstremt lille dybdeskarphed" },
+        { "value": "Close-up", "label": "Under 1 meter", "effect": "Detaljer og ansigt" },
+        { "value": "Nær", "label": "1-3 meter", "effect": "Portræt og små grupper" },
+        { "value": "Mellem", "label": "3-15 meter", "effect": "Miljø og events" },
+        { "value": "Langt", "label": "15+ meter", "effect": "Teleobjektiv og stabilitet" }
+      ],
+      "rule": "18-55mm er dit bedste nuværende close-up-valg. Ægte 1:1-makro kræver et makroobjektiv eller relevant tilbehør.",
+      "exercise": "Fotografér samme genstand tæt på med 18-55mm og længere væk med 70-300mm. Sammenlign baggrund og perspektiv.",
+      "question": "Du vil fotografere et insekt helt tæt på med dit nuværende kit. Hvad er mest præcist?",
+      "answers": ["Det er ægte 1:1-makro", "Det er close-up", "Brug altid 300mm"],
+      "correct": 1,
+      "feedback": "Det er close-up. Appen hjælper med dit kit uden at love ægte makroforstørrelse."
+    }
+  ]
+}

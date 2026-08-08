@@ -27,6 +27,15 @@ export function triangulateScenario(baseSettings, classification, profile) {
   const distance = strongestMatch(explicitMatches, "distance");
   if (distance?.id === "far") decisions.push("Lang afstand prioriterer teleobjektiv og stabil støtte.");
   if (distance?.id === "near") decisions.push("Tæt afstand prioriterer et bredere objektiv og mere kontakt med motivet.");
+  if (distance?.id === "close-up") {
+    settings.aperture = "f/5.6";
+    decisions.push("Close-up prioriterer kort fokusafstand og f/5.6 for lidt mere dybdeskarphed.");
+  }
+  if (distance?.id === "macro") {
+    settings.aperture = "f/8";
+    settings.focus = "Manuel fokus eller One Shot";
+    decisions.push("Makro giver meget lille dybdeskarphed. Dit nuværende kit kan lave close-ups, men ikke ægte 1:1-makro uden et makroobjektiv eller mellemring.");
+  }
 
   const lowLight = explicitMatches.find((match) => ["low-light", "indoor", "night", "nightclub", "evening"].includes(match.id));
   if (lowLight && profile.family !== "astro") {
@@ -51,6 +60,7 @@ export function preferredRolesForScenario(profile, classification) {
   const ids = new Set((classification?.matches || []).map((match) => match.id));
   if (ids.has("far")) roles.unshift("telephoto");
   if (ids.has("near")) roles.unshift("people", "walkaround");
+  if (ids.has("close-up") || ids.has("macro")) roles.unshift("close-up");
   if (ids.has("nightclub") || ids.has("indoor") || ids.has("low-light")) roles.unshift("low-light");
   if (ids.has("beach") || ids.has("landscape")) roles.unshift("wide");
   return [...new Set(roles)];

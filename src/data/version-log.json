@@ -1,6 +1,18 @@
 {
-  "current": "0.5.0",
+  "current": "0.6.0",
   "entries": [
+    {
+      "version": "0.6.0",
+      "date": "2026-08-08",
+      "title": "Afstand, portrætter og læring",
+      "items": [
+        "Fjernede Fotografér nu, automatisk placering og den faste ekstra tagrække.",
+        "Astro findes nu i det samme intelligente tagsystem som alle andre motiver.",
+        "Udvidede til 99 begreber og 35 grundprofiler med makro/close-up, portrættyper, regn og flere koncertforhold.",
+        "Matchende egne presets kan nu bruges som lokalt udgangspunkt, mens aktuelle tags altid har sidste ord.",
+        "Lær-delen er bygget om med visuelle skalaer, feltøvelser, spørgsmål og konkrete Canon EOS 80D-trin."
+      ]
+    },
     {
       "version": "0.5.0",
       "date": "2026-08-08",

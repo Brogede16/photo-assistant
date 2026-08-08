@@ -8,6 +8,7 @@ const taxonomy = JSON.parse(await readFile(new URL("../src/data/search/taxonomy.
 const situations = JSON.parse(await readFile(new URL("../src/data/situations/core-profiles.json", import.meta.url), "utf8"));
 const equipment = JSON.parse(await readFile(new URL("../src/data/equipment/index.json", import.meta.url), "utf8"));
 const versionLog = JSON.parse(await readFile(new URL("../src/data/version-log.json", import.meta.url), "utf8"));
+const learning = JSON.parse(await readFile(new URL("../src/data/learn/lessons.json", import.meta.url), "utf8"));
 
 const overcast = classifyQuery("abe i zoo gråvejr", taxonomy);
 assert.deepEqual(overcast.facets.subject.includes("monkey"), true);
@@ -19,6 +20,9 @@ assert.equal(findExactTerm(taxonomy, "køer").id, "cow");
 assert.equal(findExactTerm(taxonomy, "ukendt ord"), null);
 assert.equal(findExactTerm(taxonomy, "sover").id, "sleeping");
 assert.equal(findExactTerm(taxonomy, "natklub").id, "nightclub");
+assert.equal(findExactTerm(taxonomy, "makro").id, "macro");
+assert.equal(findExactTerm(taxonomy, "nærbillede").id, "close-up");
+assert.equal(findExactTerm(taxonomy, "gruppeportræt").id, "group-portrait");
 
 const consumedPhrase = consumeKnownTerms("ko gråt vejr ", taxonomy);
 assert.deepEqual(consumedPhrase.termIds, ["cow", "overcast"]);
@@ -62,6 +66,15 @@ const nightclubClassification = classifyQuery("mennesker danser på natklub", ta
 assert.equal(nightclubClassification.facets.place.includes("nightclub"), true);
 assert.equal(nightclubClassification.facets.light?.includes("night") || false, false);
 
+const macroResults = searchProfiles("insekt makro udenfor", situations.profiles, taxonomy);
+assert.equal(macroResults.results[0].item.id, "insect-close-up");
+assert.deepEqual(macroResults.results.filter((result) => result.type === "official").map((result) => result.item.id), ["insect-close-up"]);
+const rainConcert = searchProfiles("koncert udenfor regn scenelys", situations.profiles, taxonomy);
+assert.equal(rainConcert.results[0].item.id, "concert-outdoor-rain");
+assert.equal(rainConcert.results.some((result) => result.item.id === "concert-indoor-stage"), false);
+const groupPortrait = searchProfiles("gruppe portræt indenfor", situations.profiles, taxonomy);
+assert.equal(groupPortrait.results[0].item.id, "portrait-group-indoor");
+
 const cowNextTags = suggestNextTags("Ko", situations.profiles, taxonomy, ["cow"], 6);
 assert.equal(cowNextTags.some((term) => term.id === "monkey"), false);
 
@@ -99,10 +112,36 @@ const protectedAstro = buildRecommendation(astroResults.results[0].item, equipme
 });
 assert.equal(protectedAstro.settings.shutter, "6s");
 
+const macroRecommendation = buildRecommendation(macroResults.results[0].item, equipment, {
+  classification: macroResults.classification
+});
+assert.equal(macroRecommendation.lens.id, "canon-ef-s-18-55-is-stm");
+assert.equal(macroRecommendation.settings.aperture, "f/8");
+assert.equal(macroRecommendation.scenarioDecisions.some((line) => line.includes("1:1-makro")), true);
+
+const localPreset = {
+  id: "local-test",
+  name: "Mit regnkoncert-preset",
+  baseProfileId: "concert-outdoor-rain",
+  tags: ["concert", "outdoor", "rain"],
+  settings: { shutter: "1/800", iso: "Auto" }
+};
+const influencedSearch = searchProfiles("koncert udenfor regn", situations.profiles, taxonomy, [localPreset]);
+const influencedOfficial = influencedSearch.results.find((result) => result.type === "official" && result.item.id === "concert-outdoor-rain");
+assert.equal(influencedOfficial.presetInfluence.preset.id, "local-test");
+const influencedRecommendation = buildRecommendation(influencedOfficial.item, equipment, {
+  classification: influencedSearch.classification,
+  presetInfluence: influencedOfficial.presetInfluence
+});
+assert.equal(influencedRecommendation.settings.shutter, "1/800");
+assert.equal(influencedRecommendation.scenarioDecisions[0].includes("Mit regnkoncert-preset"), true);
+
 assert.equal(maxStarShutterSeconds(18, 1.6), 13);
 assert.equal(astroStatus(new Date("2026-08-08T23:00:00+02:00")).moon.percent >= 0, true);
 assert.equal(astroTargets(new Date("2026-08-08T23:00:00+02:00")).some((target) => target.id === "milky-way-wide"), true);
-assert.equal(versionLog.current, "0.5.0");
-assert.equal(versionLog.entries[0].version, "0.5.0");
+assert.equal(versionLog.current, "0.6.0");
+assert.equal(versionLog.entries[0].version, "0.6.0");
+assert.equal(learning.lessons.length, 5);
+assert.equal(learning.lessons.every((lesson) => lesson.answers[lesson.correct]), true);
 
 console.log("Alle søge-, anbefalings- og astro-tests bestod.");

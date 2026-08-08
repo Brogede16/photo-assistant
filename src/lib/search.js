@@ -85,12 +85,15 @@ export function searchProfiles(query, profiles, taxonomy, presets = []) {
   for (const profile of profiles) {
     if (!profileAcceptsSubjects(profile, classification, taxonomy)) continue;
     if (!profileAcceptsMotion(profile, classification, taxonomy)) continue;
+    if (!profileAcceptsPlace(profile, classification, taxonomy)) continue;
+    if (!profileAcceptsDistance(profile, classification)) continue;
     const score = scoreProfile(profile, classification);
     if (score > 0) {
       results.push({
         type: "official",
         score: score + (profile.priority || 0) / 100,
-        item: profile
+        item: profile,
+        presetInfluence: findPresetInfluence(profile, classification, presets, taxonomy)
       });
     }
   }
@@ -110,6 +113,29 @@ export function searchProfiles(query, profiles, taxonomy, presets = []) {
     classification,
     results: results.sort((a, b) => b.score - a.score)
   };
+}
+
+function profileAcceptsDistance(profile, classification) {
+  const requested = classification.matches.filter((match) => match.type === "distance" && !match.implied);
+  if (!requested.length) return true;
+  const supported = profile.conditions?.distance || [];
+  if (!supported.length) return true;
+  return requested.some((distance) => supported.includes(distance.id));
+}
+
+function profileAcceptsPlace(profile, classification, taxonomy) {
+  const requestedPlaces = classification.matches.filter((match) => match.type === "place" && !match.implied);
+  const requestedScopes = new Set(requestedPlaces.map((place) => placeScope(taxonomy, place.id)).filter(Boolean));
+  if (!requestedScopes.size) return true;
+  const profileScopes = new Set((profile.conditions?.place || []).map((id) => placeScope(taxonomy, id)).filter(Boolean));
+  if (!profileScopes.size) return true;
+  return [...requestedScopes].some((scope) => profileScopes.has(scope));
+}
+
+function placeScope(taxonomy, id) {
+  if (id === "outdoor" || ancestorsOf(taxonomy, id).includes("outdoor")) return "outdoor";
+  if (id === "inside" || ancestorsOf(taxonomy, id).includes("inside")) return "inside";
+  return null;
 }
 
 function profileAcceptsMotion(profile, classification, taxonomy) {
@@ -206,6 +232,7 @@ export function suggestNextTags(query, profiles, taxonomy, selectedIds = [], lim
       ...(profile.conditions?.place || []),
       ...(profile.conditions?.time || []),
       ...(profile.conditions?.weather || []),
+      ...(profile.conditions?.style || []),
       ...(profile.gearStrategy?.preferredLensRoles || [])
     ];
     for (const id of ids) {
@@ -215,12 +242,8 @@ export function suggestNextTags(query, profiles, taxonomy, selectedIds = [], lim
 
   const hasContext = selectedIds.length > 0 || Boolean(query?.trim());
   if (!hasContext && candidates.size < limit) {
-    for (const term of taxonomy.terms) {
-      if (selected.has(term.id)) continue;
-      if (!["subject", "movement", "light", "distance"].includes(term.type)) continue;
-      const current = candidates.get(term.id) || { term, score: 0 };
-      current.score += typeBoost(term.type);
-      candidates.set(term.id, current);
+    for (const [index, id] of (taxonomy.starterTags || []).entries()) {
+      addCandidate(candidates, taxonomy, selected, id, 100 - index);
     }
   }
 
@@ -253,6 +276,7 @@ function scoreProfile(profile, classification) {
     if (profile.conditions?.place?.includes(match.id)) score += match.score + 2;
     if (profile.conditions?.time?.includes(match.id)) score += match.score + 2;
     if (profile.conditions?.weather?.includes(match.id)) score += match.score + 2;
+    if (profile.conditions?.style?.includes(match.id)) score += match.score + 3;
     if (profile.gearStrategy?.preferredLensRoles?.includes(match.id)) score += match.score + 1;
     if (containsPhrase(normalizeText(profile.title), normalizeText(match.id))) score += 2;
     if (containsPhrase(normalizeText(profile.title), normalizeText(match.label))) score += 2;
@@ -284,8 +308,22 @@ function typeBoost(type) {
     place: 3,
     time: 3,
     weather: 3,
+    style: 4,
     equipment: 1
   }[type] || 0;
+}
+
+function findPresetInfluence(profile, classification, presets, taxonomy) {
+  const currentIds = new Set(classification.matches.filter((match) => !match.implied).map((match) => match.id));
+  return presets
+    .map((preset) => {
+      const knownTags = (preset.tags || []).filter((id) => findTermById(taxonomy, id));
+      const overlap = knownTags.filter((id) => currentIds.has(id)).length;
+      const sameProfile = preset.baseProfileId === profile.id;
+      return { preset, strength: (sameProfile ? 100 : 0) + overlap * 10, overlap, sameProfile };
+    })
+    .filter((candidate) => candidate.sameProfile || candidate.overlap >= 2)
+    .sort((a, b) => b.strength - a.strength)[0] || null;
 }
 
 export function mergeTagIds(taxonomy, currentIds, incomingIds) {

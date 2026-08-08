@@ -16,8 +16,9 @@ Projektet er bevidst bygget uden AI-afhængighed og uden direkte Canon API/SDK-k
   - Canon EF 70-300mm f/4-5.6 IS USM
   - Canon Speedlite 430EX II
 - Søgning på tværs af motiver, lys, bevægelse, afstand, problemer, teknikker og udstyr.
-- "Fotografér nu" med automatisk tid/placering og manuel override.
-- Astro som central funktion med stjerner, Milky Way, nordlys, måne og maksimal lukkertid.
+- Ét levende tagsystem for motiv, handling, afstand, sted, vejr, tidspunkt, lys og stil.
+- Astro som central tagfamilie med stjerner, Mælkevejen, nordlys og måne.
+- Lokale presets kan bruges som gennemsigtigt udgangspunkt for matchende guides.
 - Billedupload kun til lokal EXIF-læsning og "gem som mit preset".
 - Egne presets markeres tydeligt som `MIT PRESET`.
 

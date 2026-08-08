@@ -16,7 +16,8 @@ export function savePreset(input) {
     name: input.name || "Mit preset",
     settings: input.settings || {},
     tags: input.tags || [],
-    notes: input.notes || ""
+    notes: input.notes || "",
+    baseProfileId: input.baseProfileId || null
   };
   saveJson(PRESET_KEY, [preset, ...presets.filter((item) => item.id !== preset.id)]);
   return preset;

@@ -22,7 +22,7 @@ Søgningen skal forstå almindeligt dansk uden AI. Den gør det ved at normalise
 - Tid: morgen, middag, eftermiddag, aften, skumring og nat.
 - Vejr: sol, regn, sne, tåge og blæst.
 - Lys: sol, overskyet, skygge, modlys, golden hour, blue hour, skumring, nat, indendørs.
-- Afstand: tæt, mellem, langt.
+- Afstand: makro, close-up, nær, mellem og langt, med ærlig skelnen mellem close-up og ægte 1:1-makro.
 - Teknik: AI Servo, burst, manuel fokus, blitz bounce, Live View.
 - Problem: uskarpt, for mørkt, for lyst, grynet, fokus forkert, stjerner streger.
 - Udstyr: 80D, Sigma, 18-35, 70-300, Speedlite.
@@ -34,3 +34,5 @@ Hvis søgningen ikke giver stærke resultater, gemmes søgeteksten lokalt som uk
 ## Triangulering
 
 Profilen giver et fotografisk udgangspunkt. De valgte tags lægges derefter på i faste lag: motiv og handling, bevægelse, lys, afstand, sted og tid. Hvert lag må kun ændre de indstillinger, det har faglig betydning for. Eksempelvis styrer bevægelse primært lukkertid, fokus og serieoptagelse, mens afstand styrer objektivprioritet. Astro og effektmotiver som fyrværkeri er beskyttede mod almindelige bevægelsesregler.
+
+Astro bruger samme klassifikation og samme resultatvisning som andre motiver. `Stjerner`, `Mælkevejen`, `Nordlys`, `Måne`, tidspunkt og afstand kan derfor kombineres som almindelige tags.

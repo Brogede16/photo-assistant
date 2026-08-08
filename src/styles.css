@@ -52,7 +52,6 @@ button:active {
 
 .topbar,
 .card-title-row,
-.now-panel,
 .panel-header {
   display: flex;
   align-items: center;
@@ -185,8 +184,14 @@ select {
   color: var(--accent);
 }
 
-.now-panel,
-.manual-context,
+.clear-tags {
+  min-height: 36px;
+  border-color: transparent;
+  background: transparent;
+  color: var(--muted);
+  font-weight: 700;
+}
+
 .panel,
 .result-card {
   border: 1px solid var(--line);
@@ -194,24 +199,12 @@ select {
   background: var(--panel);
 }
 
-.now-panel {
-  margin-top: 12px;
-  padding: 14px;
-}
-
-.manual-context {
-  display: grid;
-  gap: 8px;
-  margin-top: 12px;
-  padding: 14px;
-}
-
 .tabbar {
   position: sticky;
   top: 0;
   z-index: 2;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 6px;
   margin: 14px 0;
   padding: 8px 0;
@@ -261,6 +254,11 @@ select {
   color: var(--accent-2);
 }
 
+.preset-effect {
+  color: var(--accent-2);
+  font-size: 13px;
+}
+
 .settings-strip {
   display: flex;
   flex-wrap: wrap;
@@ -306,6 +304,112 @@ select {
 .scenario-decisions ul {
   margin: 0;
   padding-left: 20px;
+}
+
+.learn-panel,
+.lesson-body,
+.camera-steps {
+  display: grid;
+  gap: 16px;
+}
+
+.learn-topics {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+}
+
+.learn-topics button {
+  min-height: 40px;
+  white-space: nowrap;
+}
+
+.learn-topics button.active {
+  border-color: var(--accent);
+  background: #103133;
+}
+
+.lesson-scale {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(112px, 1fr));
+  gap: 1px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--line);
+}
+
+.lesson-scale div {
+  display: grid;
+  align-content: start;
+  gap: 3px;
+  min-height: 112px;
+  padding: 12px;
+  background: #0a1018;
+}
+
+.lesson-scale strong {
+  color: var(--accent);
+  font-size: 18px;
+}
+
+.lesson-scale span {
+  color: var(--text);
+  font-weight: 800;
+}
+
+.lesson-scale small {
+  color: var(--muted);
+  line-height: 1.35;
+}
+
+.lesson-rule,
+.field-exercise,
+.lesson-check {
+  display: grid;
+  gap: 8px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  background: #0e141d;
+}
+
+.lesson-rule {
+  grid-template-columns: auto 1fr;
+  border-left: 3px solid var(--accent-2);
+}
+
+.lesson-rule span {
+  color: var(--accent-2);
+  font-weight: 800;
+}
+
+.answer-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.answer-grid button {
+  min-width: 0;
+  height: auto;
+  padding: 8px;
+  overflow-wrap: anywhere;
+}
+
+.answer-grid button.correct {
+  border-color: var(--accent);
+  background: #103133;
+}
+
+.answer-grid button.wrong {
+  border-color: var(--danger);
+  background: #31191b;
+}
+
+#learn-feedback:not(:empty) {
+  color: var(--text);
+  font-weight: 700;
 }
 
 .field-guide section {

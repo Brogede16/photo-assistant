@@ -11,22 +11,20 @@ Photo Assistant er en personlig fotoassistent til mobil brug ved siden af kamera
 - Offline-first: kernefunktioner virker uden internet.
 - Ingen AI-afhængighed.
 - Ingen direkte Canon API/SDK-kamerastyring.
-- Automatisk kontekst er hjælp, ikke facit: manuel override vinder altid.
+- Vejr, tidspunkt og sted vælges som almindelige tags; appen anmoder ikke om placering.
 - Egne presets må aldrig ligne officielle guides; de markeres tydeligt.
 - Foto uploades ikke til en server. EXIF læses lokalt i browseren.
 
 ## Hovedområder
 
-1. Fotografér nu
-2. Søg motiv eller problem
-3. Astro
-4. Mine presets
-5. Lær Canon EOS 80D
-6. Mit udstyr
+1. Byg situation med intelligente tags
+2. Mine presets
+3. Lær foto og Canon EOS 80D
+4. Mit udstyr
 
-## Fotografér nu
+## Situationsbygger
 
-Flowet bruger aktuel tid og, hvis brugeren tillader det, placering. Appen beregner kontekst som dag, golden hour, blue hour, skumring, nat, astronomisk mørke og månefase. Brugeren kan overskrive:
+Flowet kombinerer brugerens valgte tags. Forslag og resultater ændres løbende uden en søgeknap. Dimensionerne omfatter:
 
 - sted
 - tidspunkt
@@ -34,11 +32,11 @@ Flowet bruger aktuel tid og, hvis brugeren tillader det, placering. Appen beregn
 - motiv
 - bevægelse
 - afstand
-- håndholdt/stativ
+- stil, fx headshot, miljøportræt, gruppeportræt og uopstillet
 
 ## Astro
 
-Astro er en central funktion, ikke en ekstra beregner. Den skal dække:
+Astro er en central del af det fælles tagsystem, ikke en separat fane. Det dækker:
 
 - stjerner
 - Mælkevejen
@@ -47,7 +45,11 @@ Astro er en central funktion, ikke en ekstra beregner. Den skal dække:
 - meteorregn
 - natlandskab
 
-Første version bruger lokale beregninger for månefase, sol/tusmørke-kontekst og maksimal lukkertid ud fra brændvidde og APS-C crop. Online vejr, skydække og aurora-data er senere udvidelser.
+Astroprofilerne bruger konkrete startindstillinger og maksimal lukkertid ud fra brændvidde og APS-C crop. Vejr og tidspunkt angives som tags. Online skydække og aurora-data er senere udvidelser.
+
+## Lokale erfaringer
+
+Et preset gemt fra en officiel guide husker både profil og valgte tags. Når situationen senere matcher, kan preset-indstillingerne bruges som lokalt udgangspunkt. De aktuelle tags anvendes bagefter og har altid sidste ord, fx hvis motivets bevægelse kræver en hurtigere lukkertid.
 
 ## Billedupload
 

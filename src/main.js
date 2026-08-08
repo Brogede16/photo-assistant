@@ -1,5 +1,3 @@
-import { astroStatus, astroTargets, maxStarShutterSeconds } from "./lib/astro.js";
-import { applyManualOverride, defaultContext, getAutomaticContext } from "./lib/context.js";
 import { readExifFromFile } from "./lib/exif.js";
 import { loadPresets, savePreset } from "./lib/presets.js";
 import { buildRecommendation, explainProblem } from "./lib/recommendations.js";
@@ -9,14 +7,16 @@ const state = {
   equipment: null,
   taxonomy: null,
   profiles: [],
+  lessons: [],
   versionLog: null,
-  context: defaultContext(),
+  context: {},
   selectedResult: null,
   searchText: "",
   selectedTagIds: [],
   activeClassification: null,
   presets: loadPresets(),
-  unknownSearches: []
+  unknownSearches: [],
+  selectedLearnTopic: "shutter"
 };
 
 const app = document.querySelector("#app");
@@ -24,16 +24,18 @@ const app = document.querySelector("#app");
 boot();
 
 async function boot() {
-  const [equipment, taxonomy, situations, versionLog] = await Promise.all([
+  const [equipment, taxonomy, situations, versionLog, learning] = await Promise.all([
     fetchJson("/src/data/equipment/index.json"),
     fetchJson("/src/data/search/taxonomy.json"),
     fetchJson("/src/data/situations/core-profiles.json"),
-    fetchJson("/src/data/version-log.json")
+    fetchJson("/src/data/version-log.json"),
+    fetchJson("/src/data/learn/lessons.json")
   ]);
   state.equipment = equipment;
   state.taxonomy = taxonomy;
   state.profiles = situations.profiles;
   state.versionLog = versionLog;
+  state.lessons = learning.lessons;
   registerServiceWorker();
   render();
 }
@@ -64,42 +66,10 @@ function render() {
             ${renderSuggestedTags()}
           </div>
         </div>
-        <div class="quick-actions">
-          <button data-add-tags="stars">Stjerner</button>
-          <button data-add-tags="aurora">Nordlys</button>
-          <button data-add-tags="milky-way">Mælkevej</button>
-          <button data-add-tags="moon">Måne</button>
-          <button data-add-tags="bird,flight,far">Fugl</button>
-          <button data-add-tags="monkey,overcast,medium">Zoo</button>
-          <button data-add-tags="animal,running,overcast">Dyr</button>
-          <button data-add-tags="person,indoor">Inde</button>
-        </div>
-      </section>
-
-      <section class="now-panel">
-        <div>
-          <p class="section-kicker">Fotografér nu</p>
-          <h2>${state.context.label}</h2>
-          <p>${state.context.dateLabel} · ${state.context.locationLabel}</p>
-        </div>
-        <button data-action="now">Brug tid og sted</button>
-      </section>
-
-      <section class="manual-context">
-        <label for="manual-light">Faktisk lys ved motivet</label>
-        <select id="manual-light" data-action="manual-light">
-          <option value="">Brug tid og sted som udgangspunkt</option>
-          <option value="lysere">Det er lysere ved motivet</option>
-          <option value="mørkere">Det er mørkere ved motivet</option>
-          <option value="overskyet">Overskyet / gråvejr</option>
-          <option value="indendørs">Indendørs</option>
-        </select>
-        <p class="helper-text">Tid og placering gætter på dagslys, skumring eller nat. Vælg selv her, hvis motivet står i fx skygge, stærk sol eller indendørs lys.</p>
       </section>
 
       <nav class="tabbar" aria-label="Hovedfunktioner">
         <button data-view="home" class="active">Fotografér</button>
-        <button data-view="astro">Astro</button>
         <button data-view="presets">Presets</button>
         <button data-view="learn">Lær</button>
       </nav>
@@ -143,67 +113,12 @@ function renderSelectedTags() {
       if (!term) return "";
       return `<button class="tag-chip selected" data-remove-tag="${term.id}" title="Fjern ${term.label}">${term.label}<span aria-hidden="true">×</span></button>`;
     })
-    .join("");
+    .join("") + `<button class="clear-tags" data-action="clear-tags">Ryd alle</button>`;
 }
 
 function renderSuggestedTags() {
   const suggestions = suggestNextTags(currentSearchQuery(), state.profiles, state.taxonomy, state.selectedTagIds, 9);
   return suggestions.map((term) => `<button class="tag-chip" data-add-tags="${term.id}">${term.label}</button>`).join("");
-}
-
-function renderAstro() {
-  const content = document.querySelector("#content");
-  const status = astroStatus(new Date(state.context.date), state.context.coords);
-  const targets = astroTargets(new Date(state.context.date), state.context.coords);
-  content.innerHTML = `
-    <section class="panel astro-panel">
-      <div class="panel-header">
-        <p class="section-kicker">Astro Assistant</p>
-        <h2>${"★".repeat(status.score)}${"☆".repeat(5 - status.score)} i aften</h2>
-      </div>
-      <div class="astro-visual" aria-hidden="true">
-        <div class="moon-disc" style="--moon-fill:${status.moon.percent}%"></div>
-        <div class="stars-field"></div>
-      </div>
-      <p>${status.summary}</p>
-      <div class="settings-strip">
-        <span>18mm</span>
-        <span>f/1.8</span>
-        <span>${maxStarShutterSeconds(18)}s maks</span>
-        <span>ISO 1600</span>
-      </div>
-      <div class="astro-ready">
-        <p class="section-kicker">Jeg står klar nu</p>
-        <ol>
-          <li>Sæt 80D på stativ og monter Sigma 18-35mm eller 70-300mm afhængigt af motivet.</li>
-          <li>Brug Live View og Canon Camera Connect ved lange eksponeringer.</li>
-          <li>Tag et testbillede og brug "Det virkede ikke" i guiden til næste justering.</li>
-        </ol>
-      </div>
-      <div class="astro-targets">
-        ${targets.map(renderAstroTarget).join("")}
-      </div>
-    </section>
-  `;
-  document.querySelectorAll("[data-open-astro]").forEach((button) => {
-    button.addEventListener("click", () => openResult(button.dataset.openAstro));
-  });
-}
-
-function renderAstroTarget(target) {
-  return `
-    <article class="astro-target">
-      <div>
-        <p class="badge">${"★".repeat(target.score)}${"☆".repeat(5 - target.score)}</p>
-        <h3>${target.title}</h3>
-      </div>
-      <p>${target.note}</p>
-      <div class="settings-strip">
-        ${target.settings.split(" · ").map((item) => `<span>${item}</span>`).join("")}
-      </div>
-      <button data-open-astro="${target.id}">Åbn guide</button>
-    </article>
-  `;
 }
 
 function renderPresets() {
@@ -229,27 +144,68 @@ function renderPresets() {
 
 function renderLearn() {
   const content = document.querySelector("#content");
-  const camera = state.equipment.cameras[0];
+  const lesson = state.lessons.find((item) => item.id === state.selectedLearnTopic) || state.lessons[0];
   content.innerHTML = `
-    <section class="panel">
+    <section class="panel learn-panel">
       <div class="panel-header">
-        <p class="section-kicker">Lær kameraet</p>
-        <h2>${camera.brand} ${camera.model}</h2>
+        <p class="section-kicker">Lær ved at vælge</p>
+        <h2>Foto i praksis</h2>
       </div>
-      <div class="camera-figure" aria-label="Stiliseret Canon EOS 80D">
-        <button class="hotspot top-left" title="Programhjul">M</button>
-        <button class="hotspot top-right" title="ISO-knap">ISO</button>
-        <button class="hotspot back-center" title="Live View">LV</button>
-        <button class="hotspot back-right" title="Quick Control Dial">Q</button>
+      <div class="learn-topics" role="tablist" aria-label="Læringsemner">
+        ${state.lessons.map((item) => `<button role="tab" data-learn-topic="${item.id}" class="${item.id === lesson.id ? "active" : ""}" aria-selected="${item.id === lesson.id}">${item.label}</button>`).join("")}
       </div>
-      <div class="guide-list">
-        ${Object.entries(camera.procedures)
-          .slice(0, 8)
-          .map(([key, steps]) => `<details><summary>${labelProcedure(key)}</summary><ol>${steps.map((step) => `<li>${step}</li>`).join("")}</ol></details>`)
-          .join("")}
+      <article class="lesson-body">
+        <h3>${lesson.title}</h3>
+        <p>${lesson.intro}</p>
+        <div class="lesson-scale">
+          ${lesson.scale.map((point) => `<div><strong>${point.value}</strong><span>${point.label}</span><small>${point.effect}</small></div>`).join("")}
+        </div>
+        <div class="lesson-rule"><span>Husk</span><p>${lesson.rule}</p></div>
+        <section class="field-exercise">
+          <p class="section-kicker">Prøv det med dit 80D</p>
+          <p>${lesson.exercise}</p>
+        </section>
+        <section class="lesson-check">
+          <p class="section-kicker">Tjek din forståelse</p>
+          <h3>${lesson.question}</h3>
+          <div class="answer-grid">
+            ${lesson.answers.map((answer, index) => `<button data-learn-answer="${index}" data-correct="${lesson.correct}">${answer}</button>`).join("")}
+          </div>
+          <p id="learn-feedback" aria-live="polite"></p>
+        </section>
+      </article>
+      <div class="camera-steps">
+        <p class="section-kicker">Knapperne på Canon EOS 80D</p>
+        <div class="guide-list">
+          ${lessonProcedureIds(lesson.id).map((key) => `<details><summary>${labelProcedure(key)}</summary><ol>${state.equipment.cameras[0].procedures[key].map((step) => `<li>${step}</li>`).join("")}</ol></details>`).join("")}
+        </div>
       </div>
     </section>
   `;
+  document.querySelectorAll("[data-learn-topic]").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.selectedLearnTopic = button.dataset.learnTopic;
+      renderLearn();
+    });
+  });
+  document.querySelectorAll("[data-learn-answer]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const correct = Number(button.dataset.learnAnswer) === Number(button.dataset.correct);
+      document.querySelectorAll("[data-learn-answer]").forEach((item) => item.classList.remove("correct", "wrong"));
+      button.classList.add(correct ? "correct" : "wrong");
+      document.querySelector("#learn-feedback").textContent = correct ? lesson.feedback : "Ikke helt. Se på skalaen ovenfor og prøv igen.";
+    });
+  });
+}
+
+function lessonProcedureIds(lessonId) {
+  return {
+    shutter: ["setManualMode", "setShutter"],
+    aperture: ["setAvMode", "setAperture"],
+    iso: ["setIso"],
+    focus: ["setAiServo", "setOneShot", "setLensManualFocus"],
+    distance: ["setLensStabilizationOn", "setLensManualFocus"]
+  }[lessonId] || ["setManualMode"];
 }
 
 function renderEquipment() {
@@ -302,12 +258,12 @@ function renderVersionEntry(entry) {
 
 function renderResultCard(result, index) {
   if (result.type === "preset") return renderPresetCard(result.item, result.score);
-  const recommendation = buildRecommendation(result.item, state.equipment, { ...state.context, classification: state.activeClassification });
+  const recommendation = buildRecommendation(result.item, state.equipment, { ...state.context, classification: state.activeClassification, presetInfluence: result.presetInfluence });
   return `
     <article class="result-card" data-result-index="${index}">
       <div class="card-title-row">
         <div>
-          <p class="badge">Photo Assistant guide</p>
+          <p class="badge">${result.presetInfluence ? "Guide + dit preset" : "Photo Assistant guide"}</p>
           <h3>${result.item.title}</h3>
         </div>
         <button data-open-result="${result.item.id}">Åbn</button>
@@ -333,6 +289,7 @@ function renderPresetCard(preset) {
         </div>
       </div>
       <p>${preset.notes || "Eget preset gemt lokalt."}</p>
+      ${preset.baseProfileId ? `<p class="preset-effect">Kan påvirke matchende guides som lokalt udgangspunkt.</p>` : ""}
       <div class="settings-strip">
         ${Object.values(preset.settings || {})
           .filter(Boolean)
@@ -346,7 +303,8 @@ function renderPresetCard(preset) {
 
 function openResult(profileId) {
   const profile = state.profiles.find((item) => item.id === profileId);
-  const recommendation = buildRecommendation(profile, state.equipment, { ...state.context, classification: state.activeClassification });
+  const currentResult = searchProfiles(currentSearchQuery(), state.profiles, state.taxonomy, state.presets).results.find((result) => result.type === "official" && result.item.id === profileId);
+  const recommendation = buildRecommendation(profile, state.equipment, { ...state.context, classification: state.activeClassification, presetInfluence: currentResult?.presetInfluence });
   const content = document.querySelector("#content");
   content.innerHTML = `
     <section class="panel detail-panel">
@@ -405,8 +363,9 @@ function openResult(profileId) {
     savePreset({
       name,
       settings: recommendation.settings,
-      tags: [profile.family, ...(profile.subjects || [])],
-      notes: `Baseret på ${profile.title}`
+      tags: [...new Set([...state.selectedTagIds, ...(profile.subjects || [])])],
+      notes: `Baseret på ${profile.title}`,
+      baseProfileId: profile.id
     });
     state.presets = loadPresets();
     renderPresets();
@@ -436,6 +395,8 @@ function bindShellEvents() {
     button.addEventListener("click", () => removeTag(button.dataset.removeTag));
   });
 
+  document.querySelector('[data-action="clear-tags"]')?.addEventListener("click", clearTags);
+
   document.querySelector("#search-input")?.addEventListener("input", (event) => {
     state.searchText = event.currentTarget.value;
     promoteCompletedInputTerms();
@@ -453,20 +414,10 @@ function bindShellEvents() {
     }
   });
 
-  document.querySelector('[data-action="now"]')?.addEventListener("click", async () => {
-    state.context = await getAutomaticContext();
-    render();
-  });
-
-  document.querySelector('[data-action="manual-light"]')?.addEventListener("change", (event) => {
-    state.context = applyManualOverride(state.context, { lightOverride: event.target.value });
-  });
-
   document.querySelectorAll("[data-view]").forEach((button) => {
     button.addEventListener("click", () => {
       document.querySelectorAll("[data-view]").forEach((item) => item.classList.remove("active"));
       button.classList.add("active");
-      if (button.dataset.view === "astro") renderAstro();
       if (button.dataset.view === "presets") renderPresets();
       if (button.dataset.view === "learn") renderLearn();
       if (button.dataset.view === "home") renderHome();
@@ -499,6 +450,13 @@ function removeTag(id) {
   render();
 }
 
+function clearTags() {
+  state.selectedTagIds = [];
+  state.searchText = "";
+  state.activeClassification = null;
+  render();
+}
+
 function currentSearchQuery() {
   return termsToQuery(state.taxonomy, state.selectedTagIds, state.searchText);
 }
@@ -512,6 +470,7 @@ function refreshSearchComposer() {
   document.querySelectorAll("[data-remove-tag]").forEach((button) => {
     button.addEventListener("click", () => removeTag(button.dataset.removeTag));
   });
+  document.querySelector('[data-action="clear-tags"]')?.addEventListener("click", clearTags);
 }
 
 function bindResultEvents() {

@@ -118,10 +118,11 @@
       "aperture": { "maxAtMinFocal": 3.5, "maxAtMaxFocal": 5.6 },
       "stabilization": true,
       "autofocus": true,
-      "roles": ["walkaround", "wide", "travel", "family"],
+      "roles": ["walkaround", "wide", "travel", "family", "close-up"],
       "notes": [
         "Let standardzoom.",
-        "Overlapper med Sigma i vidvinkelområdet, men har mere rækkevidde til 55mm."
+        "Overlapper med Sigma i vidvinkelområdet, men har mere rækkevidde til 55mm.",
+        "Bedste close-up-valg i det nuværende kit, men det er ikke et ægte 1:1-makroobjektiv."
       ]
     },
     {

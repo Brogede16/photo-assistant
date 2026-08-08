@@ -19,6 +19,7 @@ export function buildRecommendation(profile, equipment, context = {}) {
   const contextAdjustments = adjustForContext(settings, context);
   const camera = equipment.cameras?.[0];
 
+  const presetSettings = context.presetInfluence?.preset?.settings || {};
   const scenario = triangulateScenario({
     mode: settings.mode || "M",
     focalLength: settings.focalLength || formatFocalLength(lens),
@@ -26,8 +27,12 @@ export function buildRecommendation(profile, equipment, context = {}) {
     aperture: settings.aperture?.start || settings.aperture || "Auto",
     iso: contextAdjustments.iso || settings.iso?.start || settings.iso || "Auto",
     focus: settings.focus || "Auto",
-    drive: settings.drive || "Single"
+    drive: settings.drive || "Single",
+    ...pickUsablePresetSettings(presetSettings)
   }, context.classification, profile);
+  if (context.presetInfluence) {
+    scenario.decisions.unshift(`Dit preset “${context.presetInfluence.preset.name}” bruges som lokalt udgangspunkt; de aktuelle tags har sidste ord.`);
+  }
 
   return {
     profile,
@@ -43,6 +48,11 @@ export function buildRecommendation(profile, equipment, context = {}) {
     })),
     notes: buildNotes(profile, context)
   };
+}
+
+function pickUsablePresetSettings(settings) {
+  const allowed = ["mode", "focalLength", "shutter", "aperture", "iso", "focus", "drive"];
+  return Object.fromEntries(allowed.filter((key) => settings[key]).map((key) => [key, settings[key]]));
 }
 
 export function explainProblem(problemId, recommendation) {

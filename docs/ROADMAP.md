@@ -33,8 +33,9 @@
 
 - Gør astro til en hovedindgang.
 - Tilføj stjerner, Mælkevejen, måne, nordlys, meteorregn og natlandskab.
-- Brug placering/tid, månefase, tusmørke og brændviddeberegninger.
+- Brug valgte tidspunkt-, vejr- og lystags samt brændviddeberegninger.
 - Integrer Canon Camera Connect som guide, ikke direkte API-styring.
+- Astro er en central tagfamilie i den fælles scenariebygger fremfor en separat søgeoplevelse.
 
 ## M5: Presets og EXIF
 
