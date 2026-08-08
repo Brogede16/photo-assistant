@@ -3,7 +3,7 @@ import { applyManualOverride, defaultContext, getAutomaticContext } from "./lib/
 import { readExifFromFile } from "./lib/exif.js";
 import { loadPresets, savePreset } from "./lib/presets.js";
 import { buildRecommendation, explainProblem } from "./lib/recommendations.js";
-import { findExactTerm, findTermById, searchProfiles, suggestNextTags, termsToQuery } from "./lib/search.js";
+import { consumeKnownTerms, findTermById, mergeTagIds, searchProfiles, suggestNextTags, termsToQuery } from "./lib/search.js";
 
 const state = {
   equipment: null,
@@ -14,6 +14,7 @@ const state = {
   selectedResult: null,
   searchText: "",
   selectedTagIds: [],
+  activeClassification: null,
   presets: loadPresets(),
   unknownSearches: []
 };
@@ -53,15 +54,12 @@ function render() {
     <main>
       <section class="search-hero">
         <label for="search-input">Hvad vil du fotografere?</label>
-        <div class="search-row">
-          <input id="search-input" type="search" autocomplete="off" placeholder="fx abe overskyet langt" value="${escapeHtml(state.searchText)}" />
-          <button data-action="search">Søg</button>
-        </div>
+        <input id="search-input" type="search" autocomplete="off" placeholder="fx ko spiser langt væk på en mark" value="${escapeHtml(state.searchText)}" />
         <div class="selected-tags" aria-label="Valgte tags">
           ${renderSelectedTags()}
         </div>
         <div class="suggestion-block">
-          <p class="section-kicker">Forslag der passer til</p>
+          <p class="section-kicker">Forslag mens du skriver</p>
           <div class="quick-actions">
             ${renderSuggestedTags()}
           </div>
@@ -117,15 +115,15 @@ function render() {
 function renderHome(results = null) {
   const content = document.querySelector("#content");
   const query = currentSearchQuery();
-  const resultList =
-    results ||
-    searchProfiles(query || "stjerner nordlys måne fugl dyr mennesker", state.profiles, state.taxonomy, state.presets).results.slice(0, 5);
+  const defaultSearch = searchProfiles(query || "stjerner nordlys måne fugl dyr mennesker", state.profiles, state.taxonomy, state.presets);
+  if (!state.activeClassification) state.activeClassification = defaultSearch.classification;
+  const resultList = results || defaultSearch.results.slice(0, 5);
 
   content.innerHTML = `
     <section class="panel">
       <div class="panel-header">
         <p class="section-kicker">Anbefalet</p>
-        <h2>Hurtige startpunkter</h2>
+        <h2>${query ? "Anbefalinger til din situation" : "Hurtige startpunkter"}</h2>
       </div>
       <div class="result-list">
         ${resultList.map(renderResultCard).join("")}
@@ -304,7 +302,7 @@ function renderVersionEntry(entry) {
 
 function renderResultCard(result, index) {
   if (result.type === "preset") return renderPresetCard(result.item, result.score);
-  const recommendation = buildRecommendation(result.item, state.equipment, state.context);
+  const recommendation = buildRecommendation(result.item, state.equipment, { ...state.context, classification: state.activeClassification });
   return `
     <article class="result-card" data-result-index="${index}">
       <div class="card-title-row">
@@ -348,7 +346,7 @@ function renderPresetCard(preset) {
 
 function openResult(profileId) {
   const profile = state.profiles.find((item) => item.id === profileId);
-  const recommendation = buildRecommendation(profile, state.equipment, state.context);
+  const recommendation = buildRecommendation(profile, state.equipment, { ...state.context, classification: state.activeClassification });
   const content = document.querySelector("#content");
   content.innerHTML = `
     <section class="panel detail-panel">
@@ -368,6 +366,7 @@ function openResult(profileId) {
         <span>${recommendation.settings.drive}</span>
         ${recommendation.flash ? `<span>${recommendation.flash.model}</span>` : ""}
       </div>
+      ${recommendation.scenarioDecisions.length ? `<div class="scenario-decisions"><p class="section-kicker">Sådan hænger dine tags sammen</p><ul>${recommendation.scenarioDecisions.map((item) => `<li>${item}</li>`).join("")}</ul></div>` : ""}
       <h3>Tag med</h3>
       <div class="gear-checklist">
         ${recommendation.gearChecklist.map((item) => `<span>${item}</span>`).join("")}
@@ -437,23 +436,20 @@ function bindShellEvents() {
     button.addEventListener("click", () => removeTag(button.dataset.removeTag));
   });
 
-  document.querySelector('[data-action="search"]')?.addEventListener("click", () => {
-    state.searchText = document.querySelector("#search-input").value;
-    runSearch(currentSearchQuery());
-  });
-
   document.querySelector("#search-input")?.addEventListener("input", (event) => {
     state.searchText = event.currentTarget.value;
     promoteCompletedInputTerms();
     refreshSearchComposer();
+    runSearch(currentSearchQuery());
   });
 
   document.querySelector("#search-input")?.addEventListener("keydown", (event) => {
     if (event.key === "Enter") {
+      event.preventDefault();
       state.searchText = event.currentTarget.value;
       promoteCompletedInputTerms({ includeLastTerm: true });
       runSearch(currentSearchQuery());
-      render();
+      refreshSearchComposer();
     }
   });
 
@@ -482,47 +478,17 @@ function bindShellEvents() {
 }
 
 function addTags(ids) {
-  const next = new Set(state.selectedTagIds);
-  for (const id of ids) {
-    if (findTermById(state.taxonomy, id)) next.add(id);
-  }
-  state.selectedTagIds = [...next];
+  state.selectedTagIds = mergeTagIds(state.taxonomy, state.selectedTagIds, ids);
   runSearch(currentSearchQuery());
   render();
 }
 
 function promoteCompletedInputTerms({ includeLastTerm = false } = {}) {
   const input = document.querySelector("#search-input");
-  const raw = state.searchText;
-  const hasCompletedSeparator = /[\s,;]$/.test(raw);
-  const parts = raw.split(/([\s,;]+)/);
-  const nextTags = new Set(state.selectedTagIds);
-  let changed = false;
-  let nextText = "";
-
-  for (let index = 0; index < parts.length; index += 1) {
-    const part = parts[index];
-    if (!part || /^[\s,;]+$/.test(part)) {
-      if (part && nextText && !nextText.endsWith(" ")) nextText += " ";
-      continue;
-    }
-
-    const isLastMeaningfulPart = parts.slice(index + 1).every((item) => !item || /^[\s,;]+$/.test(item));
-    const canPromote = includeLastTerm || !isLastMeaningfulPart || hasCompletedSeparator;
-    const term = canPromote ? findExactTerm(state.taxonomy, part) : null;
-
-    if (term) {
-      nextTags.add(term.id);
-      changed = true;
-      continue;
-    }
-
-    nextText += `${part} `;
-  }
-
-  if (!changed) return false;
-  state.selectedTagIds = [...nextTags];
-  state.searchText = nextText.replace(/\s+/g, " ").trimStart();
+  const consumed = consumeKnownTerms(state.searchText, state.taxonomy, { includeLastTerm });
+  if (!consumed.termIds.length) return false;
+  state.selectedTagIds = mergeTagIds(state.taxonomy, state.selectedTagIds, consumed.termIds);
+  state.searchText = consumed.remainder;
   if (input) input.value = state.searchText;
   return true;
 }
@@ -556,9 +522,7 @@ function bindResultEvents() {
 
 function runSearch(query) {
   const search = searchProfiles(query, state.profiles, state.taxonomy, state.presets);
-  if (query.trim() && search.results.length === 0) {
-    state.unknownSearches.push({ query, createdAt: new Date().toISOString() });
-  }
+  state.activeClassification = search.classification;
   renderHome(search.results.slice(0, 10));
 }
 

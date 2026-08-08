@@ -1,5 +1,7 @@
-export function pickLens(profile, equipment) {
-  const roles = profile.gearStrategy?.preferredLensRoles || [];
+import { preferredRolesForScenario, triangulateScenario } from "./scenario.js";
+
+export function pickLens(profile, equipment, classification = null) {
+  const roles = preferredRolesForScenario(profile, classification);
   const lenses = equipment.lenses || [];
   const scored = lenses
     .map((lens) => ({
@@ -12,25 +14,28 @@ export function pickLens(profile, equipment) {
 }
 
 export function buildRecommendation(profile, equipment, context = {}) {
-  const lens = pickLens(profile, equipment);
+  const lens = pickLens(profile, equipment, context.classification);
   const settings = profile.baseSettings || {};
   const contextAdjustments = adjustForContext(settings, context);
   const camera = equipment.cameras?.[0];
+
+  const scenario = triangulateScenario({
+    mode: settings.mode || "M",
+    focalLength: settings.focalLength || formatFocalLength(lens),
+    shutter: contextAdjustments.shutter || settings.shutter?.start || settings.shutter || "Auto",
+    aperture: settings.aperture?.start || settings.aperture || "Auto",
+    iso: contextAdjustments.iso || settings.iso?.start || settings.iso || "Auto",
+    focus: settings.focus || "Auto",
+    drive: settings.drive || "Single"
+  }, context.classification, profile);
 
   return {
     profile,
     camera,
     lens,
     flash: shouldSuggestFlash(profile, equipment) ? equipment.flashes?.[0] : null,
-    settings: {
-      mode: settings.mode || "M",
-      focalLength: settings.focalLength || formatFocalLength(lens),
-      shutter: contextAdjustments.shutter || settings.shutter?.start || settings.shutter || "Auto",
-      aperture: settings.aperture?.start || settings.aperture || "Auto",
-      iso: contextAdjustments.iso || settings.iso?.start || settings.iso || "Auto",
-      focus: settings.focus || "Auto",
-      drive: settings.drive || "Single"
-    },
+    settings: scenario.settings,
+    scenarioDecisions: scenario.decisions,
     gearChecklist: buildGearChecklist(profile, lens),
     actions: (profile.cameraActions || []).map((actionId) => ({
       id: actionId,

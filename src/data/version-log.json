@@ -1,6 +1,17 @@
 {
-  "current": "0.4.5",
+  "current": "0.5.0",
   "entries": [
+    {
+      "version": "0.5.0",
+      "date": "2026-08-08",
+      "title": "Levende scenariebygger",
+      "items": [
+        "Forslag og anbefalinger opdateres nu mens du skriver; Søg-knappen er fjernet.",
+        "Taksonomien er udvidet til 86 begreber for dyr, mennesker, handlinger, bevægelse, steder, tider, vejr, lys og afstand.",
+        "En ny trianguleringsmotor kombinerer tags og beskytter specialregler som astro og fyrværkeri mod forkerte overskrivninger.",
+        "Tilføjede grundprofiler for blandt andet spisende og sovende dyr, legende børn, latter, strand, natklub og skovdyr."
+      ]
+    },
     {
       "version": "0.4.5",
       "date": "2026-08-08",

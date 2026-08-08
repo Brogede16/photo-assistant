@@ -20,6 +20,8 @@
 - Udvid derefter til ca. 100 veldokumenterede grundprofiler.
 - Lad motiver/synonymer pege på profiler fremfor at hardcode 500 opskrifter.
 - Indstillinger skal være intervaller og startpunkter, ikke falsk præcision.
+- Kombinér grundprofiler og tags til langt flere konkrete situationer; målet er ikke 1.000 kopierede JSON-opskrifter.
+- Test konflikter og særregler, så fx astro, fyrværkeri og bevægelse ikke overskriver hinanden forkert.
 
 ## M3: Canon EOS 80D-guide
 

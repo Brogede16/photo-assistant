@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { astroStatus, astroTargets, maxStarShutterSeconds } from "../src/lib/astro.js";
 import { buildRecommendation } from "../src/lib/recommendations.js";
-import { classifyQuery, findExactTerm, searchProfiles, suggestNextTags, termsToQuery } from "../src/lib/search.js";
+import { classifyQuery, consumeKnownTerms, findExactTerm, mergeTagIds, searchProfiles, suggestNextTags, termsToQuery } from "../src/lib/search.js";
 
 const taxonomy = JSON.parse(await readFile(new URL("../src/data/search/taxonomy.json", import.meta.url), "utf8"));
 const situations = JSON.parse(await readFile(new URL("../src/data/situations/core-profiles.json", import.meta.url), "utf8"));
@@ -17,6 +17,20 @@ assert.equal(findExactTerm(taxonomy, "gråvejr").id, "overcast");
 assert.equal(findExactTerm(taxonomy, "ko").id, "cow");
 assert.equal(findExactTerm(taxonomy, "køer").id, "cow");
 assert.equal(findExactTerm(taxonomy, "ukendt ord"), null);
+assert.equal(findExactTerm(taxonomy, "sover").id, "sleeping");
+assert.equal(findExactTerm(taxonomy, "natklub").id, "nightclub");
+
+const consumedPhrase = consumeKnownTerms("ko gråt vejr ", taxonomy);
+assert.deepEqual(consumedPhrase.termIds, ["cow", "overcast"]);
+assert.equal(consumedPhrase.remainder, "");
+
+const livePartial = suggestNextTags("kan", situations.profiles, taxonomy, [], 6);
+assert.equal(livePartial[0].id, "rabbit");
+
+const resolvedDistance = mergeTagIds(taxonomy, ["near"], ["far"]);
+assert.deepEqual(resolvedDistance, ["far"]);
+const resolvedTime = mergeTagIds(taxonomy, ["morning"], ["night-time"]);
+assert.deepEqual(resolvedTime, ["night-time"]);
 
 const birdResults = searchProfiles("fugl flyver langt væk", situations.profiles, taxonomy);
 assert.equal(birdResults.results[0].item.id, "bird-flight-daylight");
@@ -32,6 +46,21 @@ assert.equal(zooResults.results[0].item.id, "zoo-monkeys-overcast");
 
 const cowResults = searchProfiles("ko overskyet", situations.profiles, taxonomy);
 assert.equal(cowResults.results[0].item.id, "cow-field-overcast");
+assert.equal(searchProfiles("ko", situations.profiles, taxonomy).results.some((result) => result.item.id === "concert-stage-light"), false);
+
+const eatingAnimalResults = searchProfiles("får spiser på mark", situations.profiles, taxonomy);
+assert.equal(eatingAnimalResults.results[0].item.id, "animal-eating-outdoors");
+assert.equal(eatingAnimalResults.results.some((result) => result.item.family === "astro"), false);
+const specificCowResults = searchProfiles("ko spiser langt væk mark", situations.profiles, taxonomy);
+assert.equal(specificCowResults.results.some((result) => result.item.id === "zoo-monkeys-overcast"), false);
+assert.equal(specificCowResults.results.some((result) => result.item.id === "wildlife-forest-low-light"), false);
+assert.deepEqual(specificCowResults.results.slice(0, 2).map((result) => result.item.id), ["animal-eating-outdoors", "cow-field-overcast"]);
+
+const nightclubResults = searchProfiles("mennesker danser på natklub", situations.profiles, taxonomy);
+assert.equal(nightclubResults.results[0].item.id, "nightclub-dancing");
+const nightclubClassification = classifyQuery("mennesker danser på natklub", taxonomy);
+assert.equal(nightclubClassification.facets.place.includes("nightclub"), true);
+assert.equal(nightclubClassification.facets.light?.includes("night") || false, false);
 
 const cowNextTags = suggestNextTags("Ko", situations.profiles, taxonomy, ["cow"], 6);
 assert.equal(cowNextTags.some((term) => term.id === "monkey"), false);
@@ -58,10 +87,22 @@ assert.equal(recommendation.lens.id, "sigma-18-35-f18-art");
 assert.equal(recommendation.settings.aperture, "f/1.8");
 assert.equal(recommendation.gearChecklist.includes("Stativ"), true);
 
+const childClassification = classifyQuery("barn griner udenfor", taxonomy);
+const childProfile = searchProfiles("barn griner udenfor", situations.profiles, taxonomy).results[0].item;
+const childRecommendation = buildRecommendation(childProfile, equipment, { classification: childClassification });
+assert.equal(childRecommendation.settings.shutter, "1/500");
+assert.equal(childRecommendation.settings.focus, "AI Servo");
+
+const protectedAstro = buildRecommendation(astroResults.results[0].item, equipment, {
+  phase: "night",
+  classification: classifyQuery("nordlys løber", taxonomy)
+});
+assert.equal(protectedAstro.settings.shutter, "6s");
+
 assert.equal(maxStarShutterSeconds(18, 1.6), 13);
 assert.equal(astroStatus(new Date("2026-08-08T23:00:00+02:00")).moon.percent >= 0, true);
 assert.equal(astroTargets(new Date("2026-08-08T23:00:00+02:00")).some((target) => target.id === "milky-way-wide"), true);
-assert.equal(versionLog.current, "0.4.5");
-assert.equal(versionLog.entries[0].version, "0.4.5");
+assert.equal(versionLog.current, "0.5.0");
+assert.equal(versionLog.entries[0].version, "0.5.0");
 
 console.log("Alle søge-, anbefalings- og astro-tests bestod.");

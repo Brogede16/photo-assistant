@@ -1,4 +1,4 @@
-const CACHE_NAME = "photo-assistant-v0.4.5";
+const CACHE_NAME = "photo-assistant-v0.5.0";
 
 const CORE_ASSETS = [
   "/",
@@ -12,6 +12,7 @@ const CORE_ASSETS = [
   "/src/lib/exif.js",
   "/src/lib/presets.js",
   "/src/lib/recommendations.js",
+  "/src/lib/scenario.js",
   "/src/lib/search.js",
   "/src/lib/storage.js",
   "/src/data/equipment/index.json",

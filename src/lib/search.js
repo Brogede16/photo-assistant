@@ -43,13 +43,23 @@ export function classifyQuery(query, taxonomy) {
 
   for (const entry of index) {
     if (!entry.phrase) continue;
-    const directMatch = normalized.includes(entry.phrase);
-    const partialMatch = tokens.some((token) => entry.phrase.startsWith(token) || token.startsWith(entry.phrase));
+    const directMatch = containsPhrase(normalized, entry.phrase);
+    const partialMatch = tokens.some((token) => token.length >= 3 && entry.phrase.startsWith(token));
     const fuzzyMatch = tokens.some((token) => token.length > 4 && levenshtein(token, entry.phrase) <= 1);
     if (directMatch || partialMatch || fuzzyMatch) {
       const current = matches.get(entry.term.id) || { ...entry.term, score: 0 };
       current.score += directMatch ? 4 : partialMatch ? 2 : 1;
       matches.set(entry.term.id, current);
+    }
+  }
+
+  for (const match of [...matches.values()]) {
+    for (const impliedId of match.implies || []) {
+      const implied = findTermById(taxonomy, impliedId);
+      if (!implied) continue;
+      const current = matches.get(implied.id) || { ...implied, score: 0, implied: true };
+      current.score += Math.max(1, match.score - 1);
+      matches.set(implied.id, current);
     }
   }
 
@@ -73,6 +83,8 @@ export function searchProfiles(query, profiles, taxonomy, presets = []) {
   const results = [];
 
   for (const profile of profiles) {
+    if (!profileAcceptsSubjects(profile, classification, taxonomy)) continue;
+    if (!profileAcceptsMotion(profile, classification, taxonomy)) continue;
     const score = scoreProfile(profile, classification);
     if (score > 0) {
       results.push({
@@ -100,6 +112,47 @@ export function searchProfiles(query, profiles, taxonomy, presets = []) {
   };
 }
 
+function profileAcceptsMotion(profile, classification, taxonomy) {
+  const actions = classification.matches.filter((match) => match.type === "action" && !match.implied);
+  const movements = classification.matches.filter((match) => match.type === "movement" && !match.implied);
+  if (!actions.length && !movements.length) return true;
+
+  const profileActions = profile.conditions?.action || [];
+  if (actions.length && profileActions.some((id) => actions.some((action) => action.id === id))) return true;
+
+  const requestedMotions = new Set([...actions, ...movements].map((match) => match.effects?.motion).filter(Boolean));
+  const profileMotions = new Set((profile.conditions?.movement || [])
+    .map((id) => findTermById(taxonomy, id)?.effects?.motion)
+    .filter(Boolean));
+  if (!requestedMotions.size || !profileMotions.size) return profileActions.length === 0;
+  return [...requestedMotions].some((motion) => profileMotions.has(motion));
+}
+
+function profileAcceptsSubjects(profile, classification, taxonomy) {
+  const subjects = classification.matches.filter((match) => match.type === "subject" && !match.implied);
+  if (!subjects.length) return true;
+  return subjects.some((subject) => {
+    const profileSubjects = profile.subjects || [];
+    if (profileSubjects.includes(subject.id)) return true;
+    const subjectAncestors = ancestorsOf(taxonomy, subject.id);
+    if (subjectAncestors.length) {
+      const allowed = new Set([subject.id, ...subjectAncestors]);
+      return profileSubjects.length > 0 && profileSubjects.every((id) => allowed.has(id));
+    }
+    return profileSubjects.some((id) => ancestorsOf(taxonomy, id).includes(subject.id));
+  });
+}
+
+function ancestorsOf(taxonomy, id) {
+  const ancestors = [];
+  let current = findTermById(taxonomy, id);
+  while (current?.parent) {
+    ancestors.push(current.parent);
+    current = findTermById(taxonomy, current.parent);
+  }
+  return ancestors;
+}
+
 export function findTermById(taxonomy, id) {
   return taxonomy.terms.find((term) => term.id === id);
 }
@@ -123,6 +176,10 @@ export function suggestNextTags(query, profiles, taxonomy, selectedIds = [], lim
   const search = searchProfiles(query || termsToQuery(taxonomy, selectedIds), profiles, taxonomy);
   const candidates = new Map();
 
+  for (const match of search.classification.matches) {
+    if (!match.implied) addCandidate(candidates, taxonomy, selected, match.id, 120 + match.score);
+  }
+
   for (const id of selectedIds) {
     const selectedTerm = findTermById(taxonomy, id);
     if (!selectedTerm) continue;
@@ -145,6 +202,10 @@ export function suggestNextTags(query, profiles, taxonomy, selectedIds = [], lim
       ...(profile.conditions?.movement || []),
       ...(profile.conditions?.light || []),
       ...(profile.conditions?.distance || []),
+      ...(profile.conditions?.action || []),
+      ...(profile.conditions?.place || []),
+      ...(profile.conditions?.time || []),
+      ...(profile.conditions?.weather || []),
       ...(profile.gearStrategy?.preferredLensRoles || [])
     ];
     for (const id of ids) {
@@ -174,6 +235,7 @@ function addCandidate(candidates, taxonomy, selected, id, score) {
   const term = findTermById(taxonomy, id);
   if (!term) return;
   if (term.suggest === false) return;
+  if ([...selected].some((selectedId) => termsConflict(taxonomy, selectedId, id))) return;
   const current = candidates.get(id) || { term, score: 0 };
   current.score += score + typeBoost(term.type);
   candidates.set(id, current);
@@ -187,9 +249,13 @@ function scoreProfile(profile, classification) {
     if (profile.conditions?.movement?.includes(match.id)) score += match.score + 3;
     if (profile.conditions?.light?.includes(match.id)) score += match.score + 3;
     if (profile.conditions?.distance?.includes(match.id)) score += match.score + 2;
+    if (profile.conditions?.action?.includes(match.id)) score += match.score + 3;
+    if (profile.conditions?.place?.includes(match.id)) score += match.score + 2;
+    if (profile.conditions?.time?.includes(match.id)) score += match.score + 2;
+    if (profile.conditions?.weather?.includes(match.id)) score += match.score + 2;
     if (profile.gearStrategy?.preferredLensRoles?.includes(match.id)) score += match.score + 1;
-    if (normalizeText(profile.title).includes(match.id)) score += 2;
-    if (normalizeText(profile.title).includes(normalizeText(match.label))) score += 2;
+    if (containsPhrase(normalizeText(profile.title), normalizeText(match.id))) score += 2;
+    if (containsPhrase(normalizeText(profile.title), normalizeText(match.label))) score += 2;
   }
   return score;
 }
@@ -214,8 +280,76 @@ function typeBoost(type) {
     movement: 3,
     light: 3,
     distance: 2,
+    action: 4,
+    place: 3,
+    time: 3,
+    weather: 3,
     equipment: 1
   }[type] || 0;
+}
+
+export function mergeTagIds(taxonomy, currentIds, incomingIds) {
+  const next = [...currentIds];
+  for (const id of incomingIds) {
+    const term = findTermById(taxonomy, id);
+    if (!term) continue;
+    for (let index = next.length - 1; index >= 0; index -= 1) {
+      if (termsConflict(taxonomy, next[index], id)) next.splice(index, 1);
+    }
+    if (!next.includes(id)) next.push(id);
+  }
+  return next;
+}
+
+export function consumeKnownTerms(value, taxonomy, { includeLastTerm = false } = {}) {
+  const hasTrailingSeparator = /[\s,;]$/.test(value);
+  const words = normalizeText(value).split(" ").filter(Boolean);
+  const consumableCount = includeLastTerm || hasTrailingSeparator ? words.length : Math.max(0, words.length - 1);
+  const phraseIndex = buildPhraseIndex(taxonomy);
+  const termIds = [];
+  const remainder = [];
+
+  for (let index = 0; index < words.length;) {
+    let found = null;
+    const maxLength = Math.min(4, consumableCount - index);
+    for (let size = maxLength; size >= 1; size -= 1) {
+      const phrase = words.slice(index, index + size).join(" ");
+      if (phraseIndex.has(phrase)) {
+        found = { term: phraseIndex.get(phrase), size };
+        break;
+      }
+    }
+    if (found) {
+      termIds.push(found.term.id);
+      index += found.size;
+    } else {
+      remainder.push(words[index]);
+      index += 1;
+    }
+  }
+
+  return { termIds: [...new Set(termIds)], remainder: remainder.join(" ") };
+}
+
+function buildPhraseIndex(taxonomy) {
+  const index = new Map();
+  for (const term of taxonomy.terms) {
+    for (const phrase of [term.id, term.label, ...(term.synonyms || [])]) {
+      index.set(normalizeText(phrase), term);
+    }
+  }
+  return index;
+}
+
+function termsConflict(taxonomy, firstId, secondId) {
+  const first = findTermById(taxonomy, firstId);
+  const second = findTermById(taxonomy, secondId);
+  return Boolean(first?.exclusiveGroup && first.exclusiveGroup === second?.exclusiveGroup && first.id !== second.id);
+}
+
+function containsPhrase(text, phrase) {
+  if (!text || !phrase) return false;
+  return (` ${text} `).includes(` ${phrase} `);
 }
 
 function levenshtein(a, b) {

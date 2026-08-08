@@ -107,7 +107,7 @@
       "title": "Dyr der løber",
       "family": "dyr",
       "priority": 84,
-      "subjects": ["animal", "dog", "monkey"],
+      "subjects": ["animal"],
       "conditions": { "movement": ["running"], "light": ["daylight", "overcast", "shade"], "distance": ["medium", "far"] },
       "gearStrategy": { "preferredLensRoles": ["animals", "telephoto"] },
       "baseSettings": {
@@ -245,7 +245,7 @@
       "title": "Aber i zoo, overskyet",
       "family": "dyr",
       "priority": 86,
-      "subjects": ["monkey", "animal"],
+      "subjects": ["monkey"],
       "conditions": { "movement": ["walking", "running"], "light": ["overcast", "shade"], "distance": ["medium", "far"] },
       "gearStrategy": { "preferredLensRoles": ["zoo", "animals", "telephoto"] },
       "baseSettings": {
@@ -283,7 +283,7 @@
       "title": "Ko på mark",
       "family": "dyr",
       "priority": 87,
-      "subjects": ["cow", "animal"],
+      "subjects": ["cow"],
       "conditions": { "movement": ["still", "walking"], "light": ["daylight", "overcast"], "distance": ["medium", "far"] },
       "gearStrategy": { "preferredLensRoles": ["animals", "telephoto", "walkaround"] },
       "baseSettings": {
@@ -440,6 +440,97 @@
         "Tag korte serier ved de vigtigste øjeblikke."
       ],
       "why": "Sport kræver ofte samme prioritet som dyr i bevægelse: lukkertid først, ISO bagefter."
+    },
+    {
+      "id": "animal-eating-outdoors",
+      "title": "Dyr der spiser udenfor",
+      "family": "dyr",
+      "priority": 82,
+      "subjects": ["animal"],
+      "conditions": { "action": ["eating"], "movement": ["gentle-motion", "walking"], "place": ["outdoor", "field", "farm"], "light": ["daylight", "overcast"], "distance": ["near", "medium", "far"] },
+      "gearStrategy": { "preferredLensRoles": ["animals", "telephoto", "walkaround"] },
+      "baseSettings": { "mode": "M", "focalLength": "70-300mm eller 35-55mm", "shutter": { "start": "1/320", "range": ["1/250", "1/640"] }, "aperture": { "start": "f/5.6", "range": ["f/4", "f/8"] }, "iso": "Auto", "focus": "AI Servo", "drive": "Continuous low" },
+      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setAiServo", "setLensStabilizationOn"],
+      "quickGuide": ["Vælg objektiv efter afstand, ikke efter dyreart.", "Hold fokus på øjet eller hovedet.", "Vent på at dyret løfter hovedet eller vender sig mod lyset."],
+      "why": "Spisende dyr bevæger hovedet mere end kroppen. En mellem-hurtig lukkertid er normalt nok."
+    },
+    {
+      "id": "animal-sleeping",
+      "title": "Dyr der sover eller hviler",
+      "family": "dyr",
+      "priority": 80,
+      "subjects": ["animal"],
+      "conditions": { "action": ["sleeping"], "movement": ["still"], "place": ["home", "zoo", "outdoor"], "light": ["daylight", "indoor", "shade"], "distance": ["near", "medium"] },
+      "gearStrategy": { "preferredLensRoles": ["animals", "people", "low-light"] },
+      "baseSettings": { "mode": "Av", "focalLength": "35-150mm", "shutter": { "start": "1/125", "range": ["1/80", "1/250"] }, "aperture": { "start": "f/2.8", "range": ["f/1.8", "f/5.6"] }, "iso": "Auto", "focus": "One Shot på øjet", "drive": "Single" },
+      "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot"],
+      "quickGuide": ["Bevæg dig roligt og undgå at vække eller forstyrre dyret.", "Fokusér på det nærmeste øje.", "Brug lydløsere arbejdsgang og tag få billeder ad gangen."],
+      "why": "Når motivet virkelig ligger stille, kan lukkertiden sænkes og ISO holdes nede."
+    },
+    {
+      "id": "children-playing-outdoors",
+      "title": "Børn der leger udenfor",
+      "family": "mennesker",
+      "priority": 85,
+      "subjects": ["child", "person"],
+      "conditions": { "action": ["playing", "laughing"], "movement": ["running", "active-motion"], "place": ["outdoor", "beach", "field"], "light": ["daylight", "overcast"], "distance": ["near", "medium"] },
+      "gearStrategy": { "preferredLensRoles": ["people", "sports", "walkaround"] },
+      "baseSettings": { "mode": "M", "focalLength": "35-150mm", "shutter": { "start": "1/1000", "range": ["1/640", "1/1600"] }, "aperture": { "start": "f/2.8", "range": ["f/2.8", "f/5.6"] }, "iso": "Auto", "focus": "AI Servo", "drive": "High-speed continuous" },
+      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setAiServo", "setHighSpeedContinuous"],
+      "quickGuide": ["Gå ned i barnets højde.", "Følg ansigt eller overkrop med AI Servo.", "Tag korte serier ved grin, hop og retningsskift."],
+      "why": "Leg skifter hurtigt mellem pause og sprint. En hurtig grundindstilling giver flere skarpe øjeblikke."
+    },
+    {
+      "id": "people-laughing",
+      "title": "Mennesker der griner",
+      "family": "mennesker",
+      "priority": 79,
+      "subjects": ["person"],
+      "conditions": { "action": ["laughing"], "movement": ["active-motion"], "place": ["home", "party", "outdoor"], "light": ["daylight", "indoor", "low-light"], "distance": ["near", "medium"] },
+      "gearStrategy": { "preferredLensRoles": ["people", "low-light"], "optional": ["flash"] },
+      "baseSettings": { "mode": "M", "focalLength": "24-100mm", "shutter": { "start": "1/500", "range": ["1/320", "1/800"] }, "aperture": { "start": "f/2.8", "range": ["f/1.8", "f/4"] }, "iso": "Auto", "focus": "AI Servo på ansigtet", "drive": "Continuous low" },
+      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setAiServo"],
+      "quickGuide": ["Hold kameraet klar før grinets højdepunkt.", "Fokusér på det nærmeste ansigt.", "Tag en kort serie fremfor at holde udløseren nede."],
+      "why": "Ansigter og skuldre bevæger sig tydeligt under latter, så portræt-lukkertider kan være for langsomme."
+    },
+    {
+      "id": "beach-people-evening",
+      "title": "Mennesker på stranden",
+      "family": "mennesker",
+      "priority": 77,
+      "subjects": ["person"],
+      "conditions": { "place": ["beach", "outdoor"], "time": ["afternoon", "evening"], "weather": ["sunny", "windy"], "movement": ["walking", "running"], "light": ["daylight", "backlight"], "distance": ["near", "medium"] },
+      "gearStrategy": { "preferredLensRoles": ["people", "wide", "walkaround"] },
+      "baseSettings": { "mode": "M", "focalLength": "24-100mm", "shutter": { "start": "1/800", "range": ["1/500", "1/1600"] }, "aperture": { "start": "f/4", "range": ["f/2.8", "f/8"] }, "iso": "Auto", "focus": "AI Servo", "drive": "Continuous low" },
+      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setAiServo"],
+      "quickGuide": ["Tjek højlys i vand og lys sand.", "Brug modlyset bevidst, men eksponer efter ansigtet.", "Beskyt kameraet mod sand og saltvand ved objektivskift."],
+      "why": "Strandlys kan være meget lyst, mens vind og leg kræver en kort lukkertid."
+    },
+    {
+      "id": "nightclub-dancing",
+      "title": "Dans på natklub eller fest",
+      "family": "event",
+      "priority": 83,
+      "subjects": ["person"],
+      "conditions": { "action": ["dancing", "laughing"], "place": ["nightclub", "party"], "time": ["evening", "night-time"], "movement": ["active-motion", "running"], "light": ["stage-light", "low-light"], "distance": ["near", "medium"] },
+      "gearStrategy": { "preferredLensRoles": ["low-light", "people", "wide"], "optional": ["flash"] },
+      "baseSettings": { "mode": "M", "focalLength": "18-35mm", "shutter": { "start": "1/500", "range": ["1/250", "1/800"] }, "aperture": { "start": "f/1.8", "range": ["f/1.8", "f/2.8"] }, "iso": "Auto", "focus": "AI Servo", "drive": "Continuous low" },
+      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setAiServo"],
+      "quickGuide": ["Brug Sigma 18-35mm og kom relativt tæt på.", "Eksponer efter ansigter i lyset, ikke det mørke lokale.", "Brug bounce-flash kun hvor det er tilladt og loftet egner sig."],
+      "why": "Mørkt lokale og hurtige mennesker konkurrerer om eksponeringen. Lukkertid sikres først, og Auto ISO tager resten."
+    },
+    {
+      "id": "wildlife-forest-low-light",
+      "title": "Vilde dyr i skov",
+      "family": "dyr",
+      "priority": 81,
+      "subjects": ["animal", "deer", "fox", "bird"],
+      "conditions": { "place": ["forest", "outdoor"], "time": ["morning", "evening"], "movement": ["walking", "running"], "light": ["shade", "low-light"], "distance": ["far"] },
+      "gearStrategy": { "preferredLensRoles": ["animals", "birds", "telephoto"] },
+      "baseSettings": { "mode": "M", "focalLength": "200-300mm", "shutter": { "start": "1/800", "range": ["1/500", "1/1600"] }, "aperture": { "start": "f/5.6", "strategy": "wide-open-at-tele" }, "iso": "Auto", "focus": "AI Servo", "drive": "High-speed continuous" },
+      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setAiServo", "setHighSpeedContinuous", "setLensStabilizationOn"],
+      "quickGuide": ["Brug 70-300mm og slå IS til.", "Find åbninger mellem grene før motivet kommer frem.", "Accepter høj ISO for at bevare en sikker lukkertid."],
+      "why": "Skovlys er ofte markant svagere end åbent dagslys, mens dyret stadig kan bevæge sig pludseligt."
     }
   ]
 }
