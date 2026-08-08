@@ -1,13 +1,13 @@
 {
   "name": "photo-assistant",
-  "version": "0.22.0",
+  "version": "0.23.0",
   "private": true,
   "type": "module",
   "description": "Dansk, offline-first PWA til konkrete fotoanbefalinger for Canon EOS 80D og brugerens udstyr.",
   "scripts": {
     "serve": "python3 -m http.server 8000",
-    "test": "node --check src/main.js && node --check src/lib/ambient.js && node tests/search.test.mjs",
-    "check": "node --check src/main.js && node --check src/lib/ambient.js && node tests/search.test.mjs"
+    "test": "node --check service-worker.js && node --check src/main.js && node --check src/lib/ambient.js && node tests/search.test.mjs",
+    "check": "node --check service-worker.js && node --check src/main.js && node --check src/lib/ambient.js && node tests/search.test.mjs"
   },
   "keywords": [
     "photography",

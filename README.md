@@ -8,6 +8,7 @@ Projektet er bevidst bygget uden AI-afhængighed og uden direkte Canon API/SDK-k
 
 - Dansk mobile-first PWA med skarpt, feltvenligt interface og lyst/mørkt tema.
 - Lokalt genereret gradientfelt med synlig bevægelse, ny komposition ved hver åbning og en husket pause/play-kontakt.
+- Offline-first service worker: appen bruger den gemte kopi først og opdaterer data i baggrunden, når der er net.
 - Transparente glasflader og et editorialt serif/sans-serif-hierarki lader gradienten leve gennem hele appen.
 - En monokrom ultramarin gradient og linjebaserede resultater holder farvesproget roligt og reducerer antallet af synlige kasser.
 - Den bevægelige baggrund samles i én stor ultramarin lyskugle; glaslaget kan slås fra og holdes meget let, når FX er aktiv.
@@ -24,12 +25,14 @@ Projektet er bevidst bygget uden AI-afhængighed og uden direkte Canon API/SDK-k
 - Søgning på tværs af motiver, lys, bevægelse, afstand, problemer, teknikker og udstyr.
 - Ét levende tagsystem for motiv, handling, afstand, sted, vejr, tidspunkt, lys og stil.
 - Scenariemotoren vælger mellem Canon-programmerne P, Av, Tv, M og Bulb ud fra den ønskede kontrol.
-- 62 grundscenarier, blandt andet standardportrætter, baggrundstyper, biler, strand, vand, børn, indendørs hverdag, panorering og lysspor.
+- 141 grundscenarier, blandt andet standardportrætter, baggrundstyper, biler, strand, vand, børn, indendørs hverdag, natur, biograf, arkitektur, festival, panorering og lysspor.
 - Astro som central tagfamilie med stjerner, Mælkevejen, nordlys og måne.
 - Lange aften- og Astro-forløb med lukkertid pr. billede, samlet optagetid, startvindue og Bulb-alternativ.
 - Lokale presets kan bruges som gennemsigtigt udgangspunkt for matchende guides.
 - Billedupload kun til lokal EXIF-læsning og "gem som mit preset".
 - Egne presets markeres tydeligt som `MIT PRESET`.
+- Appen beder ikke om placering. Lys, vejr, tidspunkt, bylys og måne vælges som tags/scenarier.
+- Konkrete indstillingsværdier kan forklares direkte i appen, og Lær-fanen har en lille eksponeringstræner for lukkertid, blænde og ISO.
 
 ## Kør lokalt
 

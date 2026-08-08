@@ -5,6 +5,8 @@ const DANISH_REPLACEMENTS = new Map([
 ]);
 
 const CONNECTOR_WORDS = new Set(["i", "på", "paa", "ved", "med", "om", "til", "af", "og", "en", "et", "den", "det", "de"]);
+const SEARCH_INDEX_CACHE = new WeakMap();
+const PHRASE_INDEX_CACHE = new WeakMap();
 
 export function normalizeText(value) {
   return String(value || "")
@@ -24,6 +26,7 @@ export function tokenize(value) {
 }
 
 export function buildSearchIndex(taxonomy) {
+  if (SEARCH_INDEX_CACHE.has(taxonomy)) return SEARCH_INDEX_CACHE.get(taxonomy);
   const entries = [];
   for (const term of taxonomy.terms) {
     const phrases = [term.label, term.id, ...(term.synonyms || [])];
@@ -34,6 +37,7 @@ export function buildSearchIndex(taxonomy) {
       });
     }
   }
+  SEARCH_INDEX_CACHE.set(taxonomy, entries);
   return entries;
 }
 
@@ -433,12 +437,14 @@ export function consumeKnownTerms(value, taxonomy, { includeLastTerm = false } =
 }
 
 function buildPhraseIndex(taxonomy) {
+  if (PHRASE_INDEX_CACHE.has(taxonomy)) return PHRASE_INDEX_CACHE.get(taxonomy);
   const index = new Map();
   for (const term of taxonomy.terms) {
     for (const phrase of [term.id, term.label, ...(term.synonyms || [])]) {
       index.set(normalizeText(phrase), term);
     }
   }
+  PHRASE_INDEX_CACHE.set(taxonomy, index);
   return index;
 }
 

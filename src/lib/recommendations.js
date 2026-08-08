@@ -16,16 +16,15 @@ export function pickLens(profile, equipment, classification = null) {
 export function buildRecommendation(profile, equipment, context = {}) {
   const lens = pickLens(profile, equipment, context.classification);
   const settings = profile.baseSettings || {};
-  const contextAdjustments = adjustForContext(settings, context);
   const camera = equipment.cameras?.[0];
 
   const presetSettings = context.presetInfluence?.preset?.settings || {};
   const scenario = triangulateScenario({
     mode: settings.mode || "M",
     focalLength: settings.focalLength || formatFocalLength(lens),
-    shutter: contextAdjustments.shutter || settings.shutter?.start || settings.shutter || "Auto",
+    shutter: settings.shutter?.start || settings.shutter || "Auto",
     aperture: settings.aperture?.start || settings.aperture || "Auto",
-    iso: contextAdjustments.iso || settings.iso?.start || settings.iso || "Auto",
+    iso: settings.iso?.start || settings.iso || "Auto",
     focus: settings.focus || "Auto",
     drive: settings.drive || "Single",
     ...pickUsablePresetSettings(presetSettings)
@@ -46,7 +45,7 @@ export function buildRecommendation(profile, equipment, context = {}) {
       id: actionId,
       steps: buildExactSteps(actionId, scenario.settings, camera, lens)
     })),
-    notes: buildNotes(profile, context)
+    notes: buildNotes(profile)
   };
 }
 
@@ -144,19 +143,6 @@ export function explainProblem(problemId, recommendation) {
   };
 }
 
-function adjustForContext(settings, context) {
-  if (!context.lightOverride && context.phase === "night" && settings.iso?.range) {
-    return { iso: settings.iso.start };
-  }
-  if (context.lightOverride === "mørkere" && settings.iso?.range) {
-    return { iso: settings.iso.range.at(-1) };
-  }
-  if (context.lightOverride === "lysere" && settings.iso?.range) {
-    return { iso: settings.iso.range[0] };
-  }
-  return {};
-}
-
 function shouldSuggestFlash(profile, equipment) {
   return Boolean(profile.gearStrategy?.optional?.includes("flash") && equipment.flashes?.length);
 }
@@ -166,9 +152,8 @@ function formatFocalLength(lens) {
   return `${lens.focalLength.min}-${lens.focalLength.max}mm`;
 }
 
-function buildNotes(profile, context) {
+function buildNotes(profile) {
   const notes = [];
   if (profile.why) notes.push(profile.why);
-  if (context.source === "automatic") notes.push("Automatisk kontekst bruges som udgangspunkt. Manuel override vinder altid.");
   return notes;
 }

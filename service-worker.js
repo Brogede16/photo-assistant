@@ -1,4 +1,4 @@
-const CACHE_NAME = "photo-assistant-v0.22.0";
+const CACHE_NAME = "photo-assistant-core";
 
 const CORE_ASSETS = [
   "/",
@@ -19,7 +19,6 @@ const CORE_ASSETS = [
   "/src/data/learn/lessons.json",
   "/src/data/search/taxonomy.json",
   "/src/data/situations/core-profiles.json",
-  "/src/data/version-log.json"
 ];
 
 self.addEventListener("install", (event) => {
@@ -38,13 +37,42 @@ self.addEventListener("activate", (event) => {
 
 self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
-  event.respondWith(
-    fetch(event.request)
-      .then((response) => {
-        const clone = response.clone();
-        caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
-        return response;
-      })
-      .catch(() => caches.match(event.request))
-  );
+
+  if (event.request.mode === "navigate") {
+    event.respondWith(cacheFirst(event.request, "/index.html"));
+    return;
+  }
+
+  if (!sameOrigin(event.request.url)) return;
+
+  event.respondWith(cacheFirst(event.request));
 });
+
+async function cacheFirst(request, fallbackUrl = null) {
+  const cached = await caches.match(request);
+  const networkUpdate = fetch(request)
+    .then((response) => {
+      if (response.ok) {
+        const clone = response.clone();
+        caches.open(CACHE_NAME).then((cache) => cache.put(request, clone));
+      }
+      return response;
+    })
+    .catch(() => null);
+
+  if (cached) {
+    return cached;
+  }
+
+  const response = await networkUpdate;
+  if (response) return response;
+  if (fallbackUrl) return caches.match(fallbackUrl);
+  return new Response("Offline og filen er ikke gemt endnu.", {
+    status: 503,
+    headers: { "Content-Type": "text/plain; charset=utf-8" }
+  });
+}
+
+function sameOrigin(url) {
+  return new URL(url).origin === self.location.origin;
+}

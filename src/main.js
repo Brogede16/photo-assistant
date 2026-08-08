@@ -1,6 +1,6 @@
 import { readExifFromFile } from "./lib/exif.js";
 import { startAmbientField } from "./lib/ambient.js";
-import { loadPresets, savePreset } from "./lib/presets.js";
+import { deletePreset, loadPresets, savePreset } from "./lib/presets.js";
 import { buildRecommendation, explainProblem } from "./lib/recommendations.js";
 import { consumeKnownTerms, findTermById, mergeTagIds, searchProfiles, suggestNextTags, termsToQuery } from "./lib/search.js";
 
@@ -9,40 +9,44 @@ const state = {
   taxonomy: null,
   profiles: [],
   lessons: [],
-  versionLog: null,
   context: {},
   selectedResult: null,
   searchText: "",
   selectedTagIds: [],
   activeClassification: null,
   presets: loadPresets(),
-  unknownSearches: [],
+  unknownSearches: loadUnknownSearches(),
   selectedLearnTopic: "shutter",
+  exposureTrainer: { shutter: 0, aperture: 0, iso: 0 },
   theme: getInitialTheme(),
   ambientEnabled: getInitialAmbientSetting()
 };
 
 const app = document.querySelector("#app");
 let stopAmbientField = null;
+let wakeLock = null;
 
 applyTheme();
 boot();
 
 async function boot() {
-  const [equipment, taxonomy, situations, versionLog, learning] = await Promise.all([
-    fetchJson("/src/data/equipment/index.json"),
-    fetchJson("/src/data/search/taxonomy.json"),
-    fetchJson("/src/data/situations/core-profiles.json"),
-    fetchJson("/src/data/version-log.json"),
-    fetchJson("/src/data/learn/lessons.json")
-  ]);
-  state.equipment = equipment;
-  state.taxonomy = taxonomy;
-  state.profiles = situations.profiles;
-  state.versionLog = versionLog;
-  state.lessons = learning.lessons;
-  registerServiceWorker();
-  render();
+  try {
+    const [equipment, taxonomy, situations, learning] = await Promise.all([
+      fetchJson("/src/data/equipment/index.json"),
+      fetchJson("/src/data/search/taxonomy.json"),
+      fetchJson("/src/data/situations/core-profiles.json"),
+      fetchJson("/src/data/learn/lessons.json")
+    ]);
+    state.equipment = equipment;
+    state.taxonomy = taxonomy;
+    state.profiles = situations.profiles;
+    state.lessons = learning.lessons;
+    registerServiceWorker();
+    setupWakeLock();
+    render();
+  } catch (error) {
+    renderBootError(error);
+  }
 }
 
 function render() {
@@ -57,8 +61,7 @@ function render() {
       </div>
       <div class="header-actions">
         <button class="icon-button fx-toggle ${state.ambientEnabled ? "active" : ""}" data-action="toggle-ambient" aria-pressed="${state.ambientEnabled}" aria-label="${state.ambientEnabled ? "Sæt gradientens bevægelse på pause" : "Start gradientens bevægelse"}" title="${state.ambientEnabled ? "Gradient bevæger sig" : "Gradient er sat på pause"}"><span aria-hidden="true">${state.ambientEnabled ? "Ⅱ" : "▶"}</span></button>
-        <button class="icon-button theme-toggle" data-action="toggle-theme" aria-label="${state.theme === "dark" ? "Skift til lyst tema" : "Skift til mørkt tema"}" title="${state.theme === "dark" ? "Lyst tema" : "Mørkt tema"}"><span aria-hidden="true">${state.theme === "dark" ? "☀" : "◐"}</span></button>
-        <button class="icon-button" data-action="show-version-log" aria-label="Versionlog" title="Versionlog">v${state.versionLog.current}</button>
+        <button class="icon-button theme-toggle" data-action="toggle-theme" aria-label="Skift farvetema" title="Skift farvetema"><span aria-hidden="true">${themeIcon(state.theme)}</span></button>
         <button class="icon-button" data-action="show-equipment" aria-label="Mit udstyr" title="Mit udstyr">80D</button>
       </div>
     </header>
@@ -107,7 +110,7 @@ function renderHome(results = null) {
         <h2>${query ? "Anbefalinger til din situation" : "Guides"}</h2>
       </div>
       <div class="result-list">
-        ${resultList.map(renderResultCard).join("")}
+        ${resultList.length ? resultList.map(renderResultCard).join("") : renderEmptyResults(query)}
       </div>
     </section>
   `;
@@ -152,6 +155,7 @@ function renderPresets() {
     </section>
   `;
   document.querySelector("#exif-file").addEventListener("change", handleExifImport);
+  bindResultEvents();
 }
 
 function renderLearn() {
@@ -187,7 +191,8 @@ function renderLearn() {
             `).join("")}
           </section>
         ` : ""}
-        <div class="lesson-rule"><span>Husk</span><p>${lesson.rule}</p></div>
+      ${renderExposureTrainer()}
+      <div class="lesson-rule"><span>Husk</span><p>${lesson.rule}</p></div>
         <section class="field-exercise">
           <p class="section-kicker">Prøv det med dit 80D</p>
           <p>${lesson.exercise}</p>
@@ -223,6 +228,66 @@ function renderLearn() {
       document.querySelector("#learn-feedback").textContent = correct ? lesson.feedback : "Ikke helt. Se på skalaen ovenfor og prøv igen.";
     });
   });
+  document.querySelectorAll("[data-exposure-control]").forEach((input) => {
+    input.addEventListener("input", () => {
+      state.exposureTrainer[input.dataset.exposureControl] = Number(input.value);
+      renderLearn();
+    });
+  });
+}
+
+function renderExposureTrainer() {
+  const { shutter, aperture, iso } = state.exposureTrainer;
+  const total = shutter + aperture + iso;
+  const base = {
+    shutter: valueFromStops(["1/4000", "1/2000", "1/1000", "1/500", "1/250", "1/125", "1/60", "1/30", "1/15", "1/8", "1/4"], shutter),
+    aperture: valueFromStops(["f/16", "f/11", "f/8", "f/5.6", "f/4", "f/2.8", "f/2", "f/1.8"], aperture),
+    iso: valueFromStops(["ISO 100", "ISO 200", "ISO 400", "ISO 800", "ISO 1600", "ISO 3200", "ISO 6400"], iso)
+  };
+  return `
+    <section class="exposure-trainer">
+      <div>
+        <p class="section-kicker">Hvad sker der hvis jeg ændrer denne?</p>
+        <h3>Eksponering hænger sammen</h3>
+        <p>Flyt én skyder. Appen viser, hvor meget lys du har tilføjet eller fjernet, og hvad du kan gøre for at holde samme lysmængde.</p>
+      </div>
+      <div class="trainer-readout">
+        <span>${base.shutter}</span>
+        <span>${base.aperture}</span>
+        <span>${base.iso}</span>
+      </div>
+      ${renderExposureSlider("shutter", "Lukkertid", "Hurtigere", "Langsommere")}
+      ${renderExposureSlider("aperture", "Blænde", "Mindre åbning", "Mere åbning")}
+      ${renderExposureSlider("iso", "ISO", "Lavere ISO", "Højere ISO")}
+      <div class="trainer-balance ${total === 0 ? "balanced" : ""}">
+        <strong>${total === 0 ? "Samme lysmængde" : `${Math.abs(total)} stop ${total > 0 ? "lysere" : "mørkere"}`}</strong>
+        <p>${exposureAdvice(total)}</p>
+      </div>
+    </section>
+  `;
+}
+
+function renderExposureSlider(key, label, leftLabel, rightLabel) {
+  const value = state.exposureTrainer[key];
+  return `
+    <label class="exposure-slider">
+      <span>${label}</span>
+      <input data-exposure-control="${key}" type="range" min="-3" max="3" step="1" value="${value}" />
+      <small>${leftLabel} · ${rightLabel}</small>
+    </label>
+  `;
+}
+
+function valueFromStops(values, stops) {
+  const baseIndex = Math.floor(values.length / 2);
+  const index = Math.max(0, Math.min(values.length - 1, baseIndex + stops));
+  return values[index];
+}
+
+function exposureAdvice(total) {
+  if (total === 0) return "Du har balanceret ændringerne. Billedet bør blive cirka lige lyst, men bevægelse, dybdeskarphed og støj ændrer sig.";
+  if (total > 0) return "Billedet bliver lysere. For at holde samme lys: vælg hurtigere lukkertid, mindre blændeåbning eller lavere ISO.";
+  return "Billedet bliver mørkere. For at holde samme lys: vælg længere lukkertid, større blændeåbning eller højere ISO.";
 }
 
 function lessonProcedureIds(lessonId) {
@@ -253,37 +318,6 @@ function renderEquipment() {
   `;
 }
 
-function renderVersionLog() {
-  const content = document.querySelector("#content");
-  content.innerHTML = `
-    <section class="panel">
-      <div class="panel-header">
-        <p class="section-kicker">Versionlog</p>
-        <h2>Hvad er nyt?</h2>
-      </div>
-      <div class="version-list">
-        ${state.versionLog.entries.map(renderVersionEntry).join("")}
-      </div>
-    </section>
-  `;
-}
-
-function renderVersionEntry(entry) {
-  return `
-    <article class="version-entry">
-      <div class="card-title-row">
-        <div>
-          <p class="badge">v${entry.version} · ${entry.date}</p>
-          <h3>${entry.title}</h3>
-        </div>
-      </div>
-      <ul>
-        ${entry.items.map((item) => `<li>${item}</li>`).join("")}
-      </ul>
-    </article>
-  `;
-}
-
 function renderResultCard(result, index) {
   if (result.type === "preset") return renderPresetCard(result.item, result.score);
   const recommendation = buildRecommendation(result.item, state.equipment, { ...state.context, classification: state.activeClassification, presetInfluence: result.presetInfluence });
@@ -296,13 +330,14 @@ function renderResultCard(result, index) {
         </div>
         <button data-open-result="${result.item.id}">Åbn</button>
       </div>
-      <p>${recommendation.lens.brand} ${recommendation.lens.model}</p>
-      <div class="settings-strip">
-        <span>${recommendation.settings.mode}</span>
-        <span>${recommendation.settings.shutter}</span>
-        <span>${recommendation.settings.aperture}</span>
-        <span>ISO ${recommendation.settings.iso}</span>
+      <button class="lens-choice" data-explain-lens="${result.item.id}">${recommendation.lens.brand} ${recommendation.lens.model}</button>
+      <div class="settings-strip" aria-label="Kameraindstillinger">
+        ${renderSettingPill("mode", recommendation.settings.mode, result.item.id)}
+        ${renderSettingPill("shutter", recommendation.settings.shutter, result.item.id)}
+        ${renderSettingPill("aperture", recommendation.settings.aperture, result.item.id)}
+        ${renderSettingPill("iso", recommendation.settings.iso, result.item.id)}
       </div>
+      <div class="setting-explanation" aria-live="polite"></div>
       ${recommendation.exposurePlan ? `<p class="exposure-summary">${recommendation.exposurePlan.perFrame} pr. billede · ${recommendation.exposurePlan.total} samlet</p>` : ""}
     </article>
   `;
@@ -320,12 +355,47 @@ function renderPresetCard(preset) {
       <p>${preset.notes || "Eget preset gemt lokalt."}</p>
       ${preset.baseProfileId ? `<p class="preset-effect">Kan påvirke matchende guides som lokalt udgangspunkt.</p>` : ""}
       <div class="settings-strip">
-        ${Object.values(preset.settings || {})
-          .filter(Boolean)
-          .slice(0, 4)
-          .map((value) => `<span>${value}</span>`)
-          .join("")}
+        ${renderPresetSettings(preset.settings)}
       </div>
+      <div class="quick-actions">
+        <button data-edit-preset="${preset.id}">Ret navn</button>
+        <button data-delete-preset="${preset.id}">Slet</button>
+      </div>
+    </article>
+  `;
+}
+
+function renderPresetSettings(settings = {}) {
+  const labels = {
+    camera: "Kamera",
+    lens: "Objektiv",
+    focalLength: "Brændvidde",
+    mode: "Program",
+    shutter: "Lukkertid",
+    aperture: "Blænde",
+    iso: "ISO",
+    focus: "Fokus",
+    drive: "Serie",
+    dateTime: "Dato"
+  };
+  const order = ["mode", "focalLength", "shutter", "aperture", "iso", "focus", "drive", "camera", "lens", "dateTime"];
+  const values = order
+    .filter((key) => settings[key])
+    .map((key) => `<span><small>${labels[key]}</small>${key === "iso" && !String(settings[key]).startsWith("ISO") ? `ISO ${settings[key]}` : settings[key]}</span>`);
+  return values.length ? values.join("") : "<span>Ingen læsbare værdier</span>";
+}
+
+function renderSettingPill(key, value, profileId) {
+  const display = key === "iso" && !String(value).startsWith("ISO") ? `ISO ${value}` : value;
+  return `<button class="setting-pill" data-explain-setting="${key}" data-setting-value="${escapeHtml(value)}" data-profile-id="${profileId}">${escapeHtml(display)}</button>`;
+}
+
+function renderEmptyResults(query) {
+  rememberUnknownSearch(query);
+  return `
+    <article class="empty-state">
+      <h3>Ingen guide matcher endnu</h3>
+      <p>Prøv at gøre situationen lidt bredere med tags som motiv, sted, lys eller bevægelse. Søgningen er gemt lokalt, så vi kan se hvilke scenarier appen mangler.</p>
     </article>
   `;
 }
@@ -342,16 +412,17 @@ function openResult(profileId) {
       <h2>${profile.title}</h2>
       <p class="hero-setting">${recommendation.lens.brand} ${recommendation.lens.model}</p>
       <div class="settings-strip large">
-        <span>${recommendation.settings.mode}</span>
-        <span>${recommendation.settings.focalLength}</span>
-        <span>${recommendation.settings.shutter}</span>
-        <span>${recommendation.settings.aperture}</span>
-        <span>ISO ${recommendation.settings.iso}</span>
+        ${renderSettingPill("mode", recommendation.settings.mode, profile.id)}
+        ${renderSettingPill("focalLength", recommendation.settings.focalLength, profile.id)}
+        ${renderSettingPill("shutter", recommendation.settings.shutter, profile.id)}
+        ${renderSettingPill("aperture", recommendation.settings.aperture, profile.id)}
+        ${renderSettingPill("iso", recommendation.settings.iso, profile.id)}
       </div>
+      <div class="setting-explanation detail-explanation" aria-live="polite"></div>
       <div class="settings-strip technique-strip">
-        <span>${recommendation.settings.focus}</span>
-        <span>${recommendation.settings.drive}</span>
-        ${recommendation.flash ? `<span>${recommendation.flash.model}</span>` : ""}
+        ${renderSettingPill("focus", recommendation.settings.focus, profile.id)}
+        ${renderSettingPill("drive", recommendation.settings.drive, profile.id)}
+        ${recommendation.flash ? renderSettingPill("flash", recommendation.flash.model, profile.id) : ""}
       </div>
       ${renderExposurePlan(recommendation.exposurePlan)}
       ${recommendation.scenarioDecisions.length ? `<div class="scenario-decisions"><p class="section-kicker">Sådan hænger dine tags sammen</p><ul>${recommendation.scenarioDecisions.map((item) => `<li>${item}</li>`).join("")}</ul></div>` : ""}
@@ -396,6 +467,7 @@ function openResult(profileId) {
     state.presets = loadPresets();
     renderPresets();
   });
+  bindResultEvents();
 }
 
 function renderExposurePlan(plan) {
@@ -472,35 +544,40 @@ function bindShellEvents() {
   });
 
   document.querySelector('[data-action="show-equipment"]')?.addEventListener("click", renderEquipment);
-  document.querySelector('[data-action="show-version-log"]')?.addEventListener("click", renderVersionLog);
   document.querySelector('[data-action="toggle-theme"]')?.addEventListener("click", toggleTheme);
   document.querySelector('[data-action="toggle-ambient"]')?.addEventListener("click", toggleAmbient);
 }
 
 function getInitialTheme() {
   const saved = localStorage.getItem("photoAssistant.theme");
-  if (saved === "light" || saved === "dark") return saved;
-  return window.matchMedia?.("(prefers-color-scheme: light)").matches ? "light" : "dark";
+  if (saved === "light" || saved === "dark" || saved === "red") return saved;
+  const hour = new Date().getHours();
+  if (hour >= 23 || hour < 6) return "red";
+  if (hour >= 7 && hour < 17) return "light";
+  return "dark";
 }
 
 function applyTheme() {
   document.documentElement.dataset.theme = state.theme;
-  document.querySelector('meta[name="theme-color"]')?.setAttribute("content", state.theme === "dark" ? "#090b0e" : "#f4f6f8");
+  const colors = { dark: "#090b0e", light: "#f4f6f8", red: "#090000" };
+  document.querySelector('meta[name="theme-color"]')?.setAttribute("content", colors[state.theme] || colors.dark);
 }
 
 function toggleTheme() {
-  state.theme = state.theme === "dark" ? "light" : "dark";
+  const themes = ["light", "dark", "red"];
+  state.theme = themes[(themes.indexOf(state.theme) + 1) % themes.length];
   localStorage.setItem("photoAssistant.theme", state.theme);
   applyTheme();
   render();
 }
 
 function getInitialAmbientSetting() {
-  return true;
+  return localStorage.getItem("photoAssistant.ambientEnabled") !== "false";
 }
 
 function toggleAmbient() {
   state.ambientEnabled = !state.ambientEnabled;
+  localStorage.setItem("photoAssistant.ambientEnabled", String(state.ambientEnabled));
   render();
 }
 
@@ -553,6 +630,30 @@ function bindResultEvents() {
   document.querySelectorAll("[data-open-result]").forEach((button) => {
     button.addEventListener("click", () => openResult(button.dataset.openResult));
   });
+  document.querySelectorAll("[data-explain-setting]").forEach((button) => {
+    button.addEventListener("click", () => showSettingExplanation(button));
+  });
+  document.querySelectorAll("[data-explain-lens]").forEach((button) => {
+    button.addEventListener("click", () => showLensExplanation(button));
+  });
+  document.querySelectorAll("[data-delete-preset]").forEach((button) => {
+    button.addEventListener("click", () => {
+      deletePreset(button.dataset.deletePreset);
+      state.presets = loadPresets();
+      renderPresets();
+    });
+  });
+  document.querySelectorAll("[data-edit-preset]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const preset = state.presets.find((item) => item.id === button.dataset.editPreset);
+      if (!preset) return;
+      const name = prompt("Nyt navn til preset", preset.name);
+      if (!name) return;
+      savePreset({ ...preset, name });
+      state.presets = loadPresets();
+      renderPresets();
+    });
+  });
 }
 
 function runSearch(query) {
@@ -561,8 +662,154 @@ function runSearch(query) {
   renderHome(search.results.slice(0, 10));
 }
 
+function showSettingExplanation(button) {
+  const profile = state.profiles.find((item) => item.id === button.dataset.profileId);
+  if (!profile) return;
+  const recommendation = buildRecommendation(profile, state.equipment, { ...state.context, classification: state.activeClassification });
+  const key = button.dataset.explainSetting;
+  const value = button.dataset.settingValue;
+  const target = button.closest(".result-card, .detail-panel")?.querySelector(".setting-explanation");
+  if (!target) return;
+  target.innerHTML = renderSettingExplanation(key, recommendation, value);
+}
+
+function showLensExplanation(button) {
+  const profile = state.profiles.find((item) => item.id === button.dataset.explainLens);
+  if (!profile) return;
+  const recommendation = buildRecommendation(profile, state.equipment, { ...state.context, classification: state.activeClassification });
+  const target = button.closest(".result-card")?.querySelector(".setting-explanation");
+  if (!target) return;
+  target.innerHTML = `
+    <strong>Hvorfor dette objektiv?</strong>
+    <p>${explainLensChoice(recommendation)}</p>
+  `;
+}
+
+function renderSettingExplanation(key, recommendation, fallbackValue = "") {
+  const value = recommendation.settings[key] || fallbackValue;
+  const explanations = {
+    mode: explainMode(value, recommendation),
+    focalLength: `Brændvidden bestemmer udsnittet. ${value} er valgt for at passe til motivets afstand og scenariets behov for enten vidvinkel, normalvinkel eller tele.`,
+    shutter: explainShutter(value, recommendation),
+    aperture: explainAperture(value, recommendation),
+    iso: explainIso(value, recommendation),
+    focus: `Fokus er sat til ${value}, fordi scenariet enten kræver præcision på et stille motiv eller løbende fokus på bevægelse.`,
+    drive: `Optagelse er sat til ${value}. Brug enkeltbillede til rolige motiver og korte serier, når øjeblikket eller bevægelsen ændrer sig hurtigt.`,
+    flash: `Flash foreslås kun, når scenariet kan tåle ekstra lys uden at ødelægge stemningen eller motivet.`
+  };
+  return `
+    <strong>${settingLabel(key)}: ${key === "iso" && !String(value).startsWith("ISO") ? `ISO ${value}` : value}</strong>
+    <p>${explanations[key] || "Denne værdi er valgt ud fra scenariets tags og dit udstyr."}</p>
+  `;
+}
+
+function explainMode(value, recommendation) {
+  const map = {
+    P: "P lader kameraet vælge både blænde og lukkertid. Det passer bedst, når øjeblikket er vigtigere end en bestemt teknisk effekt.",
+    Av: `Av betyder blændeprioritet. Du vælger ${recommendation.settings.aperture}, fordi dybdeskarphed og lysindtag er vigtigst her. Kameraet vælger lukkertiden, men hold øje med at den ikke bliver langsommere end anbefalingen.`,
+    Tv: `Tv betyder lukkertidsprioritet. Du vælger ${recommendation.settings.shutter}, fordi bevægelsen er det vigtigste at styre. Kameraet vælger blænden.`,
+    M: `M låser både ${recommendation.settings.shutter} og ${recommendation.settings.aperture}. Det er bedst, når scenen skifter lys, men billedets bevægelse og dybdeskarphed ikke må flytte sig.`,
+    Bulb: "Bulb bruges, når eksponeringen skal være længere end kameraets normale 30 sekunder. Brug stativ og Canon Camera Connect eller fjernudløser."
+  };
+  return map[value] || "Programmet er valgt efter hvor meget kontrol scenariet kræver.";
+}
+
+function explainShutter(value, recommendation) {
+  const text = String(value);
+  if (text.endsWith("s")) return `${value} er en lang lukkertid. Den bruges enten fordi kameraet står på stativ, eller fordi bevægelsen gerne må tegnes som lys, vand eller stjernespor.`;
+  return `${value} er valgt for at styre bevægelse. Jo hurtigere motivet bevæger sig, jo kortere tid skal sensoren se det. Bliver motivet uskarpt, er lukkertiden ofte det første sted at stramme op.`;
+}
+
+function explainAperture(value, recommendation) {
+  const numeric = Number(String(value).replace("f/", ""));
+  if (numeric <= 2.8) return `${value} giver meget lys og blødere baggrund. Til gengæld bliver fokusområdet smalt, så fokuspunktet skal sidde præcist.`;
+  if (numeric >= 8) return `${value} giver mere dybdeskarphed, så mere af motivet kan blive skarpt. Det koster lys, så lukkertid eller ISO skal ofte hjælpe.`;
+  return `${value} er et balanceret valg: mere dybdeskarphed end helt åben blænde, men stadig rimeligt lysstærkt.`;
+}
+
+function explainIso(value, recommendation) {
+  const numeric = Number(String(value).replace(/\D/g, ""));
+  if (!numeric) return "Auto ISO betyder, at kameraet selv hæver eller sænker følsomheden, mens du bevarer de vigtigste valg i scenariet.";
+  if (numeric <= 200) return `${numeric} er valgt for renest mulig fil, fordi scenen bør have lys nok eller kameraet står stabilt.`;
+  if (numeric >= 1600) return `${numeric} er valgt for at redde lukkertiden i lavt lys. Der kan komme mere støj, men et skarpt billede med lidt støj er bedre end et rent billede der er sløret.`;
+  return `${numeric} er et mellemvalg: stadig pæn kvalitet, men med lidt ekstra hjælp til lukkertid eller blænde.`;
+}
+
+function explainLensChoice(recommendation) {
+  const roles = recommendation.lens.roles || [];
+  if (roles.includes("low-light")) return `${recommendation.lens.model} samler mest lys i dit kit, så den er stærk til mørke, indendørs, astro og scene.`;
+  if (roles.includes("telephoto")) return `${recommendation.lens.model} giver rækkevidde, når motivet er langt væk, fx dyr, måne, sport eller detaljer på afstand.`;
+  if (roles.includes("wide")) return `${recommendation.lens.model} giver bredere udsnit, når miljø, landskab eller himmel skal med i billedet.`;
+  return `${recommendation.lens.model} passer bedst til scenariets afstand, lys og ønskede udsnit.`;
+}
+
+function settingLabel(key) {
+  return {
+    mode: "Program",
+    focalLength: "Brændvidde",
+    shutter: "Lukkertid",
+    aperture: "Blænde",
+    iso: "ISO",
+    focus: "Fokus",
+    drive: "Optagelse",
+    flash: "Flash"
+  }[key] || key;
+}
+
 function setSearchVisibility(visible) {
   document.querySelector(".search-hero")?.toggleAttribute("hidden", !visible);
+}
+
+function themeIcon(theme) {
+  return { light: "☀", dark: "◐", red: "☾" }[theme] || "◐";
+}
+
+function loadUnknownSearches() {
+  try {
+    return JSON.parse(localStorage.getItem("photoAssistant.unknownSearches") || "[]");
+  } catch {
+    return [];
+  }
+}
+
+function rememberUnknownSearch(query) {
+  const cleaned = query.trim();
+  if (cleaned.length < 3) return;
+  const entry = { query: cleaned, createdAt: new Date().toISOString() };
+  state.unknownSearches = [entry, ...state.unknownSearches.filter((item) => item.query !== cleaned)].slice(0, 50);
+  localStorage.setItem("photoAssistant.unknownSearches", JSON.stringify(state.unknownSearches));
+}
+
+function renderBootError(error) {
+  app.innerHTML = `
+    <main class="boot-error">
+      <section class="panel">
+        <p class="eyebrow">Photo Assistant</p>
+        <h1>Appen kunne ikke starte</h1>
+        <p>En af de lokale datafiler kunne ikke læses. Prøv at åbne appen igen, når der er net, så den kan hente en frisk kopi.</p>
+        <details>
+          <summary>Teknisk besked</summary>
+          <p>${escapeHtml(error?.message || "Ukendt fejl")}</p>
+        </details>
+      </section>
+    </main>
+  `;
+}
+
+function setupWakeLock() {
+  requestWakeLock();
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) requestWakeLock();
+  });
+}
+
+async function requestWakeLock() {
+  if (!("wakeLock" in navigator)) return;
+  try {
+    wakeLock = await navigator.wakeLock.request("screen");
+  } catch {
+    wakeLock = null;
+  }
 }
 
 function escapeHtml(value) {
@@ -576,8 +823,28 @@ function escapeHtml(value) {
 async function handleExifImport(event) {
   const file = event.target.files?.[0];
   if (!file) return;
-  const exif = await readExifFromFile(file);
   const output = document.querySelector("#exif-output");
+  if (!/jpe?g|tiff?/i.test(file.type) && !/\.(jpe?g|tiff?)$/i.test(file.name)) {
+    output.innerHTML = `
+      <div class="advice-box">
+        <strong>Formatet kan ikke læses lokalt</strong>
+        <p>Appen kan læse EXIF fra JPEG og TIFF. HEIC fra iPhone skal eksporteres som JPEG, før appen kan gemme det som preset.</p>
+      </div>
+    `;
+    return;
+  }
+  let exif = {};
+  try {
+    exif = await readExifFromFile(file);
+  } catch {
+    output.innerHTML = `
+      <div class="advice-box">
+        <strong>Billedet kunne ikke læses</strong>
+        <p>Prøv en JPEG/TIFF med EXIF-data. Appen sender ikke billedet nogen steder.</p>
+      </div>
+    `;
+    return;
+  }
   output.innerHTML = `
     <div class="advice-box">
       <strong>Fundet i billedet</strong>
