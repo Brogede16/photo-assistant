@@ -7,6 +7,7 @@ Projektet er bevidst bygget uden AI-afhængighed og uden direkte Canon API/SDK-k
 ## Første scope
 
 - Dansk mobile-first PWA med skarpt, feltvenligt interface og lyst/mørkt tema.
+- Lokalt genereret gradientfelt med langsom bevægelse, ny komposition ved hver åbning og en husket FX-kontakt.
 - Modulær arkitektur: data, søgning, anbefalinger, astro, EXIF og UI holdes adskilt.
 - Canon EOS 80D som første fuldt understøttede kamera.
 - Brugerens udstyr forudindlæst:

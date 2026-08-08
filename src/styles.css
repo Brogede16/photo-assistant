@@ -51,6 +51,7 @@
 body {
   margin: 0;
   min-height: 100vh;
+  overflow-x: hidden;
   background: var(--bg);
   color: var(--text);
 }
@@ -80,9 +81,48 @@ button:active {
 }
 
 .app-shell {
+  position: relative;
+  isolation: isolate;
   width: min(100%, 720px);
   margin: 0 auto;
   padding: max(16px, env(safe-area-inset-top)) 14px calc(24px + env(safe-area-inset-bottom));
+}
+
+.app-shell > header,
+.app-shell > main {
+  position: relative;
+  z-index: 1;
+}
+
+.ambient-field {
+  position: absolute;
+  z-index: 0;
+  top: -40px;
+  left: 50%;
+  width: min(920px, calc(100vw + 80px));
+  height: 560px;
+  pointer-events: none;
+  opacity: 0.82;
+  filter: blur(34px) saturate(1.18);
+  transform: translateX(-50%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 62%, transparent 100%);
+}
+
+:root[data-theme="light"] .ambient-field {
+  opacity: 0.58;
+}
+
+.ambient-on .search-hero,
+.ambient-on .panel,
+.ambient-on .result-card {
+  background: color-mix(in srgb, var(--panel) 88%, transparent);
+  backdrop-filter: blur(18px) saturate(1.08);
+}
+
+.fx-toggle.active {
+  border-color: var(--accent);
+  background: var(--active);
+  color: var(--accent);
 }
 
 .topbar,
@@ -106,9 +146,12 @@ button:active {
 @media (max-width: 400px) {
   .topbar {
     align-items: flex-start;
+    flex-wrap: wrap;
   }
 
   .header-actions {
+    width: 100%;
+    justify-content: flex-end;
     gap: 4px;
   }
 
@@ -119,6 +162,12 @@ button:active {
 
   h1 {
     font-size: 27px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ambient-field {
+    filter: blur(34px) saturate(1.08);
   }
 }
 

@@ -1,6 +1,18 @@
 {
-  "current": "0.9.0",
+  "current": "0.10.0",
   "entries": [
+    {
+      "version": "0.10.0",
+      "date": "2026-08-08",
+      "title": "Levende gradientfelt",
+      "items": [
+        "Tilføjede et lokalt genereret gradientfelt med langsom bevægelse bag appens sorte og hvide flader.",
+        "Feltet får en ny komposition ved hver åbning og ændrer sig roligt, mens appen er i brug.",
+        "En FX-knap i toppen slår både gradient og bevægelse helt fra eller til og husker valget lokalt.",
+        "Animationen stopper, når fanen ikke er synlig, og respekterer enhedens indstilling for reduceret bevægelse.",
+        "Panelerne er let transparente over farvefeltet, mens tekst, tags og kameraindstillinger beholder høj kontrast."
+      ]
+    },
     {
       "version": "0.9.0",
       "date": "2026-08-08",

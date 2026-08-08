@@ -1,4 +1,5 @@
 import { readExifFromFile } from "./lib/exif.js";
+import { startAmbientField } from "./lib/ambient.js";
 import { loadPresets, savePreset } from "./lib/presets.js";
 import { buildRecommendation, explainProblem } from "./lib/recommendations.js";
 import { consumeKnownTerms, findTermById, mergeTagIds, searchProfiles, suggestNextTags, termsToQuery } from "./lib/search.js";
@@ -17,10 +18,12 @@ const state = {
   presets: loadPresets(),
   unknownSearches: [],
   selectedLearnTopic: "shutter",
-  theme: getInitialTheme()
+  theme: getInitialTheme(),
+  ambientEnabled: getInitialAmbientSetting()
 };
 
 const app = document.querySelector("#app");
+let stopAmbientField = null;
 
 applyTheme();
 boot();
@@ -43,13 +46,17 @@ async function boot() {
 }
 
 function render() {
+  stopAmbientField?.();
+  app.classList.toggle("ambient-on", state.ambientEnabled);
   app.innerHTML = `
+    <canvas class="ambient-field" aria-hidden="true" ${state.ambientEnabled ? "" : "hidden"}></canvas>
     <header class="topbar">
       <div>
         <p class="eyebrow">Canon EOS 80D</p>
         <h1>Photo Assistant</h1>
       </div>
       <div class="header-actions">
+        <button class="icon-button fx-toggle ${state.ambientEnabled ? "active" : ""}" data-action="toggle-ambient" aria-pressed="${state.ambientEnabled}" aria-label="${state.ambientEnabled ? "Slå gradient og bevægelse fra" : "Slå gradient og bevægelse til"}" title="${state.ambientEnabled ? "Gradient og bevægelse: til" : "Gradient og bevægelse: fra"}">FX</button>
         <button class="icon-button theme-toggle" data-action="toggle-theme" aria-label="${state.theme === "dark" ? "Skift til lyst tema" : "Skift til mørkt tema"}" title="${state.theme === "dark" ? "Lyst tema" : "Mørkt tema"}"><span aria-hidden="true">${state.theme === "dark" ? "☀" : "◐"}</span></button>
         <button class="icon-button" data-action="show-version-log" aria-label="Versionlog" title="Versionlog">v${state.versionLog.current}</button>
         <button class="icon-button" data-action="show-equipment" aria-label="Mit udstyr" title="Mit udstyr">80D</button>
@@ -83,6 +90,7 @@ function render() {
 
   bindShellEvents();
   renderHome();
+  if (state.ambientEnabled) stopAmbientField = startAmbientField(document.querySelector(".ambient-field"));
 }
 
 function renderHome(results = null) {
@@ -453,6 +461,7 @@ function bindShellEvents() {
   document.querySelector('[data-action="show-equipment"]')?.addEventListener("click", renderEquipment);
   document.querySelector('[data-action="show-version-log"]')?.addEventListener("click", renderVersionLog);
   document.querySelector('[data-action="toggle-theme"]')?.addEventListener("click", toggleTheme);
+  document.querySelector('[data-action="toggle-ambient"]')?.addEventListener("click", toggleAmbient);
 }
 
 function getInitialTheme() {
@@ -470,6 +479,16 @@ function toggleTheme() {
   state.theme = state.theme === "dark" ? "light" : "dark";
   localStorage.setItem("photoAssistant.theme", state.theme);
   applyTheme();
+  render();
+}
+
+function getInitialAmbientSetting() {
+  return localStorage.getItem("photoAssistant.ambient") !== "off";
+}
+
+function toggleAmbient() {
+  state.ambientEnabled = !state.ambientEnabled;
+  localStorage.setItem("photoAssistant.ambient", state.ambientEnabled ? "on" : "off");
   render();
 }
 
