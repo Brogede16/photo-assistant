@@ -324,6 +324,26 @@ function addCandidate(candidates, taxonomy, selected, id, score) {
   candidates.set(id, current);
 }
 
+// Some technique/equipment tags (AI Servo, manual focus, burst, Bulb, tripod, remote
+// release, microphone) aren't hand-tagged on every one of the 148 profiles — they're
+// derived here from the settings a profile already recommends, so selecting one of
+// these tags actually boosts the profiles that use it instead of doing nothing.
+const DERIVED_TECHNIQUE_SIGNALS = {
+  "ai-servo": (profile) => /ai servo/i.test(String(profile.baseSettings?.focus || "")),
+  "manual-focus": (profile) => /manuel|\bmf\b/i.test(String(profile.baseSettings?.focus || "")),
+  burst: (profile) => /continuous|serie/i.test(String(profile.baseSettings?.drive || "")),
+  bulb: (profile) => profile.baseSettings?.mode === "Bulb"
+    || (profile.cameraActions || []).includes("setBulbMode")
+    || /bulb/i.test(`${profile.exposurePlan?.alternative || ""} ${profile.exposurePlan?.control || ""}`),
+  microphone: (profile) => (profile.subjects || []).includes("singer") || (profile.conditions?.action || []).includes("singing")
+};
+const DERIVED_EQUIPMENT_SIGNALS = {
+  tripod: (profile) => Boolean(profile.exposurePlan)
+    || (profile.cameraActions || []).some((action) => ["useLiveViewForAstro", "use80dIntervalTimer"].includes(action))
+    || profile.family === "astro",
+  "remote-release": (profile) => (profile.cameraActions || []).includes("useCanonCameraConnect")
+};
+
 function scoreProfile(profile, classification) {
   let score = 0;
   for (const match of classification.matches) {
@@ -339,6 +359,9 @@ function scoreProfile(profile, classification) {
     if (profile.conditions?.weather?.includes(match.id)) score += match.score + 2;
     if (profile.conditions?.style?.includes(match.id)) score += match.score + 3;
     if (profile.conditions?.technique?.includes(match.id)) score += match.score + 2;
+    if (profile.conditions?.equipment?.includes(match.id)) score += match.score + 2;
+    if (DERIVED_TECHNIQUE_SIGNALS[match.id]?.(profile)) score += match.score + 2;
+    if (DERIVED_EQUIPMENT_SIGNALS[match.id]?.(profile)) score += match.score + 2;
     if (profile.gearStrategy?.preferredLensRoles?.includes(match.id)) score += match.score + 1;
     if (containsPhrase(normalizeText(profile.title), normalizeText(match.id))) score += 2;
     if (containsPhrase(normalizeText(profile.title), normalizeText(match.label))) score += 2;

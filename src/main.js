@@ -156,7 +156,7 @@ function renderPresets() {
       </div>
       <label class="file-import">
         Importer EXIF fra billede
-        <input id="exif-file" type="file" accept="image/jpeg,image/tiff" />
+        <input id="exif-file" type="file" accept="image/jpeg,image/tiff,.cr2,image/x-canon-cr2" />
       </label>
       <div id="exif-output"></div>
       <div class="result-list">
@@ -795,6 +795,12 @@ function explainFocalLength(value, recommendation) {
     const maxSeconds = maxStarShutterSeconds(focal, recommendation.camera.sensor.cropFactor);
     return `${value} er valgt for at få meget himmel med. På EOS 80D svarer ${focal}mm til cirka ${Math.round(focal * recommendation.camera.sensor.cropFactor)}mm. Jo længere du zoomer ind, jo kortere lukkertid skal du bruge før stjerner bliver til små streger. Ved ${focal}mm er øvre grænse cirka ${maxSeconds} sekunder.`;
   }
+  const isPortrait = recommendation.profile.family === "portræt" || (recommendation.profile.conditions?.style || []).includes("portrait");
+  if (isPortrait) {
+    return lens.roles?.includes("telephoto")
+      ? `${value} bruges til at holde et roligt, flatterende perspektiv uden forvrængede ansigtstræk. Den længere brændvidde giver samtidig en blødere baggrund end et bredere objektiv ville.`
+      : `${value} holder ansigtet uforvrænget uden at stå for tæt på. Her er det Sigma-objektivets store blænde, ikke brændvidden, der skaber den bløde baggrund.`;
+  }
   if (lens.roles?.includes("telephoto")) return `${value} bruges for at komme tættere på motivet uden at gå tættere fysisk. Det er især vigtigt ved dyr, sport, måne og detaljer langt væk.`;
   if (lens.roles?.includes("wide")) return `${value} giver et bredere udsnit. Det er godt når miljøet, himlen, bygningen eller landskabet skal være en del af billedet.`;
   return `${value} er valgt som et praktisk udsnit til situationen: tæt nok på motivet, men stadig med nok omgivelser til at billedet giver mening.`;
@@ -951,11 +957,20 @@ async function handleExifImport(event) {
   const file = event.target.files?.[0];
   if (!file) return;
   const output = document.querySelector("#exif-output");
-  if (!/jpe?g|tiff?/i.test(file.type) && !/\.(jpe?g|tiff?)$/i.test(file.name)) {
+  if (/\.(cr3|raw)$/i.test(file.name)) {
     output.innerHTML = `
       <div class="advice-box">
         <strong>Formatet kan ikke læses lokalt</strong>
-        <p>Appen kan læse EXIF fra JPEG og TIFF. HEIC fra iPhone skal eksporteres som JPEG, før appen kan gemme det som preset.</p>
+        <p>EOS 80D optager ikke CR3, så det er nok en fil fra et andet kamera. Appen kan læse EXIF fra JPEG, TIFF og Canon CR2 (RAW fra EOS 80D).</p>
+      </div>
+    `;
+    return;
+  }
+  if (!/jpe?g|tiff?/i.test(file.type) && !/\.(jpe?g|tiff?|cr2)$/i.test(file.name)) {
+    output.innerHTML = `
+      <div class="advice-box">
+        <strong>Formatet kan ikke læses lokalt</strong>
+        <p>Appen kan læse EXIF fra JPEG, TIFF og Canon CR2 (RAW). HEIC fra iPhone skal eksporteres som JPEG, før appen kan gemme det som preset.</p>
       </div>
     `;
     return;

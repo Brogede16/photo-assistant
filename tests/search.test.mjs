@@ -218,7 +218,7 @@ assert.equal(buildRecommendation(childForestRunning.results[0].item, equipment, 
 
 const beachPeopleStill = searchProfiles("mennesker står stille på stranden", situations.profiles, taxonomy);
 assert.equal(beachPeopleStill.results[0].item.id, "beach-people-still");
-assert.equal(buildRecommendation(beachPeopleStill.results[0].item, equipment, { classification: beachPeopleStill.classification }).settings.aperture, "f/4");
+assert.equal(buildRecommendation(beachPeopleStill.results[0].item, equipment, { classification: beachPeopleStill.classification }).settings.aperture, "f/4.5");
 const beachGroupStill = searchProfiles("gruppe står stille på stranden", situations.profiles, taxonomy);
 assert.equal(beachGroupStill.results[0].item.id, "beach-group-still");
 assert.equal(buildRecommendation(beachGroupStill.results[0].item, equipment, { classification: beachGroupStill.classification }).settings.aperture, "f/5.6");
@@ -495,7 +495,7 @@ assert.equal(searchProfiles("barn hopper på legeplads", situations.profiles, ta
 assert.equal(searchProfiles("gadefoto i dagslys", situations.profiles, taxonomy).results[0].item.id, "street-photo-daylight");
 const restaurantFood = searchProfiles("mad på restaurant", situations.profiles, taxonomy);
 assert.equal(restaurantFood.results[0].item.id, "restaurant-food-closeup");
-assert.equal(buildRecommendation(restaurantFood.results[0].item, equipment, { classification: restaurantFood.classification }).settings.aperture, "f/4");
+assert.equal(buildRecommendation(restaurantFood.results[0].item, equipment, { classification: restaurantFood.classification }).settings.aperture, "f/5.6");
 assert.equal(searchProfiles("landskab tåge i skov", situations.profiles, taxonomy).results[0].item.id, "foggy-forest-landscape");
 assert.equal(searchProfiles("arkitektur i skumring", situations.profiles, taxonomy).results[0].item.id, "architecture-blue-hour");
 

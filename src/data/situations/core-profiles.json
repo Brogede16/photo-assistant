@@ -425,7 +425,7 @@
       "requiredTags": ["concert", "telephoto"],
       "subjects": ["concert", "person"],
       "conditions": { "movement": ["walking", "running"], "light": ["stage-light", "low-light"], "distance": ["far"], "equipment": ["telephoto"] },
-      "gearStrategy": { "preferredLensRoles": ["telephoto", "people"] },
+      "gearStrategy": { "preferredLensRoles": ["telephoto", "people", "portraits"] },
       "baseSettings": {
         "mode": "M",
         "focalLength": "200-300mm",
@@ -489,9 +489,9 @@
       "subjects": ["animal"],
       "conditions": { "action": ["sleeping"], "movement": ["still"], "place": ["home", "zoo", "outdoor"], "light": ["daylight", "indoor", "shade"], "distance": ["near", "medium"] },
       "gearStrategy": { "preferredLensRoles": ["animals", "people", "low-light"] },
-      "baseSettings": { "mode": "Av", "focalLength": "35-150mm", "shutter": { "start": "1/125", "range": ["1/80", "1/250"] }, "aperture": { "start": "f/2.8", "range": ["f/1.8", "f/5.6"] }, "iso": "Auto", "focus": "One Shot på øjet", "drive": "Single" },
+      "baseSettings": { "mode": "Av", "focalLength": "24-35mm", "shutter": { "start": "1/125", "range": ["1/80", "1/250"] }, "aperture": { "start": "f/2.8", "range": ["f/1.8", "f/5.6"] }, "iso": "Auto", "focus": "One Shot på øjet", "drive": "Single" },
       "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot"],
-      "quickGuide": ["Bevæg dig roligt og undgå at vække eller forstyrre dyret.", "Fokusér på det nærmeste øje.", "Brug lydløsere arbejdsgang og tag få billeder ad gangen."],
+      "quickGuide": ["Bevæg dig roligt og undgå at vække eller forstyrre dyret.", "Brug Sigma 18-35mm ved 24-35mm.", "Fokusér på det nærmeste øje."],
       "why": "Når motivet virkelig ligger stille, kan lukkertiden sænkes og ISO holdes nede."
     },
     {
@@ -502,9 +502,9 @@
       "subjects": ["child", "person"],
       "conditions": { "action": ["playing", "laughing"], "movement": ["running", "active-motion"], "place": ["outdoor", "beach", "field"], "light": ["daylight", "overcast"], "distance": ["near", "medium"] },
       "gearStrategy": { "preferredLensRoles": ["people", "sports", "walkaround"] },
-      "baseSettings": { "mode": "Tv", "focalLength": "35-150mm", "shutter": { "start": "1/1000", "range": ["1/640", "1/1600"] }, "aperture": "Auto", "iso": "Auto", "focus": "AI Servo", "drive": "High-speed continuous" },
+      "baseSettings": { "mode": "Tv", "focalLength": "35-55mm", "shutter": { "start": "1/1000", "range": ["1/640", "1/1600"] }, "aperture": "Auto", "iso": "Auto", "focus": "AI Servo", "drive": "High-speed continuous" },
       "cameraActions": ["setTvMode", "setShutter", "setIso", "setAiServo", "setHighSpeedContinuous"],
-      "quickGuide": ["Gå ned i barnets højde.", "Følg ansigt eller overkrop med AI Servo.", "Tag korte serier ved grin, hop og retningsskift."],
+      "quickGuide": ["Gå ned i barnets højde.", "Brug 18-55mm ved 35-55mm.", "Følg ansigt eller overkrop med AI Servo og tag korte serier ved grin, hop og retningsskift."],
       "why": "Leg skifter hurtigt mellem pause og sprint. En hurtig grundindstilling giver flere skarpe øjeblikke."
     },
     {
@@ -515,9 +515,9 @@
       "subjects": ["person"],
       "conditions": { "action": ["laughing"], "movement": ["active-motion"], "place": ["home", "party", "outdoor"], "light": ["daylight", "indoor", "low-light"], "distance": ["near", "medium"] },
       "gearStrategy": { "preferredLensRoles": ["people", "low-light"], "optional": ["flash"] },
-      "baseSettings": { "mode": "Tv", "focalLength": "24-100mm", "shutter": { "start": "1/500", "range": ["1/320", "1/800"] }, "aperture": "Auto", "iso": "Auto", "focus": "AI Servo på ansigtet", "drive": "Continuous low" },
+      "baseSettings": { "mode": "Tv", "focalLength": "24-35mm", "shutter": { "start": "1/500", "range": ["1/320", "1/800"] }, "aperture": "Auto", "iso": "Auto", "focus": "AI Servo på ansigtet", "drive": "Continuous low" },
       "cameraActions": ["setTvMode", "setShutter", "setIso", "setAiServo"],
-      "quickGuide": ["Hold kameraet klar før grinets højdepunkt.", "Fokusér på det nærmeste ansigt.", "Tag en kort serie fremfor at holde udløseren nede."],
+      "quickGuide": ["Hold kameraet klar før grinets højdepunkt.", "Brug Sigma 18-35mm ved 24-35mm og fokusér på det nærmeste ansigt.", "Tag en kort serie fremfor at holde udløseren nede."],
       "why": "Ansigter og skuldre bevæger sig tydeligt under latter, så portræt-lukkertider kan være for langsomme."
     },
     {
@@ -528,9 +528,9 @@
       "subjects": ["person"],
       "conditions": { "place": ["beach", "outdoor"], "time": ["afternoon", "evening"], "weather": ["sunny", "windy"], "movement": ["walking", "running"], "light": ["daylight", "backlight"], "distance": ["near", "medium"] },
       "gearStrategy": { "preferredLensRoles": ["people", "wide", "walkaround"] },
-      "baseSettings": { "mode": "Tv", "focalLength": "24-100mm", "shutter": { "start": "1/800", "range": ["1/500", "1/1600"] }, "aperture": "Auto", "iso": "Auto", "focus": "AI Servo", "drive": "Continuous low" },
+      "baseSettings": { "mode": "Tv", "focalLength": "24-55mm", "shutter": { "start": "1/800", "range": ["1/500", "1/1600"] }, "aperture": "Auto", "iso": "Auto", "focus": "AI Servo", "drive": "Continuous low" },
       "cameraActions": ["setTvMode", "setShutter", "setIso", "setAiServo"],
-      "quickGuide": ["Tjek højlys i vand og lys sand.", "Brug modlyset bevidst, men eksponer efter ansigtet.", "Beskyt kameraet mod sand og saltvand ved objektivskift."],
+      "quickGuide": ["Tjek højlys i vand og lys sand.", "Brug 18-55mm ved 24-55mm.", "Brug modlyset bevidst, men eksponer efter ansigtet, og beskyt kameraet mod sand og saltvand ved objektivskift."],
       "why": "Strandlys kan være meget lyst, mens vind og leg kræver en kort lukkertid."
     },
     {
@@ -606,12 +606,12 @@
       "family": "portræt",
       "priority": 89,
       "subjects": ["person"],
-      "conditions": { "style": ["portrait", "single-portrait", "headshot"], "distance": ["close-up", "near"], "place": ["home"], "light": ["window-light", "indoor"], "movement": ["still"] },
+      "conditions": { "style": ["portrait", "single-portrait", "headshot"], "distance": ["near"], "place": ["home"], "light": ["window-light", "indoor"], "movement": ["still"] },
       "gearStrategy": { "preferredLensRoles": ["people", "low-light", "portraits"] },
-      "baseSettings": { "mode": "Av", "focalLength": "70-120mm eller 35mm", "shutter": { "start": "Auto", "range": ["1/160", "1/500"] }, "aperture": { "start": "f/2.8", "range": ["f/1.8", "f/4"] }, "iso": "Auto", "focus": "One Shot på nærmeste øje", "drive": "Single" },
+      "baseSettings": { "mode": "Av", "focalLength": "35mm", "shutter": { "start": "Auto", "range": ["1/160", "1/500"] }, "aperture": { "start": "f/2", "range": ["f/1.8", "f/2.8"] }, "iso": "Auto", "focus": "One Shot på nærmeste øje", "drive": "Single" },
       "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot"],
-      "quickGuide": ["Drej ansigtet let mod vinduet.", "Brug 70-300mm omkring 70-120mm, hvis pladsen tillader det.", "Fokusér præcist på det nærmeste øje."],
-      "why": "En lidt længere brændvidde giver roligere perspektiv, mens vindueslys former ansigtet uden hård blitz."
+      "quickGuide": ["Drej ansigtet let mod vinduet.", "Brug Sigma 18-35mm ved 35mm; det er det eneste objektiv i kittet, der åbner så meget.", "Fokusér præcist på det nærmeste øje."],
+      "why": "Sigma-objektivet er det eneste i dit kit med f/1.8, så det giver mest lys og blødest baggrund i vinduets bløde lys. 70-300mm kan ikke åbne bredere end f/4 og passer bedre til andre portrætsituationer."
     },
     {
       "id": "portrait-environmental",
@@ -621,7 +621,7 @@
       "subjects": ["person"],
       "conditions": { "style": ["portrait", "single-portrait", "environmental-portrait"], "distance": ["medium"], "place": ["outdoor", "home", "street"], "light": ["daylight", "window-light", "overcast"], "movement": ["still", "walking"] },
       "gearStrategy": { "preferredLensRoles": ["people", "wide", "walkaround"] },
-      "baseSettings": { "mode": "Av", "focalLength": "24-35mm", "shutter": { "start": "Auto", "range": ["1/250", "1/800"] }, "aperture": { "start": "f/4", "range": ["f/2.8", "f/5.6"] }, "iso": "Auto", "focus": "One Shot eller AI Servo ved gang", "drive": "Single eller Continuous low" },
+      "baseSettings": { "mode": "Av", "focalLength": "24-35mm", "shutter": { "start": "Auto", "range": ["1/250", "1/800"] }, "aperture": { "start": "f/4.5", "range": ["f/4.5", "f/5.6"] }, "iso": "Auto", "focus": "One Shot eller AI Servo ved gang", "drive": "Single eller Continuous low" },
       "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot"],
       "quickGuide": ["Brug Sigma ved 24-35mm.", "Placér personen, så omgivelserne fortæller noget.", "Undgå at skære fødder og hænder tilfældigt."],
       "why": "Miljøportrættet skal både vise mennesket og stedet; derfor bruges bredere brændvidde og mere dybdeskarphed."
@@ -663,9 +663,9 @@
       "subjects": ["person"],
       "conditions": { "style": ["portrait", "single-portrait", "candid"], "action": ["laughing", "walking"], "distance": ["near", "medium"], "place": ["street", "party", "outdoor"], "light": ["daylight", "indoor", "low-light"], "movement": ["walking", "active-motion"] },
       "gearStrategy": { "preferredLensRoles": ["people", "portraits", "low-light"] },
-      "baseSettings": { "mode": "Tv", "focalLength": "35-150mm", "shutter": { "start": "1/500", "range": ["1/320", "1/800"] }, "aperture": "Auto", "iso": "Auto", "focus": "AI Servo", "drive": "Continuous low" },
+      "baseSettings": { "mode": "Tv", "focalLength": "35mm", "shutter": { "start": "1/500", "range": ["1/320", "1/800"] }, "aperture": "Auto", "iso": "Auto", "focus": "AI Servo", "drive": "Continuous low" },
       "cameraActions": ["setTvMode", "setShutter", "setIso", "setAiServo"],
-      "quickGuide": ["Forudse øjeblikket i stedet for at reagere bagefter.", "Hold fokus på ansigt eller overkrop.", "Tag korte serier omkring reaktionen."],
+      "quickGuide": ["Forudse øjeblikket i stedet for at reagere bagefter.", "Brug Sigma 18-35mm ved 35mm og hold fokus på ansigt eller overkrop.", "Tag korte serier omkring reaktionen."],
       "why": "Uopstillede øjeblikke kræver mere lukkertid end et roligt portræt."
     },
     {
@@ -676,9 +676,9 @@
       "subjects": ["person"],
       "conditions": { "style": ["portrait", "single-portrait"], "weather": ["rain"], "place": ["outdoor", "street"], "light": ["overcast", "low-light"], "distance": ["near", "medium"], "movement": ["still", "walking"] },
       "gearStrategy": { "preferredLensRoles": ["people", "low-light"], "optional": ["flash"] },
-      "baseSettings": { "mode": "Tv", "focalLength": "35-120mm", "shutter": { "start": "1/500", "range": ["1/320", "1/800"] }, "aperture": "Auto", "iso": "Auto", "focus": "AI Servo", "drive": "Continuous low" },
+      "baseSettings": { "mode": "Tv", "focalLength": "35mm", "shutter": { "start": "1/500", "range": ["1/320", "1/800"] }, "aperture": "Auto", "iso": "Auto", "focus": "AI Servo", "drive": "Continuous low" },
       "cameraActions": ["setTvMode", "setShutter", "setIso", "setAiServo"],
-      "quickGuide": ["Brug modlys eller sidelys for at gøre regndråber synlige.", "Hold kamera og objektiv tørre; 80D-kittet er ikke regnsikkert.", "Tør frontglasset ofte."],
+      "quickGuide": ["Brug Sigma 18-35mm ved 35mm.", "Brug modlys eller sidelys for at gøre regndråber synlige.", "Hold kamera og objektiv tørre; 80D-kittet er ikke regnsikkert, så tør frontglasset ofte."],
       "why": "Regn sænker lyset og skaber bevægelige dråber, så lukkertid prioriteres."
     },
     {
@@ -689,7 +689,7 @@
       "subjects": ["person"],
       "conditions": { "style": ["portrait", "single-portrait", "silhouette"], "place": ["outdoor", "beach"], "time": ["evening", "twilight"], "light": ["backlight"], "distance": ["medium", "far"], "movement": ["still"] },
       "gearStrategy": { "preferredLensRoles": ["wide", "people"] },
-      "baseSettings": { "mode": "Av", "focalLength": "18-55mm", "shutter": { "start": "Auto", "range": ["1/125", "1/1000"] }, "aperture": { "start": "f/8", "range": ["f/5.6", "f/11"] }, "iso": { "start": "100", "range": ["100", "400"] }, "focus": "One Shot på silhuettens kant", "drive": "Single" },
+      "baseSettings": { "mode": "Av", "focalLength": "18-35mm", "shutter": { "start": "Auto", "range": ["1/125", "1/1000"] }, "aperture": { "start": "f/8", "range": ["f/5.6", "f/11"] }, "iso": { "start": "100", "range": ["100", "400"] }, "focus": "One Shot på silhuettens kant", "drive": "Single" },
       "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot"],
       "quickGuide": ["Mål lyset på himlen, ikke personen.", "Sørg for et genkendeligt omrids uden overlappende arme og ben.", "Brug negativ eksponeringskompensation hvis personen ikke bliver mørk nok."],
       "why": "Silhuetten er bevidst undereksponeret; himlens farver er hovedeksponeringen."
@@ -813,7 +813,7 @@
       "subjects": ["person"],
       "conditions": { "style": ["portrait", "single-portrait", "classic-portrait"], "movement": ["still"], "light": ["daylight", "overcast"], "place": ["outdoor"], "distance": ["near"] },
       "gearStrategy": { "preferredLensRoles": ["portraits", "people", "telephoto"] },
-      "baseSettings": { "mode": "Av", "focalLength": "70-120mm eller 35mm", "shutter": { "start": "Auto", "range": ["1/200", "1/1000"] }, "aperture": { "start": "f/2.8", "range": ["f/2.8", "f/4"] }, "iso": "Auto", "focus": "One Shot på nærmeste øje", "drive": "Single" },
+      "baseSettings": { "mode": "Av", "focalLength": "70-120mm eller 35mm", "shutter": { "start": "Auto", "range": ["1/200", "1/1000"] }, "aperture": { "start": "f/4", "range": ["f/4", "f/4.5"] }, "iso": "Auto", "focus": "One Shot på nærmeste øje", "drive": "Single" },
       "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot"],
       "quickGuide": ["Placér personen i åben skygge eller blødt overskyet lys.", "Brug 70-300mm omkring 70-120mm eller Sigma ved 35mm.", "Fokusér på det nærmeste øje og kontrollér baggrunden."],
       "why": "Av gør blænde og baggrund let at styre, mens kameraet tilpasser lukkertiden til dagslyset."
@@ -854,7 +854,7 @@
       "subjects": ["person"],
       "conditions": { "style": ["portrait", "single-portrait", "clean-background"], "movement": ["still"], "light": ["daylight", "window-light", "overcast"], "distance": ["near", "medium"] },
       "gearStrategy": { "preferredLensRoles": ["portraits", "people", "telephoto"] },
-      "baseSettings": { "mode": "Av", "focalLength": "70-150mm", "shutter": "Auto", "aperture": { "start": "f/2.8", "range": ["f/2.8", "f/4"] }, "iso": "Auto", "focus": "One Shot på øjet", "drive": "Single" },
+      "baseSettings": { "mode": "Av", "focalLength": "70-150mm", "shutter": "Auto", "aperture": { "start": "f/4.5", "range": ["f/4", "f/5"] }, "iso": "Auto", "focus": "One Shot på øjet", "drive": "Single" },
       "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot", "setLensStabilizationOn"],
       "quickGuide": ["Find en enkel flade eller skab stor afstand til baggrunden.", "Brug 70-150mm for at gøre baggrunden roligere.", "Hold øje med kanter, skilte og linjer bag hovedet."],
       "why": "En rolig baggrund skabes først med placering og afstand, derefter med længere brændvidde og åben blænde."
@@ -867,7 +867,7 @@
       "subjects": ["person"],
       "conditions": { "style": ["portrait", "single-portrait", "busy-background"], "movement": ["still"], "light": ["daylight", "overcast", "indoor"], "distance": ["near", "medium"] },
       "gearStrategy": { "preferredLensRoles": ["portraits", "telephoto", "people"] },
-      "baseSettings": { "mode": "Av", "focalLength": "100-200mm", "shutter": "Auto", "aperture": { "start": "f/4", "range": ["f/2.8", "f/5.6"] }, "iso": "Auto", "focus": "One Shot på øjet", "drive": "Single" },
+      "baseSettings": { "mode": "Av", "focalLength": "100-200mm", "shutter": "Auto", "aperture": { "start": "f/5.6", "range": ["f/4.5", "f/5.6"] }, "iso": "Auto", "focus": "One Shot på øjet", "drive": "Single" },
       "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot", "setLensStabilizationOn"],
       "quickGuide": ["Flyt personen væk fra baggrunden.", "Brug 70-300mm omkring 100-200mm og zoom ind.", "Skift din egen position, så lyse pletter og linjer ikke rammer ansigtet."],
       "why": "Når baggrunden ikke kan ryddes, hjælper større motiv-baggrund-afstand og længere brændvidde mere end bare laveste f-tal."
@@ -880,9 +880,9 @@
       "subjects": ["person"],
       "conditions": { "style": ["portrait", "single-portrait", "dark-background"], "movement": ["still"], "light": ["window-light", "stage-light", "low-light"], "distance": ["near"] },
       "gearStrategy": { "preferredLensRoles": ["low-light", "people"], "optional": ["flash"] },
-      "baseSettings": { "mode": "Av", "focalLength": "35-120mm", "shutter": "Auto", "aperture": { "start": "f/2.8", "range": ["f/1.8", "f/4"] }, "iso": "Auto", "focus": "One Shot på øjet", "drive": "Single" },
+      "baseSettings": { "mode": "Av", "focalLength": "35mm", "shutter": "Auto", "aperture": { "start": "f/2.8", "range": ["f/1.8", "f/4"] }, "iso": "Auto", "focus": "One Shot på øjet", "drive": "Single" },
       "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot"],
-      "quickGuide": ["Placér personen i lys og baggrunden uden for lyset.", "Eksponer efter huden, ikke den mørke baggrund.", "Brug negativ eksponeringskompensation hvis kameraet gør ansigtet for lyst."],
+      "quickGuide": ["Brug Sigma 18-35mm ved 35mm og placér personen i lys, med baggrunden uden for lyset.", "Eksponer efter huden, ikke den mørke baggrund.", "Brug negativ eksponeringskompensation hvis kameraet gør ansigtet for lyst."],
       "why": "Low-key-looket kommer fra forskellen mellem lyset på personen og baggrunden, ikke fra at gøre hele billedet mørkt."
     },
     {
@@ -893,9 +893,9 @@
       "subjects": ["person"],
       "conditions": { "style": ["portrait", "single-portrait", "bright-background"], "movement": ["still"], "light": ["window-light", "daylight", "backlight"], "distance": ["near"] },
       "gearStrategy": { "preferredLensRoles": ["people", "low-light"], "optional": ["flash"] },
-      "baseSettings": { "mode": "Av", "focalLength": "35-120mm", "shutter": "Auto", "aperture": { "start": "f/4", "range": ["f/2.8", "f/5.6"] }, "iso": "Auto", "focus": "One Shot på øjet", "drive": "Single" },
+      "baseSettings": { "mode": "Av", "focalLength": "35mm", "shutter": "Auto", "aperture": { "start": "f/4", "range": ["f/2.8", "f/5.6"] }, "iso": "Auto", "focus": "One Shot på øjet", "drive": "Single" },
       "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot"],
-      "quickGuide": ["Eksponer efter ansigtet og kontrollér at baggrunden ikke mister alle detaljer.", "Brug positiv eksponeringskompensation hvis kameraet gør ansigtet gråt.", "Hold personen lidt væk fra den hvide flade for færre skygger."],
+      "quickGuide": ["Brug Sigma 18-35mm ved 35mm og eksponer efter ansigtet.", "Kontrollér at baggrunden ikke mister alle detaljer; brug positiv eksponeringskompensation hvis kameraet gør ansigtet gråt.", "Hold personen lidt væk fra den hvide flade for færre skygger."],
       "why": "En meget lys baggrund kan snyde lysmålingen til at gøre ansigtet for mørkt."
     },
     {
@@ -945,9 +945,9 @@
       "subjects": ["car"],
       "conditions": { "action": ["driving", "parked"], "movement": ["running", "still"], "weather": ["rain"], "light": ["night", "low-light"], "time": ["night-time"], "place": ["outdoor", "street"], "distance": ["near", "medium"] },
       "gearStrategy": { "preferredLensRoles": ["low-light", "telephoto"] },
-      "baseSettings": { "mode": "Tv", "focalLength": "35-120mm", "shutter": { "start": "1/500", "range": ["1/250", "1/800"] }, "aperture": "Auto", "iso": "Auto", "focus": "AI Servo ved kørsel", "drive": "Continuous low" },
+      "baseSettings": { "mode": "Tv", "focalLength": "24-35mm", "shutter": { "start": "1/500", "range": ["1/250", "1/800"] }, "aperture": "Auto", "iso": "Auto", "focus": "AI Servo ved kørsel", "drive": "Continuous low" },
       "cameraActions": ["setTvMode", "setShutter", "setIso", "setAiServo", "setLensStabilizationOn"],
-      "quickGuide": ["Brug Tv 1/500 til kørsel og accepter høj ISO.", "Placér gadelygter eller billygter bag regnen for synlige dråber.", "Undgå at stå tæt ved trafikken, især i mørke og regn."],
+      "quickGuide": ["Brug Sigma 18-35mm; det lysstærke objektiv hjælper mest i det svage lys.", "Brug Tv 1/500 til kørsel og accepter høj ISO.", "Placér gadelygter eller billygter bag regnen for synlige dråber, og undgå at stå tæt ved trafikken."],
       "why": "Tv sikrer bilen først; Auto ISO kompenserer for det meget lave og skiftende lys."
     },
     {
@@ -986,10 +986,10 @@
       "subjects": ["person"],
       "conditions": { "style": ["portrait", "single-portrait"], "action": ["posing"], "movement": ["still"], "place": ["beach", "outdoor"], "light": ["daylight", "backlight"], "distance": ["near", "medium"] },
       "gearStrategy": { "preferredLensRoles": ["portraits", "people", "telephoto"] },
-      "baseSettings": { "mode": "Av", "focalLength": "70-120mm", "shutter": { "start": "1/250", "range": ["1/250", "Auto"] }, "aperture": { "start": "f/2.8", "range": ["f/2.8", "f/4"] }, "iso": "Auto", "focus": "One Shot på nærmeste øje", "drive": "Single" },
+      "baseSettings": { "mode": "Av", "focalLength": "70-120mm", "shutter": { "start": "1/250", "range": ["1/250", "Auto"] }, "aperture": { "start": "f/4.5", "range": ["f/4.5", "f/5"] }, "iso": "Auto", "focus": "One Shot på nærmeste øje", "drive": "Single" },
       "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot", "setLensStabilizationOn"],
       "quickGuide": ["Placér personen med solen skråt bagfra eller i åben skygge.", "Brug 70-120mm og hold horisonten væk fra hovedet.", "Kontrollér at ansigtet er lyst uden at sand og vand brænder ud."],
-      "why": "Av ved f/2.8 giver kontrol over baggrunden, mens Auto ISO hjælper med den store forskel mellem ansigt, sand og vand."
+      "why": "Av ved f/4 giver kontrol over baggrunden inden for det, 70-300mm faktisk kan åbne ved denne brændvidde, mens Auto ISO hjælper med den store forskel mellem ansigt, sand og vand."
     },
     {
       "id": "beach-child-running",
@@ -1106,9 +1106,9 @@
       "subjects": ["person", "group"],
       "conditions": { "action": ["eating"], "movement": ["gentle-motion"], "place": ["outdoor", "garden", "beach"], "light": ["daylight", "overcast"], "distance": ["near", "medium"] },
       "gearStrategy": { "preferredLensRoles": ["people", "walkaround", "portraits"] },
-      "baseSettings": { "mode": "Tv", "focalLength": "35-100mm", "shutter": { "start": "1/400", "range": ["1/320", "1/640"] }, "aperture": "Auto", "iso": "Auto", "focus": "AI Servo på nærmeste ansigt", "drive": "Continuous low" },
+      "baseSettings": { "mode": "Tv", "focalLength": "35-55mm", "shutter": { "start": "1/400", "range": ["1/320", "1/640"] }, "aperture": "Auto", "iso": "Auto", "focus": "AI Servo på nærmeste ansigt", "drive": "Continuous low" },
       "cameraActions": ["setTvMode", "setShutter", "setIso", "setAiServo", "setLensStabilizationOn"],
-      "quickGuide": ["Find åben skygge eller blødt sidelys.", "Brug 35-100mm og hold forstyrrende service ude af billedkanten.", "Tag korte serier ved grin, servering eller skålen."],
+      "quickGuide": ["Find åben skygge eller blødt sidelys.", "Brug 18-55mm ved 35-55mm og hold forstyrrende service ude af billedkanten.", "Tag korte serier ved grin, servering eller skålen."],
       "why": "Tv 1/400 er hurtigt nok til hænder og ansigter, mens kameraet kan tilpasse blænden til dagslyset."
     },
     {
@@ -1184,10 +1184,10 @@
       "subjects": ["food"],
       "conditions": { "place": ["restaurant", "inside"], "light": ["window-light", "indoor", "low-light"], "distance": ["close-up", "near"] },
       "gearStrategy": { "preferredLensRoles": ["close-up", "low-light", "walkaround"] },
-      "baseSettings": { "mode": "Av", "focalLength": "35-55mm", "shutter": { "start": "1/160", "range": ["1/125", "1/250"] }, "aperture": { "start": "f/4", "range": ["f/2.8", "f/5.6"] }, "iso": "Auto", "focus": "One Shot på rettens vigtigste detalje", "drive": "Single" },
+      "baseSettings": { "mode": "Av", "focalLength": "35-55mm", "shutter": { "start": "1/160", "range": ["1/125", "1/250"] }, "aperture": { "start": "f/5.6", "range": ["f/5", "f/5.6"] }, "iso": "Auto", "focus": "One Shot på rettens vigtigste detalje", "drive": "Single" },
       "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot", "setLensStabilizationOn"],
-      "quickGuide": ["Sæt tallerkenen tæt på et vindue eller drej den mod rummets blødeste lys.", "Fotografér skråt ovenfra ved 35-55mm og start ved f/4.", "Gå kun mod f/2.8, hvis lyset ikke rækker, og accepter at mindre af retten bliver skarp."],
-      "why": "En tallerken har dybde. f/4 holder mere af retten skarp end f/2.8 på tæt hold, mens Auto ISO hjælper med at holde en håndholdbar lukkertid i restauranten."
+      "quickGuide": ["Sæt tallerkenen tæt på et vindue eller drej den mod rummets blødeste lys.", "Fotografér skråt ovenfra ved 35-55mm og start ved f/5.6.", "18-55mm-objektivet åbner ikke bredere end det her; brug Auto ISO hvis lyset ikke rækker."],
+      "why": "En tallerken har dybde, så f/4.5 holder mere af retten skarp. 18-55mm er kittets bedste close-up-objektiv, men det åbner kun til f/3.5-5.6, så Auto ISO gør resten af arbejdet i restaurantens lys."
     },
     {
       "id": "waterfall-long-exposure",
@@ -1263,9 +1263,9 @@
       "subjects": ["tree", "nature"],
       "conditions": { "place": ["field", "meadow", "outdoor"], "time": ["evening", "twilight"], "light": ["backlight", "daylight"], "distance": ["far"] },
       "gearStrategy": { "preferredLensRoles": ["walkaround", "wide", "telephoto"] },
-      "baseSettings": { "mode": "Av", "focalLength": "35-70mm", "shutter": { "start": "1/250", "range": ["1/160", "1/500"] }, "aperture": { "start": "f/8", "range": ["f/5.6", "f/11"] }, "iso": "Auto", "focus": "One Shot på træets stamme eller krone", "drive": "Single" },
+      "baseSettings": { "mode": "Av", "focalLength": "35-55mm", "shutter": { "start": "1/250", "range": ["1/160", "1/500"] }, "aperture": { "start": "f/8", "range": ["f/5.6", "f/11"] }, "iso": "Auto", "focus": "One Shot på træets stamme eller krone", "drive": "Single" },
       "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot", "setLensStabilizationOn"],
-      "quickGuide": ["Flyt dig, til stammen eller kronen står rent mod himlen.", "Start ved f/8 og fokusér på træets tydeligste kant.", "Se histogrammet; bliver himlen helt hvid, brug negativ eksponeringskompensation."],
+      "quickGuide": ["Flyt dig, til stammen eller kronen står rent mod himlen.", "Brug 18-55mm ved 35-55mm og start ved f/8.", "Se histogrammet; bliver himlen helt hvid, brug negativ eksponeringskompensation."],
       "why": "Av f/8 holder træets form tydelig, mens den valgte vinkel og eksponeringskontrol beskytter højlyset omkring solen."
     },
     {
@@ -1905,7 +1905,7 @@
       "subjects": ["person", "group"],
       "conditions": { "action": ["posing", "relaxing"], "movement": ["still"], "place": ["beach", "outdoor"], "light": ["daylight", "overcast", "backlight"], "distance": ["near", "medium"], "style": ["portrait", "environmental-portrait"] },
       "gearStrategy": { "preferredLensRoles": ["people", "portraits", "wide"] },
-      "baseSettings": { "mode": "Av", "focalLength": "35mm", "shutter": { "start": "1/250", "range": ["1/250", "Auto"] }, "aperture": { "start": "f/4", "range": ["f/2.8", "f/5.6"] }, "iso": "Auto", "focus": "One Shot på nærmeste øje", "drive": "Single" },
+      "baseSettings": { "mode": "Av", "focalLength": "35mm", "shutter": { "start": "1/250", "range": ["1/250", "Auto"] }, "aperture": { "start": "f/4.5", "range": ["f/4.5", "f/5.6"] }, "iso": "Auto", "focus": "One Shot på nærmeste øje", "drive": "Single" },
       "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot"],
       "quickGuide": ["Brug Sigma ved 35mm og hold horisonten fri af hovederne.", "Start i Av ved f/4 og Auto ISO; kontrollér mindst 1/250.", "Placér menneskerne tæt på samme afstand, så alle er skarpe."],
       "why": "f/4 giver mere sikker dybdeskarphed til flere mennesker end et enkeltportræt, mens 35mm bevarer både personer og strandmiljø."
@@ -2340,6 +2340,32 @@
       "cameraActions": ["setTvMode", "setShutter", "setIso", "setAiServo", "setLensStabilizationOn"],
       "quickGuide": ["Bliv langt væk og brug 70-300mm frem for at nærme dig dyret.", "Start i Tv ved 1/800 med Auto ISO og fokusér på øjet.", "Vent på, at dyret løfter hovedet, i stedet for at fotografere lange serier af søvn."],
       "why": "Dyret virker stille på land, men hoved og knurhår bevæger sig stadig. 1/800 giver et skarpt portræt på afstand uden at presse dig tættere på."
+    },
+    {
+      "id": "winter-snow-daylight",
+      "title": "Sne i dagslys",
+      "family": "vinter",
+      "priority": 88,
+      "subjects": ["landscape", "nature"],
+      "conditions": { "weather": ["snow"], "place": ["outdoor", "countryside", "field", "garden", "street"], "light": ["daylight", "bright-sun", "overcast"], "movement": ["still"] },
+      "gearStrategy": { "preferredLensRoles": ["wide", "walkaround"] },
+      "baseSettings": { "mode": "Av", "focalLength": "18-35mm", "shutter": "Auto", "aperture": { "start": "f/8", "range": ["f/5.6", "f/11"] }, "iso": { "start": "100", "range": ["100", "400"] }, "focus": "One Shot", "drive": "Single" },
+      "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot"],
+      "quickGuide": ["Brug +1 til +1,5 trins positiv eksponeringskompensation; ellers gør lysmåleren den hvide sne grå.", "Start i Av ved f/8 for skarphed i hele landskabet.", "Tjek histogrammet, så sneen ikke mister al struktur i det helt hvide."],
+      "why": "Sne fylder rammen med en lys, hvid flade, som kameraets lysmåler fejlagtigt tolker som for lyst og derfor gør for mørk. Positiv eksponeringskompensation retter fejlen; den mindre blændeåbning holder både sne og motiv skarpt."
+    },
+    {
+      "id": "portrait-harsh-midday-sun",
+      "title": "Portræt i hård middagssol",
+      "family": "portræt",
+      "priority": 87,
+      "subjects": ["person"],
+      "conditions": { "style": ["portrait", "single-portrait"], "light": ["bright-sun"], "time": ["midday"], "place": ["outdoor"], "distance": ["near"], "movement": ["still"] },
+      "gearStrategy": { "preferredLensRoles": ["people", "normal", "portraits"], "optional": ["flash"] },
+      "baseSettings": { "mode": "Av", "focalLength": "35mm", "shutter": "Auto", "aperture": { "start": "f/4", "range": ["f/2.8", "f/5.6"] }, "iso": "100", "focus": "One Shot på nærmeste øje", "drive": "Single" },
+      "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot", "setSpotMetering"],
+      "quickGuide": ["Flyt personen til åben skygge, hvis det er muligt — det er den nemmeste løsning på hård middagssol.", "Er der ingen skygge: vend personen med solen bag eller til siden som modlys, og fyld ansigtet med bounce-blitzen.", "Spotmål på ansigtet, ikke den lyse baggrund, så du undgår helt mørke skygger under øjnene."],
+      "why": "Sol højt på himlen skaber hårde skygger under øjne og næse, og et kontrastspring kameraet ikke kan gengive i ét billede. Skygge eller fill-blitz udligner forskellen, i stedet for at forsøge at redde det bagefter."
     }
   ]
 }

@@ -12,7 +12,7 @@ const TAGS = {
 export async function readExifFromFile(file) {
   const buffer = await file.arrayBuffer();
   const view = new DataView(buffer);
-  const tiffOffset = findExifTiffOffset(view);
+  const tiffOffset = findTiffOffset(view);
   if (tiffOffset < 0) return {};
 
   const littleEndian = view.getUint16(tiffOffset, false) === 0x4949;
@@ -23,8 +23,24 @@ export async function readExifFromFile(file) {
   return formatExif({ ...tags, ...exifTags });
 }
 
-function findExifTiffOffset(view) {
-  if (view.getUint16(0) !== 0xffd8) return -1;
+function findTiffOffset(view) {
+  if (view.byteLength < 8) return -1;
+  if (view.getUint16(0) === 0xffd8) return findJpegExifOffset(view);
+  if (isTiffByteOrderMark(view, 0)) return 0;
+  return -1;
+}
+
+// Canon CR2 files open with a standard TIFF header (IFD0 holds Make/Model plus
+// an Exif SubIFD pointer, same tag numbers as JPEG Exif) before the CR2-specific
+// "CR" marker and raw image data, so the existing TIFF/IFD reader below can read
+// CR2 metadata directly once the bare TIFF header is detected here.
+function isTiffByteOrderMark(view, offset) {
+  const byteOrder = view.getUint16(offset);
+  if (byteOrder !== 0x4949 && byteOrder !== 0x4d4d) return false;
+  return view.getUint16(offset + 2, byteOrder === 0x4949) === 0x002a;
+}
+
+function findJpegExifOffset(view) {
   let offset = 2;
   while (offset < view.byteLength) {
     if (view.getUint8(offset) !== 0xff) return -1;
@@ -78,7 +94,7 @@ function readAscii(view, offset, length) {
 
 function formatExif(raw) {
   return {
-    camera: [raw.make, raw.model].filter(Boolean).join(" ").replace(/\s+/g, " ").trim(),
+    camera: [raw.model?.startsWith(raw.make) ? null : raw.make, raw.model].filter(Boolean).join(" ").replace(/\s+/g, " ").trim(),
     lens: raw.lensModel || "",
     focalLength: raw.focalLength ? `${Math.round(raw.focalLength)}mm` : "",
     aperture: raw.fNumber ? `f/${round(raw.fNumber)}` : "",
