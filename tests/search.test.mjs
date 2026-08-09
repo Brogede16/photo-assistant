@@ -297,7 +297,7 @@ assert.equal(eatingAnimalResults.results[0].item.id, "animal-eating-outdoors");
 assert.equal(eatingAnimalResults.results.some((result) => result.item.family === "astro"), false);
 const specificCowResults = searchProfiles("ko spiser langt væk mark", situations.profiles, taxonomy);
 assert.equal(specificCowResults.results.some((result) => result.item.id === "zoo-monkeys-overcast"), false);
-assert.equal(specificCowResults.results.some((result) => result.item.id === "wildlife-forest-low-light"), false);
+assert.equal(specificCowResults.results.some((result) => result.item.id === "wildlife-forest-far"), false);
 assert.deepEqual(specificCowResults.results.slice(0, 2).map((result) => result.item.id), ["animal-eating-outdoors", "cow-field-overcast"]);
 
 const nightclubResults = searchProfiles("mennesker danser på natklub", situations.profiles, taxonomy);
@@ -346,7 +346,7 @@ assert.equal(groupPortraitFlashRecommendation.settings.shutter, "1/100");
 assert.equal(groupPortraitFlashRecommendation.settings.iso, "800");
 
 const forestWildlifeLowLight = searchProfiles("rådyr i skov morgen skygge langt væk", situations.profiles, taxonomy);
-assert.equal(forestWildlifeLowLight.results[0].item.id, "wildlife-forest-low-light");
+assert.equal(forestWildlifeLowLight.results[0].item.id, "wildlife-forest-far");
 const forestWildlifeRecommendation = buildRecommendation(forestWildlifeLowLight.results[0].item, equipment, { classification: forestWildlifeLowLight.classification });
 assert.equal(forestWildlifeRecommendation.settings.mode, "Tv");
 assert.equal(forestWildlifeRecommendation.settings.shutter, "1/400");

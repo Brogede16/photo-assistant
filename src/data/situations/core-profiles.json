@@ -103,31 +103,6 @@
       "why": "Fugle i flugt kræver kort lukkertid og kontinuerlig fokus. Lidt ISO-støj er bedre end bevægelsesslør."
     },
     {
-      "id": "animal-running",
-      "title": "Dyr der løber",
-      "family": "dyr",
-      "priority": 84,
-      "subjects": ["animal", "deer", "fox", "bird"],
-      "conditions": { "movement": ["running"], "light": ["daylight", "overcast", "shade"], "distance": ["medium", "far"] },
-      "gearStrategy": { "preferredLensRoles": ["animals", "telephoto"] },
-      "baseSettings": {
-        "mode": "Tv",
-        "focalLength": "100-300mm",
-        "shutter": { "start": "1/1000", "range": ["1/800", "1/1600"] },
-        "aperture": { "start": "f/5.6", "strategy": "wide-open-at-tele" },
-        "iso": "Auto",
-        "focus": "AI Servo",
-        "drive": "High-speed continuous"
-      },
-      "cameraActions": ["setTvMode", "setShutter", "setIso", "setAiServo", "setHighSpeedContinuous", "setLensStabilizationOn"],
-      "quickGuide": [
-        "Brug 70-300mm, hvis dyret er på afstand.",
-        "Prioriter lukkertiden, når motivet bevæger sig.",
-        "Følg dyret jævnt med overkroppen."
-      ],
-      "why": "Løbende dyr kræver hurtig lukkertid. Auto ISO lader kameraet kompensere, når lyset skifter."
-    },
-    {
       "id": "people-indoor-low-light",
       "title": "Mennesker indendørs i lavt lys",
       "family": "mennesker",
@@ -243,7 +218,7 @@
     {
       "id": "zoo-monkeys-overcast",
       "title": "Aber i zoo, overskyet",
-      "family": "dyr",
+      "family": "dyreliv",
       "priority": 86,
       "subjects": ["monkey"],
       "conditions": { "movement": ["walking", "running"], "light": ["overcast", "shade"], "distance": ["medium", "far"] },
@@ -281,7 +256,7 @@
     {
       "id": "cow-field-overcast",
       "title": "Ko på mark",
-      "family": "dyr",
+      "family": "dyreliv",
       "priority": 87,
       "subjects": ["cow"],
       "conditions": { "movement": ["still", "walking"], "light": ["daylight", "overcast"], "distance": ["medium", "far"] },
@@ -471,7 +446,7 @@
     {
       "id": "animal-eating-outdoors",
       "title": "Dyr der spiser udenfor",
-      "family": "dyr",
+      "family": "dyreliv",
       "priority": 82,
       "subjects": ["animal"],
       "conditions": { "action": ["eating"], "movement": ["gentle-motion", "walking"], "place": ["outdoor", "field", "farm"], "light": ["daylight", "overcast"], "distance": ["near", "medium", "far"] },
@@ -484,7 +459,7 @@
     {
       "id": "animal-sleeping",
       "title": "Dyr der sover eller hviler",
-      "family": "dyr",
+      "family": "dyreliv",
       "priority": 80,
       "subjects": ["animal"],
       "conditions": { "action": ["sleeping"], "movement": ["still"], "place": ["home", "zoo", "outdoor"], "light": ["daylight", "indoor", "shade"], "distance": ["near", "medium"] },
@@ -545,21 +520,6 @@
       "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setAiServo"],
       "quickGuide": ["Uden flash: start ved 1/160, f/1.8 og Auto ISO, og accepter at noget bevægelse bliver en del af billedet.", "Eksponer efter ansigter i lyset, ikke det mørke lokale.", "Hvis bounce-flash er tilladt og loftet egner sig, kan du bruge 1/160-1/250, f/2-f/2.8 og ISO 800-1600."],
       "why": "Natklublys er svagt. 1/160 er et realistisk kompromis på 80D: kort nok til mange øjeblikke, men ikke så kort at ISO presses helt ud over det brugbare. Auto ISO betaler med støj; det skaber ikke ekstra lys."
-    },
-    {
-      "id": "wildlife-forest-low-light",
-      "title": "Vilde dyr i skov",
-      "family": "dyr",
-      "priority": 138,
-      "modePolicy": "fixed",
-      "requiredTags": ["shade"],
-      "subjects": ["animal", "deer", "fox", "bird"],
-      "conditions": { "place": ["forest", "outdoor"], "time": ["morning", "evening"], "movement": ["walking", "running"], "light": ["shade", "low-light"], "distance": ["far"] },
-      "gearStrategy": { "preferredLensRoles": ["animals", "birds", "telephoto"] },
-      "baseSettings": { "mode": "Tv", "focalLength": "200-300mm", "shutter": { "start": "1/400", "range": ["1/250", "1/800"] }, "aperture": "Auto", "iso": "Auto", "focus": "AI Servo", "drive": "High-speed continuous" },
-      "cameraActions": ["setTvMode", "setShutter", "setIso", "setAiServo", "setHighSpeedContinuous", "setLensStabilizationOn"],
-      "quickGuide": ["Brug 70-300mm og slå IS til.", "Start ved 1/400. Gå mod 1/250, hvis dyret står stille; gå kun mod 1/800, hvis der faktisk er lys nok.", "Tag korte serier og accepter, at nogle billeder ryger på bevægelse eller høj ISO."],
-      "why": "Skovlys morgen og aften er hårdt for 80D. 1/400 er et ærligt kompromis: bedre chance for brugbar ISO, men stadig kort nok til forsigtige bevægelser."
     },
     {
       "id": "insect-close-up",
@@ -693,6 +653,19 @@
       "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot"],
       "quickGuide": ["Mål lyset på himlen, ikke personen.", "Sørg for et genkendeligt omrids uden overlappende arme og ben.", "Brug negativ eksponeringskompensation hvis personen ikke bliver mørk nok."],
       "why": "Silhuetten er bevidst undereksponeret; himlens farver er hovedeksponeringen."
+    },
+    {
+      "id": "couple-group-silhouette-sunset",
+      "title": "Par eller gruppe som silhuet ved solnedgang",
+      "family": "portræt",
+      "priority": 76,
+      "subjects": ["couple", "group", "person"],
+      "conditions": { "style": ["silhouette"], "place": ["outdoor", "beach"], "time": ["evening", "twilight"], "light": ["backlight"], "distance": ["medium", "far"], "movement": ["still"] },
+      "gearStrategy": { "preferredLensRoles": ["wide", "people"] },
+      "baseSettings": { "mode": "Av", "focalLength": "18-35mm", "shutter": { "start": "Auto", "range": ["1/125", "1/1000"] }, "aperture": { "start": "f/8", "range": ["f/5.6", "f/11"] }, "iso": { "start": "100", "range": ["100", "400"] }, "focus": "One Shot på gruppens tydeligste kant", "drive": "Single" },
+      "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot"],
+      "quickGuide": ["Placér personerne med luft imellem sig, så kropsformerne ikke smelter sammen i silhuetten.", "Mål lyset på himlen, ikke personerne.", "Brug negativ eksponeringskompensation hvis personerne ikke bliver mørke nok."],
+      "why": "Ligesom ved en enkelt silhuet er himlens farver hovedeksponeringen. Med flere personer er der ekstra grund til at sikre afstand mellem kropsformerne, så omridset stadig er genkendeligt."
     },
     {
       "id": "concert-indoor-stage",
@@ -1138,6 +1111,19 @@
       "why": "Av f/2.8 giver en rolig baggrund, mens 1/250 som nedre mål beskytter mod kattens små, hurtige bevægelser."
     },
     {
+      "id": "pet-playing-indoor",
+      "title": "Kæledyr i leg indendørs",
+      "family": "kæledyr",
+      "priority": 94,
+      "subjects": ["dog", "cat"],
+      "conditions": { "action": ["playing"], "movement": ["active-motion", "running"], "place": ["inside", "home"], "light": ["indoor", "low-light", "window-light"], "distance": ["near", "medium"] },
+      "gearStrategy": { "preferredLensRoles": ["low-light", "people", "animals"] },
+      "baseSettings": { "mode": "Tv", "focalLength": "35mm", "shutter": { "start": "1/500", "range": ["1/320", "1/800"] }, "aperture": "Auto", "iso": "Auto", "focus": "AI Servo på kæledyrets hoved", "drive": "High-speed continuous" },
+      "cameraActions": ["setTvMode", "setShutter", "setIso", "setAiServo", "setHighSpeedContinuous"],
+      "quickGuide": ["Brug Sigma 18-35mm ved 35mm; den lysstærke optik er afgørende indendørs.", "Start ved 1/500 i Tv med Auto ISO, og hæv kun mod 1/800, hvis der faktisk er lys nok.", "Følg kæledyrets hoved med AI Servo og tag korte serier, når legen topper."],
+      "why": "Leg indendørs kombinerer hurtig bevægelse med svagt lys — en af de sværeste kombinationer med dette kit. Tv sikrer bevægelsen først, mens Auto ISO og Sigma-objektivets store blænde gør resten af arbejdet."
+    },
+    {
       "id": "child-playground-action",
       "title": "Barn i fart på legepladsen",
       "family": "børn",
@@ -1192,7 +1178,7 @@
     {
       "id": "waterfall-long-exposure",
       "title": "Vandfald med blødt vand uden ND",
-      "family": "landskab",
+      "family": "natur",
       "priority": 99,
       "subjects": ["waterfall", "landscape", "nature"],
       "conditions": { "movement": ["still"], "place": ["forest", "outdoor"], "time": ["morning", "twilight", "evening"], "light": ["shade", "low-light"], "distance": ["medium", "far"], "technique": ["long-exposure"] },
@@ -1205,7 +1191,7 @@
     {
       "id": "waterfall-long-exposure-nd",
       "title": "Vandfald med blødt vand med ND-filter",
-      "family": "landskab",
+      "family": "natur",
       "priority": 120,
       "requiredTags": ["nd-filter"],
       "subjects": ["waterfall", "landscape", "nature"],
@@ -2270,11 +2256,11 @@
       "isoPolicy": "fixed",
       "requiredTags": ["forest", "far"],
       "subjects": ["animal", "deer", "fox", "bird"],
-      "conditions": { "movement": ["still", "walking", "active-motion"], "place": ["forest", "outdoor"], "time": ["morning", "afternoon", "day-time"], "light": ["shade", "overcast", "low-light"], "distance": ["far"] },
-      "gearStrategy": { "preferredLensRoles": ["telephoto", "animals"] },
-      "baseSettings": { "mode": "Tv", "focalLength": "200-300mm", "shutter": { "start": "1/400", "range": ["1/250", "1/800"] }, "aperture": "Auto", "iso": "Auto", "focus": "AI Servo på hovedet", "drive": "Continuous low" },
-      "cameraActions": ["setTvMode", "setShutter", "setIso", "setAiServo", "setLensStabilizationOn"],
-      "quickGuide": ["Brug 70-300mm og find en fri linje mellem grene.", "Start ved 1/400 med Auto ISO.", "Hvis dyret står stille, kan 1/250 redde ISO. Hvis det løber, kræver 1/800 mere lys end skoven ofte giver."],
+      "conditions": { "movement": ["still", "walking", "running", "active-motion"], "place": ["forest", "outdoor"], "time": ["morning", "afternoon", "day-time", "evening"], "light": ["shade", "overcast", "low-light"], "distance": ["far"] },
+      "gearStrategy": { "preferredLensRoles": ["telephoto", "animals", "birds"] },
+      "baseSettings": { "mode": "Tv", "focalLength": "200-300mm", "shutter": { "start": "1/400", "range": ["1/250", "1/800"] }, "aperture": "Auto", "iso": "Auto", "focus": "AI Servo på hovedet", "drive": "High-speed continuous" },
+      "cameraActions": ["setTvMode", "setShutter", "setIso", "setAiServo", "setHighSpeedContinuous", "setLensStabilizationOn"],
+      "quickGuide": ["Brug 70-300mm og find en fri linje mellem grene; slå IS til.", "Start ved 1/400 med Auto ISO. Gå mod 1/250, hvis dyret står helt stille; kun mod 1/800, hvis skoven faktisk giver nok lys.", "Tag korte serier og accepter, at nogle billeder ryger på bevægelse eller høj ISO."],
       "why": "Skov sluger lys, og 80D bliver hurtigt presset ved 200-300mm. 1/400 er et ærligt startpunkt, hvor flere billeder kan bruges, selv om nogle stadig ryger."
     },
     {
