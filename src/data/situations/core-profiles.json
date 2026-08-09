@@ -103,6 +103,19 @@
       "why": "Fugle i flugt kræver kort lukkertid og kontinuerlig fokus. Lidt ISO-støj er bedre end bevægelsesslør."
     },
     {
+      "id": "bird-forest-backlight",
+      "title": "Fugl i skov i modlys",
+      "family": "fugle",
+      "priority": 92,
+      "subjects": ["bird"],
+      "conditions": { "place": ["forest", "garden", "outdoor"], "movement": ["still", "walking"], "light": ["backlight", "shade"], "distance": ["near", "medium", "far"] },
+      "gearStrategy": { "preferredLensRoles": ["telephoto", "birds", "animals"] },
+      "baseSettings": { "mode": "Av", "focalLength": "200-300mm", "shutter": { "start": "Auto", "range": ["1/500", "1/1600"] }, "aperture": { "start": "f/5.6", "range": ["f/5.6", "f/8"] }, "iso": "Auto", "focus": "AI Servo på fuglens hoved", "drive": "Continuous low" },
+      "cameraActions": ["setAvMode", "setAperture", "setIso", "setAiServo", "setLensStabilizationOn", "setSpotMetering"],
+      "quickGuide": ["Brug 70-300mm og find en vinkel, hvor lyset rammer fuglen bagfra eller skråt bagfra gennem løvet.", "Spotmål på fuglen, ikke det lyse løv bag den, ellers bliver fuglen en silhuet.", "Brug positiv eksponeringskompensation, hvis fuglen stadig bliver for mørk."],
+      "why": "Modlys i skoven giver flot kantlys i fjerdragten, men kameraets lysmåling bliver let narret af det lyse løv bag fuglen. Spotmåling direkte på fuglen holder detaljerne, i stedet for at gøre den til et sort omrids."
+    },
+    {
       "id": "people-indoor-low-light",
       "title": "Mennesker indendørs i lavt lys",
       "family": "mennesker",
@@ -221,7 +234,7 @@
       "family": "dyreliv",
       "priority": 86,
       "subjects": ["monkey"],
-      "conditions": { "movement": ["walking", "running"], "light": ["overcast", "shade"], "distance": ["medium", "far"] },
+      "conditions": { "place": ["zoo"], "movement": ["walking", "running"], "light": ["overcast", "shade"], "distance": ["medium", "far"] },
       "gearStrategy": { "preferredLensRoles": ["zoo", "animals", "telephoto"] },
       "baseSettings": {
         "mode": "Tv",
@@ -252,6 +265,31 @@
         ]
       },
       "why": "Overskyet zoo-lys er ofte blødt men svagt. 1/800 er et praktisk startpunkt, fordi aber skifter mellem stille og hurtig bevægelse."
+    },
+    {
+      "id": "zoo-savanna-animals",
+      "title": "Savannedyr i zoo",
+      "family": "dyreliv",
+      "priority": 88,
+      "subjects": ["giraffe", "zebra", "lion", "elephant"],
+      "conditions": { "place": ["zoo", "savanna", "outdoor"], "movement": ["still", "walking", "active-motion"], "light": ["daylight", "overcast"], "distance": ["medium", "far"] },
+      "gearStrategy": { "preferredLensRoles": ["zoo", "animals", "telephoto"] },
+      "baseSettings": { "mode": "Tv", "focalLength": "150-300mm", "shutter": { "start": "1/800", "range": ["1/500", "1/1250"] }, "aperture": "Auto", "iso": "Auto", "focus": "AI Servo på hoved eller overkrop", "drive": "Continuous low" },
+      "cameraActions": ["setTvMode", "setShutter", "setIso", "setAiServo", "setLensStabilizationOn"],
+      "quickGuide": ["Brug 70-300mm og find en vinkel uden hegn, netting eller glas mellem dig og dyret.", "Start ved 1/800 med Auto ISO; store dyr virker rolige, men kan rejse sig eller gå pludseligt.", "Fokusér på hoved eller øjne og tag korte serier, når dyret bevæger sig."],
+      "fieldGuide": {
+        "before": [
+          "Tjek om hegn, net eller glas er i vejen, og find en åbning eller vinkel udenom.",
+          "Slå IS til på 70-300mm.",
+          "Brug Auto ISO, da savanneanlæg ofte har blandet lys mellem sol og skygge."
+        ],
+        "during": [
+          "Hold fokus på hoved eller øjne, selv når dyret står stille.",
+          "Vent på et øjeblik hvor dyret vender sig mod lyset.",
+          "Tag korte serier, hvis dyret rejser sig, går eller løfter hovedet."
+        ]
+      },
+      "why": "Store savannedyr står ofte bag hegn eller på god afstand i zoo. Et teleobjektiv giver et rent udsnit uden forhindringer, og 1/800 er hurtigt nok til, at en pludselig bevægelse ikke bliver sløret."
     },
     {
       "id": "cow-field-overcast",
