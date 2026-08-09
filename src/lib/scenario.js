@@ -65,7 +65,11 @@ function canAdaptMode(profile) {
 export function preferredRolesForScenario(profile, classification) {
   const roles = [...(profile.gearStrategy?.preferredLensRoles || [])];
   const ids = new Set((classification?.matches || []).map((match) => match.id));
-  if (ids.has("far")) roles.unshift("telephoto");
+  // "far" is ambiguous: it means "zoom in on a distant subject" for wildlife/events,
+  // but "fit the whole distant scene in" for landscape/astro/architecture. A profile
+  // that already declares its own "wide" preference has resolved that ambiguity
+  // itself, so the generic distance-based nudge toward telephoto shouldn't override it.
+  if (ids.has("far") && !(profile.gearStrategy?.preferredLensRoles || []).includes("wide")) roles.unshift("telephoto");
   if (ids.has("near")) roles.unshift("people", "walkaround");
   if (ids.has("close-up") || ids.has("macro")) roles.unshift("close-up");
   if (ids.has("nightclub") || ids.has("indoor") || ids.has("low-light")) roles.unshift("low-light");
