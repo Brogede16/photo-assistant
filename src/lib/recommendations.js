@@ -27,6 +27,7 @@ export function buildRecommendation(profile, equipment, context = {}) {
     shutter: settings.shutter?.start || settings.shutter || "Auto",
     aperture: settings.aperture?.start || settings.aperture || "Auto",
     iso: settings.iso?.start || settings.iso || "Auto",
+    exposureCompensation: settings.exposureCompensation?.start || settings.exposureCompensation || undefined,
     focus: settings.focus || "Auto",
     drive: settings.drive || "Single",
     ...pickUsablePresetSettings(presetSettings)
@@ -136,6 +137,14 @@ export function explainProblem(problemId, recommendation) {
         "Støj kommer ofte af høj ISO.",
         "Prøv mere lys, større blænde eller længere lukkertid, hvis motivet tillader det.",
         "Accepter hellere lidt støj end et sløret billede ved bevægelse."
+      ]
+    },
+    "wrong-colors": {
+      title: "Forkerte farver",
+      advice: [
+        "Skyd RAW eller RAW+JPEG, hvis du ikke allerede gør — så kan hvidbalancen rettes bagefter uden tab af kvalitet.",
+        "Skift hvidbalance fra Auto til den lyskilde, der faktisk er til stede, fx Wolfram/kunstlys ved stearinlys eller bål.",
+        "Blandet lys (fx vindueslys og loftslampe samtidig) er svært at rette fuldt ud; prøv at slukke den ene lyskilde."
       ]
     }
   };

@@ -307,7 +307,9 @@ function lessonProcedureIds(lessonId) {
     iso: ["setIso"],
     focus: ["setAiServo", "setOneShot", "setLensManualFocus"],
     distance: ["setLensStabilizationOn", "setLensManualFocus"],
-    modes: ["setProgramMode", "setAvMode", "setTvMode", "setManualMode", "setBulbMode"]
+    modes: ["setProgramMode", "setAvMode", "setTvMode", "setManualMode", "setBulbMode"],
+    metering: ["setSpotMetering"],
+    "long-exposure": ["setBulbMode", "setShutter"]
   }[lessonId] || ["setManualMode"];
 }
 
@@ -346,6 +348,7 @@ function renderResultCard(result, index) {
         ${renderSettingPill("shutter", recommendation.settings.shutter, result.item.id)}
         ${renderSettingPill("aperture", recommendation.settings.aperture, result.item.id)}
         ${renderSettingPill("iso", recommendation.settings.iso, result.item.id)}
+        ${recommendation.settings.exposureCompensation ? renderSettingPill("exposureCompensation", recommendation.settings.exposureCompensation, result.item.id) : ""}
       </div>
       <div class="setting-explanation" aria-live="polite"></div>
       ${recommendation.exposurePlan ? `<p class="exposure-summary">${recommendation.exposurePlan.perFrame} pr. billede · ${recommendation.exposurePlan.total} samlet</p>` : ""}
@@ -427,6 +430,7 @@ function openResult(profileId) {
         ${renderSettingPill("shutter", recommendation.settings.shutter, profile.id)}
         ${renderSettingPill("aperture", recommendation.settings.aperture, profile.id)}
         ${renderSettingPill("iso", recommendation.settings.iso, profile.id)}
+        ${recommendation.settings.exposureCompensation ? renderSettingPill("exposureCompensation", recommendation.settings.exposureCompensation, profile.id) : ""}
       </div>
       <div class="setting-explanation detail-explanation" aria-live="polite"></div>
       <div class="settings-strip technique-strip">
@@ -453,6 +457,7 @@ function openResult(profileId) {
         <button data-problem="too-bright">For lyst</button>
         <button data-problem="blurry">Uskarpt</button>
         <button data-problem="noise">Grynet</button>
+        <button data-problem="wrong-colors">Forkerte farver</button>
       </div>
       <div id="problem-output"></div>
       <button data-save-official="${profile.id}">Gem som mit preset</button>
@@ -767,6 +772,7 @@ function renderSettingExplanation(key, recommendation, fallbackValue = "") {
     shutter: explainShutter(value, recommendation),
     aperture: explainAperture(value, recommendation),
     iso: explainIso(value, recommendation),
+    exposureCompensation: explainExposureCompensation(value, recommendation),
     focus: explainFocus(value, recommendation),
     drive: explainDrive(value, recommendation),
     flash: "Flash er kun med, når ekstra lys kan hjælpe uden at ødelægge stemningen. Indendørs betyder det ofte bounce mod loft eller væg, ikke direkte flash i ansigtet."
@@ -831,6 +837,13 @@ function explainIso(value, recommendation) {
   return `ISO ${numeric} er et roligt kompromis: lidt mere hjælp end ISO 100, men stadig uden at presse filen så hårdt som ISO 3200.`;
 }
 
+function explainExposureCompensation(value, recommendation) {
+  const text = String(value);
+  const isNegative = text.trim().startsWith("-");
+  if (isNegative) return `${value} trin gør billedet mørkere end kameraets lysmåler foreslår. Det er nødvendigt her, fordi en stor lys flade (himmel, hvid baggrund) narrer måleren til at foreslå for meget lys, hvilket ellers ville gøre det egentlige motiv for lyst eller helt udviske en silhuet.`;
+  return `${value} trin gør billedet lysere end kameraets lysmåler foreslår. Det er nødvendigt her, fordi en stor mørk eller hvid flade (skygge, sne, modlys) narrer måleren til at foreslå for lidt lys, hvilket ellers ville gøre motivet for mørkt eller gråligt.`;
+}
+
 function explainFocus(value, recommendation) {
   const text = String(value).toLowerCase();
   if (recommendation.profile.family === "astro") return "Ved stjerner er autofokus upålidelig. Sæt objektivet til MF, brug Live View, forstør en klar stjerne og drej fokusringen langsomt, til stjernen er mindst mulig.";
@@ -887,6 +900,7 @@ function settingLabel(key) {
     shutter: "Lukkertid",
     aperture: "Blænde",
     iso: "ISO",
+    exposureCompensation: "Eksponeringskompensation",
     focus: "Fokus",
     drive: "Optagelse",
     flash: "Flash"

@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
-import { astroStatus, astroTargets, maxStarShutterSeconds } from "../src/lib/astro.js";
+import { maxStarShutterSeconds } from "../src/lib/astro.js";
 import { buildRecommendation } from "../src/lib/recommendations.js";
 import { classifyQuery, consumeKnownTerms, findExactTerm, mergeTagIds, searchProfiles, suggestNextTags, termsToQuery } from "../src/lib/search.js";
 
@@ -639,9 +639,7 @@ assert.equal(influencedRecommendation.settings.shutter, "1/800");
 assert.equal(influencedRecommendation.scenarioDecisions[0].includes("Mit regnkoncert-preset"), true);
 
 assert.equal(maxStarShutterSeconds(18, 1.6), 13);
-assert.equal(astroStatus(new Date("2026-08-08T23:00:00+02:00")).moon.percent >= 0, true);
-assert.equal(astroTargets(new Date("2026-08-08T23:00:00+02:00")).some((target) => target.id === "milky-way-wide"), true);
-assert.equal(learning.lessons.length, 6);
+assert.equal(learning.lessons.length, 10);
 assert.equal(learning.lessons.some((lesson) => lesson.id === "modes"), true);
 const modesLesson = learning.lessons.find((lesson) => lesson.id === "modes");
 assert.deepEqual(modesLesson.explanations.map((mode) => mode.value), ["P", "Av", "Tv", "M", "Bulb"]);

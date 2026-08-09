@@ -210,6 +210,7 @@
     { "id": "too-dark", "type": "problem", "label": "For mørkt", "synonyms": ["for mørkt", "for moerkt", "undereksponeret"] },
     { "id": "too-bright", "type": "problem", "label": "For lyst", "synonyms": ["for lyst", "overeksponeret", "hvid måne", "hvid maane"] },
     { "id": "noise", "type": "problem", "label": "For meget støj", "synonyms": ["grynet", "støj", "stoej", "iso støj", "iso stoej"] },
+    { "id": "wrong-colors", "type": "problem", "label": "Forkerte farver", "synonyms": ["forkerte farver", "forkert hvidbalance", "gul tone", "blå tone", "blaa tone", "orange billede"] },
     { "id": "ai-servo", "type": "technique", "label": "AI Servo", "synonyms": ["ai servo", "servo", "kontinuerlig autofocus", "tracking"] },
     { "id": "burst", "type": "technique", "label": "Serieoptagelse", "synonyms": ["burst", "serie", "serieoptagelse", "high speed continuous"] },
     { "id": "microphone", "type": "technique", "label": "Ved mikrofonen", "synonyms": ["mikrofon", "mikrofonen", "ved mikrofonen", "med mikrofon"], "related": ["singer", "singing", "spotlight", "stage"] },

@@ -110,7 +110,7 @@
       "subjects": ["bird"],
       "conditions": { "place": ["forest", "garden", "outdoor"], "movement": ["still", "walking"], "light": ["backlight", "shade"], "distance": ["near", "medium", "far"] },
       "gearStrategy": { "preferredLensRoles": ["telephoto", "birds", "animals"] },
-      "baseSettings": { "mode": "Av", "focalLength": "200-300mm", "shutter": { "start": "Auto", "range": ["1/500", "1/1600"] }, "aperture": { "start": "f/5.6", "range": ["f/5.6", "f/8"] }, "iso": "Auto", "focus": "AI Servo på fuglens hoved", "drive": "Continuous low" },
+      "baseSettings": { "mode": "Av", "focalLength": "200-300mm", "shutter": { "start": "Auto", "range": ["1/500", "1/1600"] }, "aperture": { "start": "f/5.6", "range": ["f/5.6", "f/8"] }, "iso": "Auto", "exposureCompensation": "+1 (efter behov)", "focus": "AI Servo på fuglens hoved", "drive": "Continuous low" },
       "cameraActions": ["setAvMode", "setAperture", "setIso", "setAiServo", "setLensStabilizationOn", "setSpotMetering"],
       "quickGuide": ["Brug 70-300mm og find en vinkel, hvor lyset rammer fuglen bagfra eller skråt bagfra gennem løvet.", "Spotmål på fuglen, ikke det lyse løv bag den, ellers bliver fuglen en silhuet.", "Brug positiv eksponeringskompensation, hvis fuglen stadig bliver for mørk."],
       "why": "Modlys i skoven giver flot kantlys i fjerdragten, men kameraets lysmåling bliver let narret af det lyse løv bag fuglen. Spotmåling direkte på fuglen holder detaljerne, i stedet for at gøre den til et sort omrids."
@@ -687,7 +687,7 @@
       "subjects": ["person", "sunset"],
       "conditions": { "style": ["portrait", "single-portrait", "silhouette"], "place": ["outdoor", "beach"], "time": ["evening", "twilight"], "light": ["backlight"], "distance": ["medium", "far"], "movement": ["still"] },
       "gearStrategy": { "preferredLensRoles": ["wide", "people"] },
-      "baseSettings": { "mode": "Av", "focalLength": "18-35mm", "shutter": { "start": "Auto", "range": ["1/125", "1/1000"] }, "aperture": { "start": "f/8", "range": ["f/5.6", "f/11"] }, "iso": { "start": "100", "range": ["100", "400"] }, "focus": "One Shot på silhuettens kant", "drive": "Single" },
+      "baseSettings": { "mode": "Av", "focalLength": "18-35mm", "shutter": { "start": "Auto", "range": ["1/125", "1/1000"] }, "aperture": { "start": "f/8", "range": ["f/5.6", "f/11"] }, "iso": { "start": "100", "range": ["100", "400"] }, "exposureCompensation": "-1 til -2", "focus": "One Shot på silhuettens kant", "drive": "Single" },
       "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot"],
       "quickGuide": ["Mål lyset på himlen, ikke personen.", "Sørg for et genkendeligt omrids uden overlappende arme og ben.", "Brug negativ eksponeringskompensation hvis personen ikke bliver mørk nok."],
       "why": "Silhuetten er bevidst undereksponeret; himlens farver er hovedeksponeringen."
@@ -700,7 +700,7 @@
       "subjects": ["couple", "group", "person", "sunset"],
       "conditions": { "style": ["silhouette"], "place": ["outdoor", "beach"], "time": ["evening", "twilight"], "light": ["backlight"], "distance": ["medium", "far"], "movement": ["still"] },
       "gearStrategy": { "preferredLensRoles": ["wide", "people"] },
-      "baseSettings": { "mode": "Av", "focalLength": "18-35mm", "shutter": { "start": "Auto", "range": ["1/125", "1/1000"] }, "aperture": { "start": "f/8", "range": ["f/5.6", "f/11"] }, "iso": { "start": "100", "range": ["100", "400"] }, "focus": "One Shot på gruppens tydeligste kant", "drive": "Single" },
+      "baseSettings": { "mode": "Av", "focalLength": "18-35mm", "shutter": { "start": "Auto", "range": ["1/125", "1/1000"] }, "aperture": { "start": "f/8", "range": ["f/5.6", "f/11"] }, "iso": { "start": "100", "range": ["100", "400"] }, "exposureCompensation": "-1 til -2", "focus": "One Shot på gruppens tydeligste kant", "drive": "Single" },
       "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot"],
       "quickGuide": ["Placér personerne med luft imellem sig, så kropsformerne ikke smelter sammen i silhuetten.", "Mål lyset på himlen, ikke personerne.", "Brug negativ eksponeringskompensation hvis personerne ikke bliver mørke nok."],
       "why": "Ligesom ved en enkelt silhuet er himlens farver hovedeksponeringen. Med flere personer er der ekstra grund til at sikre afstand mellem kropsformerne, så omridset stadig er genkendeligt."
@@ -891,7 +891,7 @@
       "subjects": ["person"],
       "conditions": { "style": ["portrait", "single-portrait", "dark-background"], "movement": ["still"], "light": ["window-light", "stage-light", "low-light"], "distance": ["near"] },
       "gearStrategy": { "preferredLensRoles": ["low-light", "people"], "optional": ["flash"] },
-      "baseSettings": { "mode": "Av", "focalLength": "35mm", "shutter": "Auto", "aperture": { "start": "f/2.8", "range": ["f/1.8", "f/4"] }, "iso": "Auto", "focus": "One Shot på øjet", "drive": "Single" },
+      "baseSettings": { "mode": "Av", "focalLength": "35mm", "shutter": "Auto", "aperture": { "start": "f/2.8", "range": ["f/1.8", "f/4"] }, "iso": "Auto", "exposureCompensation": "-1 (efter behov)", "focus": "One Shot på øjet", "drive": "Single" },
       "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot"],
       "quickGuide": ["Brug Sigma 18-35mm ved 35mm og placér personen i lys, med baggrunden uden for lyset.", "Eksponer efter huden, ikke den mørke baggrund.", "Brug negativ eksponeringskompensation hvis kameraet gør ansigtet for lyst."],
       "why": "Low-key-looket kommer fra forskellen mellem lyset på personen og baggrunden, ikke fra at gøre hele billedet mørkt."
@@ -904,7 +904,7 @@
       "subjects": ["person"],
       "conditions": { "style": ["portrait", "single-portrait", "bright-background"], "movement": ["still"], "light": ["window-light", "daylight", "backlight"], "distance": ["near"] },
       "gearStrategy": { "preferredLensRoles": ["people", "low-light"], "optional": ["flash"] },
-      "baseSettings": { "mode": "Av", "focalLength": "35mm", "shutter": "Auto", "aperture": { "start": "f/4", "range": ["f/2.8", "f/5.6"] }, "iso": "Auto", "focus": "One Shot på øjet", "drive": "Single" },
+      "baseSettings": { "mode": "Av", "focalLength": "35mm", "shutter": "Auto", "aperture": { "start": "f/4", "range": ["f/2.8", "f/5.6"] }, "iso": "Auto", "exposureCompensation": "+1 (efter behov)", "focus": "One Shot på øjet", "drive": "Single" },
       "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot"],
       "quickGuide": ["Brug Sigma 18-35mm ved 35mm og eksponer efter ansigtet.", "Kontrollér at baggrunden ikke mister alle detaljer; brug positiv eksponeringskompensation hvis kameraet gør ansigtet gråt.", "Hold personen lidt væk fra den hvide flade for færre skygger."],
       "why": "En meget lys baggrund kan snyde lysmålingen til at gøre ansigtet for mørkt."
@@ -1287,7 +1287,7 @@
       "subjects": ["tree", "nature"],
       "conditions": { "place": ["field", "meadow", "outdoor"], "time": ["evening", "twilight"], "light": ["backlight", "daylight"], "distance": ["far"] },
       "gearStrategy": { "preferredLensRoles": ["walkaround", "wide", "telephoto"] },
-      "baseSettings": { "mode": "Av", "focalLength": "35-55mm", "shutter": { "start": "1/250", "range": ["1/160", "1/500"] }, "aperture": { "start": "f/8", "range": ["f/5.6", "f/11"] }, "iso": "Auto", "focus": "One Shot på træets stamme eller krone", "drive": "Single" },
+      "baseSettings": { "mode": "Av", "focalLength": "35-55mm", "shutter": { "start": "1/250", "range": ["1/160", "1/500"] }, "aperture": { "start": "f/8", "range": ["f/5.6", "f/11"] }, "iso": "Auto", "exposureCompensation": "-1 (efter behov)", "focus": "One Shot på træets stamme eller krone", "drive": "Single" },
       "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot", "setLensStabilizationOn"],
       "quickGuide": ["Flyt dig, til stammen eller kronen står rent mod himlen.", "Brug 18-55mm ved 35-55mm og start ved f/8.", "Se histogrammet; bliver himlen helt hvid, brug negativ eksponeringskompensation."],
       "why": "Av f/8 holder træets form tydelig, mens den valgte vinkel og eksponeringskontrol beskytter højlyset omkring solen."
@@ -2373,9 +2373,9 @@
       "subjects": ["landscape", "nature"],
       "conditions": { "weather": ["snow"], "place": ["outdoor", "countryside", "field", "garden", "street"], "light": ["daylight", "bright-sun", "overcast"], "movement": ["still"] },
       "gearStrategy": { "preferredLensRoles": ["wide", "walkaround"] },
-      "baseSettings": { "mode": "Av", "focalLength": "18-35mm", "shutter": "Auto", "aperture": { "start": "f/8", "range": ["f/5.6", "f/11"] }, "iso": { "start": "100", "range": ["100", "400"] }, "focus": "One Shot", "drive": "Single" },
+      "baseSettings": { "mode": "Av", "focalLength": "18-35mm", "shutter": "Auto", "aperture": { "start": "f/8", "range": ["f/5.6", "f/11"] }, "iso": { "start": "100", "range": ["100", "400"] }, "exposureCompensation": { "start": "+1.5", "range": ["+1", "+2"] }, "focus": "One Shot", "drive": "Single" },
       "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot"],
-      "quickGuide": ["Brug +1 til +1,5 trins positiv eksponeringskompensation; ellers gør lysmåleren den hvide sne grå.", "Start i Av ved f/8 for skarphed i hele landskabet.", "Tjek histogrammet, så sneen ikke mister al struktur i det helt hvide."],
+      "quickGuide": ["Brug +1 til +2 trins positiv eksponeringskompensation; ellers gør lysmåleren den hvide sne grå.", "Start i Av ved f/8 for skarphed i hele landskabet.", "Tjek histogrammet, så sneen ikke mister al struktur i det helt hvide."],
       "why": "Sne fylder rammen med en lys, hvid flade, som kameraets lysmåler fejlagtigt tolker som for lyst og derfor gør for mørk. Positiv eksponeringskompensation retter fejlen; den mindre blændeåbning holder både sne og motiv skarpt."
     },
     {

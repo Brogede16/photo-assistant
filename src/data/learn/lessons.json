@@ -116,6 +116,75 @@
       "answers": ["P · Programautomatik", "Av · Blændeprioritet", "Tv · Lukkertidsprioritet"],
       "correct": 2,
       "feedback": "Tv betyder Time value. Du låser lukkertiden på 1/1000, mens kameraet vælger blænden."
+    },
+    {
+      "id": "metering",
+      "label": "Lysmåling",
+      "title": "Vælg hvor kameraet måler lyset",
+      "intro": "Kameraets lysmåler forsøger at gøre alt til middelgråt. Det virker de fleste steder, men snyder sig selv ved sne, silhuetter og stærkt modlys. At vide, hvor og hvordan der måles, er nøglen til at rette det.",
+      "scale": [
+        { "value": "Matrix/evaluerende", "label": "Standard", "effect": "Måler hele billedet, godt til jævnt lys" },
+        { "value": "Spot", "label": "Præcis", "effect": "Måler kun et lille punkt, godt til modlys og scenelys" },
+        { "value": "Centervægtet", "label": "Midten", "effect": "Vægter midten mest, en mellemting" }
+      ],
+      "rule": "Når baggrunden er meget lysere eller mørkere end motivet, brug spotmåling direkte på motivet — ellers regner kameraet baggrunden med og gør motivet forkert eksponeret. Kombinér med eksponeringskompensation, når selve motivet også er meget lyst eller mørkt, som sne eller en sort baggrund.",
+      "exercise": "Fotografér en person foran et vindue med hhv. matrix- og spotmåling. Sammenlign hvor meget mørkere ansigtet bliver med matrixmåling.",
+      "question": "Du fotograferer en fugl i modlys, hvor himlen bag er meget lys. Hvad gør du?",
+      "answers": ["Brug matrixmåling og stol på kameraet", "Spotmål direkte på fuglen", "Skift til lavere ISO"],
+      "correct": 1,
+      "feedback": "Spotmåling på fuglen forhindrer den lyse himmel i at narre kameraet til at gøre fuglen for mørk."
+    },
+    {
+      "id": "white-balance",
+      "label": "Hvidbalance",
+      "title": "Gør hvidt til hvidt igen",
+      "intro": "Hvidbalance retter farven på lyset, så hvide ting ser hvide ud, uanset om lyset er varmt stearinlysskær eller koldt skyggeblåt. Auto hvidbalance rammer rigtigt det meste af tiden, men kan snydes af ensfarvet lys som bål, stearinlys eller natklub-scenelys.",
+      "scale": [
+        { "value": "Auto (AWB)", "label": "De fleste situationer", "effect": "Kameraet gætter ud fra scenen" },
+        { "value": "Dagslys", "label": "Solskin udenfor", "effect": "Fast, neutral reference" },
+        { "value": "Skygge/overskyet", "label": "Blåligt lys", "effect": "Tilføjer varme for at neutralisere" },
+        { "value": "Kunstlys/Wolfram", "label": "Glødepærer, bål, stearinlys", "effect": "Fjerner den kraftige orange tone" }
+      ],
+      "rule": "Skyd RAW, når lyset er svært — bål, stearinlys, blandet kunstlys — så kan hvidbalancen rettes præcist bagefter uden tab af kvalitet. JPEG låser hvidbalancen fast i billedet med det samme.",
+      "exercise": "Fotografér samme motiv i Auto, Dagslys og Skygge hvidbalance i blandet indendørslys. Se hvor forskellig farvetonen bliver.",
+      "question": "Du fotograferer ved stearinlys, og billederne bliver meget orange. Hvad er den mest fleksible løsning?",
+      "answers": ["Skift til Dagslys hvidbalance", "Skyd RAW og ret hvidbalancen bagefter", "Brug altid Auto og accepter resultatet"],
+      "correct": 1,
+      "feedback": "RAW gemmer alle sensordata, så hvidbalancen kan justeres frit i efterbehandlingen uden at ødelægge billedet."
+    },
+    {
+      "id": "raw-workflow",
+      "label": "RAW eller JPEG",
+      "title": "Vælg dit filformat",
+      "intro": "EOS 80D kan gemme RAW, JPEG eller begge på én gang. RAW gemmer alle sensordata og giver mest frihed bagefter; JPEG er hurtigere at dele, men låser valg som hvidbalance og kontrast med det samme.",
+      "scale": [
+        { "value": "JPEG", "label": "Hurtigt og delbart", "effect": "Mindre filer, straks klar til deling" },
+        { "value": "RAW", "label": "Mest kontrol", "effect": "Størst mulig kvalitet, kræver efterbehandling" },
+        { "value": "RAW+JPEG", "label": "Bedst af begge", "effect": "Kameraets standard — JPEG til hurtigt kig, RAW som sikkerhed" }
+      ],
+      "rule": "Brug RAW (eller RAW+JPEG), når lyset er svært, hvidbalancen usikker, eller billedet er værd at arbejde videre med — fx astro, koncert og modlys. JPEG alene er fint til hverdagsbilleder, hvor hurtighed betyder mere end den sidste kvalitet.",
+      "exercise": "Skyd samme motiv i RAW+JPEG. Prøv at rette et forkert eksponeret eller forkert hvidbalanceret billede fra hver fil, og se hvor meget mere RAW-filen tåler.",
+      "question": "Appen kan importere EXIF fra en billedfil. Hvilke formater læser den direkte?",
+      "answers": ["Kun RAW (CR2)", "JPEG, TIFF og Canon CR2", "Kun JPEG"],
+      "correct": 1,
+      "feedback": "Appen læser JPEG, TIFF og Canon CR2 (RAW fra EOS 80D) direkte. Skyder du RAW+JPEG, kan du importere JPEG-filen med samme EXIF-data."
+    },
+    {
+      "id": "long-exposure",
+      "label": "Lang eksponering",
+      "title": "Når lukkeren skal stå åben længe",
+      "intro": "Lange lukkertider tegner bevægelse — blødt vand, lysspor, stjerner eller skyer — i stedet for at fryse den. Det kræver et stativ og ofte et ND-filter for at kunne bruge lange tider, selv i dagslys.",
+      "scale": [
+        { "value": "1/4-2s", "label": "Blødt vand", "effect": "Vandfald og bølger uden ND i svagt lys" },
+        { "value": "4-30s", "label": "Lysspor og stjerner", "effect": "Biler, karruseller og stjernehimlen" },
+        { "value": "Flere minutter", "label": "Stjernespor, skyer i bevægelse", "effect": "Kræver ND-filter i dagslys eller Bulb om natten" }
+      ],
+      "rule": "Uden ND-filter er lange lukkertider kun mulige, når lyset i forvejen er svagt (skygge, skumring, nat). Skal du bruge lange tider i klart dagslys — fx for at udjævne bølger eller skyer midt på dagen — kræver det et ND-filter for at undgå et helt overeksponeret billede.",
+      "exercise": "Fotografér rindende vand ved 1/125, 1/4 sekund og 2 sekunder fra samme stativ-position. Sammenlign hvor blødt vandet bliver.",
+      "question": "Du vil udjævne bølger ved stranden midt på en solrig dag. Hvad skal du bruge?",
+      "answers": ["Bare en langsommere lukkertid i Av", "Et ND-filter for at kunne bruge lang lukkertid uden overeksponering", "Højere ISO"],
+      "correct": 1,
+      "feedback": "Uden ND-filter bliver billedet helt overeksponeret ved lange lukkertider i stærkt dagslys. Filtret reducerer lyset, så du kan bruge sekunder i stedet for brøkdele."
     }
   ]
 }
