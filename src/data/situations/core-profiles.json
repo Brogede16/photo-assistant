@@ -3040,6 +3040,206 @@
       "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot", "setLensStabilizationOn"],
       "quickGuide": ["Brug 70-300mm og bliv på god afstand, så situationen forbliver naturlig og uopstillet.", "Start ved f/8 — modsat actionbilleder handler det her om at holde nok af scenen skarp, ikke kun ét ansigt.", "Fokusér på det nærmeste ansigt og vent på et roligt, ægte øjeblik frem for at forudse bevægelse."],
       "why": "Candid-billeder på afstand handler ofte om stemning og sammenhæng snarere end at fryse hurtig bevægelse. En lidt lukket blænde holder mere af scenen skarp, mens Auto-lukkertid er hurtig nok til at undgå rystelser ved lang brændvidde."
+    },
+    {
+      "id": "portrait-panning-street",
+      "title": "Portræt med panorering",
+      "family": "portræt",
+      "priority": 85,
+      "subjects": ["person"],
+      "conditions": {"style": ["portrait", "single-portrait"], "movement": ["walking", "running"], "place": ["outdoor", "street", "city"], "light": ["daylight", "overcast"], "technique": ["panning"], "distance": ["medium"]},
+      "gearStrategy": {"preferredLensRoles": ["people", "walkaround"]},
+      "baseSettings": {
+        "mode": "Tv",
+        "focalLength": "35mm",
+        "shutter": {"start": "1/60", "range": ["1/30", "1/125"]},
+        "aperture": "Auto",
+        "iso": {"start": "100", "range": ["100", "400"]},
+        "focus": "AI Servo",
+        "drive": "Continuous low"
+      },
+      "cameraActions": ["setTvMode", "setShutter", "setIso", "setAiServo", "setLensStabilizationOn"],
+      "quickGuide": [
+        "Stå sikkert, og drej hele overkroppen i takt med personen, mens du følger med i søgeren.",
+        "Start ved 1/60 sekund; jo langsommere lukkertid, jo mere flyder baggrunden, men jo sværere er panoreringen at holde jævn.",
+        "Tag korte serier — panorering kræver mange forsøg, før én er skarp nok på ansigtet."
+      ],
+      "why": "En bevidst langsom lukkertid gør baggrunden til bløde striber, mens en jævn, følgende bevægelse holder personen skarp. Det er samme teknik som ved bilpanorering, men med et roligere starttempo, fordi et gående eller løbende menneske bevæger sig langsommere end en bil."
+    },
+    {
+      "id": "portrait-motion-crowd-flash",
+      "title": "Portræt foran en travl gågade om aftenen",
+      "family": "portræt",
+      "priority": 84,
+      "subjects": ["person"],
+      "conditions": {"style": ["portrait", "single-portrait", "environmental-portrait"], "movement": ["still"], "place": ["outdoor", "street", "city"], "time": ["evening", "night-time"], "light": ["night", "low-light"], "technique": ["long-exposure"], "distance": ["near", "medium"]},
+      "gearStrategy": {"preferredLensRoles": ["people", "wide", "low-light"], "optional": ["flash"]},
+      "baseSettings": {
+        "mode": "M",
+        "focalLength": "24-35mm",
+        "shutter": {"start": "1/15", "range": ["1/8", "1/30"]},
+        "aperture": {"start": "f/5.6", "range": ["f/4", "f/8"]},
+        "iso": {"start": "800", "range": ["400", "1600"]},
+        "focus": "One Shot på det nærmeste øje",
+        "drive": "Single"
+      },
+      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setOneShot"],
+      "quickGuide": [
+        "Placér personen i forgrunden, mens gadelivet passerer bag ved.",
+        "Sæt Speedlite 430EX II til fyldlys, og hold personen helt stille under eksponeringen.",
+        "1/15 sekund er langsomt nok til at sløre gående mennesker, men blitzen fryser stadig ansigtet."
+      ],
+      "why": "Blitzens korte lysglimt fryser personen, selvom lukkertiden er for langsom til at fryse den forbipasserende folkemængde. Resultatet er et skarpt portræt med et levende, sløret byliv omkring. Har kameraet 2nd curtain sync slået til i menuen, lander blitzglimtet i slutningen af eksponeringen, så eventuelle bevægelsesspor trækker naturligt bagud fra personen i stedet for foran."
+    },
+    {
+      "id": "portrait-light-trails-tripod",
+      "title": "Portræt foran bilernes lysspor om natten",
+      "family": "portræt",
+      "priority": 84,
+      "subjects": ["person", "light-trails"],
+      "conditions": {"style": ["portrait", "single-portrait"], "movement": ["still"], "place": ["outdoor", "street", "city"], "time": ["evening", "night-time"], "light": ["night", "low-light"], "technique": ["long-exposure"], "distance": ["near", "medium"]},
+      "gearStrategy": {"preferredLensRoles": ["wide", "people"], "support": ["tripod", "flash"], "optional": ["flash"]},
+      "baseSettings": {
+        "mode": "M",
+        "focalLength": "24mm",
+        "shutter": {"start": "4s", "range": ["2s", "8s"]},
+        "aperture": {"start": "f/8", "range": ["f/5.6", "f/11"]},
+        "iso": {"start": "200", "range": ["100", "400"]},
+        "focus": "One Shot på personen, derefter MF",
+        "drive": "2 sek. selvudløser"
+      },
+      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setLensManualFocus"],
+      "quickGuide": [
+        "Sæt kameraet på stativ et sikkert stykke fra vejen, med personen i forgrunden og trafikken bagved.",
+        "Fokusér på personen, skift derefter til MF, så fokus ikke flytter sig under eksponeringen.",
+        "Start ved 4 sekunder, og brug Speedlite 430EX II til at lyse personen op midt i eksponeringen."
+      ],
+      "why": "4 sekunder er nok til at strække forbikørende billyskatte til sammenhængende spor uden at overeksponere dem helt. Uden blitz bliver personen kun en svag skygge i det lange lys; med blitz midt i eksponeringen bliver personen skarp og lys, mens lysstriberne stadig tegnes hele vejen rundt om vedkommende."
+    },
+    {
+      "id": "portrait-carousel-lights",
+      "title": "Portræt foran karrusellys om aftenen",
+      "family": "portræt",
+      "priority": 82,
+      "subjects": ["person", "carousel"],
+      "conditions": {"style": ["portrait", "single-portrait", "environmental-portrait"], "movement": ["still"], "place": ["outdoor", "city", "festival-site", "party"], "time": ["evening", "night-time"], "light": ["night", "low-light"], "technique": ["long-exposure"], "distance": ["near", "medium"]},
+      "gearStrategy": {"preferredLensRoles": ["wide", "people"], "optional": ["flash"]},
+      "baseSettings": {
+        "mode": "M",
+        "focalLength": "24mm",
+        "shutter": {"start": "1/4s", "range": ["1/8s", "1/2s"]},
+        "aperture": {"start": "f/5.6", "range": ["f/4", "f/8"]},
+        "iso": {"start": "400", "range": ["200", "800"]},
+        "focus": "One Shot på personens ansigt",
+        "drive": "Single"
+      },
+      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setOneShot"],
+      "quickGuide": [
+        "Placér personen tæt på kameraet med den oplyste karrusel roterende i baggrunden.",
+        "Bed personen stå helt stille; 1/4 sekund er kort nok til at holde et roligt ansigt rimeligt skarpt.",
+        "Brug gerne Speedlite 430EX II som fyldlys, hvis ansigtet drukner i karrussellens farver."
+      ],
+      "why": "1/4 sekund er langt nok til, at karrussellens lys tegner farverige striber af bevægelse, men kort nok til at et menneske, der står roligt, stadig bliver genkendeligt skarpt uden blitz. Går personen efter helt skarpt ansigt hver gang, er blitzen den sikre løsning."
+    },
+    {
+      "id": "portrait-zoom-burst-background",
+      "title": "Kreativt portræt med zoom burst-baggrund",
+      "family": "portræt",
+      "priority": 80,
+      "subjects": ["person", "light-trails"],
+      "conditions": {"style": ["portrait", "single-portrait"], "movement": ["still"], "place": ["outdoor", "city", "stage"], "light": ["night", "low-light", "stage-light"], "technique": ["zoom-burst"], "distance": ["medium"]},
+      "gearStrategy": {"preferredLensRoles": ["telephoto", "walkaround"], "support": ["tripod", "flash"]},
+      "baseSettings": {
+        "mode": "M",
+        "focalLength": "70-300mm",
+        "shutter": {"start": "1/4s", "range": ["1/8s", "1/2s"]},
+        "aperture": {"start": "f/11", "range": ["f/8", "f/16"]},
+        "iso": {"start": "400", "range": ["200", "800"]},
+        "focus": "One Shot på personens ansigt, før du starter zoom",
+        "drive": "Single"
+      },
+      "cameraActions": ["setManualMode", "setShutter", "setAperture", "setIso", "setOneShot"],
+      "quickGuide": [
+        "Fokusér på personens ansigt med 70-300mm, og lås fokus, før du starter eksponeringen.",
+        "Udløs kameraet, og drej zoomringen jævnt gennem hele de 1/4 sekund, lukkeren er åben.",
+        "Fyr gerne Speedlite 430EX II ved starten af eksponeringen, så ansigtet fryses skarpt, mens baggrundens lys tegner striber udad."
+      ],
+      "why": "Zoom burst tegner streger ud fra billedets centrum, når brændvidden ændres, mens lukkeren er åben. Et blitzglimt i begyndelsen af eksponeringen fryser ansigtet, før zoomet begynder at sløre resten af billedet, så personen forbliver det eneste skarpe punkt."
+    },
+    {
+      "id": "portrait-blue-hour",
+      "title": "Portræt i blue hour",
+      "family": "portræt",
+      "priority": 83,
+      "subjects": ["person"],
+      "conditions": {"style": ["portrait", "single-portrait"], "movement": ["still"], "place": ["outdoor", "city"], "time": ["evening", "twilight"], "light": ["twilight", "low-light"], "distance": ["near", "medium"]},
+      "gearStrategy": {"preferredLensRoles": ["people", "low-light", "normal"]},
+      "baseSettings": {
+        "mode": "Av",
+        "focalLength": "35mm",
+        "shutter": {"start": "Auto", "range": ["1/60", "1/250"]},
+        "aperture": {"start": "f/2", "range": ["f/1.8", "f/2.8"]},
+        "iso": "Auto",
+        "focus": "One Shot på det nærmeste øje",
+        "drive": "Single"
+      },
+      "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot"],
+      "quickGuide": [
+        "Fotografér 20-40 minutter efter solnedgang, mens himlen stadig har et dybt blåt skær.",
+        "Brug Sigma 18-35mm ved 35mm og en åben blænde for at holde ISO nede i det svindende lys.",
+        "Lad gerne bylys eller vinduer være tændt i baggrunden — den varme kontrast til den kølige himmel er selve pointen."
+      ],
+      "why": "Blue hour giver en jævn, kølig himmel, som passer flot sammen med varmt kunstlys fra vinduer og gadelys. Vinduet mellem solnedgang og fuldt mørke er kort, så en åben blænde holder ISO til et brugbart niveau, mens lyset stadig ændrer sig."
+    },
+    {
+      "id": "portrait-string-lights-bokeh",
+      "title": "Portræt med lyskæder i baggrunden",
+      "family": "portræt",
+      "priority": 81,
+      "subjects": ["person"],
+      "conditions": {"style": ["portrait", "single-portrait", "environmental-portrait"], "movement": ["still"], "place": ["outdoor", "garden", "street", "home"], "time": ["evening", "night-time"], "light": ["low-light", "night"], "distance": ["near"]},
+      "gearStrategy": {"preferredLensRoles": ["people", "low-light"]},
+      "baseSettings": {
+        "mode": "Av",
+        "focalLength": "35mm",
+        "shutter": {"start": "Auto", "range": ["1/60", "1/200"]},
+        "aperture": {"start": "f/1.8", "range": ["f/1.8", "f/2.2"]},
+        "iso": "Auto",
+        "focus": "One Shot på det nærmeste øje",
+        "drive": "Single"
+      },
+      "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot"],
+      "quickGuide": [
+        "Placér personen mindst et par meter foran lyskæderne, så de kan blive til bløde, runde lyspletter.",
+        "Brug Sigma 18-35mm helt åben ved f/1.8 — det er det eneste objektiv i kittet, der giver runde bokeh-cirkler af små lyspunkter.",
+        "Fokusér præcist på det nærmeste øje; jo mere åben blænde, jo mindre er der at være skarpt på."
+      ],
+      "why": "Afstanden mellem person og lyskæder er det, der afgør, hvor store og bløde lyspletterne bliver — jo længere baggrunden er fra fokusplanet, jo tydeligere bokeh. Sigma-objektivets f/1.8 er nødvendig, fordi 70-300mm og 18-55mm ikke åbner nok til at gøre de små lyspunkter tydeligt runde."
+    },
+    {
+      "id": "portrait-mixed-window-lamp",
+      "title": "Portræt i blandet indendørs lys",
+      "family": "portræt",
+      "priority": 79,
+      "subjects": ["person"],
+      "conditions": {"style": ["portrait", "single-portrait", "headshot"], "movement": ["still"], "place": ["home", "inside"], "light": ["window-light", "indoor", "low-light"], "distance": ["near"]},
+      "gearStrategy": {"preferredLensRoles": ["people", "low-light", "portraits"]},
+      "baseSettings": {
+        "mode": "Av",
+        "focalLength": "35mm",
+        "shutter": {"start": "Auto", "range": ["1/125", "1/500"]},
+        "aperture": {"start": "f/2", "range": ["f/1.8", "f/2.8"]},
+        "iso": "Auto",
+        "focus": "One Shot på det nærmeste øje",
+        "drive": "Single"
+      },
+      "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot"],
+      "quickGuide": [
+        "Skyd RAW, så hvidbalancen kan rettes bagefter — vinduets kølige dagslys og en varm loftslampe blander sig sjældent pænt i JPEG.",
+        "Sluk om muligt loftslampen, og lad vindueslyset stå alene som hovedlyskilde.",
+        "Kan lampen ikke slukkes, så drej personen mod den lyskilde, der giver det mest flatterende resultat, og accepter en let farvet skygge fra den anden."
+      ],
+      "why": "To lyskilder med forskellig farvetemperatur samtidig — koldt vindueslys og varmt kunstlys — kan kameraets automatiske hvidbalance ikke rette fuldt ud for begge dele på én gang. Den mest pålidelige løsning er at fjerne den ene lyskilde eller acceptere den som et bevidst stemningselement."
     }
   ]
 }

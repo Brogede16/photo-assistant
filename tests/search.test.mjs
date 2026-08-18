@@ -415,7 +415,7 @@ assert.equal(standardPortraitRecommendation.settings.mode, "Av");
 assert.equal(standardPortraitRecommendation.lens.id, "canon-ef-70-300-is-usm");
 assert.equal(searchProfiles("portræt rodet baggrund", situations.profiles, taxonomy).results[0].item.id, "portrait-busy-background");
 
-const singlePortrait = searchProfiles("portræt enkeltmand", situations.profiles, taxonomy);
+const singlePortrait = searchProfiles("portræt enkeltmand der poserer", situations.profiles, taxonomy);
 assert.equal(singlePortrait.results[0].item.id, "portrait-single-person");
 const singlePortraitRecommendation = buildRecommendation(singlePortrait.results[0].item, equipment, { classification: singlePortrait.classification });
 assert.equal(singlePortraitRecommendation.settings.mode, "Av");
