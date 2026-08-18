@@ -38,7 +38,10 @@ function makeMaterials() {
     rubber: new THREE.MeshStandardMaterial({ color: 0x141518, roughness: 0.95, metalness: 0.02 }),
     dial: new THREE.MeshStandardMaterial({ color: 0x2f333a, roughness: 0.45, metalness: 0.45 }),
     ridge: new THREE.MeshStandardMaterial({ color: 0x15171a, roughness: 0.75, metalness: 0.1 }),
-    metal: new THREE.MeshStandardMaterial({ color: 0xb6bac1, roughness: 0.26, metalness: 0.92 }),
+    // Uden et environment map får ren, høj metalness intet at spejle og
+    // fremstår sort. Lavere metalness holder overfladen synlig med kun
+    // direkte lys, på bekostning af fysisk korrekt kromudseende.
+    metal: new THREE.MeshStandardMaterial({ color: 0xc7ccd4, roughness: 0.32, metalness: 0.4 }),
     glass: new THREE.MeshStandardMaterial({ color: 0x080a0f, roughness: 0.12, metalness: 0.05 }),
     red: new THREE.MeshStandardMaterial({ color: 0xc0392b, roughness: 0.5 }),
     white: new THREE.MeshStandardMaterial({ color: 0xd7dae0, roughness: 0.6 })
@@ -391,14 +394,10 @@ export function initCamera3D(canvas, controlsReference, { onSelect } = {}) {
   const materials = makeMaterials();
   const scene = new THREE.Scene();
 
-  const envSource = environmentTexture();
-  envSource.mapping = THREE.EquirectangularReflectionMapping;
-  const pmrem = new THREE.PMREMGenerator(renderer);
-  const envTarget = pmrem.fromEquirectangular(envSource);
-  scene.environment = envTarget.texture;
-  envSource.dispose();
-  pmrem.dispose();
-
+  // PMREMGenerator gav bajonetringen et rigtigt spejlmiljø at reflektere,
+  // men er en tung synkron GPU-operation (cubemap + mip-kæde), der uden
+  // ægte GPU-acceleration kan blokere hovedtråden i lang tid. Metal-udseendet
+  // klares i stedet billigere med lavere metalness og mere direkte lys.
   const camera = new THREE.PerspectiveCamera(36, 1, 0.5, 200);
   const rig = new THREE.Group();
   rig.add(buildBody(materials));
@@ -412,7 +411,10 @@ export function initCamera3D(canvas, controlsReference, { onSelect } = {}) {
   shadow.position.y = BODY_BOTTOM - 0.1;
   scene.add(shadow);
 
-  scene.add(new THREE.AmbientLight(0xffffff, 0.22));
+  // HemisphereLight er en billig erstatning for et environment map: en enkelt
+  // gradient mellem himmel- og jordfarve, ingen cubemap-generering.
+  scene.add(new THREE.HemisphereLight(0xdfe6ff, 0x15161a, 0.9));
+  scene.add(new THREE.AmbientLight(0xffffff, 0.15));
   const key = new THREE.DirectionalLight(0xffffff, 1.5);
   key.position.set(6, 10, 9);
   scene.add(key);
@@ -545,17 +547,33 @@ export function initCamera3D(canvas, controlsReference, { onSelect } = {}) {
   canvas.addEventListener("pointercancel", onPointerUp);
   canvas.addEventListener("wheel", onWheel, { passive: false });
 
-  const resize = () => {
-    const width = canvas.clientWidth || 1;
-    const height = canvas.clientHeight || 1;
+  // Sætter man canvas.width/height (via renderer.setSize), rapporterer nogle
+  // browsere det som endnu en resize af selve canvas-elementet — det starter
+  // en uendelig ResizeObserver-løkke, der låser hele fanen. Derfor: spring
+  // over, hvis målene ikke reelt har ændret sig, og lad callbacket vente en
+  // frame, så det aldrig kører synkront inde i observerens egen notifikation.
+  let lastWidth = 0;
+  let lastHeight = 0;
+  let resizeFrame = null;
+  const applyResize = () => {
+    resizeFrame = null;
+    const width = Math.round(canvas.clientWidth) || 1;
+    const height = Math.round(canvas.clientHeight) || 1;
+    if (width === lastWidth && height === lastHeight) return;
+    lastWidth = width;
+    lastHeight = height;
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     renderer.setSize(width, height, false);
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
   };
-  const resizeObserver = new ResizeObserver(resize);
+  const scheduleResize = () => {
+    if (resizeFrame) return;
+    resizeFrame = requestAnimationFrame(applyResize);
+  };
+  const resizeObserver = new ResizeObserver(scheduleResize);
   resizeObserver.observe(canvas);
-  resize();
+  applyResize();
 
   let frameId = null;
   const tick = () => {
@@ -575,6 +593,7 @@ export function initCamera3D(canvas, controlsReference, { onSelect } = {}) {
 
   return function stop() {
     if (frameId) cancelAnimationFrame(frameId);
+    if (resizeFrame) cancelAnimationFrame(resizeFrame);
     resizeObserver.disconnect();
     canvas.removeEventListener("pointerdown", onPointerDown);
     canvas.removeEventListener("pointermove", onPointerMove);
@@ -589,7 +608,6 @@ export function initCamera3D(canvas, controlsReference, { onSelect } = {}) {
         material?.dispose?.();
       }
     });
-    envTarget.dispose();
     renderer.dispose();
   };
 }
