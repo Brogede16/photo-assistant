@@ -1,4 +1,4 @@
-const CACHE_NAME = "photo-assistant-core-v0.30.0";
+const CACHE_NAME = "photo-assistant-core-v0.31.0";
 
 const CORE_ASSETS = [
   "/",
@@ -10,6 +10,7 @@ const CORE_ASSETS = [
   "/src/lib/astro.js",
   "/src/lib/ambient.js",
   "/src/lib/exif.js",
+  "/src/lib/focal.js",
   "/src/lib/presets.js",
   "/src/lib/recommendations.js",
   "/src/lib/scenario.js",

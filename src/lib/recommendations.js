@@ -1,3 +1,4 @@
+import { lensCoversAnyFocal } from "./focal.js";
 import { preferredRolesForScenario, triangulateScenario } from "./scenario.js";
 
 export function pickLens(profile, equipment, classification = null) {
@@ -7,12 +8,19 @@ export function pickLens(profile, equipment, classification = null) {
 export function rankLenses(profile, equipment, classification = null) {
   const roles = preferredRolesForScenario(profile, classification);
   const lenses = equipment.lenses || [];
+  const declaredFocal = profile.baseSettings?.focalLength;
   return lenses
     .map((lens) => ({
       lens,
+      // Et objektiv, der ikke kan nå profilens egen brændvidde, må aldrig vinde
+      // på rolle-point alene: så beder guiden brugeren om at zoome til noget,
+      // objektivet fysisk ikke kan.
+      coversFocal: lensCoversAnyFocal(lens, declaredFocal),
       score: roles.reduce((sum, role) => sum + (lens.roles?.includes(role) ? 1 : 0), 0)
     }))
-    .sort((a, b) => b.score - a.score || (b.lens.focalLength?.max || 0) - (a.lens.focalLength?.max || 0));
+    .sort((a, b) => Number(b.coversFocal) - Number(a.coversFocal)
+      || b.score - a.score
+      || (b.lens.focalLength?.max || 0) - (a.lens.focalLength?.max || 0));
 }
 
 export function buildRecommendation(profile, equipment, context = {}) {

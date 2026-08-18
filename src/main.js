@@ -440,7 +440,7 @@ function openResult(profileId) {
   content.innerHTML = `
     <section class="panel detail-panel">
       <button class="text-button" data-action="back-home">Tilbage</button>
-      <p class="section-kicker">${profile.family}</p>
+      <p class="section-kicker">${formatFamily(profile.family)}</p>
       <h2>${profile.title}</h2>
       <p class="hero-setting">${recommendation.lens.brand} ${recommendation.lens.model}</p>
       <div class="settings-strip large">
@@ -910,6 +910,13 @@ function parseFocalLength(value) {
 
 function clamp(value, min, max) {
   return Math.max(min, Math.min(max, value));
+}
+
+// Familier er små bogstaver i data, så de kan sammenlignes og testes uden
+// tvivl om stavemåde. Overskriften i brugerfladen får stort begyndelsesbogstav.
+function formatFamily(family) {
+  const text = String(family || "");
+  return text.charAt(0).toUpperCase() + text.slice(1);
 }
 
 function settingLabel(key) {

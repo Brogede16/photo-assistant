@@ -21,6 +21,18 @@ Photo Assistant bruger ikke AI ved kørsel. Anbefalingerne kommer fra kontroller
 
 De to effekter er gensidigt udelukkende. Når én vælges, filtrerer motoren den modsatte profil fra. Appen viser derfor et kvalificeret standardvalg og foreslår de tags, der afgør det kreative valg.
 
+## Automatisk kontrol af alle profiler
+
+`tests/data.test.mjs` kører ved hver `npm test` og holder samtlige profiler op mod fysikken og mod det udstyr, brugeren faktisk har. Formålet er, at en tastefejl i én værdi ikke kan gemme sig i en samling, der vokser.
+
+- **Lysmængde.** Hver profils startværdier omregnes til EV100, scenens lysstyrke uafhængigt af hvilken kombination af lukkertid, blænde og ISO der er valgt: `EV100 = log2(blænde² / lukkertid) - log2(ISO / 100)`. Sunny 16 er kontrollen: f/16, 1/125 og ISO 100 giver EV 15. Resultatet sammenlignes med et interval pr. lystag. Intervallerne er brede med vilje — de skal fange fejl på flere stop, ikke diskutere en halv. Motiver, der lyser selv eller er direkte solbelyste (måne, sol, fyrværkeri, ild, lærred, lysspor, stjerner, nordlys), har deres eget interval, fordi de ikke følger omgivelsernes lys. ND-filter og light painting undtages, fordi filteret fjerner og lommelygten tilføjer et ukendt antal stop.
+- **Udstyr.** Hver angivet brændvidde skal findes på mindst ét af de fire objektiver, og den anbefalede blænde skal kunne nås inden for den brændvidde. Producenterne oplyser kun objektivets lysstyrke i hver ende, så mellemliggende brændvidder interpoleres logaritmisk og sammenlignes med en tolerance på 1/3 stop. Derudover kontrolleres, at det objektiv, appen rent faktisk vælger, kan nå profilens egen brændvidde — ellers ville guiden bede om at zoome til noget, objektivet ikke kan.
+- **Intervaller.** Startværdien skal ligge inden for profilens eget interval for lukkertid, blænde og ISO. Lukkertider skrives fra langsom til hurtig, blænde og ISO fra lav til høj; rækkefølgen normaliseres før sammenligning.
+- **Familier.** Familier skrives med små bogstaver, og ingen familie må bestå af én enkelt profil. Brugerfladen sætter selv stort begyndelsesbogstav. Det holder listen af familier på et antal, der giver mening som overskrifter.
+- **Dokumentation.** Antallet af grundscenarier i README kontrolleres mod data, så tallet ikke kan løbe fra virkeligheden.
+
+Testen er et plausibilitetsnet, ikke et bevis. Den fanger værdier, der er teknisk umulige eller flere stop forkerte; den afgør ikke, om et startpunkt er det fotografisk bedste. Den vurdering ligger stadig i profilens `why` og i kilderne herunder.
+
 ## Kilder og principper
 
 - [Canon: Depth of field](https://files.canon-europe.com/files/webcontent/rf-lens-world/knowledge/depth-of-field/index.html) beskriver sammenhængen mellem blænde, afstand, brændvidde og dybdeskarphed.

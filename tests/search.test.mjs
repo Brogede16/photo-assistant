@@ -3,6 +3,7 @@ import { readFile } from "node:fs/promises";
 import { maxStarShutterSeconds } from "../src/lib/astro.js";
 import { buildRecommendation } from "../src/lib/recommendations.js";
 import { classifyQuery, consumeKnownTerms, findExactTerm, mergeTagIds, searchProfiles, suggestNextTags, termsToQuery } from "../src/lib/search.js";
+import { firstNumber, settingStart, shutterToSeconds } from "./helpers/exposure.mjs";
 
 const taxonomy = JSON.parse(await readFile(new URL("../src/data/search/taxonomy.json", import.meta.url), "utf8"));
 const situations = JSON.parse(await readFile(new URL("../src/data/situations/core-profiles.json", import.meta.url), "utf8"));
@@ -29,28 +30,13 @@ for (const profile of situations.profiles.filter((item) => item.family === "astr
   const isPinpointStars = ["stars", "milky-way", "meteor-shower"].some((id) => subjects.has(id)) && !subjects.has("star-trails");
   if (!isPinpointStars) continue;
   const focalLength = firstNumber(profile.baseSettings?.focalLength);
-  const shutterSeconds = shutterToSeconds(profile.baseSettings?.shutter?.start || profile.baseSettings?.shutter);
+  const shutterSeconds = shutterToSeconds(settingStart(profile.baseSettings?.shutter));
   if (!focalLength || !shutterSeconds) continue;
   assert.equal(
     shutterSeconds <= maxStarShutterSeconds(focalLength, equipment.cameras[0].sensor.cropFactor),
     true,
     `Astroprofil ${profile.id} bruger ${shutterSeconds}s ved ${focalLength}mm, hvilket risikerer stjernespor`
   );
-}
-
-function firstNumber(value) {
-  const match = String(value || "").match(/\d+/);
-  return match ? Number(match[0]) : null;
-}
-
-function shutterToSeconds(value) {
-  const text = String(value || "");
-  if (text.endsWith("s")) return Number(text.slice(0, -1).replace(",", "."));
-  if (text.includes("/")) {
-    const [top, bottom] = text.split("/").map(Number);
-    return bottom ? top / bottom : null;
-  }
-  return Number(text) || null;
 }
 
 const overcast = classifyQuery("abe i zoo gråvejr", taxonomy);

@@ -339,7 +339,7 @@
       "gearStrategy": { "preferredLensRoles": ["people", "low-light"], "optional": ["flash"] },
       "baseSettings": {
         "mode": "Av",
-        "focalLength": "35mm eller 100-150mm",
+        "focalLength": "35mm",
         "shutter": { "start": "Auto", "range": ["1/250", "1/1000"] },
         "aperture": { "start": "f/2.8", "range": ["f/1.8", "f/4"] },
         "iso": "Auto",
@@ -348,7 +348,7 @@
       },
       "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot"],
       "quickGuide": [
-        "Brug Sigma ved 35mm for miljøportræt eller 70-300mm omkring 100-150mm for tættere portræt.",
+        "Brug Sigma ved 35mm og f/2.8 til miljøportrættet. Vil du hellere have et tættere udsnit, så brug 70-300mm omkring 100-150mm — der åbner objektivet kun til cirka f/5, så lad ISO stige i stedet.",
         "Eksponer efter ansigtet, ikke den lyse himmel.",
         "Brug Speedlite som fill, hvis ansigtet bliver for mørkt."
       ],
@@ -459,7 +459,7 @@
     {
       "id": "outdoor-sport-daylight",
       "title": "Sport udendørs",
-      "family": "bevægelse",
+      "family": "sport",
       "priority": 68,
       "subjects": ["sport"],
       "conditions": { "movement": ["running"], "light": ["daylight", "overcast"], "distance": ["medium", "far"] },
@@ -1190,7 +1190,7 @@
     {
       "id": "street-photo-daylight",
       "title": "Uopstillet gadefoto i dagslys",
-      "family": "gadefoto",
+      "family": "mennesker",
       "priority": 94,
       "subjects": ["person"],
       "conditions": { "style": ["street-photo", "candid"], "movement": ["walking", "active-motion"], "place": ["street", "outdoor"], "light": ["daylight", "overcast"], "distance": ["medium"] },
@@ -1203,7 +1203,7 @@
     {
       "id": "restaurant-food-closeup",
       "title": "Mad på restaurant",
-      "family": "mad",
+      "family": "restaurant",
       "priority": 96,
       "subjects": ["food"],
       "conditions": { "place": ["restaurant", "inside"], "light": ["window-light", "indoor", "low-light"], "distance": ["close-up", "near"] },
@@ -1793,7 +1793,7 @@
     {
       "id": "filmtaget-rooftop-event",
       "title": "Stemning på Filmtaget",
-      "family": "Filmtaget",
+      "family": "filmtaget",
       "priority": 109,
       "modePolicy": "fixed",
       "isoPolicy": "fixed",
@@ -1809,7 +1809,7 @@
     {
       "id": "filmtaget-daytime-screen",
       "title": "Himmelbio i dagslys",
-      "family": "Filmtaget",
+      "family": "filmtaget",
       "priority": 105,
       "modePolicy": "fixed",
       "isoPolicy": "fixed",
@@ -1825,7 +1825,7 @@
     {
       "id": "filmtaget-screen-twilight",
       "title": "Himmelbios LED-skærm i skumringen",
-      "family": "Filmtaget",
+      "family": "filmtaget",
       "priority": 122,
       "modePolicy": "fixed",
       "isoPolicy": "fixed",
@@ -1841,7 +1841,7 @@
     {
       "id": "filmtaget-audience-evening",
       "title": "Publikum i Himmelbio om aftenen",
-      "family": "Filmtaget",
+      "family": "filmtaget",
       "priority": 120,
       "modePolicy": "fixed",
       "isoPolicy": "fixed",
@@ -1857,7 +1857,7 @@
     {
       "id": "filmtaget-city-view",
       "title": "Udsigt fra Filmtaget over Kongens Have og byen",
-      "family": "Filmtaget",
+      "family": "filmtaget",
       "priority": 117,
       "modePolicy": "fixed",
       "isoPolicy": "fixed",
@@ -2368,7 +2368,7 @@
     {
       "id": "winter-snow-daylight",
       "title": "Sne i dagslys",
-      "family": "vinter",
+      "family": "natur",
       "priority": 88,
       "subjects": ["landscape", "nature"],
       "conditions": { "weather": ["snow"], "place": ["outdoor", "countryside", "field", "garden", "street"], "light": ["daylight", "bright-sun", "overcast"], "movement": ["still"] },
@@ -2498,7 +2498,7 @@
     {
       "id": "harbor-scene",
       "title": "Havneområde",
-      "family": "rejser",
+      "family": "landskab",
       "priority": 90,
       "subjects": ["architecture", "boat", "person"],
       "conditions": { "place": ["harbor", "outdoor", "city"], "time": ["afternoon", "evening", "twilight"], "light": ["daylight", "backlight", "low-light"], "movement": ["still", "walking"], "distance": ["medium", "far"] },
