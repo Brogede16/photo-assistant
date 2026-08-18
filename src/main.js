@@ -26,6 +26,7 @@ const state = {
 
 const app = document.querySelector("#app");
 let stopAmbientField = null;
+let stopCamera3D = null;
 let wakeLock = null;
 
 applyTheme();
@@ -53,6 +54,8 @@ async function boot() {
 
 function render() {
   stopAmbientField?.();
+  stopCamera3D?.();
+  stopCamera3D = null;
   app.classList.toggle("ambient-on", state.ambientEnabled);
   app.innerHTML = `
     <canvas class="ambient-field" aria-hidden="true" ${state.ambientEnabled ? "" : "hidden"}></canvas>
@@ -103,6 +106,8 @@ function render() {
 }
 
 function renderHome(results = null) {
+  stopCamera3D?.();
+  stopCamera3D = null;
   const content = document.querySelector("#content");
   const query = currentSearchQuery();
   const defaultSearch = searchProfiles(query || "stjerner nordlys måne fugl dyr mennesker", state.profiles, state.taxonomy, state.presets);
@@ -146,6 +151,8 @@ function renderThemeButton(theme, icon, label) {
 }
 
 function renderPresets() {
+  stopCamera3D?.();
+  stopCamera3D = null;
   setSearchVisibility(false);
   const content = document.querySelector("#content");
   content.innerHTML = `
@@ -169,6 +176,8 @@ function renderPresets() {
 }
 
 function renderLearn() {
+  stopCamera3D?.();
+  stopCamera3D = null;
   setSearchVisibility(false);
   const content = document.querySelector("#content");
   const lesson = state.lessons.find((item) => item.id === state.selectedLearnTopic) || state.lessons[0];
@@ -314,6 +323,8 @@ function lessonProcedureIds(lessonId) {
 }
 
 function renderEquipment() {
+  stopCamera3D?.();
+  stopCamera3D = null;
   const content = document.querySelector("#content");
   const controls = state.equipment.cameras[0]?.controlsReference || [];
   content.innerHTML = `
@@ -329,6 +340,15 @@ function renderEquipment() {
       </div>
       ${controls.length ? `
         <div class="panel-header">
+          <p class="section-kicker">Rundt om kameraet</p>
+          <h2>3D-model</h2>
+        </div>
+        <p class="controls-intro">Træk for at rotere, knib eller rul for at zoome, og tryk på et markeret punkt for at se, hvad det gør. Objektivet er udeladt — modellen viser kun huset.</p>
+        <div class="camera3d-wrap">
+          <canvas class="camera3d-canvas" aria-label="3D-model af Canon EOS 80D"></canvas>
+        </div>
+        <div id="camera3d-explanation" class="setting-explanation" aria-live="polite"></div>
+        <div class="panel-header">
           <p class="section-kicker">Når du står med kameraet</p>
           <h2>Knapperne på dit kamera</h2>
         </div>
@@ -337,16 +357,47 @@ function renderEquipment() {
           ${controls.map((c) => `
             <details>
               <summary>${c.label}</summary>
-              <p class="control-symbol"><strong>Sådan ser den ud:</strong> ${c.symbol}</p>
-              <p><strong>Placering:</strong> ${c.location}</p>
-              ${c.detail ? `<p><strong>Godt at vide:</strong> ${c.detail}</p>` : ""}
-              <p><strong>Bruges til:</strong> ${c.purpose}</p>
+              ${renderControlDetails(c)}
             </details>
           `).join("")}
         </div>
       ` : ""}
     </section>
   `;
+  if (controls.length) initEquipmentCamera3D(controls);
+}
+
+function renderControlDetails(c) {
+  return `
+    <p class="control-symbol"><strong>Sådan ser den ud:</strong> ${c.symbol}</p>
+    <p><strong>Placering:</strong> ${c.location}</p>
+    ${c.detail ? `<p><strong>Godt at vide:</strong> ${c.detail}</p>` : ""}
+    <p><strong>Bruges til:</strong> ${c.purpose}</p>
+  `;
+}
+
+function initEquipmentCamera3D(controls) {
+  const canvas = document.querySelector(".camera3d-canvas");
+  if (!canvas) return;
+  import("./lib/camera3d.js")
+    .then(({ initCamera3D }) => {
+      if (document.querySelector(".camera3d-canvas") !== canvas) return;
+      stopCamera3D = initCamera3D(canvas, controls, {
+        onSelect: (control) => {
+          const target = document.querySelector("#camera3d-explanation");
+          if (target) target.innerHTML = `<strong>${control.label}</strong>${renderControlDetails(control)}`;
+        }
+      });
+      if (!stopCamera3D) showCamera3DFallback(canvas);
+    })
+    .catch(() => showCamera3DFallback(canvas));
+}
+
+function showCamera3DFallback(canvas) {
+  canvas.closest(".camera3d-wrap")?.insertAdjacentHTML(
+    "beforeend",
+    `<p class="camera3d-fallback">3D-visning kunne ikke indlæses her — brug listen herunder i stedet.</p>`
+  );
 }
 
 function renderResultCard(result, index) {

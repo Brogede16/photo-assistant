@@ -17,6 +17,7 @@ Projektet er bevidst bygget uden AI-afhængighed og uden direkte Canon API/SDK-k
 - Gradientlaget dækker hele dokumentfladen, følger med scroll og bevæger sig ad tilfældige, bløde ruter.
 - Modulær arkitektur: data, søgning, anbefalinger, astro, EXIF og UI holdes adskilt.
 - Canon EOS 80D som første fuldt understøttede kamera.
+- Roterbar 3D-model af kamerahuset under "Mit udstyr" med klikbare kontrolpunkter, der genbruger de samme forklaringer som listen nedenunder. En forenklet, selvbygget model i Three.js — ikke en CAD-scanning, og uden objektiv.
 - Brugerens udstyr forudindlæst:
   - Sigma 18-35mm f/1.8 DC HSM Art
   - Canon EF-S 18-55mm f/3.5-5.6 IS STM
