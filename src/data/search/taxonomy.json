@@ -93,7 +93,7 @@
     { "id": "headshot", "type": "style", "label": "Tæt portræt", "parent": "portrait", "synonyms": ["headshot", "ansigtsportræt", "ansigtsportraet", "tæt portræt", "taet portraet"], "related": ["person", "close-up", "posing"] },
     { "id": "environmental-portrait", "type": "style", "label": "Miljøportræt", "parent": "portrait", "synonyms": ["miljøportræt", "miljoeportraet", "person i omgivelser", "helfigur"], "related": ["person", "medium", "outdoor", "indoor"] },
     { "id": "group-portrait", "type": "style", "label": "Gruppeportræt", "parent": "portrait", "synonyms": ["gruppeportræt", "gruppeportraet", "familieportræt", "familieportraet"], "related": ["group", "posing", "medium"] },
-    { "id": "candid", "type": "style", "label": "Uopstillet", "synonyms": ["uopstillet", "candid", "spontant", "øjebliksbillede", "oejebliksbillede"], "related": ["person", "laughing", "active-motion"] },
+    { "id": "candid", "type": "style", "label": "Uopstillet", "synonyms": ["uopstillet", "candid", "spontant", "øjebliksbillede", "oejebliksbillede", "ubevidst"], "related": ["person", "laughing", "active-motion"] },
     { "id": "street-photo", "type": "style", "label": "Gadefoto", "synonyms": ["gadefoto", "street photo", "street photography", "gadens liv"], "related": ["person", "candid", "street", "walking", "daylight"] },
     { "id": "snapshot", "type": "style", "label": "Hverdagsbillede", "synonyms": ["hverdagsbillede", "snapshot", "hurtigt billede", "bare tag et billede"], "related": ["person", "near", "daylight", "indoor"] },
     { "id": "crowd-shot", "type": "style", "label": "Publikumsbillede", "synonyms": ["publikumsbillede", "crowd shot", "hele publikum", "menneskehav"], "related": ["audience", "festival", "wide", "far"] },
@@ -226,7 +226,7 @@
     { "id": "nd-filter", "type": "equipment", "label": "ND-filter", "requiresProfileMatch": true, "synonyms": ["nd-filter", "nd filter", "nd", "neutral density", "gråfilter", "graafilter", "variabelt nd-filter"], "related": ["waterfall", "long-exposure", "daylight", "tripod"] },
     { "id": "remote-release", "type": "equipment", "label": "Fjernudløser", "synonyms": ["fjernudløser", "fjernudloeser", "canon app", "camera connect"] },
     { "id": "flash", "type": "equipment", "label": "Blitz", "synonyms": ["blitz", "flash", "speedlite", "430ex"] },
-    { "id": "telephoto", "type": "equipment", "label": "Teleobjektiv", "synonyms": ["tele", "teleobjektiv", "70-300", "300mm", "55-200"] },
+    { "id": "telephoto", "type": "equipment", "label": "Teleobjektiv", "synonyms": ["tele", "teleobjektiv", "70-300", "300mm", "55-200", "zoom"] },
     { "id": "wide", "type": "equipment", "label": "Vidvinkel", "synonyms": ["vidvinkel", "wide", "18mm", "18-35", "sigma"] }
   ]
 }

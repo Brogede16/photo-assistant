@@ -3240,6 +3240,31 @@
         "Kan lampen ikke slukkes, så drej personen mod den lyskilde, der giver det mest flatterende resultat, og accepter en let farvet skygge fra den anden."
       ],
       "why": "To lyskilder med forskellig farvetemperatur samtidig — koldt vindueslys og varmt kunstlys — kan kameraets automatiske hvidbalance ikke rette fuldt ud for begge dele på én gang. Den mest pålidelige løsning er at fjerne den ene lyskilde eller acceptere den som et bevidst stemningselement."
+    },
+    {
+      "id": "portrait-candid-zoom-motion",
+      "title": "Ubevidst portræt med zoom og lidt bevægelse",
+      "family": "portræt",
+      "priority": 82,
+      "subjects": ["person"],
+      "conditions": {"style": ["portrait", "candid", "environmental-portrait"], "movement": ["walking", "gentle-motion"], "place": ["outdoor", "street", "city", "beach", "garden"], "light": ["daylight", "overcast"], "distance": ["far", "medium"]},
+      "gearStrategy": {"preferredLensRoles": ["telephoto"]},
+      "baseSettings": {
+        "mode": "Tv",
+        "focalLength": "150-300mm",
+        "shutter": {"start": "1/160", "range": ["1/125", "1/250"]},
+        "aperture": "Auto",
+        "iso": {"start": "400", "range": ["200", "800"]},
+        "focus": "AI Servo på det nærmeste øje",
+        "drive": "Continuous low"
+      },
+      "cameraActions": ["setTvMode", "setShutter", "setIso", "setAiServo", "setLensStabilizationOn"],
+      "quickGuide": [
+        "Brug 70-300mm og hold god afstand, så personen ikke lægger mærke til kameraet.",
+        "Sæt lukkertiden til omkring 1/160 i Tv — det er langsomt nok til, at gang, hår og tøj får et strejf af bevægelse, men hurtigt nok til at ansigtet stadig kan følges med AI Servo.",
+        "Følg det nærmeste øje med AI Servo, og udløs midt i en naturlig bevægelse frem for i et stift, stillestående øjeblik."
+      ],
+      "why": "En helt fastfrosset candid kan virke stiv og opstillet, selvom motivet ikke aner, det bliver fotograferet. 1/160 er langsomt nok til, at kropsdele i bevægelse — et ben midt i et skridt, hår i vinden, et svingende ærme — får en let, naturlig sløring, mens AI Servo holder selve ansigtet nogenlunde skarpt. Det giver et mere levende resultat end søsterprofilen 'Candid på afstand med tele', som bevidst fryser alt."
     }
   ]
 }
