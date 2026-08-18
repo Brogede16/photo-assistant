@@ -26,7 +26,7 @@ const HOTSPOT_LAYOUT = {
   afDriveButton: [1.9, PLATE_TOP + 0.28, -1.5],
   isoButton: [3.0, PLATE_TOP + 0.28, -1.5],
   meteringWbButton: [4.1, PLATE_TOP + 0.28, -1.5],
-  quickControlDial: [4.9, 0.4, BODY_BACK - 0.3],
+  quickControlDial: [4.9, -0.9, BODY_BACK - 0.3],
   liveViewSwitch: [4.5, 2.7, BODY_BACK - 0.22]
 };
 
@@ -302,10 +302,10 @@ function buildBody(materials) {
 
   // Quick Control Dial på bagsiden.
   const quickDial = knurledDial(1.55, 0.34, 32, materials);
-  quickDial.position.set(4.9, 0.4, BODY_BACK - 0.08);
+  quickDial.position.set(4.9, -0.9, BODY_BACK - 0.08);
   quickDial.rotation.x = Math.PI / 2;
   group.add(quickDial);
-  add(new THREE.CylinderGeometry(0.62, 0.62, 0.24, 24), materials.body, 4.9, 0.4, BODY_BACK - 0.24).rotation.x = Math.PI / 2;
+  add(new THREE.CylinderGeometry(0.62, 0.62, 0.24, 24), materials.body, 4.9, -0.9, BODY_BACK - 0.24).rotation.x = Math.PI / 2;
 
   // Live View-kontakt med rød start/stop-knap.
   add(new THREE.CylinderGeometry(0.55, 0.55, 0.26, 26), materials.dial, 4.5, 2.7, BODY_BACK - 0.1).rotation.x = Math.PI / 2;
@@ -317,7 +317,7 @@ function buildBody(materials) {
   }
 
   // Et par knapper på bagsiden, så bagpladen ikke står tom.
-  for (const [x, y] of [[-6.0, 2.5], [-6.0, 1.4], [-6.0, 0.3], [-6.0, -0.8], [2.6, -2.5], [4.9, -2.5]]) {
+  for (const [x, y] of [[-6.0, 2.5], [-6.0, 1.4], [-6.0, 0.3], [-6.0, -0.8], [4.2, 1.5], [5.6, 1.5]]) {
     add(roundedBox(0.72, 0.42, 0.2, 0.16, 0.05), materials.dial, x, y, BODY_BACK - 0.12);
   }
 
