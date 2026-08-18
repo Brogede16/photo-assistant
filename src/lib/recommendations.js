@@ -71,24 +71,24 @@ function actionsForSettings(actions, settings) {
 
 function buildExactSteps(actionId, settings, camera, lens) {
   const exact = {
-    setManualMode: ["Drej programhjulet til M.", `Kontrollér at M vises, før du indstiller ${settings.shutter}, ${settings.aperture} og ISO ${settings.iso}.`],
-    setAvMode: ["Drej programhjulet til Av.", `Drej Main Dial ved udløserknappen til ${settings.aperture}.`, `Kontrollér at kameraets lukkertid ikke bliver langsommere end ${settings.shutter}.`],
-    setTvMode: ["Drej programhjulet til Tv.", `Drej Main Dial ved udløserknappen til ${settings.shutter}.`, "Kameraet vælger blænden automatisk."],
-    setProgramMode: ["Drej programhjulet til P.", "Lad kameraet vælge lukkertid og blænde til dette hurtige hverdagsbillede."],
-    setBulbMode: ["Drej programhjulet til M.", "Drej lukkertiden forbi 30 sekunder, til Bulb vises.", "Start og stop eksponeringen med Canon Camera Connect eller en fjernudløser."],
-    setFocalLength: [`Montér ${lens.brand} ${lens.model}.`, `Drej zoomringen til ${settings.focalLength}.`],
-    setShutter: [`Indstil lukkertiden til ${settings.shutter} med Main Dial ved udløserknappen.`, wholeSecondsHint(settings.shutter)],
-    setAperture: [settings.mode === "Av" ? `I Av: drej Main Dial til ${settings.aperture}.` : `I M: drej Quick Control Dial bagpå til ${settings.aperture}.`, "Brug LOCK-kontakten ved baghjulet, hvis hjulet er låst."],
-    setIso: ["Tryk ISO-knappen på toppen af kameraet.", `Drej Main Dial til ${String(settings.iso).toLowerCase() === "auto" ? "AUTO" : settings.iso}.`, "Tryk udløseren halvt ned for at bekræfte."],
-    setAiServo: ["Tryk AF-knappen på toppen.", "Drej Main Dial til AI SERVO, og tryk udløseren halvt ned.", `Hold fokuspunktet på motivet; anbefalingen er ${settings.focus}.`],
-    setOneShot: ["Tryk AF-knappen på toppen.", "Drej Main Dial til ONE SHOT, og tryk udløseren halvt ned.", `Placér fokuspunktet som anbefalet: ${settings.focus}.`],
-    setLensManualFocus: [`Skub AF/MF-kontakten på ${lens.model} til MF.`, `Drej fokusringen, til motivet står skarpt: ${settings.focus}.`],
-    setHighSpeedContinuous: ["Tryk DRIVE-knappen på toppen.", `Vælg ${settings.drive} med Main Dial.`, "Tag korte serier på 3-5 billeder."],
-    setDriveMode: ["Tryk DRIVE-knappen på toppen.", `Drej Main Dial, til ${settings.drive} vises.`, settings.drive === "Single" ? "Tag ét billede ad gangen." : "Brug korte, kontrollerede serier."],
-    setLensStabilizationOn: [`Sæt STABILIZER-kontakten på ${lens.model} til ON.`, "Slå stabilisering fra, hvis kameraet står helt fast på stativ."],
-    useLiveViewForAstro: ["Tryk START/STOP for Live View.", "Forstør en klar stjerne 5x og derefter 10x.", "Drej fokusringen, til stjernen er mindst mulig og skarp."],
-    use80dIntervalTimer: ["Åbn optagemenuen på EOS 80D og find Intervaltimer.", "Sæt intervallet til den anbefalede pause og antal billeder til serien.", "Slå Long exposure noise reduction fra, før du starter lange serier."],
-    useCanonCameraConnect: ["Forbind EOS 80D til Canon Camera Connect via kameraets Wi-Fi-menu.", "Åbn fjernoptagelse, og brug appens udløser uden at røre kameraet."]
+    setManualMode: ["Tryk LÅSEKNAPPEN i midten af programhjulet (øverst til venstre) ned, mens du drejer hjulet til M.", `Kontrollér at M vises på topskærmen, før du indstiller ${settings.shutter}, ${settings.aperture} og ISO ${settings.iso}.`],
+    setAvMode: ["Tryk LÅSEKNAPPEN i midten af programhjulet (øverst til venstre) ned, mens du drejer hjulet til Av.", `Drej det tandede hjul, der omslutter udløserknappen (Main Dial), til ${settings.aperture}.`, `Kontrollér lukkertiden i søgeren (nederst til venstre i søgerbilledet) — den må ikke blive langsommere end ${settings.shutter}.`],
+    setTvMode: ["Tryk LÅSEKNAPPEN i midten af programhjulet (øverst til venstre) ned, mens du drejer hjulet til Tv.", `Drej det tandede hjul, der omslutter udløserknappen (Main Dial), til ${settings.shutter}.`, "Kameraet vælger blænden automatisk."],
+    setProgramMode: ["Tryk LÅSEKNAPPEN i midten af programhjulet (øverst til venstre) ned, mens du drejer hjulet til P.", "Lad kameraet vælge lukkertid og blænde til dette hurtige hverdagsbillede."],
+    setBulbMode: ["Tryk LÅSEKNAPPEN i midten af programhjulet ned, mens du drejer det til M.", "Drej det tandede hjul ved udløserknappen (Main Dial) forbi 30 sekunder, til bogstavet B (Bulb) vises på topskærmen.", "Start og stop eksponeringen med Canon Camera Connect eller en fjernudløser."],
+    setFocalLength: [`Montér ${lens.brand} ${lens.model} på kamerahuset.`, `Drej den brede gummiring yderst på objektivet (zoomringen) til ${settings.focalLength}.`],
+    setShutter: [`Drej det tandede hjul, der omslutter selve udløserknappen (Main Dial), med pegefingeren, til lukkertiden på topskærmen viser ${settings.shutter}.`, wholeSecondsHint(settings.shutter)],
+    setAperture: [settings.mode === "Av" ? `I Av: drej det tandede hjul ved udløserknappen (Main Dial) til ${settings.aperture}.` : `I M: drej det store hjul på bagsiden (Quick Control Dial, betjenes med tommelfingeren) til ${settings.aperture}.`, "Reagerer hjulet ikke, så tjek den lille LOCK-kontakt lige under baghjulet til venstre."],
+    setIso: ["Tryk knappen mærket 'ISO' — den sidder i rækken af tre knapper på toppen af kameraet, lige bag udløseren.", `Drej det tandede hjul ved udløseren (Main Dial) til ${String(settings.iso).toLowerCase() === "auto" ? "AUTO" : settings.iso}, mens du kigger på topskærmen.`, "Tryk udløseren halvt ned for at bekræfte."],
+    setAiServo: ["Tryk knappen mærket med AF-symbolet — den sidder i rækken af tre knapper på toppen af kameraet.", "Drej det tandede hjul ved udløseren (Main Dial) til AI SERVO, og tryk udløseren halvt ned.", `Hold fokuspunktet på motivet; anbefalingen er ${settings.focus}.`],
+    setOneShot: ["Tryk knappen mærket med AF-symbolet — den sidder i rækken af tre knapper på toppen af kameraet.", "Drej det tandede hjul ved udløseren (Main Dial) til ONE SHOT, og tryk udløseren halvt ned.", `Placér fokuspunktet som anbefalet: ${settings.focus}.`],
+    setLensManualFocus: [`Skub den lille skydekontakt mærket AF/MF på siden af ${lens.model} til MF.`, `Drej fokusringen (den brede ring nærmest kamerahuset), til motivet står skarpt: ${settings.focus}.`],
+    setHighSpeedContinuous: ["Tryk hurtigt to gange på AF-knappen (rækken af tre knapper på toppen) for at skifte til DRIVE-funktionen.", `Drej det tandede hjul ved udløseren (Main Dial) til ${settings.drive}.`, "Tag korte serier på 3-5 billeder."],
+    setDriveMode: ["Tryk hurtigt to gange på AF-knappen (rækken af tre knapper på toppen) for at skifte til DRIVE-funktionen.", `Drej det tandede hjul ved udløseren (Main Dial), til ${settings.drive} vises på topskærmen.`, settings.drive === "Single" ? "Tag ét billede ad gangen." : "Brug korte, kontrollerede serier."],
+    setLensStabilizationOn: [`Find den lille skydekontakt mærket STABILIZER eller IS på siden af ${lens.model}, og sæt den til ON.`, "Slå stabilisering fra, hvis kameraet står helt fast på stativ."],
+    useLiveViewForAstro: ["Vip den runde kontakt med den røde knap på bagsiden (øverst til højre for skærmen) for at aktivere Live View, tryk så den røde START/STOP-knap i midten.", "Forstør en klar stjerne 5x og derefter 10x (forstørrelsesknappen med lup-ikon, nederst til højre bagpå).", "Drej fokusringen på objektivet, til stjernen er mindst mulig og skarp."],
+    use80dIntervalTimer: ["Tryk MENU (bagsiden, øverst til venstre) og find Intervaltimer under den røde optagefane.", "Sæt intervallet til den anbefalede pause og antal billeder til serien.", "Slå Long exposure noise reduction fra, før du starter lange serier."],
+    useCanonCameraConnect: ["Forbind EOS 80D til Canon Camera Connect via kameraets Wi-Fi-menu (MENU-knap, bagsiden øverst til venstre).", "Åbn fjernoptagelse i appen, og brug appens udløser uden at røre kameraet."]
   };
   return (exact[actionId] || camera?.procedures?.[actionId] || []).filter(Boolean);
 }

@@ -28,75 +28,149 @@
         "metering": "Evaluative",
         "safeResetMode": "Av + Auto ISO + One Shot + Single drive"
       },
+      "controlsReference": [
+        {
+          "id": "modeDial",
+          "label": "Programhjul",
+          "symbol": "M / Av / Tv / P / B",
+          "location": "Øverst til venstre på kameraet, den store drejeskive med bogstaver.",
+          "detail": "Der er en lille LÅSEKNAP midt i hjulet — tryk den ned, mens du drejer, ellers sidder hjulet fast. Det er den mest almindelige grund til, at hjulet 'ikke vil dreje'.",
+          "purpose": "Vælger hvor meget kameraet selv styrer: M (alt manuelt), Av (du vælger blænde), Tv (du vælger lukkertid), P (kameraet vælger begge), B (Bulb, lange eksponeringer)."
+        },
+        {
+          "id": "shutterButton",
+          "label": "Udløserknap og Main Dial",
+          "symbol": "Det lille tandede hjul, der omslutter selve udløserknappen",
+          "location": "Øverst til højre, der hvor din pegefinger hviler.",
+          "detail": "Drejes med pegefingeren uden at løfte hånden fra grebet.",
+          "purpose": "Ændrer lukkertid i M og Tv. I Av kan den bruges til blænde, hvis Quick Control Dial er låst."
+        },
+        {
+          "id": "quickControlDial",
+          "label": "Quick Control Dial (baghjul)",
+          "symbol": "Det store hjul på bagsiden, med SET-knappen i midten",
+          "location": "Bagsiden af kameraet, hvor din tommelfinger naturligt hviler.",
+          "detail": "Der er en lille LOCK-kontakt lige under hjulet til venstre — skub den, hvis hjulet virker låst.",
+          "purpose": "Ændrer blænde i M-tilstand. Bruges også til at navigere i menuer sammen med SET-knappen."
+        },
+        {
+          "id": "isoButton",
+          "label": "ISO-knap",
+          "symbol": "Mærket 'ISO' med et lille kamera-med-plus/minus-ikon",
+          "location": "Øverst på kameraet, i rækken af tre knapper lige bag udløseren.",
+          "detail": "Tryk knappen én gang, og drej derefter Main Dial (fingerhjulet ved udløseren), mens du kigger på topskærmen.",
+          "purpose": "Vælger ISO-følsomhed eller Auto ISO."
+        },
+        {
+          "id": "afDriveButton",
+          "label": "AF·DRIVE-knap",
+          "symbol": "Mærket med et lille AF-symbol og et 'flere billeder'-ikon",
+          "location": "Øverst på kameraet, i samme række som ISO-knappen.",
+          "detail": "Ét tryk skifter fokusmetode (One Shot/AI Servo) via Main Dial; et hurtigt ekstra tryk skifter til serieindstilling (Single/Continuous).",
+          "purpose": "Vælger fokusmetode og om kameraet tager ét billede eller en serie."
+        },
+        {
+          "id": "meteringWbButton",
+          "label": "Målemetode/hvidbalance-knap",
+          "symbol": "Mærket med et lille målecirkel-ikon og 'WB'",
+          "location": "Øverst på kameraet, i samme række som ISO- og AF·DRIVE-knappen.",
+          "detail": "Ét tryk skifter målemetode (fx Spotmåling) via Main Dial; et hurtigt ekstra tryk skifter hvidbalance.",
+          "purpose": "Vælger hvor kameraet måler lyset, og hvilken hvidbalance der bruges."
+        },
+        {
+          "id": "liveViewSwitch",
+          "label": "Live View/optage-kontakt",
+          "symbol": "Rund kontakt med en rød START/STOP-knap i midten",
+          "location": "Bagsiden af kameraet, øverst til højre for skærmen.",
+          "detail": "Vip kontakten for at aktivere Live View, tryk derefter den røde knap i midten for at starte/stoppe.",
+          "purpose": "Bruges til Live View, som er nødvendig for at forstørre og fokusere manuelt ved astro og makro."
+        },
+        {
+          "id": "afMfSwitch",
+          "label": "AF/MF-kontakt (på objektivet)",
+          "symbol": "Lille skydekontakt mærket 'AF' og 'MF'",
+          "location": "På siden af objektivet, tæt på kamerahuset.",
+          "detail": "Skub til MF for at fokusere manuelt med fokusringen; husk at skubbe tilbage til AF bagefter.",
+          "purpose": "Slår autofokus til/fra på objektivet."
+        },
+        {
+          "id": "stabilizerSwitch",
+          "label": "STABILIZER/IS-kontakt (på objektivet)",
+          "symbol": "Lille skydekontakt mærket 'STABILIZER' eller 'IS' med ON/OFF",
+          "location": "På siden af objektivet (findes kun på 18-55mm og 70-300mm, ikke på Sigma 18-35mm).",
+          "detail": "Slå til ved håndholdt fotografering; kan slås fra på stativ.",
+          "purpose": "Reducerer kamerarystelser ved lange lukkertider eller lange brændvidder."
+        }
+      ],
       "procedures": {
         "setManualMode": [
-          "Drej programhjulet øverst til venstre til M.",
-          "Kontroller at skærmen viser M."
+          "Find programhjulet øverst til venstre — tryk LÅSEKNAPPEN i midten af hjulet ned, mens du drejer det til M.",
+          "Kontroller at det store bogstav 'M' vises på topskærmen."
         ],
         "setAvMode": [
-          "Drej programhjulet øverst til venstre til Av.",
+          "Find programhjulet øverst til venstre — tryk LÅSEKNAPPEN i midten af hjulet ned, mens du drejer det til Av.",
           "Brug Av når du vil vælge blænden, mens kameraet selv vælger lukkertid.",
-          "Hold øje med lukkertiden i søgeren, så den ikke bliver for langsom."
+          "Hold øje med lukkertiden i søgeren (tallet nederst til venstre i søgerbilledet), så den ikke bliver for langsom."
         ],
         "setTvMode": [
-          "Drej programhjulet øverst til venstre til Tv.",
-          "Drej Main Dial ved udløserknappen for at vælge lukkertiden.",
+          "Find programhjulet øverst til venstre — tryk LÅSEKNAPPEN i midten af hjulet ned, mens du drejer det til Tv.",
+          "Drej det lille tandede hjul, der omslutter selve udløserknappen (Main Dial), for at vælge lukkertiden.",
           "Kameraet vælger blænden; brug Auto ISO, når lyset skifter."
         ],
         "setProgramMode": [
-          "Drej programhjulet øverst til venstre til P.",
+          "Find programhjulet øverst til venstre — tryk LÅSEKNAPPEN i midten af hjulet ned, mens du drejer det til P.",
           "Kameraet vælger lukkertid og blænde.",
           "Brug P til hurtige hverdagsbilleder, hvor øjeblikket er vigtigere end fuld kontrol."
         ],
         "setBulbMode": [
-          "Drej programhjulet til M.",
-          "Drej lukkertiden forbi 30 sekunder til Bulb vises.",
+          "Find programhjulet øverst til venstre — tryk LÅSEKNAPPEN i midten ned, mens du drejer det til M.",
+          "Drej det tandede hjul ved udløserknappen forbi 30 sekunder, til bogstavet 'B' (Bulb) vises på topskærmen.",
           "Brug stativ og Canon Camera Connect eller en fjernudløser, så kameraet ikke bevæger sig."
         ],
         "setShutter": [
-          "Brug Main Dial ved udløserknappen.",
-          "Drej indtil lukkertiden på skærmen matcher anbefalingen.",
+          "Drej det lille tandede hjul, der omslutter udløserknappen (Main Dial), med pegefingeren.",
+          "Drej indtil lukkertiden på topskærmen matcher anbefalingen.",
           "Ved hele sekunder viser 80D et anførselstegn, fx 8\" for 8 sekunder."
         ],
         "setAperture": [
-          "I M drejes Quick Control Dial bagpå for at ændre blænde.",
-          "Hvis hjulet er låst, brug låsekontakten ved Quick Control Dial."
+          "I M drejes det store hjul på bagsiden (Quick Control Dial, betjenes med tommelfingeren) for at ændre blænde.",
+          "Hvis hjulet ikke reagerer, tjek den lille LOCK-kontakt lige under hjulet til venstre — skub den om."
         ],
         "setIso": [
-          "Tryk ISO-knappen på toppen.",
-          "Drej Main Dial til ønsket ISO eller AUTO.",
-          "Tryk udløseren halvt ned for at vende tilbage."
+          "Tryk knappen mærket 'ISO' — den sidder i en række af tre knapper på toppen af kameraet, lige bag udløseren.",
+          "Drej det tandede hjul ved udløseren (Main Dial) til ønsket ISO eller AUTO, mens du kigger på topskærmen.",
+          "Tryk udløseren halvt ned for at bekræfte og vende tilbage til almindelig visning."
         ],
         "setSpotMetering": [
-          "Tryk knappen til målemetode på toppen af kameraet.",
-          "Drej Main Dial, til symbolet for Spotmåling vises på topdisplayet.",
-          "Placér søgerens centrale måleområde på artistens belyste ansigt, når du kontrollerer eksponeringen."
+          "Tryk knappen med målecirkel-ikonet og 'WB' — den sidder i rækken af tre knapper på toppen af kameraet.",
+          "Drej det tandede hjul ved udløseren (Main Dial), til symbolet for Spotmåling (en lille cirkel i midten af en firkant) vises på topskærmen.",
+          "Placér søgerens centrale måleområde på motivets lyseste, vigtigste punkt, når du kontrollerer eksponeringen."
         ],
         "setAntiFlicker": [
-          "Tryk MENU og gå til den røde optagefane 4.",
-          "Vælg Anti-flicker shoot. og sæt den til Enable.",
+          "Tryk MENU-knappen (bagsiden, øverst til venstre) og gå til den røde optagefane 4.",
+          "Vælg 'Anti-flicker shoot.' og sæt den til Enable.",
           "Brug søgeren, ikke Live View, når 80D skal time billedet efter almindeligt flimrende kunstlys. Kontrollér stadig lærredet på et testbillede."
         ],
         "setAiServo": [
-          "Tryk AF-knappen på toppen.",
-          "Drej Main Dial til AI Servo.",
+          "Tryk knappen mærket med AF-symbolet — den sidder i rækken af tre knapper på toppen af kameraet.",
+          "Drej det tandede hjul ved udløseren (Main Dial) til AI Servo, mens du kigger på topskærmen.",
           "Brug dette til motiver der bevæger sig."
         ],
         "setOneShot": [
-          "Tryk AF-knappen på toppen.",
-          "Drej Main Dial til One Shot.",
+          "Tryk knappen mærket med AF-symbolet — den sidder i rækken af tre knapper på toppen af kameraet.",
+          "Drej det tandede hjul ved udløseren (Main Dial) til One Shot, mens du kigger på topskærmen.",
           "Brug dette til stillestående motiver."
         ],
         "setHighSpeedContinuous": [
-          "Tryk DRIVE-knappen på toppen.",
-          "Drej Main Dial til High-speed continuous.",
+          "Tryk hurtigt to gange på AF-knappen (samme knap som fokusmetode) for at skifte til DRIVE-funktionen.",
+          "Drej det tandede hjul ved udløseren (Main Dial) til High-speed continuous, mens du kigger på topskærmen.",
           "Tag korte serier fremfor at holde knappen nede længe."
         ],
         "useLiveViewForAstro": [
           "Sæt kameraet på stativ.",
-          "Tryk Live View-knappen bagpå.",
-          "Find en klar stjerne eller fjern lysprik.",
-          "Forstør visningen og fokuser manuelt, indtil prikken er mindst mulig."
+          "Vip den runde kontakt med den røde knap på bagsiden (øverst til højre for skærmen) for at aktivere Live View, og tryk den røde knap i midten for at starte.",
+          "Find en klar stjerne eller fjern lysprik på skærmen.",
+          "Forstør visningen (tryk forstørrelsesknappen, +/lup-ikonet, nederst til højre bagpå) og fokuser manuelt, indtil prikken er mindst mulig."
         ],
         "useCanonCameraConnect": [
           "Brug Canon Camera Connect som fjernudløser og Live View-hjælp.",

@@ -315,6 +315,7 @@ function lessonProcedureIds(lessonId) {
 
 function renderEquipment() {
   const content = document.querySelector("#content");
+  const controls = state.equipment.cameras[0]?.controlsReference || [];
   content.innerHTML = `
     <section class="panel">
       <div class="panel-header">
@@ -326,6 +327,24 @@ function renderEquipment() {
         ${state.equipment.lenses.map((item) => `<article><strong>${item.brand} ${item.model}</strong><p>${item.roles.join(" · ")}</p></article>`).join("")}
         ${state.equipment.flashes.map((item) => `<article><strong>${item.brand} ${item.model}</strong><p>${item.roles.join(" · ")}</p></article>`).join("")}
       </div>
+      ${controls.length ? `
+        <div class="panel-header">
+          <p class="section-kicker">Når du står med kameraet</p>
+          <h2>Knapperne på dit kamera</h2>
+        </div>
+        <p class="controls-intro">Slå op her, hvis en guide siger "tryk ISO-knappen" eller "drej programhjulet", og du er i tvivl om hvilken knap eller hjul det er.</p>
+        <div class="guide-list">
+          ${controls.map((c) => `
+            <details>
+              <summary>${c.label}</summary>
+              <p class="control-symbol"><strong>Sådan ser den ud:</strong> ${c.symbol}</p>
+              <p><strong>Placering:</strong> ${c.location}</p>
+              ${c.detail ? `<p><strong>Godt at vide:</strong> ${c.detail}</p>` : ""}
+              <p><strong>Bruges til:</strong> ${c.purpose}</p>
+            </details>
+          `).join("")}
+        </div>
+      ` : ""}
     </section>
   `;
 }

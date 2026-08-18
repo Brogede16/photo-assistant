@@ -619,10 +619,10 @@
       "subjects": ["person"],
       "conditions": { "style": ["portrait", "single-portrait", "environmental-portrait"], "distance": ["medium"], "place": ["outdoor", "home", "street"], "light": ["daylight", "window-light", "overcast"], "movement": ["still", "walking"] },
       "gearStrategy": { "preferredLensRoles": ["people", "wide", "walkaround"] },
-      "baseSettings": { "mode": "Av", "focalLength": "24-35mm", "shutter": { "start": "Auto", "range": ["1/250", "1/800"] }, "aperture": { "start": "f/4.5", "range": ["f/4.5", "f/5.6"] }, "iso": "Auto", "focus": "One Shot eller AI Servo ved gang", "drive": "Single eller Continuous low" },
+      "baseSettings": { "mode": "Av", "focalLength": "24-35mm", "shutter": { "start": "Auto", "range": ["1/250", "1/800"] }, "aperture": { "start": "f/4.5", "range": ["f/4.5", "f/8"] }, "iso": "Auto", "focus": "One Shot eller AI Servo ved gang", "drive": "Single eller Continuous low" },
       "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot"],
-      "quickGuide": ["Brug Sigma ved 24-35mm.", "Placér personen, så omgivelserne fortæller noget.", "Undgå at skære fødder og hænder tilfældigt."],
-      "why": "Miljøportrættet skal både vise mennesket og stedet; derfor bruges bredere brændvidde og mere dybdeskarphed."
+      "quickGuide": ["Brug Sigma ved 24-35mm.", "Placér personen, så omgivelserne fortæller noget.", "Undgå at skære fødder og hænder tilfældigt.", "Skal huset, haven eller andre detaljer tydeligt kunne ses, så gå mod f/8 for mere dybdeskarphed i hele billedet."],
+      "why": "Miljøportrættet skal både vise mennesket og stedet; derfor bruges bredere brændvidde og mere dybdeskarphed. Jo mere af miljøet der skal være genkendeligt, jo tættere på f/8 er det værd at gå."
     },
     {
       "id": "portrait-group-indoor",
@@ -2477,10 +2477,10 @@
       "subjects": ["child", "person"],
       "conditions": { "style": ["portrait", "single-portrait", "classic-portrait"], "movement": ["still"], "place": ["outdoor", "inside", "home"], "light": ["daylight", "overcast", "indoor", "window-light"], "distance": ["near", "medium"] },
       "gearStrategy": { "preferredLensRoles": ["low-light", "people", "portraits"] },
-      "baseSettings": { "mode": "Av", "focalLength": "35mm", "shutter": { "start": "1/250", "range": ["1/200", "1/500"] }, "aperture": { "start": "f/2.8", "range": ["f/2", "f/4"] }, "iso": "Auto", "focus": "One Shot på det nærmeste øje", "drive": "Single" },
+      "baseSettings": { "mode": "Av", "focalLength": "35mm", "shutter": { "start": "1/250", "range": ["1/200", "1/500"] }, "aperture": { "start": "f/2.8", "range": ["f/2", "f/8"] }, "iso": "Auto", "focus": "One Shot på det nærmeste øje", "drive": "Single" },
       "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot"],
-      "quickGuide": ["Brug Sigma 18-35mm ved 35mm og kom ned i barnets øjenhøjde.", "Fokusér præcist på det nærmeste øje.", "Giv barnet tid til at falde til ro i stedet for at bede om et bestemt udtryk — de mest naturlige portrætter kommer, når barnet glemmer kameraet."],
-      "why": "Samme opskrift som et voksenportræt — roligt lys og et lysstærkt objektiv — men lavere øjenhøjde og mere tålmodighed, fordi børn sjældent poserer på kommando."
+      "quickGuide": ["Brug Sigma 18-35mm ved 35mm og kom ned i barnets øjenhøjde.", "Fokusér præcist på det nærmeste øje.", "Giv barnet tid til at falde til ro i stedet for at bede om et bestemt udtryk — de mest naturlige portrætter kommer, når barnet glemmer kameraet.", "Er der noget i billedet, der skal være med og skarpt — en gynge, legetøj, hår foran ansigtet — så luk blænden til f/5.6-f/8 for mere fokusmargen, i stedet for at presse f/2.8 igennem."],
+      "why": "Samme opskrift som et voksenportræt — roligt lys og et lysstærkt objektiv — men lavere øjenhøjde og mere tålmodighed, fordi børn sjældent poserer på kommando. Et barn i bevægelse tæt på kameraet giver mindre fokusmargen end en stillestående voksen, så en anelse snævrere blænde er ofte en tryggere start end helt åben."
     },
     {
       "id": "family-bonfire",
@@ -2750,9 +2750,9 @@
       "subjects": ["person", "child"],
       "conditions": { "action": ["swimming", "splashing"], "movement": ["active-motion", "running"], "place": ["water", "beach", "outdoor"], "light": ["daylight", "backlight", "overcast"], "weather": ["sunny", "windy"], "distance": ["medium", "far"] },
       "gearStrategy": { "preferredLensRoles": ["telephoto", "people", "sports"] },
-      "baseSettings": { "mode": "Tv", "focalLength": "100-300mm", "shutter": { "start": "1/1250", "range": ["1/1000", "1/2000"] }, "aperture": "Auto", "iso": "Auto", "focus": "AI Servo på personen", "drive": "High-speed continuous" },
+      "baseSettings": { "mode": "Tv", "focalLength": "100-300mm", "shutter": { "start": "1/1250", "range": ["1/500", "1/2000"] }, "aperture": "Auto", "iso": "Auto", "focus": "AI Servo på personen", "drive": "High-speed continuous" },
       "cameraActions": ["setTvMode", "setShutter", "setIso", "setAiServo", "setHighSpeedContinuous", "setLensStabilizationOn"],
-      "quickGuide": ["Brug 70-300mm og stå, så du kan følge hele bevægelsen — fx et wakepark-hop eller en person, der falder i vandet.", "Start ved 1/1250 for at fryse vandsprøjtet.", "Tag lange serier hen over hele hoppet eller faldet; det bedste øjeblik er svært at forudsige præcist."],
+      "quickGuide": ["Brug 70-300mm og stå, så du kan følge hele bevægelsen — fx et wakepark-hop eller en person, der falder i vandet.", "Start ved 1/1250 for at fryse vandsprøjtet.", "Er det en roligere gruppe, der bare plasker og leger uden hurtige hop, er 1/500 ofte nok.", "Tag lange serier hen over hele hoppet eller faldet; det bedste øjeblik er svært at forudsige præcist."],
       "why": "Vandsport-action skifter meget hurtigt, og vandsprøjt kræver kort lukkertid for at fryse. High-speed continuous øger chancen for at ramme det rigtige splitsekund."
     },
     {
@@ -3027,6 +3027,19 @@
       "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot"],
       "quickGuide": ["Brug en bred brændvidde og inkludér både broens konstruktion og vandet eller landskabet omkring.", "Start ved f/8 for skarphed fra forgrund til baggrund.", "Prøv en vinkel nedefra for at fremhæve broens linjer og konstruktion."],
       "why": "Om dagen er broens konstruktionsdetaljer og linjeføring hovedmotivet, hvor natudgaven i stedet handler om lys og eventuelle lysspor fra trafik."
+    },
+    {
+      "id": "candid-telephoto-distance",
+      "title": "Candid på afstand med tele",
+      "family": "mennesker",
+      "priority": 87,
+      "subjects": ["person", "group", "child"],
+      "conditions": { "style": ["candid"], "movement": ["still", "gentle-motion", "walking"], "place": ["beach", "outdoor", "street", "garden"], "light": ["daylight", "overcast"], "distance": ["far"] },
+      "gearStrategy": { "preferredLensRoles": ["telephoto"] },
+      "baseSettings": { "mode": "Av", "focalLength": "200-300mm", "shutter": { "start": "Auto", "range": ["1/250", "1/800"] }, "aperture": { "start": "f/8", "range": ["f/5.6", "f/11"] }, "iso": "Auto", "focus": "One Shot på det nærmeste ansigt", "drive": "Single" },
+      "cameraActions": ["setAvMode", "setAperture", "setIso", "setOneShot", "setLensStabilizationOn"],
+      "quickGuide": ["Brug 70-300mm og bliv på god afstand, så situationen forbliver naturlig og uopstillet.", "Start ved f/8 — modsat actionbilleder handler det her om at holde nok af scenen skarp, ikke kun ét ansigt.", "Fokusér på det nærmeste ansigt og vent på et roligt, ægte øjeblik frem for at forudse bevægelse."],
+      "why": "Candid-billeder på afstand handler ofte om stemning og sammenhæng snarere end at fryse hurtig bevægelse. En lidt lukket blænde holder mere af scenen skarp, mens Auto-lukkertid er hurtig nok til at undgå rystelser ved lang brændvidde."
     }
   ]
 }
