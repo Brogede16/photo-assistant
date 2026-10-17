@@ -1,25 +1,25 @@
-const CACHE_NAME = "photo-assistant-core-v0.32.0";
+const CACHE_NAME = "photo-assistant-core-v0.32.1";
 
 const CORE_ASSETS = [
-  "/",
-  "/index.html",
-  "/src/main.js",
-  "/src/styles.css",
-  "/public/manifest.webmanifest",
-  "/public/icons/icon.svg",
-  "/src/lib/astro.js",
-  "/src/lib/ambient.js",
-  "/src/lib/exif.js",
-  "/src/lib/focal.js",
-  "/src/lib/presets.js",
-  "/src/lib/recommendations.js",
-  "/src/lib/scenario.js",
-  "/src/lib/search.js",
-  "/src/lib/storage.js",
-  "/src/data/equipment/index.json",
-  "/src/data/learn/lessons.json",
-  "/src/data/search/taxonomy.json",
-  "/src/data/situations/core-profiles.json",
+  "./",
+  "./index.html",
+  "./src/main.js",
+  "./src/styles.css",
+  "./public/manifest.webmanifest",
+  "./public/icons/icon.svg",
+  "./src/lib/astro.js",
+  "./src/lib/ambient.js",
+  "./src/lib/exif.js",
+  "./src/lib/focal.js",
+  "./src/lib/presets.js",
+  "./src/lib/recommendations.js",
+  "./src/lib/scenario.js",
+  "./src/lib/search.js",
+  "./src/lib/storage.js",
+  "./src/data/equipment/index.json",
+  "./src/data/learn/lessons.json",
+  "./src/data/search/taxonomy.json",
+  "./src/data/situations/core-profiles.json",
 ];
 
 self.addEventListener("install", (event) => {
@@ -40,7 +40,7 @@ self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
 
   if (event.request.mode === "navigate") {
-    event.respondWith(cacheFirst(event.request, "/index.html"));
+    event.respondWith(cacheFirst(event.request, "./index.html"));
     return;
   }
 
