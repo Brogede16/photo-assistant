@@ -35,10 +35,10 @@ boot();
 async function boot() {
   try {
     const [equipment, taxonomy, situations, learning] = await Promise.all([
-      fetchJson("/src/data/equipment/index.json"),
-      fetchJson("/src/data/search/taxonomy.json"),
-      fetchJson("/src/data/situations/core-profiles.json"),
-      fetchJson("/src/data/learn/lessons.json")
+      fetchJson(new URL("./data/equipment/index.json", import.meta.url)),
+      fetchJson(new URL("./data/search/taxonomy.json", import.meta.url)),
+      fetchJson(new URL("./data/situations/core-profiles.json", import.meta.url)),
+      fetchJson(new URL("./data/learn/lessons.json", import.meta.url))
     ]);
     state.equipment = equipment;
     state.taxonomy = taxonomy;
@@ -1131,6 +1131,6 @@ async function fetchJson(path) {
 
 function registerServiceWorker() {
   if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("/service-worker.js");
+    navigator.serviceWorker.register(new URL("../service-worker.js", import.meta.url));
   }
 }
